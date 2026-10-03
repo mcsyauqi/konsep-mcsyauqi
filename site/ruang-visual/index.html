@@ -100,7 +100,7 @@ p{margin:0}
 .vf .plate.ai{top:auto;bottom:-32px;left:auto;right:0;font-weight:500}
 
 .meja{position:absolute;z-index:3;left:var(--gut);bottom:44px;width:clamp(330px,33vw,440px);background:var(--putih);color:var(--lensa);border-radius:3px;box-shadow:12px 18px 28px -14px rgba(0,0,0,.45);padding:16px 14px 14px}
-.meja .clip,.headplate .clip{position:absolute;top:-12px}
+.meja .clip,.headplate .clip{position:absolute;top:-15px}
 .meja .clip.l{left:40px}.meja .clip.r{right:40px}
 .latar{margin-top:8px;font-size:13px;line-height:1.4;color:var(--bayang)}
 .latar b{color:var(--lensa)}
@@ -116,7 +116,13 @@ p{margin:0}
 .mrow .btn{flex:1}
 .trust{margin-top:10px;font-size:13px;line-height:1.45;color:var(--bayang)}
 
-.vcard{position:absolute;z-index:2;right:max(var(--gut),calc((100vw - var(--wrap))/2));bottom:44px;width:200px;margin:0}
+.stage{--rr:max(var(--gut),calc((100vw - var(--wrap))/2));--s:1}
+.rig{position:absolute;z-index:2;right:var(--rr);bottom:10px;width:calc(300px*var(--s));height:calc(460px*var(--s));pointer-events:none}
+.rig-svg{width:100%;height:100%;display:block}
+.rig .plate.ai{position:absolute;left:0;bottom:6px;font-weight:500}
+.vcard{position:absolute;z-index:3;right:calc(var(--rr) + 75px*var(--s));bottom:calc(10px + 176px*var(--s));width:calc(150px*var(--s));margin:0}
+.vcard figcaption{display:none}
+.vcard .hook{font-size:13px;line-height:1.3}
 .vscreen{position:relative;aspect-ratio:9/16;border-radius:8px;overflow:hidden;background-color:var(--paper);background-size:auto 100%;background-position:50% 50%;box-shadow:0 18px 30px -18px rgba(0,0,0,.55);outline:1px solid rgba(255,255,255,.35);outline-offset:-1px}
 .vscreen .push{position:absolute;inset:0;background:inherit;background-size:auto 100%;animation:push 8s ease-in-out infinite alternate}
 @keyframes push{to{transform:scale(1.09)}}
@@ -125,7 +131,7 @@ p{margin:0}
 .prog{position:absolute;left:10px;right:10px;bottom:16px;height:4px;border-radius:2px;background:rgba(255,255,255,.45);overflow:hidden}
 .prog i{position:absolute;left:0;top:0;bottom:0;width:38%;background:var(--putih);animation:prog 8s linear infinite}
 @keyframes prog{from{width:0}to{width:100%}}
-.vcard figcaption{margin-top:10px}
+
 
 /* section umum */
 .sec{padding:112px 0}
@@ -164,7 +170,7 @@ p{margin:0}
 .facts p{font-size:16px;color:var(--bayang)}
 
 /* video */
-.vid{background:var(--lantai);--rv-bg:var(--lantai)}
+
 .vgrid{display:grid;grid-template-columns:5fr 7fr;gap:64px;align-items:center}
 .phone{position:relative;width:min(100%,360px);margin:0 auto;aspect-ratio:9/16;border-radius:12px;overflow:hidden;background:var(--aren) url(assets/rv-aren-m.webp) 50% 50%/auto 100% no-repeat;box-shadow:0 30px 50px -30px rgba(26,25,24,.6)}
 .safe{position:absolute;border:1.5px solid rgba(255,255,255,.75);background:rgba(255,255,255,.07);border-radius:4px;pointer-events:none}
@@ -219,6 +225,38 @@ p{margin:0}
 .sfoot img{width:120px;height:90px;object-fit:cover;border-radius:3px;border:4px solid var(--putih);box-shadow:var(--shadow);flex:none}
 .sfoot p{font-size:16px;line-height:1.6;color:var(--bayang)}
 .sfoot strong{color:var(--lensa)}
+
+/* video: kertas gula aren yang turun dari rak, ponsel di tripod, pembuka dijepit di tali */
+.vid{background:transparent}
+.vid-rack{position:relative;height:58px;background:var(--putih)}
+.rod3{position:absolute;left:0;right:0;top:10px;height:3px;background:var(--lensa)}
+.rod3::before,.rod3::after{content:"";position:absolute;top:-4px;width:11px;height:11px;border-radius:50%;background:var(--lensa)}
+.rod3::before{left:8px}.rod3::after{right:8px}
+.cyl3{position:absolute;left:20px;right:20px;top:13px;height:30px;border-radius:9px/15px;background:linear-gradient(180deg,rgba(255,255,255,.30) 0,rgba(255,255,255,.08) 28%,rgba(0,0,0,0) 52%,rgba(0,0,0,.32) 100%),#68391F}
+.vid-paper{--rv-bg:#68391F;margin:0 20px;padding:72px 0 88px;color:var(--putih);background:linear-gradient(180deg,#68391F 0,#68391F 74%,#5B3119 100%)}
+.vstage{display:grid;grid-template-columns:7fr 5fr;gap:56px;align-items:start}
+.vcopy .h2{color:var(--putih);margin-bottom:16px}
+.vcopy .lead{color:var(--putih);max-width:62ch}
+.hookline{position:relative;margin-top:36px;padding-top:4px}
+.hl-label{font-weight:700;font-size:15px;margin-bottom:22px}
+.hooks2{position:relative;display:grid;grid-template-columns:repeat(3,1fr);gap:16px;padding-top:14px}
+.hooks2::before{content:"";position:absolute;left:-12px;right:-12px;top:0;height:2px;background:#E9E1D8;border-radius:1px}
+.hk2{position:relative;text-align:left;background:var(--putih);color:var(--lensa);border:0;border-radius:3px;padding:20px 14px 16px;font:500 15px/1.45 var(--sans);cursor:pointer;box-shadow:10px 14px 22px -14px rgba(0,0,0,.55);min-height:108px}
+.hk2 .clip{position:absolute;top:-28px;left:50%;transform:translateX(-50%)}
+.hk2[aria-checked="true"]{background:var(--kunyit);color:var(--lensa);font-weight:700;transform:translateY(8px)}
+.hk2:focus-visible{outline:2px solid var(--putih);outline-offset:3px}
+.vform{position:relative;margin-top:40px;background:var(--putih);color:var(--lensa);border-radius:3px;padding:24px 22px 20px;box-shadow:12px 18px 28px -14px rgba(0,0,0,.5);max-width:560px}
+.vform .clip{position:absolute;top:-15px}
+.vform .clip.l{left:40px}.vform .clip.r{right:40px}
+.vrows{margin:0 0 16px}
+.vrows div{display:grid;grid-template-columns:72px 1fr;gap:12px;padding:6px 0}
+.vrows dt{font-size:13px;font-weight:700;color:var(--bayang)}
+.vrows dd{margin:0;font-size:15px;line-height:1.5}
+.fallback{margin-top:12px;font-size:14px;line-height:1.5;color:var(--bayang)}
+.tripod-wrap{position:relative;display:flex;flex-direction:column;align-items:center;padding-top:8px}
+.tripod-wrap .phone{width:min(100%,300px);margin:0;border:7px solid var(--lensa);border-radius:18px;box-shadow:14px 22px 34px -18px rgba(0,0,0,.6)}
+.tripod{width:min(100%,300px);height:auto;display:block;margin-top:-2px}
+.tripod-wrap .plate.ai{position:absolute;right:0;bottom:4px;font-weight:500}
 /* empat cara: gulungan menggantung dari satu batang */
 .banners{display:grid;grid-template-columns:1.35fr repeat(4,1fr);gap:24px;align-items:start}
 .bn{position:relative;padding-top:3px}
@@ -261,6 +299,17 @@ p{margin:0}
 .qa summary::before{content:"";flex:none;width:28px;height:12px;border-radius:4px/6px;background:linear-gradient(180deg,rgba(255,255,255,.32),rgba(0,0,0,0) 50%,rgba(0,0,0,.3)),var(--cabai);transition:height .2s}
 .qa details[open] summary::before{height:8px}
 .qa details p{margin-top:10px;padding-left:42px;color:var(--bayang);font-size:16px;line-height:1.65;max-width:72ch}
+
+.pending .pending-tag{display:inline-block;margin:4px 0 16px;background:var(--kunyit);color:var(--lensa);font-weight:700;font-size:14px;padding:6px 10px;border-radius:3px}
+.pv-grid{display:grid;grid-template-columns:5fr 7fr;gap:32px;align-items:start;margin-top:16px}
+.pv{margin:0}
+.pv-shot{position:relative;border-radius:3px;overflow:hidden}
+.pv-shot img{width:100%;height:auto;filter:blur(1.2px)}
+.pv-mark{position:absolute;inset:0;display:grid;place-items:center;font:700 28px/1 var(--sans);letter-spacing:.12em;color:rgba(255,255,255,.55);pointer-events:none}
+.pv figcaption{margin-top:10px;font-size:15px;line-height:1.55;color:var(--bayang)}
+.pv figcaption b{color:var(--lensa)}
+.pv-opts h3{margin-top:0}
+@media (max-width:700px){ .pv-grid{grid-template-columns:1fr} }
 /* fokus di footer gelap */
 .foot :focus-visible{outline-color:#FFFFFF}
 /* animasi kartu video berhenti saat di luar layar */
@@ -296,9 +345,9 @@ p{margin:0}
 .skor{background:var(--lantai);border-radius:8px;padding:24px;margin-top:12px}
 
 /* tablet */
+@media (max-width:1279px){ .stage{--s:.84} }
 @media (max-width:1100px){
   .navlinks{display:none}
-  .vcard{width:170px}
   .roll[aria-checked="true"] .nm{top:80px;left:0;z-index:5;background:var(--putih);color:var(--lensa);font:700 12px/1 var(--sans);padding:5px 7px;border-radius:3px;box-shadow:0 4px 10px -4px rgba(0,0,0,.35)}
   .roll:nth-child(n+4)[aria-checked="true"] .nm{left:auto;right:0}
 }
@@ -309,8 +358,8 @@ p{margin:0}
   .layer img{-webkit-mask-image:linear-gradient(180deg,transparent 0,#000 64px);mask-image:linear-gradient(180deg,transparent 0,#000 64px)}
   .meja{position:relative;left:auto;bottom:auto;width:auto;max-width:640px;margin-top:16px}
   .meja .seg{display:none}
-  .vcard{bottom:auto;top:calc(var(--slot-bottom,600px) - 300px);width:150px}
-  .vcard figcaption{display:none}
+  .rig{display:none}
+  .vcard{right:var(--gut);bottom:auto;top:calc(var(--slot-bottom,600px) - 300px);width:150px}
 }
 @media (max-width:1100px){
   .sec-head{grid-template-columns:1fr;gap:16px}
@@ -327,7 +376,15 @@ p{margin:0}
   .meja .mrow{flex-direction:column}
   .meja .seg button{flex:1}
 }
+@media (max-width:1100px){
+  .vstage{grid-template-columns:1fr;gap:40px}
+  .tripod-wrap{order:-1}
+}
 /* ponsel */
+@media (max-width:700px) and (max-height:780px){
+  .meja{order:1}
+  .photo-slot{order:2}
+}
 @media (max-width:700px){
   :root{--gut:16px}
   body{font-size:16px}
@@ -342,6 +399,15 @@ p{margin:0}
   .roll .cyl{height:24px;border-radius:7px/12px}
   .roll .cyl::after{width:7px;right:3px}
   .roll .nm{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+  .vid-paper{margin:0 8px;padding:48px 0 64px}
+  .cyl3{left:8px;right:8px}
+  .hooks2{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:12px;padding:30px 4px 14px;margin:0 -4px}
+  .hooks2::before{left:0;right:0;top:16px}
+  .hk2{flex:0 0 72%;scroll-snap-align:start;min-height:96px;font-size:14px}
+  .hk2 .clip{top:-28px}
+  .hl-label{margin-bottom:6px}
+  .tripod-wrap .phone,.tripod{width:min(100%,250px)}
+  .vrows div{grid-template-columns:60px 1fr}
   .roll[aria-checked="true"] .nm{position:absolute;width:auto;height:auto;overflow:visible;clip:auto;top:70px;left:0;z-index:5;background:var(--putih);color:var(--lensa);font:700 12px/1 var(--sans);padding:5px 7px;border-radius:3px;box-shadow:0 4px 10px -4px rgba(0,0,0,.35)}
   .roll:nth-child(n+4)[aria-checked="true"] .nm{left:auto;right:0}
   .sambung{padding-top:118px}
@@ -413,6 +479,9 @@ p{margin:0}
 </style>
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
+  <symbol id="klem" viewBox="0 0 34 30"><path d="M9.5 13 4.2 3.6 7.4 1.8 13.6 13" fill="none" stroke="#9AA1A8" stroke-width="1.8" stroke-linejoin="round"/><path d="M24.5 13 29.8 3.6 26.6 1.8 20.4 13" fill="none" stroke="#9AA1A8" stroke-width="1.8" stroke-linejoin="round"/><path d="M3 12h28l-2.6 16H5.6z" fill="#1A1918"/><path d="M4.6 14.6h24.8" stroke="#5C5F62" stroke-width="1.6"/></symbol>
+</defs></svg>
 
 <header class="wrap nav">
   <a class="logo" href="#" aria-label="Ruang Visual, beranda">
@@ -455,7 +524,7 @@ p{margin:0}
       <p class="sub"><span class="long">Studio foto dan video produk berbasis AI. Unggah foto atau tempel link produk, tarik latar yang cocok, lalu terima foto katalog dan video iklan 9:16 sekaligus.</span><span class="short">Studio foto dan video produk berbasis AI. Unggah foto atau tempel link produk, lalu terima foto katalog dan video iklan 9:16.</span></p>
       <div class="photo-slot" aria-hidden="true"></div>
       <form class="meja" action="#" onsubmit="return false">
-        <svg class="clip l" width="30" height="22" viewBox="0 0 30 22" aria-hidden="true"><path d="M9 10C8 5 10 1.5 15 1.5S22 5 21 10" fill="none" stroke="#1A1918" stroke-width="2" stroke-linecap="round"/><path d="M3 9h24l-2.5 12h-19z" fill="#1A1918"/><path d="M6 12h18" stroke="#5C5F62" stroke-width="1.5"/></svg><svg class="clip r" width="30" height="22" viewBox="0 0 30 22" aria-hidden="true"><path d="M9 10C8 5 10 1.5 15 1.5S22 5 21 10" fill="none" stroke="#1A1918" stroke-width="2" stroke-linecap="round"/><path d="M3 9h24l-2.5 12h-19z" fill="#1A1918"/><path d="M6 12h18" stroke="#5C5F62" stroke-width="1.5"/></svg>
+        <svg class="clip l" width="34" height="30" viewBox="0 0 34 30" aria-hidden="true"><use href="#klem"/></svg><svg class="clip r" width="34" height="30" viewBox="0 0 34 30" aria-hidden="true"><use href="#klem"/></svg>
         <label class="sr" for="src">Link produk atau foto produk</label>
         <div class="field">
           <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1" fill="none" stroke="#5C5F62" stroke-width="1.75" stroke-linecap="round"/></svg>
@@ -475,6 +544,20 @@ p{margin:0}
       </form>
     </div>
     <div class="vf" aria-hidden="true"><i></i><i></i><i></i><i></i><span class="plate">Foto 4:5</span><span class="plate ai">Contoh hasil AI</span></div>
+    <div class="rig" aria-hidden="true">
+      <svg class="rig-svg" viewBox="0 0 300 460" width="300" height="460">
+        <circle cx="150" cy="150" r="138" fill="none" stroke="#F3F4F5" stroke-width="18"/>
+        <circle cx="150" cy="150" r="128.5" fill="none" stroke="#1A1918" stroke-opacity=".22" stroke-width="1.5"/>
+        <circle cx="150" cy="150" r="147.5" fill="none" stroke="#1A1918" stroke-opacity=".30" stroke-width="1.5"/>
+        <rect x="128" y="8" width="44" height="10" rx="2" fill="#1A1918"/>
+        <rect x="128" y="282" width="44" height="10" rx="2" fill="#1A1918"/>
+        <rect x="146" y="290" width="8" height="118" fill="#1A1918"/>
+        <rect x="140" y="330" width="20" height="10" rx="2" fill="#2A2826"/>
+        <path d="M150 404 104 452M150 404 196 452M150 404V454" stroke="#1A1918" stroke-width="5" stroke-linecap="round"/>
+        <ellipse cx="150" cy="455" rx="62" ry="4" fill="#000" fill-opacity=".28"/>
+      </svg>
+      <span class="plate ai">Contoh hasil AI</span>
+    </div>
     <figure class="vcard">
       <div class="vscreen" role="img" aria-label="Contoh video iklan 9:16 dari produk yang sama, dengan teks hook di layar.">
         <span class="push" aria-hidden="true"></span>
@@ -491,7 +574,7 @@ p{margin:0}
   <div class="wrap">
     <div class="strip-wrap">
       <div class="headplate">
-        <svg class="clip" width="30" height="22" viewBox="0 0 30 22" aria-hidden="true"><path d="M9 10C8 5 10 1.5 15 1.5S22 5 21 10" fill="none" stroke="#1A1918" stroke-width="2" stroke-linecap="round"/><path d="M3 9h24l-2.5 12h-19z" fill="#1A1918"/><path d="M6 12h18" stroke="#5C5F62" stroke-width="1.5"/></svg>
+        <svg class="clip" width="34" height="30" viewBox="0 0 34 30" aria-hidden="true"><use href="#klem"/></svg>
         <h2 id="h-sambung">Geser kertasnya.<br>Produknya tetap di tempat.</h2>
       </div>
       <div class="strip reveal" tabindex="0" role="slider" aria-label="Geser gulungan latar" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" aria-valuetext="Sambungan Telang dan Pandan">
@@ -519,34 +602,44 @@ p{margin:0}
   </div>
 </section>
 
-<section class="sec vid" id="video" aria-labelledby="h-video">
-  <div class="wrap vgrid">
-    <div class="phone reveal" role="img" aria-label="Contoh video iklan 9:16 di latar gula aren dengan garis zona aman dan teks hook.">
-      <span class="plate">Video 9:16, 8 detik</span>
-      <span class="safe r" aria-hidden="true"></span><span class="safe b" aria-hidden="true"></span>
-      <span class="plate zl">Zona aman</span>
-      <span class="hook" id="phook">Camilan yang selalu habis duluan pas arisan</span>
-      <span class="prog" aria-hidden="true"><i></i></span>
-    </div>
-    <div class="vcopy">
-      <h2 class="h2" id="h-video">Dari link ke video 9:16, tanpa memegang produknya.</h2>
-      <p class="lead">Affiliate cukup menempel link produk. Ruang Visual membaca nama dan foto utama dari halaman publik produk itu, lalu menulis pembuka dan menyusun video dengan voice over Bahasa Indonesia. Pakai hanya untuk produk yang kamu promosikan secara resmi, misalnya lewat program affiliate.</p>
-      <fieldset class="hooks">
-        <legend>Pilih pembuka (3 dari 10 variasi)</legend>
-        <div role="radiogroup" aria-label="Variasi pembuka video">
-          <button type="button" class="hk" role="radio" aria-checked="true">Camilan yang selalu habis duluan pas arisan</button>
-          <button type="button" class="hk" role="radio" aria-checked="false">Bawa satu, pulang ditanya belinya di mana</button>
-          <button type="button" class="hk" role="radio" aria-checked="false">Teman nonton yang renyahnya awet sampai episode terakhir</button>
+<section class="vid" id="video" aria-labelledby="h-video">
+  <div class="vid-rack" aria-hidden="true"><span class="rod3"></span><span class="cyl3"></span></div>
+  <div class="vid-paper">
+    <div class="wrap vstage">
+      <div class="vcopy">
+        <h2 class="h2" id="h-video">Dari link ke video 9:16, tanpa memegang produknya.</h2>
+        <p class="lead">Affiliate cukup menempel link produk. Ruang Visual membaca nama dan foto utama dari halaman publik produk itu, lalu menulis pembuka dan menyusun video dengan voice over Bahasa Indonesia. Pakai hanya untuk produk yang kamu promosikan secara resmi, misalnya lewat program affiliate.</p>
+        <div class="hookline">
+          <p class="hl-label" id="hl-label">Pilih pembuka, 3 dari 10 variasi:</p>
+          <div class="hooks2" role="radiogroup" aria-labelledby="hl-label">
+            <button type="button" class="hk2" role="radio" aria-checked="true"><svg class="clip" width="34" height="30" viewBox="0 0 34 30" aria-hidden="true"><use href="#klem"/></svg>Camilan yang selalu habis duluan pas arisan</button>
+            <button type="button" class="hk2" role="radio" aria-checked="false"><svg class="clip" width="34" height="30" viewBox="0 0 34 30" aria-hidden="true"><use href="#klem"/></svg>Bawa satu, pulang ditanya belinya di mana</button>
+            <button type="button" class="hk2" role="radio" aria-checked="false"><svg class="clip" width="34" height="30" viewBox="0 0 34 30" aria-hidden="true"><use href="#klem"/></svg>Teman nonton yang renyahnya awet sampai episode terakhir</button>
+          </div>
         </div>
-      </fieldset>
-      <dl class="vmeta">
-        <div><dt>Suara</dt><dd>Perempuan, santai<small>4 suara Bahasa Indonesia</small></dd></div>
-        <div><dt>Mesin yang dipakai</dt><dd>Gerak halus<small>Kling atau Veo, dipilih otomatis</small></dd></div>
-        <div><dt>Biaya</dt><dd class="num">Video 8 detik = 20 kredit, Rp10.000 (angka contoh)<small>Biaya tertulis sebelum kamu menekan tombol</small></dd></div>
-        <div><dt>Rasio dan zona aman</dt><dd>9:16 untuk TikTok, Reels, Shorts<small>Teks tidak tertutup tombol aplikasi</small></dd></div>
-      </dl>
-      <label class="check"><input type="checkbox" checked> Ingatkan saya menandai video ini sebagai konten AI saat mengunggah</label>
-      <a class="btn btn-dark" href="#">Buat video dari link</a>
+        <div class="vform">
+          <svg class="clip l" width="34" height="30" viewBox="0 0 34 30" aria-hidden="true"><use href="#klem"/></svg><svg class="clip r" width="34" height="30" viewBox="0 0 34 30" aria-hidden="true"><use href="#klem"/></svg>
+          <dl class="vrows">
+            <div><dt>Suara</dt><dd>Perempuan, santai (4 suara Bahasa Indonesia)</dd></div>
+            <div><dt>Mesin</dt><dd>Gerak halus: Kling atau Veo, dipilih otomatis</dd></div>
+            <div><dt>Biaya</dt><dd class="num">Video 8 detik = 20 kredit, Rp10.000 (angka contoh), tertulis sebelum kamu menekan tombol</dd></div>
+          </dl>
+          <label class="check"><input type="checkbox" checked> Ingatkan saya menandai video ini sebagai konten AI saat mengunggah</label>
+          <a class="btn btn-dark" href="#">Buat video dari link</a>
+          <p class="fallback">Kalau link belum terbaca, kolomnya langsung berubah jadi tempat unggah foto, tanpa menghapus isianmu.</p>
+        </div>
+      </div>
+      <div class="tripod-wrap">
+        <div class="phone reveal" role="img" aria-label="Contoh video iklan 9:16 di latar gula aren dengan garis zona aman dan teks hook, terpasang di tripod.">
+          <span class="plate">Video 9:16, 8 detik</span>
+          <span class="safe r" aria-hidden="true"></span><span class="safe b" aria-hidden="true"></span>
+          <span class="plate zl">Zona aman</span>
+          <span class="hook" id="phook">Camilan yang selalu habis duluan pas arisan</span>
+          <span class="prog" aria-hidden="true"><i></i></span>
+        </div>
+        <svg class="tripod" viewBox="0 0 300 150" aria-hidden="true"><rect x="118" y="0" width="64" height="12" rx="2" fill="#1A1918"/><rect x="145" y="12" width="10" height="92" fill="#1A1918"/><rect x="138" y="44" width="24" height="10" rx="2" fill="#2A2826"/><path d="M150 100 82 144M150 100 218 144M150 100V146" stroke="#1A1918" stroke-width="6" stroke-linecap="round"/><ellipse cx="150" cy="147" rx="84" ry="4" fill="#000" fill-opacity=".3"/></svg>
+        <span class="plate ai">Contoh hasil AI</span>
+      </div>
     </div>
   </div>
 </section>
@@ -596,7 +689,7 @@ p{margin:0}
 </footer>
 
 <!-- ============ BAGIAN 2: DOKUMEN KONSEP ============ -->
-<div class="doc-line"><div class="wrap"><p>Dokumen konsep: Gulung Latar</p><small>Di bawah garis ini bukan bagian situs. Konsep final ronde 3, 3 Oktober 2026.</small></div></div>
+<div class="doc-line"><div class="wrap"><p>Dokumen konsep: Gulung Latar</p><small>Di bawah garis ini bukan bagian situs. Konsep final, 3 Oktober 2026.</small></div></div>
 <article class="doc wrap">
 
 <section>
@@ -661,9 +754,9 @@ p{margin:0}
   <h2>Struktur homepage lengkap</h2>
   <ul>
     <li><b>Navigasi</b>: logo sweep + wordmark; Foto Produk AI, Video Iklan, Template, Prompt, Harga; Masuk; Mulai (bukan "Coba gratis" selama kredit coba belum diputuskan).</li>
-    <li><b>Hero dinding studio</b> (atas-bawah): rak selebar layar; panggung full-bleed dengan H1 di area kertas kosong, produk di tengah dalam jendela bidik "Foto 4:5", kartu video 9:16 berdiri di kanan, meja kerja di kiri bawah yang dijepit dua klem hitam ke kertas latar (field link atau unggah berbobot setara, pilihan Foto/Video/Keduanya, tombol "Buat foto dan video", keterangan "Latar aktif: Cabai Kering (merah)" yang ikut berganti). Pembuka: Cabai Kering.</li>
+    <li><b>Hero dinding studio</b> (atas-bawah): rak selebar layar; panggung full-bleed dengan H1 di area kertas kosong, produk di tengah dalam jendela bidik "Foto 4:5", kartu video 9:16 terpasang di ring light bertripod yang berdiri di lantai kertas yang sama (alat yang dikenal penjual live dan TikTok), meja kerja di kiri bawah yang dijepit dua klem hitam ke kertas latar (field link atau unggah berbobot setara, pilihan Foto/Video/Keduanya, tombol "Buat foto dan video", keterangan "Latar aktif: Cabai Kering (merah)" yang ikut berganti). Pembuka: Cabai Kering.</li>
     <li><b>Kertas Sambung</b>: judulnya pelat putih yang dijepit ke tepi atas gulungan, bukan judul kiri + paragraf; gulungan panjang yang digeser; sambungan awal Telang-Pandan tepat melintasi produk; pembanding foto HP; biaya per latar berlabel angka contoh.</li>
-    <li><b>Dari link ke video 9:16</b>: pemutar dengan zona aman, tiga variasi pembuka yang bisa dipilih, suara, mesin per kebutuhan, biaya, pengingat label konten AI.</li>
+    <li><b>Dari link ke video 9:16</b>: kertas Gula Aren turun dari rak kedua dan menjadi latar section. Ponsel berbezel berdiri di tripod; tiga pembuka dijepit klem di tali (yang terpilih kertas Kunyit, menggantung lebih rendah) dan mengganti teks di layar ponsel; formulir dijepit ke kertas berisi suara, mesin, biaya berlabel angka contoh, pengingat label konten AI, tombol, dan kalimat "Kalau link belum terbaca, kolomnya langsung berubah jadi tempat unggah foto".</li>
     <li><b>Empat cara memakai studio</b>: lima gulungan menggantung dari satu batang; kertas putih pertama membawa judul, empat kertas berwarna membawa seller, affiliate, kreator, agensi, panjangnya berbeda-beda. Tanpa grid kartu bertepi.</li>
     <li><b>Isi saldo seperti beli pulsa</b>: empat ujung gulungan berdiri di rak, diameternya membesar sesuai nominal (112 sampai 208px), jumlah kredit di lubang tabung kardus; semua angka berlabel contoh.</li>
     <li><b>Perpustakaan Prompt Indonesia</b> (halaman per prompt), <b>Template jualan</b> (termasuk tema musiman sebagai isi), <b>Sebelum mulai</b> (tanya jawab: hak pakai foto dari link, hak pakai iklan, wajah di UGC, kredit coba), <b>footer</b>.</li>
@@ -688,7 +781,7 @@ p{margin:0}
   <h2>Versi mobile (360 sampai 390px)</h2>
   <ul>
     <li>Rak 76px: enam gulungan 52 x 24px, target sentuh 52 x 64px, nama tetap jadi label aksesibel.</li>
-    <li>H1 mulai di 174px dari atas (ronde 1: 550px). Nama gulungan aktif tampil di pelat putih di bawah lidah kertas. Urutan: rak, H1, subjudul pendek, foto produk dengan kartu video kecil, meja kerja (field, tombol 48px, keterangan latar aktif). Tombol di layar pertama 390x844 (y 804).</li>
+    <li>H1 mulai di 174px dari atas (ronde 1: 550px). Nama gulungan aktif tampil di pelat putih di bawah lidah kertas. Urutan: rak, H1, subjudul pendek, foto produk dengan kartu video kecil, meja kerja (field, tombol 48px, keterangan latar aktif). Tombol di layar pertama 390x844 (y 804). Di layar pendek (tinggi 780px ke bawah, misalnya 360x640) meja kerja naik ke atas foto produk sehingga tombol ada di y 482.</li>
     <li>Kertas Sambung memakai jendela seukuran foto ponsel, seret horizontal dengan gulir vertikal tetap jalan.</li>
     <li>Ponsel memuat versi gambar 780px; hanya Cabai Kering yang dimuat awal. Kartu video tidak memutar berkas video di ponsel atau saat Save-Data.</li>
   </ul>
@@ -752,9 +845,42 @@ p{margin:0}
   </tbody></table></div>
 </section>
 
+<section class="pending">
+  <h2>Jalur pratinjau sebelum isi saldo</h2>
+  <p class="pending-tag">Menunggu keputusan Syauqi. Tidak ditampilkan di mockup di atas, dan halaman tidak menjanjikan apa pun yang gratis.</p>
+  <p>Masalah yang dicatat Juri C: tanpa kredit coba, pengunjung harus isi saldo dulu sebelum melihat satu hasil dari produknya sendiri. Desain di bawah menyiapkan jalurnya; mana yang dipakai adalah keputusan harga, bukan keputusan desain.</p>
+  <div class="pv-grid">
+    <figure class="pv">
+      <div class="pv-shot"><img src="assets/rv-cabai-m.webp" width="780" height="680" loading="lazy" alt="Contoh pratinjau: foto produk di latar cabai kering, beresolusi rendah dengan tanda air."><span class="pv-mark" aria-hidden="true">PRATINJAU</span></div>
+      <figcaption><b>Satu pratinjau dari produkmu.</b> Setelah unggah foto atau tempel link, tampil satu foto beresolusi rendah dengan tanda air di latar yang dipilih. Unduh resolusi penuh dan video baru setelah isi saldo.</figcaption>
+    </figure>
+    <div class="pv-opts">
+      <h3>Pilihan yang perlu diputuskan</h3>
+      <ul>
+        <li><b>A. Pratinjau bertanda air tanpa saldo.</b> Satu foto per akun per hari, tanpa video. Biaya per pratinjau ditanggung Ruang Visual (perlu dihitung dari harga model per gambar).</li>
+        <li><b>B. Kredit coba untuk akun baru.</b> Angkanya ditulis tepat di bawah tombol hero ("Akun baru dapat N kredit coba"), bukan di navigasi.</li>
+        <li><b>C. Tanpa keduanya.</b> Halaman tetap seperti sekarang: tombol "Mulai", tanya jawab menjawab "belum diputuskan".</li>
+      </ul>
+      <p>Sampai ada keputusan, copy di mockup tetap tanpa kata gratis, dan tombol navigasi tetap "Mulai".</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Perubahan ronde 4</h2>
+  <div class="tblw"><table class="tbl"><thead><tr><th>Catatan</th><th>Perubahan</th></tr></thead><tbody>
+    <tr><td>A: klem meja terbaca gembok atau tas</td><td>Klem digambar ulang sebagai klem kertas: badan hitam dengan dua kawat logam terbuka ke samping. Satu simbol dipakai di meja, pelat judul, formulir video, dan tali pembuka.</td></tr>
+    <tr><td>A: panggung hero meminjam rupa alat foto produk AI</td><td>Kartu video kini terpasang di ring light bertripod yang berdiri di lantai kertas cabai: lampu studio sebagai benda, bukan kartu melayang. Inline SVG, tanpa gambar tambahan.</td></tr>
+    <tr><td>A: section video masih formulir standar</td><td>Section dibangun ulang di atas kertas Gula Aren yang turun dari rak; ponsel di tripod; pembuka dijepit di tali; formulir dijepit; grid 2x2 keterangan dan daftar radio dihapus.</td></tr>
+    <tr><td>B: tombol di bawah lipatan pada 360x640</td><td>Di layar ponsel pendek, meja kerja naik ke atas foto produk; tombol di y 482 pada 360x640.</td></tr>
+    <tr><td>C: jalan keluar saat link gagal tidak terlihat</td><td>Kalimat cadangan dikembalikan di bawah tombol "Buat video dari link".</td></tr>
+    <tr><td>C: konversi tanpa coba gratis</td><td>Bukan diputuskan desainer. Jalur pratinjau disiapkan di atas dengan label "menunggu keputusan"; mockup tidak menjanjikan gratis.</td></tr>
+  </tbody></table></div>
+</section>
+
 <section>
   <h2>Skor juri</h2>
-  <div class="skor"><!--SKOR--><p>Diisi pemilik sesi setelah penilaian ronde 2.</p></div>
+  <div class="skor"><!--SKOR--><style>.tabel-skor{border-collapse:collapse;margin:8px 0 12px;font-variant-numeric:tabular-nums}.tabel-skor th,.tabel-skor td{border:1px solid currentColor;padding:4px 10px;text-align:left}.tabel-skor td+td,.tabel-skor th+th{text-align:right}</style><h3>Skor panel juri</h3><table class="tabel-skor"><thead><tr><th>Juri</th><th>Ronde 1</th><th>Ronde 2</th><th>Ronde 3</th><th>Ronde 4</th></tr></thead><tbody><tr><td>Juri A, keunikan</td><td>85</td><td>86</td><td>91</td><td>93</td></tr><tr><td>Juri B, craft</td><td>83</td><td>94</td><td>95</td><td>96</td></tr><tr><td>Juri C, pasar</td><td>81</td><td>86</td><td>88</td><td>89</td></tr></tbody></table><p><b>Rata-rata ronde 4: 92,7.</b> Target 95 per juri. Craft lolos; keunikan 93 karena inti panggung hero masih berbagi rupa dengan alat foto produk AI; pasar 89 (92 bila keputusan coba gratis diambil, juri menyarankan pratinjau 1 foto bertanda air).</p><p>Diuji di Chromium dengan emulasi ukuran layar 360 sampai 1440 px, belum di HP sungguhan.</p></div>
 </section>
 </article>
 
@@ -847,7 +973,7 @@ p{margin:0}
   [].slice.call(document.querySelectorAll('[role=radiogroup]')).forEach(function(g){
     if(g.classList.contains('rolls')) return;
     var bs=[].slice.call(g.querySelectorAll('[role=radio]'));
-    bs.forEach(function(x){ x.addEventListener('click',function(){ bs.forEach(function(y){y.setAttribute('aria-checked',y===x)}); if(x.classList.contains('hk')) document.getElementById('phook').textContent=x.textContent; }); });
+    bs.forEach(function(x){ x.addEventListener('click',function(){ bs.forEach(function(y){y.setAttribute('aria-checked',y===x)}); if(x.classList.contains('hk')||x.classList.contains('hk2')) document.getElementById('phook').textContent=x.textContent.trim(); }); });
   });
   /* kertas sambung */
   var strip=document.querySelector('.strip'), sls=[].slice.call(strip.querySelectorAll('.sl')), seams=[].slice.call(strip.querySelectorAll('.seam')), tags=[].slice.call(strip.querySelectorAll('.tag'));

@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
 <title>Dokurapi: Konsep Desain</title>
-<meta name="description" content="Konsep desain Dokurapi ronde 2: Palang Portal. Kompres PDF dan foto sampai lolos batas ukuran portal pendaftaran.">
+<meta name="description" content="Konsep desain Dokurapi: Palang Portal. Kompres PDF dan foto sampai lolos batas ukuran portal pendaftaran.">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='5' fill='%231B1F24'/%3E%3Crect x='4' y='9' width='3' height='19' fill='%23D5DAE1'/%3E%3Crect x='25' y='9' width='3' height='19' fill='%23D5DAE1'/%3E%3Crect x='2' y='6' width='28' height='5' fill='%23fff'/%3E%3Cpath d='M4 6h4l-3 5H2zM12 6h4l-3 5H9zM20 6h4l-3 5h-4zM28 6h2v1l-2 4h-3z' fill='%23C8102E'/%3E%3Crect x='11' y='17' width='10' height='11' fill='%23FFC20E'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -348,6 +348,7 @@ button{font:inherit;color:inherit}
   .lane-cta .fmt{display:block;text-align:center;margin:0 0 2px}
   .mbar.on{display:flex}
   body.has-mbar{padding-bottom:72px}
+  html.has-mbar{scroll-padding-bottom:80px}
 }
 @media (max-width:639px){
   :root{--pad:16px}
@@ -636,7 +637,7 @@ button{font:inherit;color:inherit}
 <div class="docband" id="dokumen">
   <div class="wrap">
     <p style="margin:0;color:#FFC20E;font-weight:800;font-size:16px">Di bawah garis ini: dokumen konsep, bukan bagian situs</p>
-    <h2 class="t">Palang Portal, konsep final ronde 2</h2>
+    <h2 class="t">Palang Portal, konsep final</h2>
     <p>Setiap portal pendaftaran punya palang batas ukuran. Dokurapi memperlihatkan seberapa tinggi berkasmu dibanding palang itu, lalu mengompresnya sampai bisa lewat.</p>
   </div>
   <div class="road" aria-hidden="true"></div>
@@ -893,7 +894,7 @@ button{font:inherit;color:inherit}
     </tbody>
   </table></div>
   <h3>Skor juri</h3>
-  <div class="score"><!--SKOR--><p>Diisi setelah penilaian ronde 2.</p></div>
+  <div class="score"><!--SKOR--><style>.tabel-skor{border-collapse:collapse;margin:8px 0 12px;font-variant-numeric:tabular-nums}.tabel-skor th,.tabel-skor td{border:1px solid currentColor;padding:4px 10px;text-align:left}.tabel-skor td+td,.tabel-skor th+th{text-align:right}</style><h3>Skor panel juri</h3><table class="tabel-skor"><thead><tr><th>Juri</th><th>Ronde 1</th><th>Ronde 2</th><th>Ronde 3</th><th>Ronde 4</th></tr></thead><tbody><tr><td>Juri A, keunikan</td><td>88</td><td>90</td><td>95</td><td>95</td></tr><tr><td>Juri B, craft</td><td>88</td><td>92</td><td>96</td><td>97</td></tr><tr><td>Juri C, pasar</td><td>86</td><td>92</td><td>95</td><td>95</td></tr></tbody></table><p><b>Rata-rata ronde 4: 95,7.</b> Target 95 per juri. Lolos 95 di ketiga juri. Sisa: uji unggah ke portal nyata (cara portal menghitung KB) dan cek angka syarat portal ke panduan resmi.</p><p>Diuji di Chromium dengan emulasi ukuran layar 360 sampai 1440 px, belum di HP sungguhan.</p></div>
 </div></section>
 </div>
 
@@ -1019,7 +1020,7 @@ const mbar = $('#mbar');
 const vis = { pick: true, card: false }; let cardEl = null;
 const io = ('IntersectionObserver' in window) ? new IntersectionObserver(es => { es.forEach(e => { if (e.target === pickBtn) vis.pick = e.isIntersecting; else if (e.target === cardEl) vis.card = e.isIntersecting; }); syncBar(); }) : null;
 if (io) io.observe(pickBtn);
-function syncBar() { const on = !!(S && S.phase === 'pass' && S.result) && matchMedia('(max-width:767px)').matches && !vis.pick && !vis.card; mbar.classList.toggle('on', on); document.body.classList.toggle('has-mbar', on); }
+function syncBar() { const on = !!(S && S.phase === 'pass' && S.result) && matchMedia('(max-width:767px)').matches && !vis.pick && !vis.card; mbar.classList.toggle('on', on); document.body.classList.toggle('has-mbar', on); document.documentElement.classList.toggle('has-mbar', on); }
 function observeCard() { if (io && cardEl) io.unobserve(cardEl); cardEl = $('.result', resultSlot); vis.card = true; if (io && cardEl) io.observe(cardEl); syncBar(); }
 
 const S = { limitKB: 200, src: null, phase: 'idle', result: null, opts: null, isSample: false, urls: [] };
@@ -1225,7 +1226,7 @@ function resetOutputs() {
   engineEl.hidden = true; engineEl.innerHTML = '';
   lane.classList.remove('ok'); blkw.classList.remove('through');
   if (io && cardEl) io.unobserve(cardEl); cardEl = null; vis.card = false;
-  mbar.classList.remove('on'); document.body.classList.remove('has-mbar');
+  mbar.classList.remove('on'); document.body.classList.remove('has-mbar'); document.documentElement.classList.remove('has-mbar');
   if (S.result && S.result.url) URL.revokeObjectURL(S.result.url);
   S.result = null;
 }

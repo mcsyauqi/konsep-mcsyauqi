@@ -81,7 +81,13 @@ code{font-family:var(--f);font-stretch:87%;font-weight:600;font-size:.95em;backg
 
 /* ---------- hero ---------- */
 .hero{padding:30px 0 56px}
-.kepala{margin:0;font-weight:800;font-stretch:125%;font-size:clamp(32px,2.6vw + 14px,52px);line-height:1.04;letter-spacing:-.02em;text-wrap:balance}
+.kepala{margin:0;font-weight:800;font-stretch:125%;font-size:clamp(32px,2.5vw + 12px,50px);line-height:1.04;letter-spacing:-.02em;text-wrap:balance}
+.kop-hero{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;border-bottom:1.5px solid var(--cetakan);padding-bottom:10px}
+.kop-meta{flex:none;display:grid;gap:3px;text-align:right;font-stretch:87%;font-size:14px;font-weight:600;line-height:1.2;padding-bottom:4px;font-variant-numeric:tabular-nums}
+.kop-meta .no{color:var(--nomor-seri);font-weight:700}
+.kop-meta .tgl{color:var(--kolom)}
+.titik-isi{display:inline-block;width:78px;height:4px;margin-left:4px;background:radial-gradient(circle,var(--batas-isian) 1.1px,transparent 1.4px) 0 0/5px 4px repeat-x}
+.tanda{display:inline-block;width:9px;height:13px;margin:0 5px 0 1px;vertical-align:-1px;background:var(--sw);box-shadow:inset 0 0 0 1px var(--tepi-lembar);border-radius:1px}
 .hero-baris{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:16px 48px;align-items:center;margin-top:14px}
 .sub{margin:0;color:var(--kolom);font-size:17px;line-height:1.55;text-wrap:pretty}
 .cta-baris{display:flex;gap:16px;align-items:center}
@@ -174,7 +180,8 @@ code{font-family:var(--f);font-stretch:87%;font-weight:600;font-size:.95em;backg
 .slot[data-terisi="1"] .slot-st{color:var(--cetakan);border-color:var(--batas-isian)}
 .gelembung{background:var(--meja);border-radius:6px 6px 6px 2px;padding:7px 10px;font-size:13.5px;line-height:1.42}
 .wa-teks{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.wa-link{display:block;color:var(--isian);font-weight:600;text-decoration:underline;text-underline-offset:2px}
+.wa-link{display:block;color:var(--cetakan)}
+.wa-link u{color:var(--isian);font-weight:600;text-underline-offset:2px}
 .kas{display:grid;gap:3px;font-size:13.5px}
 .kas-b{display:grid;grid-template-columns:58px minmax(0,1fr) auto;gap:8px;align-items:baseline;border-bottom:1px solid var(--garis-baris);padding-bottom:3px}
 .kas-b span:first-child{color:var(--kolom);font-size:12.5px}
@@ -295,7 +302,8 @@ table{border-collapse:collapse;width:100%}
 .ttd-kupon b{display:block;margin-top:18px;padding-top:6px;border-top:1px solid var(--cetakan);font-weight:800;font-stretch:125%;font-size:18px;color:var(--cetakan)}
 .kupon{padding:26px 28px 24px;display:flex;flex-direction:column;justify-content:center;gap:12px;transition:transform .12s var(--gerak)}
 .kupon:hover{transform:translateX(2px)}
-.kupon-lbl{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:650;letter-spacing:.06em;text-transform:uppercase;color:var(--kolom)}
+.kupon-lbl{display:flex;align-items:baseline;gap:8px;font-size:14px;font-weight:600;font-stretch:87%;color:var(--kolom)}
+.kupon-lbl .no{color:var(--nomor-seri);font-weight:700;font-variant-numeric:tabular-nums}
 .kupon .tombol{width:100%}
 .kupon p{margin:0;font-size:14px;line-height:1.45;color:var(--kolom)}
 .kupon p strong{color:var(--cetakan);font-weight:650}
@@ -344,6 +352,9 @@ table{border-collapse:collapse;width:100%}
   .paku-hero{position:relative;left:auto;top:auto;width:84px;margin:14px auto 0}
   .paku-ket{width:200px;margin-left:-58px}
 }
+@media (max-width:959px){
+  .kop-meta{display:none}
+}
 @media (max-width:900px){
   .hero-baris,.dua-lembar{grid-template-columns:minmax(0,1fr)}
   .dua-lembar .ingat-lembar{margin-top:0}
@@ -360,9 +371,13 @@ table{border-collapse:collapse;width:100%}
   .bonggol-buku>.perfo-v::after,.blok-isi>.perfo-v::after,.kupon-lembar>.perfo-v::after{top:0;bottom:auto;left:auto;right:-8px;clip-path:inset(0 50% 0 0)}
 }
 @media (max-width:640px){
+  html{scroll-padding-bottom:80px}
   body{font-size:16px}
   .wrap{padding:0 16px}
-  .hero{padding:20px 0 40px}
+  .hero{padding:14px 0 40px}
+  .kop-hero{padding-bottom:8px}
+  .hero-baris{margin-top:10px}
+  .tanda{display:none}
   .kepala{font-stretch:112%;font-size:33px;line-height:1.06}
   .sub{font-size:16px}
   .cta-baris{flex-direction:column;align-items:stretch}
@@ -446,9 +461,12 @@ table{border-collapse:collapse;width:100%}
 <section class="hero" aria-labelledby="judul-hero">
   <div class="wrap">
     <div class="hero-atas">
-      <h1 class="kepala" id="judul-hero">Tulis nota sekali, tiga urusan beres.</h1>
+      <div class="kop-hero">
+        <h1 class="kepala" id="judul-hero">Tulis nota sekali, tiga urusan beres.</h1>
+        <div class="kop-meta" aria-hidden="true"><span class="no">No. 0001</span><span class="tgl">Tgl.<span class="titik-isi"></span></span></div>
+      </div>
       <div class="hero-baris">
-        <p class="sub">Nota dan invoice untuk usaha kecil: lembar aslinya siap dikirim ke pelanggan lewat WhatsApp-mu, tembusannya masuk buku kas, pengingat jatuh tempo ikut terpasang.</p>
+        <p class="sub">Nota dan invoice untuk usaha kecil: <span class="tanda" style="--sw:#fff" aria-hidden="true"></span>lembar aslinya siap dikirim ke pelanggan lewat WhatsApp-mu, <span class="tanda" style="--sw:var(--tembusan-merah-muda)" aria-hidden="true"></span>tembusannya masuk buku kas, <span class="tanda" style="--sw:var(--tembusan-kuning)" aria-hidden="true"></span>pengingat jatuh tempo ikut terpasang.</p>
         <div class="cta-baris">
           <a class="tombol" id="cta-utama" href="#daftar">Bikin nota pertama</a>
           <p class="mikro" id="mikro-cta"><strong>Gratis 20 nota per bulan</strong> <span class="contoh">(angka contoh, belum final)</span>. Daftar lewat WhatsApp atau Google. Data bisa diekspor.</p>
@@ -542,13 +560,13 @@ table{border-collapse:collapse;width:100%}
         <div class="tujuan" aria-live="polite">
           <div class="slot slot-asli" id="slot-asli" data-terisi="0">
             <div class="slot-lbl"><span>Lembar asli ke pelanggan</span><span class="slot-st" id="st-asli">Belum dikirim</span></div>
-            <div class="gelembung"><span class="wa-teks" id="pesan-wa">Halo Bu Rina, ini nota pesanan untuk Sabtu, 10 Oktober. Sisa pembayaran Rp580.000, mohon dilunasi paling lambat Jumat, 9 Oktober. Terima kasih.</span><span class="wa-link" id="wa-link">neracaku.id/n/DN-0451</span></div>
+            <div class="gelembung"><span class="wa-teks" id="pesan-wa">Halo Bu Rina, ini nota pesanan untuk Sabtu, 10 Oktober. Sisa pembayaran Rp580.000, mohon dilunasi paling lambat Jumat, 9 Oktober.</span><span class="wa-link">Rincian dan cara bayar: <u id="wa-link">neracaku.id/n/DN-0451</u>. Terima kasih.</span></div>
           </div>
           <div class="slot slot-kas" id="slot-kas" data-terisi="0">
             <div class="slot-lbl"><span>Tembusan merah muda ke buku kas</span><span class="slot-st" id="st-kas">Belum dicatat</span></div>
             <div class="kas">
               <div class="kas-b"><span>Sab 3 Okt</span><span>DP Bu Rina <em>uang masuk</em></span><span class="nom masuk" data-k="dp">Rp580.000</span></div>
-              <div class="kas-b" id="kas-sisa"><span>Jum 9 Okt</span><span id="kas-sisa-ket">Sisa Bu Rina <em>belum dibayar</em></span><span class="nom" data-k="sisa" id="kas-sisa-nom">Rp580.000</span></div>
+              <div class="kas-b" id="kas-sisa"><span id="kas-sisa-tgl">Jum 9 Okt</span><span id="kas-sisa-ket">Sisa Bu Rina <em>belum dibayar</em></span><span class="nom" data-k="sisa" id="kas-sisa-nom">Rp580.000</span></div>
             </div>
           </div>
           <div class="slot slot-ingat" id="slot-ingat" data-terisi="0">
@@ -727,7 +745,7 @@ table{border-collapse:collapse;width:100%}
       </div>
       <div class="perfo-v" aria-hidden="true"></div>
       <div class="kupon" id="harga">
-        <span class="kupon-lbl"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><circle cx="4" cy="4.5" r="2.2" fill="none" stroke="#4D5160" stroke-width="1.3"/><circle cx="4" cy="11.5" r="2.2" fill="none" stroke="#4D5160" stroke-width="1.3"/><path d="M5.8 5.6L14 12M5.8 10.4L14 4" stroke="#4D5160" stroke-width="1.3"/></svg>Sobek di sini</span>
+        <span class="kupon-lbl"><span class="no">No. 0001</span>lembar asli nota pertamamu</span>
         <a class="tombol" href="#daftar-akun">Bikin nota pertama</a>
         <p><strong>Gratis 20 nota per bulan</strong> <span class="contoh">(angka contoh, belum final)</span>. Paket berbayar untuk usaha yang lebih ramai.</p>
       </div>
@@ -746,7 +764,7 @@ table{border-collapse:collapse;width:100%}
 <section class="batas-konsep" aria-labelledby="judul-konsep">
   <div class="wrap">
     <h2 id="judul-konsep">Lembar konsep: Nota Rangkap</h2>
-    <p>Semua di atas garis ganda adalah mockup landing page. Di bawah ini dokumen konsep ronde 3: ide, sistem visual, komponen, dan perubahan dari catatan tiga juri.</p>
+    <p>Semua di atas garis ganda adalah mockup landing page. Di bawah ini dokumen konsep: ide, sistem visual, komponen, dan perubahan dari catatan tiga juri.</p>
   </div>
 </section>
 
@@ -910,7 +928,7 @@ table{border-collapse:collapse;width:100%}
           <tr><td>Juri A 1</td><td>Tepi rangkap di section bawah</td><td>Strip kiri 8 px dan strip daftar 3 px dihapus. Lembar section memakai tembusan 6/8 dan 12/16 px, nota mini 4/6 dan 8/12 px, kupon dan blok formulir juga bertembusan.</td></tr>
           <tr><td>Juri A 2</td><td>Perforasi berlubang, bukan garis putus-putus</td><td>Semua pemisah, kaki nota, kabel hero, dan footer jadi deretan lubang bulat dengan takik setengah lingkaran. Garis putus-putus: 0.</td></tr>
           <tr><td>Juri A 3</td><td>Paku berskala hero</td><td>Paku 120 x 230 px berdiri di kanan tumpukan dengan dua slip lama. Tandai lunas menyobek tembusan kuning dari tumpukan dan menancapkannya di paku. Slot ketiga hanya status.</td></tr>
-          <tr><td>Juri A 4</td><td>Penutup jadi kupon sobek</td><td>Lembar bertembusan dengan janji bertabel, tanda tangan "Hormat kami, Neracaku", dan kupon "Sobek di sini" di kanan perforasi tegak.</td></tr>
+          <tr><td>Juri A 4</td><td>Penutup jadi kupon sobek</td><td>Lembar bertembusan dengan janji bertabel, tanda tangan "Hormat kami, Neracaku", dan kupon di kanan perforasi tegak (labelnya diganti di ronde 4).</td></tr>
           <tr><td>Amandemen</td><td>Section bawah tanpa kerangka generik</td><td>Buku bonggol, dua lembar di meja, blok formulir, kupon sobek. Judul tercetak di dalam bendanya.</td></tr>
           <tr><td>Juri C 1</td><td>Tiga tujuan di layar pertama HP</td><td>Baris chip "Satu nota, tiga tujuan" di bawah CTA (HP), tombol Kirim nota jadi bergaris.</td></tr>
           <tr><td>Juri C 2</td><td>Subjudul jujur</td><td>"siap dikirim ke pelanggan lewat WhatsApp-mu".</td></tr>
@@ -923,9 +941,26 @@ table{border-collapse:collapse;width:100%}
       </div>
     </section>
 
+    <section class="k-sek" aria-labelledby="k-ubah4">
+      <h2 id="k-ubah4">Perubahan ronde 4</h2>
+      <div class="tbl-gulir">
+      <table class="k-tbl">
+        <thead><tr><th scope="col">Sumber</th><th scope="col">Catatan</th><th scope="col">Yang dikerjakan</th></tr></thead>
+        <tbody>
+          <tr><td>Juri C 1</td><td>Tanggal pelunasan salah</td><td>Setelah Tandai lunas, baris buku kas jadi "Sab 3 Okt, Pelunasan Bu Rina, uang masuk" (tanggal bayar), bukan tanggal jatuh tempo. Ulangi contoh mengembalikannya ke "Jum 9 Okt".</td></tr>
+          <tr><td>Juri C 2</td><td>Tautan WA tanpa label</td><td>Gelembung kini berakhir "Rincian dan cara bayar: neracaku.id/n/DN-0451. Terima kasih." di baris sendiri.</td></tr>
+          <tr><td>Juri A 1</td><td>Atas hero masih pembuka SaaS standar</td><td>Bagian atas jadi kop nota: garis kop 1,5 px di bawah judul, "No. 0001" (merah) dan "Tgl." bertitik isian di kanan seperti kepala nota, dan tiga penanda warna lembar di subjudul. Di HP penanda dan nomor disembunyikan, jarak dikompensasi: layar pertama tidak bertambah tinggi (tiga chip tetap berakhir di y 519).</td></tr>
+          <tr><td>Juri A 2</td><td>Kupon "Sobek di sini" + gunting adalah trope</td><td>Gunting dan "Sobek di sini" dibuang. Kupon kini berlabel "No. 0001, lembar asli nota pertamamu": nomor yang sama dengan kop hero, jadi halaman dibuka dan ditutup dengan nota pertama pengunjung. Perforasi tetap jadi tanda sobek.</td></tr>
+          <tr><td>Juri A 3</td><td>Judul melebar serumpun Soluslide</td><td>Archivo lebar tetap (inti resep kepala nota), tapi judul kini selalu duduk di kop bergaris dengan nomor seri, sesuatu yang tidak dimiliki merek lain.</td></tr>
+          <tr><td>Juri B</td><td>Bar lengket menutup fokus di 360</td><td><code>scroll-padding-bottom: 80px</code> di bawah 640 px, ditambah penjaga fokus yang menggulir elemen ke atas bar. Diuji Tab 44 kali di 360x640: 0 elemen tertutup, dengan dan tanpa reduced motion.</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </section>
+
     <section class="k-sek" aria-labelledby="k-skor">
       <h2 id="k-skor">Skor juri</h2>
-      <div class="skor"><!--SKOR-->Diisi setelah penilaian ronde 3.</div>
+      <div class="skor"><!--SKOR--><style>.tabel-skor{border-collapse:collapse;margin:8px 0 12px;font-variant-numeric:tabular-nums}.tabel-skor th,.tabel-skor td{border:1px solid currentColor;padding:4px 10px;text-align:left}.tabel-skor td+td,.tabel-skor th+th{text-align:right}</style><h3>Skor panel juri</h3><table class="tabel-skor"><thead><tr><th>Juri</th><th>Ronde 1</th><th>Ronde 2</th><th>Ronde 3</th><th>Ronde 4</th></tr></thead><tbody><tr><td>Juri A, keunikan</td><td>77</td><td>84</td><td>93</td><td>95</td></tr><tr><td>Juri B, craft</td><td>86</td><td>96</td><td>97</td><td>98</td></tr><tr><td>Juri C, pasar</td><td>83</td><td>91</td><td>94</td><td>95</td></tr></tbody></table><p><b>Rata-rata ronde 4: 96,0.</b> Target 95 per juri. Lolos 95 di ketiga juri. Sisa: uji metafora nota rangkap dan paku nota ke pemilik warung dan penjual online, termasuk di luar Jawa.</p><p>Diuji di Chromium dengan emulasi ukuran layar 360 sampai 1440 px, belum di HP sungguhan.</p></div>
     </section>
 
   </div>
@@ -982,7 +1017,7 @@ table{border-collapse:collapse;width:100%}
     $('#terbilang').textContent=terbilang(sisa);
     $$('[data-k="sisa"]').forEach(function(el){el.textContent=rp(sisa)});
     $$('[data-k="dp"]').forEach(function(el){el.textContent=rp(dp)});
-    $('#pesan-wa').textContent='Halo Bu Rina, ini nota pesanan untuk Sabtu, 10 Oktober. Sisa pembayaran '+rp(sisa)+', mohon dilunasi paling lambat Jumat, 9 Oktober. Terima kasih.';
+    $('#pesan-wa').textContent='Halo Bu Rina, ini nota pesanan untuk Sabtu, 10 Oktober. Sisa pembayaran '+rp(sisa)+', mohon dilunasi paling lambat Jumat, 9 Oktober.';
     $('#wa-link').textContent='neracaku.id/n/'+(modeInvoice?'INV-2026-10-0451':'DN-0451');
     return sisa;
   }
@@ -1064,6 +1099,7 @@ table{border-collapse:collapse;width:100%}
     var slip=$('#slip'), tempat=$('#paku-tempat');
     function akhir(){
       tempat.appendChild(slip); slip.style.transform='';
+      $('#kas-sisa-tgl').textContent='Sab 3 Okt';
       $('#kas-sisa-ket').innerHTML='Pelunasan Bu Rina <em>uang masuk</em>';
       $('#kas-sisa-nom').classList.add('masuk');
       $('#st-ingat').textContent='Di paku';
@@ -1093,6 +1129,7 @@ table{border-collapse:collapse;width:100%}
     $('#st-kas').textContent='Belum dicatat';
     $('#st-ingat').textContent='Belum aktif';
     $('#ingat-teks').innerHTML=INGAT_AWAL; hitung();
+    $('#kas-sisa-tgl').textContent='Jum 9 Okt';
     $('#kas-sisa-ket').innerHTML='Sisa Bu Rina <em>belum dibayar</em>';
     $('#kas-sisa-nom').classList.remove('masuk');
     setChip('nota','Belum dikirim');
@@ -1145,6 +1182,11 @@ table{border-collapse:collapse;width:100%}
     var lengket=$('#lengket');
     var io2=new IntersectionObserver(function(es){es.forEach(function(e){lengket.classList.toggle('tampil',!e.isIntersecting&&e.boundingClientRect.top<0)})});
     io2.observe($('#cta-utama'));
+    document.addEventListener('focusin',function(e){
+      if(!lengket.classList.contains('tampil')||lengket.contains(e.target))return;
+      var r=e.target.getBoundingClientRect(), batas=innerHeight-lengket.offsetHeight-12;
+      if(r.bottom>batas) window.scrollBy({top:r.bottom-batas,behavior:'instant'});
+    });
   }
 
   hitung();
