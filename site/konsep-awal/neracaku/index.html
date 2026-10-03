@@ -1,0 +1,1196 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Neracaku: Konsep Desain</title>
+<meta name="description" content="Konsep desain Neracaku, aplikasi nota, invoice, dan pembukuan untuk UMKM Indonesia. Arah: Nota Rangkap.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%23fff'/%3E%3Cpath d='M4 13V5h2.2v1.1C6.8 5.3 7.6 4.8 8.7 4.8c1.7 0 2.6 1 2.6 2.9V13H9.1V8.1c0-.9-.4-1.4-1.2-1.4-.9 0-1.6.6-1.6 1.7V13z' fill='%23F7CAD5' transform='translate(1.5 1.5)'/%3E%3Cpath d='M4 13V5h2.2v1.1C6.8 5.3 7.6 4.8 8.7 4.8c1.7 0 2.6 1 2.6 2.9V13H9.1V8.1c0-.9-.4-1.4-1.2-1.4-.9 0-1.6.6-1.6 1.7V13z' fill='%2315161C'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --lembar-asli:#FFFFFF;
+  --cetakan:#15161C;
+  --isian:#2433A6;
+  --isian-tipis:#EEF0FA;
+  --kolom:#4D5160;
+  --tembusan-merah-muda:#F7CAD5;
+  --tembusan-kuning:#FAEDB0;
+  --karbon:#4651B0;
+  --nomor-seri:#C21F3A;
+  --lewat-tempo:#A3410F;
+  --garis-baris:#D8DAE2;
+  --tepi-lembar:#C9CCD6;
+  --batas-isian:#868B9B;
+  --meja:#F2F3F7;
+  --f:"Archivo",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --gerak:cubic-bezier(.2,.8,.2,1);
+  --lubang:radial-gradient(circle,var(--batas-isian) 2.2px,transparent 2.6px);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{margin:0;background:var(--lembar-asli);color:var(--cetakan);font-family:var(--f);font-size:17px;line-height:1.6;font-stretch:100%;font-weight:400;overflow-x:hidden}
+a{color:var(--isian)}
+img,svg{display:block}
+button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--isian);outline-offset:2px}
+.sr{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.wrap{max-width:1280px;margin:0 auto;padding:0 40px}
+code{font-family:var(--f);font-stretch:87%;font-weight:600;font-size:.95em;background:var(--meja);padding:0 4px;border-radius:3px}
+.contoh{font-weight:500;color:var(--kolom)}
+
+/* ---------- perforasi berlubang (pengganti garis putus-putus) ---------- */
+.perfo{position:relative;height:14px;background:var(--lubang) 14px 50%/12px 14px repeat-x}
+.perfo::before,.perfo::after{content:"";position:absolute;top:0;width:14px;height:14px;border:1.5px solid var(--batas-isian);border-radius:50%;background:#fff}
+.perfo::before{left:-7px;clip-path:inset(0 0 0 50%)}
+.perfo::after{right:-7px;clip-path:inset(0 50% 0 0)}
+.perfo.siap{clip-path:inset(0 100% 0 0)}
+.perfo.bergerak{animation:robek .5s var(--gerak) both}
+@keyframes robek{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
+.perfo-v{position:relative;width:14px;background:var(--lubang) 50% 14px/14px 12px repeat-y}
+.perfo-v::before,.perfo-v::after{content:"";position:absolute;left:0;width:14px;height:14px;border:1.5px solid var(--batas-isian);border-radius:50%;background:var(--meja-bawah,#fff)}
+.perfo-v::before{top:-8px;clip-path:inset(50% 0 0 0)}
+.perfo-v::after{bottom:-8px;clip-path:inset(0 0 50% 0)}
+
+/* ---------- navigasi ---------- */
+.nav{border-bottom:1px solid var(--garis-baris);background:var(--lembar-asli);position:relative;z-index:20}
+.nav .wrap{height:64px;display:flex;align-items:center;gap:28px}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--cetakan)}
+.logo-n{font-weight:800;font-stretch:125%;font-size:30px;line-height:1;width:30px;height:32px;display:grid;place-items:center;text-shadow:2px 2px 0 var(--karbon),4px 4px 0 var(--tembusan-merah-muda)}
+.logo-kata{font-weight:800;font-stretch:125%;font-size:21px;letter-spacing:-.01em}
+.nav-tautan{display:flex;gap:24px;margin-left:auto;align-items:center}
+.nav-tautan a{color:var(--cetakan);text-decoration:none;font-size:15px;font-weight:500}
+.nav-tautan a:hover{color:var(--isian)}
+.nav-tautan a.tombol,.nav-tautan a.tombol:hover{color:#fff}
+.nav .tombol{height:40px;font-size:15px;padding:0 16px}
+.nav-menu{display:none;margin-left:auto;align-items:center;gap:8px}
+.nav-menu a{color:var(--cetakan);text-decoration:none;font-weight:600;font-size:15px;padding:8px}
+.nav-menu button{width:44px;height:44px;border:1px solid var(--batas-isian);background:#fff;border-radius:6px;display:grid;place-items:center;cursor:pointer}
+
+/* ---------- tombol & chip ---------- */
+.tombol{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:48px;padding:0 20px;border-radius:6px;background:var(--isian);color:#fff;font-weight:650;font-size:16px;text-decoration:none;border:0;cursor:pointer;white-space:nowrap;transition:background-color .12s}
+.tombol:hover{background:#1C2885}
+.tombol-garis,.tombol-garis:hover{background:#fff;color:var(--isian);border:1.5px solid var(--isian)}
+.tombol-garis:hover{background:var(--isian-tipis)}
+.chip{display:inline-flex;align-items:center;gap:6px;min-height:28px;padding:3px 10px;border-radius:4px;border:1px solid var(--batas-isian);font-size:13px;font-weight:600;line-height:1.3;color:var(--cetakan);background:#fff}
+.chip svg{flex:none}
+.chip[data-s="lewat"]{border-color:var(--lewat-tempo);color:var(--lewat-tempo)}
+
+/* ---------- hero ---------- */
+.hero{padding:30px 0 56px}
+.kepala{margin:0;font-weight:800;font-stretch:125%;font-size:clamp(32px,2.5vw + 12px,50px);line-height:1.04;letter-spacing:-.02em;text-wrap:balance}
+.kop-hero{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;border-bottom:1.5px solid var(--cetakan);padding-bottom:10px}
+.kop-meta{flex:none;display:grid;gap:3px;text-align:right;font-stretch:87%;font-size:14px;font-weight:600;line-height:1.2;padding-bottom:4px;font-variant-numeric:tabular-nums}
+.kop-meta .no{color:var(--nomor-seri);font-weight:700}
+.kop-meta .tgl{color:var(--kolom)}
+.titik-isi{display:inline-block;width:78px;height:4px;margin-left:4px;background:radial-gradient(circle,var(--batas-isian) 1.1px,transparent 1.4px) 0 0/5px 4px repeat-x}
+.tanda{display:inline-block;width:9px;height:13px;margin:0 5px 0 1px;vertical-align:-1px;background:var(--sw);box-shadow:inset 0 0 0 1px var(--tepi-lembar);border-radius:1px}
+.hero-baris{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:16px 48px;align-items:center;margin-top:14px}
+.sub{margin:0;color:var(--kolom);font-size:17px;line-height:1.55;text-wrap:pretty}
+.cta-baris{display:flex;gap:16px;align-items:center}
+.cta-baris .mikro{margin:0;max-width:36ch}
+.mikro{margin:10px 0 0;font-size:13.5px;line-height:1.45;color:var(--kolom);text-wrap:pretty}
+.mikro strong{color:var(--cetakan);font-weight:650}
+.tiga-tujuan{display:none}
+
+.meja{margin-top:26px;position:relative}
+.meja-alat{width:min(664px,100%);margin:0 auto 10px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.pilih{display:inline-flex;border:1.5px solid var(--batas-isian);border-radius:6px;overflow:hidden;background:#fff}
+.pilih button{height:34px;padding:0 14px;border:0;background:#fff;font-size:14px;font-weight:600;color:var(--kolom);cursor:pointer}
+.pilih button+button{border-left:1.5px solid var(--batas-isian)}
+.pilih button[aria-pressed="true"]{background:var(--cetakan);color:#fff}
+.alat-kanan{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.alat-kanan .tombol{height:36px;font-size:14px;padding:0 14px}
+.alat-kanan .tombol[hidden]{display:none}
+
+/* tumpukan nota rangkap + paku */
+.tumpuk-wrap{position:relative;width:min(664px,100%);margin:0 auto}
+.tumpuk{position:relative;padding:0 12px 48px 0}
+.tembusan{position:absolute;border:1px solid rgba(21,22,28,.10);border-radius:2px;transition:opacity .24s var(--gerak),transform .24s var(--gerak)}
+.t-merah{z-index:2;left:6px;top:24px;right:6px;bottom:24px;background:var(--tembusan-merah-muda)}
+.t-kuning{z-index:1;left:12px;top:48px;right:0;bottom:0;background:var(--tembusan-kuning)}
+.tumpuk.lunas .t-kuning{opacity:0;transform:translateY(10px)}
+.karbon{position:absolute;left:22px;right:22px;bottom:3px;height:18px;display:flex;justify-content:space-between;gap:12px;font-size:13px;font-weight:600;font-stretch:87%;color:var(--karbon);transform:translate(1px,1px);white-space:nowrap;overflow:hidden;font-variant-numeric:tabular-nums;transition:opacity .16s}
+.karbon.rembes{opacity:.35}
+.lembar{position:relative;z-index:3;background:#fff;border:1px solid var(--tepi-lembar);border-radius:2px;padding:14px 22px 0}
+.lk{display:grid;grid-template-columns:1fr auto;gap:2px 16px;align-items:baseline}
+.lk-judul{font-weight:800;font-stretch:125%;font-size:28px;line-height:1;letter-spacing:-.01em}
+.lk-no{font-weight:700;font-stretch:87%;font-size:14px;color:var(--nomor-seri);text-align:right;font-variant-numeric:tabular-nums}
+.lk-ket{font-size:13px;color:var(--kolom);line-height:1.4}
+.lk-ket b{color:var(--isian);font-weight:600}
+.lk-kanan{text-align:right}
+.mode-invoice .hanya-nota,.hanya-invoice{display:none}
+.mode-invoice .hanya-invoice{display:inline}
+.tabel{margin-top:10px;border-top:1.5px solid var(--cetakan)}
+.baris{display:grid;grid-template-columns:96px minmax(0,1fr) 122px 128px;align-items:center;column-gap:12px;border-bottom:1px solid var(--garis-baris);min-height:36px}
+.baris-kepala{min-height:26px}
+.baris-kepala span{font-size:12px;font-weight:650;letter-spacing:.06em;text-transform:uppercase;color:var(--kolom)}
+.ka{text-align:right}
+.isi{width:100%;border:0;border-bottom:1px solid transparent;background:transparent;color:var(--isian);font-size:17px;font-weight:500;padding:5px 0;border-radius:0;min-width:0}
+.isi:hover{border-bottom-color:var(--batas-isian)}
+.isi:focus{outline:none;border-bottom-color:var(--isian);background:var(--isian-tipis)}
+.isi.angka{font-stretch:62%;font-variant-numeric:tabular-nums;font-size:18px}
+.isi.ka{text-align:right}
+.jumlah{font-stretch:62%;font-variant-numeric:tabular-nums;font-size:18px;font-weight:500;color:var(--isian);text-align:right}
+.kali{display:none}
+.bawah{display:grid;grid-template-columns:minmax(0,1fr) 248px;gap:16px;padding:8px 0}
+.terbilang-lbl{font-size:12px;font-weight:650;letter-spacing:.06em;text-transform:uppercase;color:var(--kolom)}
+.terbilang{margin:2px 0 0;color:var(--isian);font-size:15px;font-weight:500;line-height:1.4}
+.ttd{margin-top:6px;font-size:13px;color:var(--kolom)}
+.ttd b{color:var(--isian);font-weight:600}
+.total{display:grid;grid-template-columns:1fr auto;row-gap:1px;font-size:14px;align-content:start}
+.total dt{color:var(--kolom)}
+.total dd{margin:0;text-align:right;font-stretch:87%;font-weight:700;color:var(--isian);font-variant-numeric:tabular-nums;font-size:15px}
+.total .sisa{font-size:20px;font-weight:800;border-top:1px solid var(--cetakan);border-bottom:3px double var(--cetakan);padding:1px 0}
+.total dt.sisa-l{align-self:center;color:var(--cetakan);font-weight:650}
+.kaki{position:relative;height:26px;margin:0 -22px;padding:0 22px;background:radial-gradient(circle,var(--batas-isian) 1.2px,transparent 1.5px) 4px 0/7px 3px repeat-x;display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:13px;font-weight:600;font-stretch:87%;color:var(--isian);white-space:nowrap;overflow:hidden;font-variant-numeric:tabular-nums}
+.kaki .lbl,.karbon .lbl{font-weight:500}
+
+/* slip kuning: tersembunyi di balik tembusan kuning, lalu pindah ke paku */
+.slip{width:132px;text-align:left;background:var(--tembusan-kuning);padding:8px 10px 7px;font-size:12.5px;line-height:1.38;color:var(--cetakan);clip-path:polygon(0 3px,5% 0,10% 3px,15% 0,20% 3px,25% 0,30% 3px,35% 0,40% 3px,45% 0,50% 3px,55% 0,60% 3px,65% 0,70% 3px,75% 0,80% 3px,85% 0,90% 3px,95% 0,100% 3px,100% 100%,0 100%);box-shadow:inset 0 -1px 0 rgba(21,22,28,.12)}
+.tumpuk>.slip{position:absolute;right:0;bottom:0;z-index:0}
+.slip b{font-weight:650}
+.slip .slip-no{display:block;font-weight:700;font-stretch:87%;font-size:12px;color:var(--nomor-seri);font-variant-numeric:tabular-nums}
+.slip .nom{font-stretch:62%;font-size:15px;font-weight:600;font-variant-numeric:tabular-nums}
+.paku-hero{position:absolute;left:calc(100% + 30px);top:34px;width:120px;text-align:center}
+.paku-gambar{position:relative}
+.paku-gambar>svg:first-child{width:100%;height:auto}
+.paku-ujung{position:absolute;left:calc(50% - 2px);top:0;width:4px;height:calc(36.5% + 8px);z-index:4;pointer-events:none}
+.paku-tempat{position:absolute;left:50%;top:36.5%;width:132px;margin-left:-66px;z-index:3}
+.paku-ket{margin:6px 0 0;font-size:12.5px;line-height:1.35;color:var(--kolom)}
+.paku-ket b{display:block;color:var(--cetakan);font-weight:650;font-size:13px}
+
+/* slot tujuan */
+.tujuan-wrap{position:relative;margin-top:28px}
+.kabel{position:absolute;left:0;right:0;top:-28px;height:28px;width:100%;pointer-events:none}
+.kabel path{fill:none;stroke:var(--batas-isian);stroke-width:2.6;stroke-linecap:round;stroke-dasharray:0 8}
+.tujuan{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+.slot{position:relative;border:1px solid var(--garis-baris);border-radius:6px;padding:10px 14px 12px 24px;background:#fff;display:flex;flex-direction:column;gap:8px;scroll-margin-top:24px}
+.slot::before{content:"";position:absolute;left:0;top:0;bottom:0;width:8px;border-radius:5px 0 0 5px;background:var(--garis-baris);transition:background-color .2s}
+.slot[data-terisi="1"]::before{background:var(--strip)}
+.slot-asli{--strip:#fff}
+.slot-asli[data-terisi="1"]::before{box-shadow:inset 0 0 0 1px var(--tepi-lembar)}
+.slot-kas{--strip:var(--tembusan-merah-muda)}
+.slot-ingat{--strip:var(--tembusan-kuning)}
+.slot-lbl{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:14px;font-weight:650;line-height:1.3;color:var(--cetakan)}
+.slot-st{flex:none;font-size:12px;font-weight:600;color:var(--kolom);border:1px solid var(--garis-baris);border-radius:4px;padding:2px 7px;white-space:nowrap}
+.slot[data-terisi="1"] .slot-st{color:var(--cetakan);border-color:var(--batas-isian)}
+.gelembung{background:var(--meja);border-radius:6px 6px 6px 2px;padding:7px 10px;font-size:13.5px;line-height:1.42}
+.wa-teks{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.wa-link{display:block;color:var(--cetakan)}
+.wa-link u{color:var(--isian);font-weight:600;text-underline-offset:2px}
+.kas{display:grid;gap:3px;font-size:13.5px}
+.kas-b{display:grid;grid-template-columns:58px minmax(0,1fr) auto;gap:8px;align-items:baseline;border-bottom:1px solid var(--garis-baris);padding-bottom:3px}
+.kas-b span:first-child{color:var(--kolom);font-size:12.5px}
+.kas-b .nom{font-stretch:62%;font-size:16px;font-weight:600;font-variant-numeric:tabular-nums}
+.kas-b .nom.masuk{color:var(--isian)}
+.kas-b em{font-style:normal;color:var(--kolom);font-size:12.5px}
+.ingat-teks{font-size:13.5px;line-height:1.45;border-left:3px solid var(--tembusan-kuning);padding:2px 0 2px 10px}
+.ingat-teks .nom{font-stretch:62%;font-size:16px;font-weight:600;font-variant-numeric:tabular-nums}
+.ingat-teks b{font-weight:650}
+.catatan-demo{width:min(664px,100%);margin:14px auto 0;font-size:13.5px;color:var(--kolom);text-align:center;min-height:22px}
+.catatan-demo button{background:none;border:0;color:var(--isian);text-decoration:underline;cursor:pointer;font-size:13.5px;padding:0}
+
+/* ---------- lembar umum di bawah hero (selalu dengan tembusan mengintip) ---------- */
+.sek{padding:64px 0}
+.lembar-sek{position:relative;background:#fff;border:1px solid var(--tepi-lembar);border-radius:2px}
+.tembus-1{box-shadow:6px 8px 0 -1px var(--tembusan-merah-muda),6px 8px 0 0 var(--tepi-lembar);margin-bottom:8px}
+.tembus-2{box-shadow:6px 8px 0 -1px var(--tembusan-merah-muda),6px 8px 0 0 var(--tepi-lembar),12px 16px 0 -2px var(--tembusan-kuning),12px 16px 0 -1px var(--tepi-lembar);margin-bottom:16px}
+.kop{display:flex;justify-content:space-between;align-items:baseline;gap:16px;border-bottom:1.5px solid var(--cetakan);padding-bottom:10px;margin-bottom:12px}
+.kop h2{margin:0;font-weight:700;font-stretch:112%;font-size:clamp(24px,1vw + 18px,32px);line-height:1.12;letter-spacing:-.01em;text-wrap:balance}
+.kop-meta{flex:none;font-size:13px;font-weight:600;font-stretch:87%;color:var(--kolom)}
+.kop-sub{margin:0 0 14px;color:var(--kolom);font-size:15.5px;line-height:1.5}
+
+/* buku bonggol (daftar nota) */
+.bonggol-buku{display:grid;grid-template-columns:minmax(0,4fr) 14px minmax(0,8fr);background:#fff;border:1px solid var(--tepi-lembar);border-radius:2px;--meja-bawah:#fff}
+.bonggol{background:var(--meja);padding:28px 26px}
+.bonggol h2{margin:0 0 10px;font-weight:700;font-stretch:112%;font-size:clamp(24px,1vw + 18px,32px);line-height:1.12;letter-spacing:-.01em;text-wrap:balance}
+.bonggol>p{margin:0 0 18px;color:var(--kolom);font-size:15.5px;line-height:1.5}
+.ring{display:grid;grid-template-columns:minmax(0,1fr) auto;margin:0;border-top:1.5px solid var(--cetakan);font-size:14.5px}
+.ring dt,.ring dd{margin:0;padding:8px 0;border-bottom:1px solid var(--garis-baris)}
+.ring dt{color:var(--kolom)}
+.ring dd{text-align:right;font-stretch:87%;font-weight:700;font-variant-numeric:tabular-nums}
+.bonggol-buku .perfo-v{background-color:#fff}
+.nota-mini{padding:26px 34px 22px 26px;display:grid;gap:22px;align-content:start}
+.nm{position:relative;background:#fff;border:1px solid var(--tepi-lembar);border-radius:2px;display:grid;grid-template-columns:118px minmax(0,1fr) auto;gap:4px 16px;align-items:center;padding:11px 16px}
+.nm[data-t="2"]{box-shadow:4px 6px 0 -1px var(--tembusan-merah-muda),4px 6px 0 0 var(--tepi-lembar),8px 12px 0 -2px var(--tembusan-kuning),8px 12px 0 -1px var(--tepi-lembar)}
+.nm[data-t="1"]{box-shadow:4px 6px 0 -1px var(--tembusan-merah-muda),4px 6px 0 0 var(--tepi-lembar)}
+.nm-no{font-weight:700;font-stretch:87%;font-size:13px;color:var(--nomor-seri);font-variant-numeric:tabular-nums;line-height:1.3}
+.nm-no small{display:block;color:var(--kolom);font-weight:500;font-size:12.5px}
+.nm-nama{font-weight:600;font-size:15.5px;line-height:1.3;margin-bottom:4px;color:var(--isian)}
+.nm-nom{font-stretch:62%;font-size:21px;font-weight:600;font-variant-numeric:tabular-nums;text-align:right;color:var(--isian)}
+.lipat{position:absolute;top:-1px;right:-1px;width:14px;height:14px;background:linear-gradient(225deg,#fff 50%,var(--lewat-tempo) 50%)}
+
+/* dua lembar di meja */
+.dua-lembar{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:40px;align-items:start}
+.dua-lembar .lembar-sek{padding:24px 28px 26px}
+.dua-lembar .ingat-lembar{margin-top:72px}
+.kas-tabel{width:100%;border-collapse:collapse;font-size:14.5px}
+.kas-tabel th{text-align:left;font-size:12px;font-weight:650;letter-spacing:.05em;text-transform:uppercase;color:var(--kolom);padding:4px 10px 6px 0;border-bottom:1px solid var(--cetakan)}
+.kas-tabel th.r,.kas-tabel td.r{text-align:right;padding-right:0}
+.kas-tabel td{padding:8px 10px 8px 0;border-bottom:1px solid var(--garis-baris);vertical-align:top;color:var(--isian)}
+.kas-tabel td small{display:block;color:var(--kolom);font-size:12.5px}
+.kas-tabel td.tg{white-space:nowrap;font-stretch:87%;font-weight:600}
+.kas-tabel td.r{font-stretch:62%;font-size:18px;font-weight:500;font-variant-numeric:tabular-nums;white-space:nowrap}
+.kas-tabel tfoot td{color:var(--cetakan);font-weight:650;border-bottom:0}
+.kas-tabel tfoot td.r{font-weight:700;border-bottom:3px double var(--cetakan);color:var(--cetakan)}
+.ringkas{margin-top:18px}
+.ringkas p{margin:0 0 6px;font-size:15.5px}
+.lr{display:grid;grid-template-columns:1fr auto;font-size:14.5px;row-gap:2px;margin:0}
+.lr dt{color:var(--kolom)}
+.lr dd{margin:0;text-align:right;font-stretch:87%;font-weight:600;font-variant-numeric:tabular-nums}
+.lr .untung{font-weight:800;font-size:18px;border-top:1px solid var(--cetakan);border-bottom:3px double var(--cetakan)}
+.lr dt.untung-l{color:var(--cetakan);font-weight:650;align-self:center}
+.nada{display:flex;margin:2px 0 12px}
+.nada button{flex:1}
+.pesan{background:var(--meja);border-radius:6px 6px 6px 2px;padding:12px 14px;font-size:15px;line-height:1.5;min-height:118px}
+.pesan-ket{margin:8px 0 0;font-size:13.5px;color:var(--kolom)}
+.jadwal{display:grid;grid-template-columns:92px minmax(0,1fr);margin:14px 0 0;border-top:1.5px solid var(--cetakan);font-size:14.5px}
+.jadwal dt,.jadwal dd{margin:0;padding:7px 0;border-bottom:1px solid var(--garis-baris)}
+.jadwal dt{font-weight:650;font-stretch:87%}
+.jadwal dd{color:var(--kolom)}
+
+/* blok formulir (alat gratis) */
+.blok{position:relative;background:#fff;border:1px solid var(--tepi-lembar);border-top:0;border-radius:0 0 2px 2px;box-shadow:0 4px 0 -1px #fff,0 4px 0 0 var(--tepi-lembar),0 8px 0 -2px #fff,0 8px 0 -1px var(--tepi-lembar);margin-bottom:8px}
+.blok-lem{height:12px;background:var(--cetakan);border-radius:2px 2px 0 0;margin:0 -1px}
+.blok-kop{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:20px 28px 14px;border-bottom:1.5px solid var(--cetakan);margin:0 0 0}
+.blok-kop h2{margin:0;font-weight:700;font-stretch:112%;font-size:clamp(24px,1vw + 18px,32px);line-height:1.12;letter-spacing:-.01em}
+.blok-kop p{margin:0;color:var(--kolom);font-size:15px;text-align:right}
+.blok-isi{display:grid;grid-template-columns:minmax(0,7fr) 14px minmax(0,5fr)}
+.blok-isi>.perfo-v{margin:18px 0}
+.form-pph{padding:22px 28px 26px}
+.form-pph h3,.blok-kanan h3{margin:0 0 6px;font-size:20px;font-weight:700;line-height:1.25}
+.rumus{margin:0 0 14px;font-size:15px;line-height:1.55}
+.rumus p{margin:0 0 6px}
+.rumus .pengecualian{border-left:3px solid var(--lewat-tempo);padding-left:10px;color:var(--cetakan)}
+table{border-collapse:collapse;width:100%}
+.tbl{font-size:14.5px;margin:0 0 14px}
+.tbl caption{text-align:left;font-weight:650;font-size:14px;padding:0 0 6px;color:var(--cetakan)}
+.tbl th{text-align:left;font-size:12px;font-weight:650;letter-spacing:.05em;text-transform:uppercase;color:var(--kolom);border-bottom:1.5px solid var(--cetakan);padding:6px 8px 6px 0}
+.tbl td{border-bottom:1px solid var(--garis-baris);padding:6px 8px 6px 0;vertical-align:top}
+.tbl td.r{text-align:right;font-stretch:87%;font-weight:650;font-variant-numeric:tabular-nums;padding-right:0}
+.tbl th.r{text-align:right;padding-right:0}
+.hitung{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px 12px;align-items:end;margin:4px 0 10px}
+.hitung label{display:grid;gap:4px;font-size:13px;font-weight:600;color:var(--kolom)}
+.hitung select,.hitung input{height:44px;border:1.5px solid var(--batas-isian);border-radius:6px;padding:0 10px;background:#fff;font-size:16px;color:var(--isian);font-weight:500;min-width:0;width:100%}
+.hitung input{font-stretch:62%;font-size:18px;font-variant-numeric:tabular-nums}
+.hasil{min-height:48px;background:var(--isian-tipis);border-radius:6px;padding:10px 14px;font-size:15px;line-height:1.45}
+.hasil b{font-stretch:87%;font-weight:800;font-variant-numeric:tabular-nums}
+.sumber{margin:12px 0 0;font-size:13px;color:var(--kolom)}
+.blok-kanan{display:grid;grid-template-rows:auto 14px auto;align-content:start}
+.blok-kanan>div:not(.perfo){padding:22px 28px}
+.blok-kanan>.perfo{margin:0 18px}
+.blok-kanan p{margin:0 0 12px;color:var(--kolom);font-size:15px}
+.unduh{display:flex;gap:8px;flex-wrap:wrap}
+.unduh a{display:inline-flex;align-items:center;height:36px;padding:0 12px;border:1.5px solid var(--batas-isian);border-radius:6px;font-size:14px;font-weight:600;text-decoration:none;color:var(--cetakan)}
+.unduh a:hover{border-color:var(--isian);color:var(--isian)}
+
+/* kupon sobek (penutup) */
+.penutup{padding:48px 0 64px}
+.kupon-lembar{display:grid;grid-template-columns:minmax(0,1fr) 14px 360px}
+.kupon-kiri{padding:26px 30px 24px}
+.kupon-kiri h2{margin:0 0 14px;font-weight:800;font-stretch:125%;font-size:clamp(26px,1.4vw + 18px,38px);line-height:1.08;letter-spacing:-.02em}
+.janji{margin:0;display:grid;grid-template-columns:96px minmax(0,1fr);border-top:1.5px solid var(--cetakan);font-size:15px}
+.janji dt,.janji dd{margin:0;padding:8px 0;border-bottom:1px solid var(--garis-baris)}
+.janji dt{font-size:12px;font-weight:650;letter-spacing:.06em;text-transform:uppercase;color:var(--kolom);padding-top:10px}
+.janji dd{color:var(--isian)}
+.ttd-kupon{display:flex;justify-content:flex-end;margin-top:16px;text-align:center}
+.ttd-kupon div{min-width:200px;font-size:13.5px;color:var(--kolom)}
+.ttd-kupon b{display:block;margin-top:18px;padding-top:6px;border-top:1px solid var(--cetakan);font-weight:800;font-stretch:125%;font-size:18px;color:var(--cetakan)}
+.kupon{padding:26px 28px 24px;display:flex;flex-direction:column;justify-content:center;gap:12px;transition:transform .12s var(--gerak)}
+.kupon:hover{transform:translateX(2px)}
+.kupon-lbl{display:flex;align-items:baseline;gap:8px;font-size:14px;font-weight:600;font-stretch:87%;color:var(--kolom)}
+.kupon-lbl .no{color:var(--nomor-seri);font-weight:700;font-variant-numeric:tabular-nums}
+.kupon .tombol{width:100%}
+.kupon p{margin:0;font-size:14px;line-height:1.45;color:var(--kolom)}
+.kupon p strong{color:var(--cetakan);font-weight:650}
+.footer{padding:18px 0 30px;font-size:14px;color:var(--kolom)}
+.footer .wrap>div{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:18px}
+.footer b{color:var(--cetakan);font-weight:650}
+
+/* ---------- bagian konsep ---------- */
+.batas-konsep{margin-top:8px;border-top:3px double var(--cetakan);border-bottom:1px solid var(--garis-baris);background:var(--meja)}
+.batas-konsep .wrap{padding-top:34px;padding-bottom:30px}
+.batas-konsep h2{margin:0 0 8px;font-weight:800;font-stretch:125%;font-size:clamp(28px,1.5vw + 20px,44px);line-height:1.05;letter-spacing:-.02em}
+.batas-konsep p{margin:0;color:var(--kolom);max-width:72ch}
+.konsep{padding:24px 0 80px}
+.k-sek{padding:36px 0 8px;border-bottom:1px solid var(--garis-baris)}
+.k-sek:last-child{border-bottom:0}
+.k-sek h2{margin:0 0 12px;font-weight:700;font-stretch:112%;font-size:26px;line-height:1.2}
+.k-sek p,.k-sek li{max-width:78ch;font-size:16px}
+.k-sek ul{padding-left:20px}
+.k-sek li{margin-bottom:6px}
+.swatch-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;margin:8px 0 18px}
+.sw{border:1px solid var(--garis-baris);border-radius:6px;overflow:hidden;background:#fff}
+.sw-w{height:64px;border-bottom:1px solid var(--garis-baris);display:flex;align-items:flex-end;padding:6px 10px;font-weight:700;font-size:15px}
+.sw-t{padding:8px 10px 10px;font-size:13.5px;line-height:1.45}
+.sw-t b{display:block;font-size:14.5px}
+.k-tbl{font-size:14.5px;margin:8px 0 18px}
+.k-tbl th{text-align:left;font-size:12px;font-weight:650;letter-spacing:.05em;text-transform:uppercase;color:var(--kolom);border-bottom:1.5px solid var(--cetakan);padding:6px 10px 6px 0;vertical-align:bottom}
+.k-tbl td{border-bottom:1px solid var(--garis-baris);padding:7px 10px 7px 0;vertical-align:top}
+.tbl-gulir{overflow-x:auto}
+.spes{display:grid;gap:10px;margin:10px 0 18px}
+.spes div{display:grid;grid-template-columns:180px minmax(0,1fr);gap:16px;align-items:baseline;border-bottom:1px solid var(--garis-baris);padding-bottom:10px}
+.spes small{color:var(--kolom);font-size:13px}
+.contoh-tepi{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin:12px 0 18px}
+.contoh-tepi figure{margin:0;border:1px solid var(--garis-baris);border-radius:6px;padding:14px 22px 14px 14px}
+.contoh-tepi figcaption{font-size:13.5px;color:var(--kolom);margin-top:18px}
+.skor{border:1.5px solid var(--batas-isian);border-radius:6px;padding:16px 18px;color:var(--kolom)}
+
+/* ---------- sticky CTA mobile ---------- */
+.lengket{display:none}
+
+/* ---------- responsif ---------- */
+@media (max-width:1100px){
+  .wrap{padding:0 28px}
+  .nav-tautan{gap:18px}
+}
+@media (max-width:1019px){
+  .paku-hero{position:relative;left:auto;top:auto;width:84px;margin:14px auto 0}
+  .paku-ket{width:200px;margin-left:-58px}
+}
+@media (max-width:959px){
+  .kop-meta{display:none}
+}
+@media (max-width:900px){
+  .hero-baris,.dua-lembar{grid-template-columns:minmax(0,1fr)}
+  .dua-lembar .ingat-lembar{margin-top:0}
+  .tujuan{grid-template-columns:minmax(0,1fr);gap:12px}
+  .kabel{display:none}
+  .tujuan-wrap{margin-top:22px}
+  .tujuan-wrap::before{content:"Satu nota, tiga tujuan:";display:block;font-size:13px;font-weight:650;color:var(--kolom);margin-bottom:8px}
+  .contoh-tepi{grid-template-columns:minmax(0,1fr)}
+  .nav-tautan{display:none}
+  .nav-menu{display:flex}
+  .bonggol-buku,.blok-isi,.kupon-lembar{grid-template-columns:minmax(0,1fr)}
+  .bonggol-buku>.perfo-v,.blok-isi>.perfo-v,.kupon-lembar>.perfo-v{width:auto;height:14px;margin:0;background:var(--lubang) 14px 50%/11px 14px repeat-x}
+  .bonggol-buku>.perfo-v::before,.blok-isi>.perfo-v::before,.kupon-lembar>.perfo-v::before{top:0;left:-8px;clip-path:inset(0 0 0 50%)}
+  .bonggol-buku>.perfo-v::after,.blok-isi>.perfo-v::after,.kupon-lembar>.perfo-v::after{top:0;bottom:auto;left:auto;right:-8px;clip-path:inset(0 50% 0 0)}
+}
+@media (max-width:640px){
+  html{scroll-padding-bottom:80px}
+  body{font-size:16px}
+  .wrap{padding:0 16px}
+  .hero{padding:14px 0 40px}
+  .kop-hero{padding-bottom:8px}
+  .hero-baris{margin-top:10px}
+  .tanda{display:none}
+  .kepala{font-stretch:112%;font-size:33px;line-height:1.06}
+  .sub{font-size:16px}
+  .cta-baris{flex-direction:column;align-items:stretch}
+  .cta-baris .tombol{width:100%}
+  .cta-baris .mikro{max-width:none}
+  .tiga-tujuan{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;align-items:center}
+  .tt-lbl{width:100%;font-size:13px;font-weight:650;color:var(--cetakan)}
+  .tt-chip{display:inline-flex;align-items:center;gap:7px;min-height:40px;padding:6px 12px 6px 10px;border:1px solid var(--batas-isian);border-radius:4px;background:#fff;font-size:14px;font-weight:600;color:var(--cetakan);text-decoration:none;position:relative}
+  .tt-chip::before{content:"";width:10px;height:22px;border-radius:1px;background:var(--sw);box-shadow:inset 0 0 0 1px var(--tepi-lembar);flex:none}
+  .meja-alat{flex-direction:column;align-items:stretch}
+  .pilih{display:grid;grid-template-columns:1fr 1fr}
+  .alat-kanan{justify-content:space-between}
+  .tumpuk{padding:0 8px 40px 0}
+  .t-merah{left:4px;top:20px;right:4px;bottom:20px}
+  .t-kuning{left:8px;top:40px}
+  .karbon{left:14px;right:14px;bottom:1px;font-size:12px}
+  .lembar{padding:14px 14px 0}
+  .lk-judul{font-size:24px}
+  .baris-kepala{display:none}
+  .baris{grid-template-columns:52px 14px minmax(0,1fr) auto;grid-template-areas:"nama nama nama nama" "qty kali harga jml";row-gap:0;padding:6px 0}
+  .c-nama{grid-area:nama}.c-qty{grid-area:qty}.c-harga{grid-area:harga}.c-jml{grid-area:jml}
+  .kali{display:block;grid-area:kali;color:var(--kolom);font-size:14px;text-align:center}
+  .c-harga .isi{text-align:left}
+  .isi{font-size:16px}
+  .bawah{grid-template-columns:minmax(0,1fr);gap:8px}
+  .total{order:-1}
+  .kaki{margin:0 -14px;padding:0 14px;font-size:12px}
+  .kaki .opsional,.karbon .opsional{display:none}
+  .bonggol{padding:22px 18px}
+  .nota-mini{padding:20px 22px 18px 16px}
+  .nm{grid-template-columns:minmax(0,1fr) auto;padding:10px 12px}
+  .nm-no{grid-column:1;grid-row:1}
+  .nm-no small{display:inline;margin-left:6px}
+  .nm-nom{grid-row:1;grid-column:2}
+  .nm-isi{grid-column:1/-1;grid-row:2}
+  .dua-lembar .lembar-sek{padding:20px 18px 22px}
+  .kop{flex-direction:column;gap:2px}
+  .kas-tabel th:first-child,.kas-tabel td.tg{display:none}
+  .blok-kop{flex-direction:column;gap:4px;padding:18px 18px 12px}
+  .blok-kop p{text-align:left}
+  .form-pph,.blok-kanan>div:not(.perfo){padding:18px}
+  .hitung{grid-template-columns:minmax(0,1fr)}
+  .kupon-kiri,.kupon{padding:20px 18px}
+  .janji{grid-template-columns:72px minmax(0,1fr)}
+  .ttd-kupon{justify-content:center}
+  .spes div{grid-template-columns:minmax(0,1fr);gap:2px}
+  .lengket{display:block;position:fixed;left:0;right:0;bottom:0;z-index:30;background:#fff;border-top:1px solid var(--garis-baris);padding:10px 16px;transform:translateY(110%);transition:transform .2s var(--gerak)}
+  .lengket.tampil{transform:none}
+  .lengket .tombol{width:100%;height:48px}
+  .footer{padding-bottom:96px}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{transition:none!important;animation:none!important}
+}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="logo" href="#" aria-label="Neracaku, beranda">
+      <span class="logo-n" aria-hidden="true">n</span><span class="logo-kata">neracaku</span>
+    </a>
+    <nav class="nav-tautan" aria-label="Menu utama">
+      <a href="#fitur">Fitur</a>
+      <a href="#harga">Harga</a>
+      <a href="#alat">Alat gratis</a>
+      <a href="#masuk">Masuk</a>
+      <a class="tombol" href="#daftar">Bikin nota pertama</a>
+    </nav>
+    <div class="nav-menu">
+      <a href="#masuk">Masuk</a>
+      <button type="button" aria-label="Buka menu"><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 6h14M3 10h14M3 14h14" stroke="#15161C" stroke-width="1.75" stroke-linecap="round"/></svg></button>
+    </div>
+  </div>
+</header>
+
+<main>
+<!-- ===================== BAGIAN 1: MOCKUP LANDING PAGE ===================== -->
+<section class="hero" aria-labelledby="judul-hero">
+  <div class="wrap">
+    <div class="hero-atas">
+      <div class="kop-hero">
+        <h1 class="kepala" id="judul-hero">Tulis nota sekali, tiga urusan beres.</h1>
+        <div class="kop-meta" aria-hidden="true"><span class="no">No. 0001</span><span class="tgl">Tgl.<span class="titik-isi"></span></span></div>
+      </div>
+      <div class="hero-baris">
+        <p class="sub">Nota dan invoice untuk usaha kecil: <span class="tanda" style="--sw:#fff" aria-hidden="true"></span>lembar aslinya siap dikirim ke pelanggan lewat WhatsApp-mu, <span class="tanda" style="--sw:var(--tembusan-merah-muda)" aria-hidden="true"></span>tembusannya masuk buku kas, <span class="tanda" style="--sw:var(--tembusan-kuning)" aria-hidden="true"></span>pengingat jatuh tempo ikut terpasang.</p>
+        <div class="cta-baris">
+          <a class="tombol" id="cta-utama" href="#daftar">Bikin nota pertama</a>
+          <p class="mikro" id="mikro-cta"><strong>Gratis 20 nota per bulan</strong> <span class="contoh">(angka contoh, belum final)</span>. Daftar lewat WhatsApp atau Google. Data bisa diekspor.</p>
+        </div>
+      </div>
+      <nav class="tiga-tujuan" aria-label="Tiga tujuan nota">
+        <span class="tt-lbl">Satu nota, tiga tujuan:</span>
+        <a class="tt-chip" href="#slot-asli" style="--sw:#fff">WhatsApp pelanggan</a>
+        <a class="tt-chip" href="#slot-kas" style="--sw:var(--tembusan-merah-muda)">Buku kas</a>
+        <a class="tt-chip" href="#slot-ingat" style="--sw:var(--tembusan-kuning)">Pengingat 6 Okt</a>
+      </nav>
+    </div>
+
+    <div class="meja" id="meja">
+      <div class="meja-alat">
+        <div class="pilih" role="group" aria-label="Tampilan dokumen">
+          <button type="button" aria-pressed="true" data-mode="nota">Nota</button>
+          <button type="button" aria-pressed="false" data-mode="invoice">Invoice resmi</button>
+        </div>
+        <div class="alat-kanan">
+          <span class="chip" id="chip-status"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><rect x="2.5" y="1.5" width="9" height="11" rx="1" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M5 5h4M5 7.5h4" stroke="currentColor" stroke-width="1.4"/></svg><span>Belum dikirim</span></span>
+          <button type="button" class="tombol tombol-garis" id="tombol-aksi">Kirim nota</button>
+        </div>
+      </div>
+
+      <div class="tumpuk-wrap">
+        <div class="tumpuk" id="tumpuk">
+          <div class="slip" id="slip" aria-hidden="true"><span class="slip-no" id="slip-no">DN-0451</span><b>Lunas, 3 Okt</b><br><span class="nom" data-k="sisa">Rp580.000</span></div>
+          <div class="tembusan t-kuning" aria-hidden="true"><div class="karbon" data-karbon><span><span class="lbl">Sisa </span><span data-k="sisa">Rp580.000</span></span><span><span class="lbl">Jatuh tempo </span>Jum, 9 Okt 2026</span><span class="opsional" data-k="no">No. DN-0451</span></div></div>
+          <div class="tembusan t-merah" aria-hidden="true"><div class="karbon" data-karbon><span><span class="lbl">Sisa </span><span data-k="sisa">Rp580.000</span></span><span><span class="lbl">Jatuh tempo </span>Jum, 9 Okt 2026</span><span class="opsional" data-k="no">No. DN-0451</span></div></div>
+
+          <article class="lembar" id="lembar" aria-label="Contoh nota yang bisa diisi">
+            <div class="lk">
+              <div class="lk-judul"><span class="hanya-nota">NOTA</span><span class="hanya-invoice">INVOICE</span></div>
+              <div class="lk-no"><span class="hanya-nota">No. DN-0451</span><span class="hanya-invoice">No. INV/2026/10/0451</span></div>
+              <div class="lk-ket"><span class="hanya-nota">Dapur Ningsih, Sleman. Kepada Yth. <b>Bu Rina</b>, pesanan Sab, 10 Okt 2026</span><span class="hanya-invoice">Dapur Ningsih, Sleman. NPWP opsional. Ditagihkan ke <b>Rina Wulandari</b></span></div>
+              <div class="lk-ket lk-kanan"><span class="hanya-nota">3 Okt 2026</span><span class="hanya-invoice">Termin: DP 50%</span></div>
+            </div>
+
+            <div class="tabel" role="group" aria-label="Rincian barang">
+              <div class="baris baris-kepala" aria-hidden="true">
+                <span><span class="hanya-nota">Banyaknya</span><span class="hanya-invoice">Kuantitas</span></span>
+                <span><span class="hanya-nota">Nama barang</span><span class="hanya-invoice">Deskripsi</span></span>
+                <span class="ka"><span class="hanya-nota">Harga</span><span class="hanya-invoice">Harga satuan</span></span>
+                <span class="ka">Jumlah</span>
+              </div>
+              <div class="baris" data-baris="0">
+                <span class="c-qty"><label class="sr" for="q0">Banyaknya, baris 1</label><input class="isi angka" id="q0" inputmode="numeric" maxlength="4" autocomplete="off" value="40"></span>
+                <span class="c-nama"><label class="sr" for="n0">Nama barang, baris 1</label><input class="isi" id="n0" maxlength="40" autocomplete="off" value="Nasi box ayam bakar"></span>
+                <span class="kali" aria-hidden="true">x</span>
+                <span class="c-harga"><label class="sr" for="h0">Harga satuan, baris 1</label><input class="isi angka ka" id="h0" inputmode="numeric" maxlength="11" autocomplete="off" value="25.000"></span>
+                <span class="c-jml jumlah" data-jml="0">Rp1.000.000</span>
+              </div>
+              <div class="baris" data-baris="1">
+                <span class="c-qty"><label class="sr" for="q1">Banyaknya, baris 2</label><input class="isi angka" id="q1" inputmode="numeric" maxlength="4" autocomplete="off" value="40"></span>
+                <span class="c-nama"><label class="sr" for="n1">Nama barang, baris 2</label><input class="isi" id="n1" maxlength="40" autocomplete="off" value="Es teh manis"></span>
+                <span class="kali" aria-hidden="true">x</span>
+                <span class="c-harga"><label class="sr" for="h1">Harga satuan, baris 2</label><input class="isi angka ka" id="h1" inputmode="numeric" maxlength="11" autocomplete="off" value="4.000"></span>
+                <span class="c-jml jumlah" data-jml="1">Rp160.000</span>
+              </div>
+            </div>
+
+            <div class="bawah">
+              <div>
+                <div class="terbilang-lbl">Terbilang (sisa)</div>
+                <p class="terbilang" id="terbilang">lima ratus delapan puluh ribu rupiah</p>
+                <div class="ttd hanya-invoice">Hormat kami, <b>Ningsih</b> (Dapur Ningsih)</div>
+              </div>
+              <dl class="total" aria-live="polite" aria-atomic="true" id="total">
+                <dt>Total</dt><dd id="v-total">Rp1.160.000</dd>
+                <dt>DP 50%</dt><dd id="v-dp">Rp580.000</dd>
+                <dt class="sisa-l">Sisa</dt><dd class="sisa" id="v-sisa">Rp580.000</dd>
+              </dl>
+            </div>
+            <div class="kaki"><span><span class="lbl">Sisa </span><span data-k="sisa">Rp580.000</span></span><span><span class="lbl">Jatuh tempo </span>Jum, 9 Okt 2026</span><span class="opsional" data-k="no">No. DN-0451</span></div>
+          </article>
+        </div>
+
+        <div class="paku-hero">
+          <div class="paku-gambar" id="paku">
+            <svg viewBox="0 0 120 230" aria-hidden="true"><rect x="9" y="150" width="104" height="50" rx="1" fill="#FAEDB0" stroke="rgba(21,22,28,.22)" transform="rotate(-5 61 175)"/><rect x="10" y="139" width="102" height="50" rx="1" fill="#FAEDB0" stroke="rgba(21,22,28,.22)" transform="rotate(4 61 164)"/><ellipse cx="60" cy="220" rx="48" ry="6" fill="#4D5160"/><rect x="12" y="213" width="96" height="7" fill="#4D5160"/><ellipse cx="60" cy="213" rx="48" ry="6" fill="#868B9B"/><path d="M58.4 213V12l1.6-9 1.6 9v201z" fill="#15161C"/></svg>
+            <svg class="paku-ujung" viewBox="0 0 4 96" preserveAspectRatio="none" aria-hidden="true"><path d="M.4 96V12L2 3l1.6 9v84z" fill="#15161C"/></svg>
+            <div class="paku-tempat" id="paku-tempat"></div>
+          </div>
+          <p class="paku-ket"><b>Paku nota</b>tembusan kuning yang sudah lunas</p>
+        </div>
+      </div>
+
+      <div class="tujuan-wrap">
+        <svg class="kabel" viewBox="0 0 1200 28" preserveAspectRatio="none" aria-hidden="true"><path d="M600 0 C600 15 200 13 200 28" vector-effect="non-scaling-stroke"/><path d="M600 0 L600 28" vector-effect="non-scaling-stroke"/><path d="M600 0 C600 15 1000 13 1000 28" vector-effect="non-scaling-stroke"/></svg>
+        <div class="tujuan" aria-live="polite">
+          <div class="slot slot-asli" id="slot-asli" data-terisi="0">
+            <div class="slot-lbl"><span>Lembar asli ke pelanggan</span><span class="slot-st" id="st-asli">Belum dikirim</span></div>
+            <div class="gelembung"><span class="wa-teks" id="pesan-wa">Halo Bu Rina, ini nota pesanan untuk Sabtu, 10 Oktober. Sisa pembayaran Rp580.000, mohon dilunasi paling lambat Jumat, 9 Oktober.</span><span class="wa-link">Rincian dan cara bayar: <u id="wa-link">neracaku.id/n/DN-0451</u>. Terima kasih.</span></div>
+          </div>
+          <div class="slot slot-kas" id="slot-kas" data-terisi="0">
+            <div class="slot-lbl"><span>Tembusan merah muda ke buku kas</span><span class="slot-st" id="st-kas">Belum dicatat</span></div>
+            <div class="kas">
+              <div class="kas-b"><span>Sab 3 Okt</span><span>DP Bu Rina <em>uang masuk</em></span><span class="nom masuk" data-k="dp">Rp580.000</span></div>
+              <div class="kas-b" id="kas-sisa"><span id="kas-sisa-tgl">Jum 9 Okt</span><span id="kas-sisa-ket">Sisa Bu Rina <em>belum dibayar</em></span><span class="nom" data-k="sisa" id="kas-sisa-nom">Rp580.000</span></div>
+            </div>
+          </div>
+          <div class="slot slot-ingat" id="slot-ingat" data-terisi="0">
+            <div class="slot-lbl"><span>Tembusan kuning ke pengingat</span><span class="slot-st" id="st-ingat">Belum aktif</span></div>
+            <div class="ingat-teks" id="ingat-teks"><b>Ingatkan Sel, 6 Okt</b> (tiga hari sebelum jatuh tempo)<br>Jatuh tempo Jum, 9 Okt, sisa <span class="nom" data-k="sisa">Rp580.000</span></div>
+          </div>
+        </div>
+      </div>
+      <p class="catatan-demo" id="catatan-demo">Contoh usaha fiktif. Coba ubah jumlah atau harga, lalu tekan <b>Kirim nota</b>.</p>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="perfo" aria-hidden="true"></div></div>
+
+<section class="sek" id="fitur" aria-labelledby="judul-daftar">
+  <div class="wrap">
+    <div class="bonggol-buku">
+      <div class="bonggol">
+        <h2 id="judul-daftar">Sekilas lihat, langsung tahu siapa yang belum bayar.</h2>
+        <p>Setiap nota membawa tembusannya. Yang kuning masih menempel berarti belum lunas; begitu lunas, tembusan kuning pindah ke paku. Statusnya juga selalu tertulis.</p>
+        <dl class="ring">
+          <dt>Belum lunas</dt><dd>2 nota, Rp4.180.000</dd>
+          <dt>Lewat jatuh tempo</dt><dd>1 nota, Rp1.250.000</dd>
+          <dt>Lunas sejak 1 Okt</dt><dd>2 nota, Rp1.000.000</dd>
+        </dl>
+      </div>
+      <div class="perfo-v" aria-hidden="true"></div>
+      <div class="nota-mini" role="list" aria-label="Contoh daftar nota">
+        <div class="nm" data-t="2" role="listitem">
+          <div class="nm-no">DN-0451<small>3 Okt 2026</small></div>
+          <div class="nm-isi"><div class="nm-nama">Bu Rina</div><span class="chip"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><circle cx="7" cy="7" r="5.5" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M7 4v3.2l2 1.3" fill="none" stroke="currentColor" stroke-width="1.4"/></svg>Belum lunas, jatuh tempo Jum 9 Okt</span></div>
+          <div class="nm-nom">Rp580.000</div>
+        </div>
+        <div class="nm" data-t="2" role="listitem">
+          <div class="nm-no">DN-0448<small>23 Sep 2026</small></div>
+          <div class="nm-isi"><div class="nm-nama">Toko Bangunan Sinar</div><span class="chip" data-s="lewat"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M2 2h7l3 3v7H2z" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M9 2v3h3" fill="none" stroke="currentColor" stroke-width="1.4"/></svg>Lewat 3 hari, jatuh tempo Rab 30 Sep</span></div>
+          <div class="nm-nom">Rp1.250.000</div>
+          <span class="lipat" aria-hidden="true"></span>
+        </div>
+        <div class="nm" data-t="2" role="listitem">
+          <div class="nm-no">INV/2026/09/0441<small>30 Sep 2026</small></div>
+          <div class="nm-isi"><div class="nm-nama">PT Griya Karya</div><span class="chip"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><circle cx="7" cy="7" r="5.5" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M7 4v3.2l2 1.3" fill="none" stroke="currentColor" stroke-width="1.4"/></svg>Belum lunas, jatuh tempo Kam 15 Okt</span></div>
+          <div class="nm-nom">Rp3.600.000</div>
+        </div>
+        <div class="nm" data-t="1" role="listitem">
+          <div class="nm-no">DN-0446<small>28 Sep 2026</small></div>
+          <div class="nm-isi"><div class="nm-nama">Pak Hendra</div><span class="chip"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M7 1.5v8" stroke="currentColor" stroke-width="1.4"/><path d="M3 12.5h8" stroke="currentColor" stroke-width="1.6"/><path d="M4.5 6h5v3h-5z" fill="none" stroke="currentColor" stroke-width="1.2"/></svg>Lunas, Kam 1 Okt</span></div>
+          <div class="nm-nom">Rp420.000</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sek" style="padding-top:8px" aria-label="Buku kas dan pengingat">
+  <div class="wrap dua-lembar">
+    <article class="lembar-sek tembus-1" aria-labelledby="judul-kas">
+      <header class="kop"><h2 id="judul-kas">Buku kas terisi sendiri.</h2><span class="kop-meta">Oktober 2026</span></header>
+      <p class="kop-sub">Tembusan merah muda dari setiap nota masuk ke sini tanpa ketik ulang. Pengeluaran dicatat dalam dua ketukan.</p>
+      <table class="kas-tabel">
+        <thead><tr><th scope="col">Tanggal</th><th scope="col">Keterangan</th><th scope="col" class="r">Masuk</th><th scope="col" class="r">Keluar</th></tr></thead>
+        <tbody>
+          <tr><td class="tg">Sab 3 Okt</td><td>DP Bu Rina<small>dari nota DN-0451</small></td><td class="r">580.000</td><td class="r"></td></tr>
+          <tr><td class="tg">Sab 3 Okt</td><td>Bahan baku<small>ayam dan beras</small></td><td class="r"></td><td class="r">740.000</td></tr>
+          <tr><td class="tg">Jum 2 Okt</td><td>Kemasan<small>kotak nasi</small></td><td class="r"></td><td class="r">210.000</td></tr>
+          <tr><td class="tg">Kam 1 Okt</td><td>Pelunasan Pak Hendra<small>dari nota DN-0446</small></td><td class="r">420.000</td><td class="r"></td></tr>
+        </tbody>
+        <tfoot><tr><td class="tg"></td><td>Jumlah (Rp)</td><td class="r">1.000.000</td><td class="r">950.000</td></tr></tfoot>
+      </table>
+      <div class="ringkas">
+        <p>September untung Rp4.250.000. Pengeluaran terbesar: bahan baku.</p>
+        <dl class="lr">
+          <dt>Penjualan</dt><dd>Rp18.600.000</dd>
+          <dt>Bahan baku</dt><dd>Rp9.120.000</dd>
+          <dt>Gaji 2 orang</dt><dd>Rp3.000.000</dd>
+          <dt>Kemasan</dt><dd>Rp1.430.000</dd>
+          <dt>Lain-lain</dt><dd>Rp800.000</dd>
+          <dt class="untung-l">Untung</dt><dd class="untung">Rp4.250.000</dd>
+        </dl>
+        <p style="margin-top:12px"><a href="#laporan">Unduh PDF laporan, siap dilampirkan</a></p>
+      </div>
+    </article>
+    <article class="lembar-sek tembus-2 ingat-lembar" aria-labelledby="judul-ingat">
+      <header class="kop"><h2 id="judul-ingat">Pengingat tahu sopan santun.</h2></header>
+      <p class="kop-sub">Pilih nadanya, Neracaku menyusun pesannya. Kamu tinggal kirim dari WhatsApp-mu sendiri.</p>
+      <div class="pilih nada" role="group" aria-label="Nada pesan pengingat">
+        <button type="button" aria-pressed="true" data-nada="0">Halus, H-3</button>
+        <button type="button" aria-pressed="false" data-nada="1">Hari H</button>
+        <button type="button" aria-pressed="false" data-nada="2">Tegas, H+7</button>
+      </div>
+      <div class="pesan" id="pesan-nada" aria-live="polite">Halo Bu Rina, sekadar mengingatkan nota DN-0451 sebesar Rp580.000 jatuh tempo Jumat, 9 Oktober. Rincian dan cara bayar ada di tautan ini: neracaku.id/n/DN-0451. Terima kasih, Bu.</div>
+      <p class="pesan-ket" id="pesan-tgl">Dijadwalkan Selasa, 6 Oktober 2026. Neracaku memberi tahu kamu, lalu kamu kirim dengan satu ketukan.</p>
+      <dl class="jadwal">
+        <dt>Sel 6 Okt</dt><dd>Halus, tiga hari sebelum jatuh tempo</dd>
+        <dt>Jum 9 Okt</dt><dd>Hari jatuh tempo</dd>
+        <dt>Jum 16 Okt</dt><dd>Tegas, kalau masih belum dibayar</dd>
+      </dl>
+      <p class="pesan-ket" style="margin-top:10px">Begitu nota ditandai lunas, pengingat yang tersisa berhenti sendiri.</p>
+    </article>
+  </div>
+</section>
+
+<div class="wrap"><div class="perfo" aria-hidden="true"></div></div>
+
+<section class="sek" id="alat" aria-labelledby="judul-alat">
+  <div class="wrap">
+    <div class="blok">
+      <div class="blok-lem" aria-hidden="true"></div>
+      <div class="blok-kop"><h2 id="judul-alat">Alat gratis, tanpa daftar.</h2><p>Satu blok formulir, sobek yang kamu perlu.</p></div>
+      <div class="blok-isi">
+        <div class="form-pph">
+          <h3>PPh 21 berapa persen? Pakai tarif efektif (TER).</h3>
+          <div class="rumus">
+            <p><b>Januari sampai November:</b> potongan PPh 21 pegawai tetap = gaji bruto sebulan x tarif efektif (TER). Kategorinya ditentukan status PTKP.</p>
+            <p class="pengecualian"><b>Desember, atau bulan terakhir karyawan bekerja:</b> tidak memakai TER. PPh 21 setahun dihitung ulang dengan tarif Pasal 17, lalu dikurangi potongan bulan-bulan sebelumnya, jadi hasilnya bisa berbeda.</p>
+          </div>
+          <table class="tbl">
+            <caption>Kategori TER dan batas bebas potongan</caption>
+            <thead><tr><th scope="col">Kategori</th><th scope="col">Status PTKP</th><th scope="col" class="r">0% sampai</th></tr></thead>
+            <tbody>
+              <tr><td>A</td><td>TK/0, TK/1, K/0</td><td class="r">Rp5.400.000</td></tr>
+              <tr><td>B</td><td>TK/2, TK/3, K/1, K/2</td><td class="r">Rp6.200.000</td></tr>
+              <tr><td>C</td><td>K/3</td><td class="r">Rp6.600.000</td></tr>
+            </tbody>
+          </table>
+          <form class="hitung" id="form-pph" action="/alat/kalkulator-pph-21" method="get">
+            <label>Status PTKP
+              <select name="status" id="pph-status">
+                <option>TK/0</option><option>TK/1</option><option>K/0</option><option>TK/2</option><option>TK/3</option><option>K/1</option><option>K/2</option><option>K/3</option>
+              </select>
+            </label>
+            <label>Bulan
+              <select name="bulan" id="pph-bulan">
+                <option value="1">Januari</option><option value="2">Februari</option><option value="3">Maret</option><option value="4">April</option><option value="5">Mei</option><option value="6">Juni</option><option value="7">Juli</option><option value="8">Agustus</option><option value="9">September</option><option value="10" selected>Oktober</option><option value="11">November</option><option value="akhir">Desember atau bulan terakhir bekerja</option>
+              </select>
+            </label>
+            <label>Gaji bruto sebulan (Rp)
+              <input name="bruto" id="pph-bruto" inputmode="numeric" maxlength="15" autocomplete="off" value="10.000.000">
+            </label>
+            <button class="tombol" type="submit">Hitung</button>
+          </form>
+          <div class="hasil" id="pph-hasil" aria-live="polite">Oktober, kategori A, tarif 2%. PPh 21 bulan ini <b>Rp200.000</b>.</div>
+          <p class="sumber">Sumber: Lampiran PP Nomor 58 Tahun 2023 (tabel TER) dan PMK Nomor 168 Tahun 2023 Pasal 1 dan Pasal 15 (masa pajak terakhir). Keduanya di JDIH BPK berstatus berlaku, dicek 3 Okt 2026. Gaji karyawan bisa dicatat sebagai uang keluar di buku kas Neracaku.</p>
+        </div>
+        <div class="perfo-v" aria-hidden="true"></div>
+        <div class="blok-kanan">
+          <div>
+            <h3>Contoh invoice dan nota</h3>
+            <p>Dua tampilan: nota untuk pelanggan harian, invoice resmi untuk klien PT dan kontraktor (kop usaha, nomor invoice, NPWP opsional, termin, tanda tangan).</p>
+            <div class="unduh"><a href="#unduh-pdf">PDF</a><a href="#unduh-docx">DOCX</a><a href="#unduh-xlsx">XLSX</a></div>
+          </div>
+          <div class="perfo" aria-hidden="true"></div>
+          <div>
+            <h3>Kalkulator pajak usaha</h3>
+            <p>Perkiraan pajak dari omzet, lengkap dengan dasar aturannya. Ditulis sebagai perkiraan, bukan nasihat pajak final.</p>
+            <a href="#kalkulator-pajak">Buka kalkulator</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="penutup" id="daftar" aria-labelledby="judul-penutup">
+  <div class="wrap">
+    <div class="lembar-sek tembus-2 kupon-lembar">
+      <div class="kupon-kiri">
+        <h2 id="judul-penutup">Kirim nota pertamamu hari ini.</h2>
+        <dl class="janji">
+          <dt>Daftar</dt><dd>pakai nomor WhatsApp atau akun Google</dd>
+          <dt>Draf</dt><dd>isian contoh di atas tersimpan dan jadi nota pertamamu</dd>
+          <dt>Data</dt><dd>bisa diekspor ke Excel kapan saja</dd>
+        </dl>
+        <div class="ttd-kupon"><div>Hormat kami,<b>Neracaku</b></div></div>
+      </div>
+      <div class="perfo-v" aria-hidden="true"></div>
+      <div class="kupon" id="harga">
+        <span class="kupon-lbl"><span class="no">No. 0001</span>lembar asli nota pertamamu</span>
+        <a class="tombol" href="#daftar-akun">Bikin nota pertama</a>
+        <p><strong>Gratis 20 nota per bulan</strong> <span class="contoh">(angka contoh, belum final)</span>. Paket berbayar untuk usaha yang lebih ramai.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="perfo" aria-hidden="true"></div>
+    <div><span>Hormat kami, <b>Neracaku</b></span><span>Nota yang sudah dikirim tetap bisa direvisi.</span></div>
+  </div>
+</footer>
+
+<!-- ===================== BAGIAN 2: DOKUMEN KONSEP ===================== -->
+<section class="batas-konsep" aria-labelledby="judul-konsep">
+  <div class="wrap">
+    <h2 id="judul-konsep">Lembar konsep: Nota Rangkap</h2>
+    <p>Semua di atas garis ganda adalah mockup landing page. Di bawah ini dokumen konsep: ide, sistem visual, komponen, dan perubahan dari catatan tiga juri.</p>
+  </div>
+</section>
+
+<div class="konsep">
+  <div class="wrap">
+
+    <section class="k-sek" aria-labelledby="k-ide">
+      <h2 id="k-ide">Ide besar</h2>
+      <p><b>Nota Rangkap.</b> Tulis nota sekali, lalu tiga lembarnya bekerja sendiri: lembar asli untuk pelanggan, tembusan merah muda untuk buku kas, tembusan kuning untuk pengingat tagihan. Buku nota rangkap (kertas NCR putih, merah muda, kuning) ada di laci hampir semua toko bangunan, bengkel, grosir, dan katering. Neracaku membuat benda yang sudah dikenal itu bekerja lebih pintar.</p>
+      <p>Rasa merek: <b>akrab, cekatan, rapi</b>. "-ku" berarti milik sendiri, seperti buku nota pribadi pemilik toko. "Neraca" adalah hasil akhirnya: tembusan merah muda yang menumpuk menjadi laporan.</p>
+    </section>
+
+    <section class="k-sek" aria-labelledby="k-sig">
+      <h2 id="k-sig">Signature element: tembusan, jejak karbon, paku nota, perforasi</h2>
+      <ul>
+        <li><b>Tembusan yang mengintip, di semua tempat.</b> Lembar asli di hero, setiap nota di daftar, setiap lembar section, dan kupon penutup membawa tembusan merah muda (dan kuning bila belum lunas) yang bergeser di kanan bawah. Tidak ada kartu callout bergaris kiri.</li>
+        <li><b>Jejak karbon.</b> Baris kaki nota tercetak lagi di tepi tembusan dalam warna karbon, bergeser 1 px, dan ikut berubah saat pengunjung mengetik.</li>
+        <li><b>Paku nota berskala hero.</b> Paku berdiri di samping tumpukan (desktop) dengan dua slip lama tertancap. Tandai lunas menyobek tembusan kuning dari tumpukan itu sendiri lalu menancapkannya di paku.</li>
+        <li><b>Perforasi berlubang.</b> Semua pemisah memakai deretan lubang bulat dengan takik setengah lingkaran di ujung, seperti garis sobek buku nota. Garis putus-putus tidak dipakai (milik marka jalan Dokurapi).</li>
+      </ul>
+      <p>Section di bawah hero disusun dari benda toko, bukan dari kerangka judul + paragraf + grid kartu: <b>buku bonggol</b> (daftar nota, bonggol abu di kiri dipisah perforasi tegak), <b>dua lembar bertembusan di meja</b> (buku kas dan pengingat, judul tercetak di kop lembar), <b>blok formulir</b> (alat gratis, lem blok hitam di atas, tiap formulir dipisah perforasi), dan <b>kupon sobek</b> (penutup).</p>
+    </section>
+
+    <section class="k-sek" aria-labelledby="k-palet">
+      <h2 id="k-palet">Palet (nama token milik Neracaku)</h2>
+      <p>Aturan inti: <b>yang dicetak hitam, yang diisi biru</b>. Semua data yang diketik pengguna (isian nota, nama pelanggan, angka buku kas) memakai Biru Isian; label dan teks sistem memakai Hitam Cetakan.</p>
+      <div class="swatch-grid">
+        <div class="sw"><div class="sw-w" style="background:#FFFFFF">Aa</div><div class="sw-t"><b>Lembar Asli</b><code>#FFFFFF</code> dasar halaman</div></div>
+        <div class="sw"><div class="sw-w" style="background:#15161C;color:#fff">Aa</div><div class="sw-t"><b>Hitam Cetakan</b><code>#15161C</code> teks utama, lem blok. 18,05:1</div></div>
+        <div class="sw"><div class="sw-w" style="background:#2433A6;color:#fff">Aa</div><div class="sw-t"><b>Biru Isian</b><code>#2433A6</code> data isian, tombol, tautan. 10,00:1; 9,02:1 di Meja</div></div>
+        <div class="sw"><div class="sw-w" style="background:#F7CAD5;color:#15161C">Aa</div><div class="sw-t"><b>Tembusan Merah Muda</b><code>#F7CAD5</code> tembusan kedua. Hitam 12,35:1, Biru 6,84:1</div></div>
+        <div class="sw"><div class="sw-w" style="background:#FAEDB0;color:#15161C">Aa</div><div class="sw-t"><b>Tembusan Kuning</b><code>#FAEDB0</code> tembusan ketiga, slip. Hitam 15,30:1, Biru 8,48:1</div></div>
+        <div class="sw"><div class="sw-w" style="background:#F7CAD5;color:#4651B0">Rp580.000</div><div class="sw-t"><b>Karbon</b><code>#4651B0</code> jejak karbon. 4,69:1 merah muda, 5,81:1 kuning</div></div>
+        <div class="sw"><div class="sw-w" style="background:#fff;color:#C21F3A;font-size:14px;font-stretch:87%">No. DN-0451</div><div class="sw-t"><b>Merah Nomor Seri</b><code>#C21F3A</code> hanya teks nomor seri 12-15 px. 5,91:1 putih, 4,91:1 kuning</div></div>
+        <div class="sw"><div class="sw-w" style="background:#fff;color:#A3410F">Lewat 3 hari</div><div class="sw-t"><b>Jingga Lewat Tempo</b><code>#A3410F</code> status terlambat, sudut terlipat. 6,32:1</div></div>
+        <div class="sw"><div class="sw-w" style="background:#fff;color:#4D5160">Aa</div><div class="sw-t"><b>Abu Kolom</b><code>#4D5160</code> teks sekunder. 7,89:1 putih, 7,12:1 Meja</div></div>
+        <div class="sw"><div class="sw-w" style="background:#F2F3F7;color:#15161C">Aa</div><div class="sw-t"><b>Meja</b><code>#F2F3F7</code> bonggol, gelembung chat, panel konsep</div></div>
+        <div class="sw"><div class="sw-w" style="background:#fff;background-image:radial-gradient(circle,#868B9B 1.8px,transparent 2.1px);background-size:11px 14px;background-position:0 46px;background-repeat:repeat-x">Aa</div><div class="sw-t"><b>Batas Isian</b><code>#868B9B</code> border field, lubang perforasi. 3,40:1</div></div>
+        <div class="sw"><div class="sw-w" style="background:#fff;box-shadow:inset 0 -4px 0 #D8DAE2">Aa</div><div class="sw-t"><b>Garis Baris</b><code>#D8DAE2</code> garis baris nota, dekoratif</div></div>
+      </div>
+      <p>Proporsi: Lembar Asli sekitar 75%, Hitam Cetakan 12%, Biru Isian 8%, merah muda dan kuning paling banyak 5%. Tidak ada band pastel selebar layar.</p>
+    </section>
+
+    <section class="k-sek" aria-labelledby="k-tipo">
+      <h2 id="k-tipo">Tipografi: satu keluarga, lima lebar</h2>
+      <p>Archivo (Omnibus-Type, OFL), variabel <code>wdth</code> 62-125 dan <code>wght</code> 100-900, punya <code>tnum</code>. Dipegang Neracaku saja di portofolio.</p>
+      <div class="spes">
+        <div><small>Kepala nota, H1, judul kupon<br>wdth 125, wght 800</small><span style="font-weight:800;font-stretch:125%;font-size:34px;line-height:1.05">Tulis nota sekali</span></div>
+        <div><small>Judul kop lembar<br>wdth 112, wght 700</small><span style="font-weight:700;font-stretch:112%;font-size:26px;line-height:1.15">Buku kas terisi sendiri.</span></div>
+        <div><small>Body dan terbilang<br>wdth 100, wght 400/500</small><span style="color:#2433A6;font-weight:500">lima ratus delapan puluh ribu rupiah</span></div>
+        <div><small>Total dan nomor seri<br>wdth 87, wght 700-800</small><span style="font-weight:800;font-stretch:87%;font-size:24px;font-variant-numeric:tabular-nums;color:#2433A6">Sisa Rp580.000</span></div>
+        <div><small>Angka kolom<br>wdth 62, wght 500, tnum</small><span style="font-stretch:62%;font-size:22px;font-variant-numeric:tabular-nums;color:#2433A6">40 &nbsp; 25.000 &nbsp; 580.000 &nbsp; 740.000</span></div>
+      </div>
+      <p>H1 <code>clamp(32px, 2.6vw + 14px, 52px)</code>: 1 baris di 1440 dan 1024, 2 baris di 390 dan 360 (wdth 112, 33 px), diukur di browser. Font dimuat sebagai satu berkas variabel Google Fonts (sekitar 88 KB subset latin); produksi disubset sendiri ke Basic Latin dengan kedua sumbu utuh: 43 KB.</p>
+    </section>
+
+    <section class="k-sek" aria-labelledby="k-grid">
+      <h2 id="k-grid">Grid, radius, pemisah, gerak</h2>
+      <ul>
+        <li><b>Grid:</b> 12 kolom, kontainer 1280 px (konten 1200), gutter 24, margin 40 desktop, 16 mobile. Hero: judul satu baris; subjudul kolom 1-7, CTA + janji kolom 8-12; tumpukan nota 664 px di tengah dengan paku 120 px di kanannya; tiga slot tujuan masing-masing 4 kolom.</li>
+        <li><b>Radius:</b> lembar 2 px, tombol dan field 6 px, chip 4 px. Tidak ada pill.</li>
+        <li><b>Kedalaman:</b> tidak ada bayangan blur. Semua kedalaman berasal dari tembusan padat yang bergeser: 6/8 px (merah muda) dan 12/16 px (kuning) untuk lembar section, 4/6 dan 8/12 px untuk nota mini, 6/24 dan 12/48 px untuk tumpukan hero.</li>
+        <li><b>Pemisah:</b> perforasi berlubang (lubang 3,6 px setiap 11 px) dengan takik setengah lingkaran 14 px di ujung; versi tegak untuk bonggol, blok formulir, dan kupon. Kabel hero juga berupa deretan titik. Tidak ada garis putus-putus.</li>
+        <li><b>Gerak 1, tembusan memisah:</b> salinan baris kaki terbang ke slotnya, translate saja, 520 ms, jeda 80 ms. Tanpa skala dan rotasi.</li>
+        <li><b>Gerak 2, karbon merembes:</b> jejak karbon memudar ke 35% lalu kembali dalam 160 ms saat angka diketik.</li>
+        <li><b>Gerak 3, sobek ke paku:</b> tembusan kuning di tumpukan turun 10 px dan memudar (240 ms), slip kuning yang tadinya di baliknya lepas dan pindah ke paku (560 ms). Ujung paku tergambar di atas slip.</li>
+        <li><b>Gerak 4, perforasi terbuka:</b> deretan lubang terbuka dari kiri 500 ms saat pertama masuk layar. Kupon bergeser 2 px saat disentuh kursor. Tidak ada count-up dan fade-up generik.</li>
+        <li><b>Reduced motion:</b> semua animasi dan smooth scroll dimatikan; status tetap berubah.</li>
+      </ul>
+    </section>
+
+    <section class="k-sek" aria-labelledby="k-struktur">
+      <h2 id="k-struktur">Struktur homepage</h2>
+      <ul>
+        <li><b>Hero:</b> judul, subjudul, CTA + janji (kuota diberi label angka contoh). Di HP, baris "Satu nota, tiga tujuan" berisi tiga chip yang menggulir ke slotnya. Tumpukan nota yang bisa diisi, sakelar Nota / Invoice resmi, paku nota di kanan tumpukan, tiga slot tujuan dengan kabel titik.</li>
+        <li><b>Buku bonggol:</b> bonggol abu berisi judul dan rekap (belum lunas, lewat tempo, lunas), perforasi tegak, lalu nota mini bertembusan dengan chip status.</li>
+        <li><b>Dua lembar di meja:</b> lembar buku kas (kolom Tanggal, Keterangan, Masuk, Keluar, jumlah bergaris ganda, laba rugi September) dan lembar pengingat (tiga nada, jadwal), diletakkan berselisih tinggi seperti kertas di meja.</li>
+        <li><b>Blok formulir alat gratis:</b> PPh 21 TER (rumus dengan pengecualian Desember, tabel kategori, kalkulator dengan pilihan bulan, sumber), contoh invoice (PDF, DOCX, XLSX), kalkulator pajak.</li>
+        <li><b>Kupon sobek:</b> lembar dengan janji bertabel dan tanda tangan "Hormat kami, Neracaku"; kupon di kanan perforasi berisi tombol dan kuota.</li>
+        <li><b>Testimoni:</b> foto asli pemilik usaha nyata, disembunyikan sampai ada pengguna beta.</li>
+      </ul>
+    </section>
+
+    <section class="k-sek" aria-labelledby="k-komp">
+      <h2 id="k-komp">Komponen kunci dan tembusan ringkas</h2>
+      <ul>
+        <li><b>Editor nota:</b> sel <code>input</code> berlabel, angka <code>inputmode="numeric"</code>, total dan terbilang di <code>aria-live="polite"</code>, sakelar Nota / Invoice resmi.</li>
+        <li><b>Halaman tagihan publik:</b> lembar asli, salin rekening, QRIS milik usaha, "Saya sudah bayar" + unggah bukti; nota baru lunas setelah pemilik mencocokkan mutasi.</li>
+        <li><b>Pengingat:</b> fase 1 dikirim dari WhatsApp pemilik sendiri (satu ketukan). WhatsApp Business API hanya fase 2.</li>
+        <li><b>Kalkulator PPh 21:</b> pilihan bulan; Januari sampai November memakai TER, Desember atau bulan terakhir bekerja menampilkan penjelasan hitung ulang tahunan, bukan angka TER.</li>
+      </ul>
+      <div class="contoh-tepi">
+        <figure>
+          <div class="nm" data-t="2"><div class="nm-no">DN-0448</div><div class="nm-isi"><div class="nm-nama">Toko Sinar</div></div><div class="nm-nom">Rp1.250.000</div><span class="lipat"></span></div>
+          <figcaption>Nota mini di daftar: tembusan 4/6 px dan 8/12 px. Lewat tempo ditandai sudut terlipat 14 px + chip teks.</figcaption>
+        </figure>
+        <figure>
+          <div style="display:flex;gap:18px;align-items:end">
+            <svg width="16" height="16" viewBox="0 0 16 16" aria-label="Favicon 16 piksel" role="img"><rect width="16" height="16" fill="#fff"/><path d="M4 13V5h2.2v1.1C6.8 5.3 7.6 4.8 8.7 4.8c1.7 0 2.6 1 2.6 2.9V13H9.1V8.1c0-.9-.4-1.4-1.2-1.4-.9 0-1.6.6-1.6 1.7V13z" fill="#F7CAD5" transform="translate(1.5 1.5)"/><path d="M4 13V5h2.2v1.1C6.8 5.3 7.6 4.8 8.7 4.8c1.7 0 2.6 1 2.6 2.9V13H9.1V8.1c0-.9-.4-1.4-1.2-1.4-.9 0-1.6.6-1.6 1.7V13z" fill="#15161C"/></svg>
+            <svg width="64" height="64" viewBox="0 0 16 16" aria-hidden="true"><rect width="16" height="16" fill="#fff" stroke="#D8DAE2" stroke-width=".1"/><path d="M4 13V5h2.2v1.1C6.8 5.3 7.6 4.8 8.7 4.8c1.7 0 2.6 1 2.6 2.9V13H9.1V8.1c0-.9-.4-1.4-1.2-1.4-.9 0-1.6.6-1.6 1.7V13z" fill="#F7CAD5" transform="translate(1.5 1.5)"/><path d="M4 13V5h2.2v1.1C6.8 5.3 7.6 4.8 8.7 4.8c1.7 0 2.6 1 2.6 2.9V13H9.1V8.1c0-.9-.4-1.4-1.2-1.4-.9 0-1.6.6-1.6 1.7V13z" fill="#15161C"/></svg>
+          </div>
+          <figcaption>Favicon 16 px: huruf n dengan satu bayangan merah muda. Kanan: diperbesar 4x.</figcaption>
+        </figure>
+        <figure>
+          <svg width="200" height="86" viewBox="0 0 200 86" aria-label="Tembusan versi cetak hitam putih" role="img"><defs><pattern id="arsir1" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="#15161C" stroke-width="1"/></pattern><pattern id="arsir2" width="3" height="3" patternUnits="userSpaceOnUse"><circle cx="1.5" cy="1.5" r=".7" fill="#15161C"/></pattern></defs><rect x="12" y="24" width="186" height="60" fill="url(#arsir2)" stroke="#15161C" stroke-width=".8"/><rect x="6" y="12" width="186" height="60" fill="url(#arsir1)" stroke="#15161C" stroke-width=".8"/><rect x="0" y="0" width="186" height="60" fill="#fff" stroke="#15161C" stroke-width="1"/><text x="10" y="22" font-family="Archivo" font-weight="800" font-size="14" style="font-stretch:125%">NOTA</text><text x="10" y="44" font-family="Archivo" font-size="11">Sisa Rp580.000</text></svg>
+          <figcaption>PDF cetak hitam-putih: merah muda jadi arsir miring, kuning jadi titik.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="k-sek" aria-labelledby="k-mobile">
+      <h2 id="k-mobile">Versi mobile (360-390 px)</h2>
+      <ul>
+        <li>Judul 2 baris. Di bawah CTA ada baris "Satu nota, tiga tujuan" dengan tiga chip (WhatsApp pelanggan, Buku kas, Pengingat 6 Okt), jadi tiga tujuan terbaca di layar pertama 390x844.</li>
+        <li>Hanya "Bikin nota pertama" yang biru penuh; tombol demo Kirim nota bergaris.</li>
+        <li>Baris nota dua tingkat; paku nota (84 px) berdiri di bawah tumpukan; tiga slot bertumpuk.</li>
+        <li>Bonggol, blok formulir, dan kupon bertumpuk dengan perforasi mendatar. Buku kas menyembunyikan kolom tanggal.</li>
+        <li>CTA lengket 48 px muncul setelah tombol hero lewat dari layar.</li>
+      </ul>
+    </section>
+
+    <section class="k-sek" aria-labelledby="k-peta">
+      <h2 id="k-peta">Peta pengaruh referensi</h2>
+      <div class="tbl-gulir">
+      <table class="k-tbl">
+        <thead><tr><th scope="col">Referensi</th><th scope="col">Yang diambil</th><th scope="col">Bagaimana diubah</th></tr></thead>
+        <tbody>
+          <tr><td>midday.ai</td><td>Ketenangan, satu CTA, ruang lega</td><td>Tanpa serif. Ruang lega menjadi meja tempat nota dan paku diletakkan.</td></tr>
+          <tr><td>digits.com</td><td>Kontras di judul, aplikasi sebagai pusat</td><td>Kontras lewat lebar huruf (125 lawan 62); pusatnya satu lembar nota yang bisa diisi.</td></tr>
+          <tr><td>waveapps.com</td><td>Dekat dengan usaha kecil, arus kas di depan</td><td>Buku kas berkolom Masuk/Keluar dan laba rugi bergaris ganda, bukan dashboard donut.</td></tr>
+          <tr><td>stripe.com/invoicing</td><td>Invoice dan cara bayar di hero</td><td>Hero menunjukkan ke mana nota pergi (tiga tujuan); halaman bayar memakai rekening, QRIS, unggah bukti.</td></tr>
+          <tr><td>mercury.com</td><td>Rasa tepercaya dari kerapian</td><td>Kepercayaan dari detail cetak (nomor seri, terbilang, garis ganda, perforasi), bukan lanskap gelap.</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </section>
+
+    <section class="k-sek" aria-labelledby="k-risiko">
+      <h2 id="k-risiko">Risiko dan mitigasi</h2>
+      <div class="tbl-gulir">
+      <table class="k-tbl">
+        <thead><tr><th scope="col">Risiko</th><th scope="col">Mitigasi</th></tr></thead>
+        <tbody>
+          <tr><td>Terasa jadul bagi penjual online muda</td><td>Metafora kertas hanya di dokumen, status, dan pemisah; navigasi dan tipografi kontemporer; sakelar Invoice resmi untuk klien formal.</td></tr>
+          <tr><td>Status dari tembusan tidak terbaca di HP kecil atau oleh pengguna buta warna</td><td>Chip teks + ikon wajib di setiap nota; lewat tempo punya sudut terlipat (bentuk, bukan warna).</td></tr>
+          <tr><td>Kuota "20 nota per bulan" belum punya kanon harga</td><td>Diberi label "(angka contoh, belum final)" di setiap tempat angka itu muncul.</td></tr>
+          <tr><td>Kalkulator PPh 21 salah di Desember</td><td>Rumus menyebut pengecualian masa pajak terakhir (PMK 168/2023 Pasal 15); pilihan Desember menampilkan penjelasan, bukan angka TER.</td></tr>
+          <tr><td>"Datamu bisa diekspor" adalah janji fitur</td><td>Ekspor Excel masuk MVP; kalau tidak, kalimat dihapus.</td></tr>
+          <tr><td>Paku nota kurang dikenal di sebagian daerah</td><td>Paku diberi keterangan "tembusan kuning yang sudah lunas"; status "Lunas" selalu tertulis.</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </section>
+
+    <section class="k-sek" aria-labelledby="k-ubah3">
+      <h2 id="k-ubah3">Perubahan ronde 3</h2>
+      <div class="tbl-gulir">
+      <table class="k-tbl">
+        <thead><tr><th scope="col">Sumber</th><th scope="col">Catatan</th><th scope="col">Yang dikerjakan</th></tr></thead>
+        <tbody>
+          <tr><td>Juri A 1</td><td>Tepi rangkap di section bawah</td><td>Strip kiri 8 px dan strip daftar 3 px dihapus. Lembar section memakai tembusan 6/8 dan 12/16 px, nota mini 4/6 dan 8/12 px, kupon dan blok formulir juga bertembusan.</td></tr>
+          <tr><td>Juri A 2</td><td>Perforasi berlubang, bukan garis putus-putus</td><td>Semua pemisah, kaki nota, kabel hero, dan footer jadi deretan lubang bulat dengan takik setengah lingkaran. Garis putus-putus: 0.</td></tr>
+          <tr><td>Juri A 3</td><td>Paku berskala hero</td><td>Paku 120 x 230 px berdiri di kanan tumpukan dengan dua slip lama. Tandai lunas menyobek tembusan kuning dari tumpukan dan menancapkannya di paku. Slot ketiga hanya status.</td></tr>
+          <tr><td>Juri A 4</td><td>Penutup jadi kupon sobek</td><td>Lembar bertembusan dengan janji bertabel, tanda tangan "Hormat kami, Neracaku", dan kupon di kanan perforasi tegak (labelnya diganti di ronde 4).</td></tr>
+          <tr><td>Amandemen</td><td>Section bawah tanpa kerangka generik</td><td>Buku bonggol, dua lembar di meja, blok formulir, kupon sobek. Judul tercetak di dalam bendanya.</td></tr>
+          <tr><td>Juri C 1</td><td>Tiga tujuan di layar pertama HP</td><td>Baris chip "Satu nota, tiga tujuan" di bawah CTA (HP), tombol Kirim nota jadi bergaris.</td></tr>
+          <tr><td>Juri C 2</td><td>Subjudul jujur</td><td>"siap dikirim ke pelanggan lewat WhatsApp-mu".</td></tr>
+          <tr><td>Juri C 3</td><td>Label kuota</td><td>"(angka contoh, belum final)" di hero dan kupon.</td></tr>
+          <tr><td>Juri C 4</td><td>Rumus PPh 21 + Desember</td><td>Rumus Januari sampai November + pengecualian masa pajak terakhir, pilihan bulan di kalkulator, sumber PMK 168/2023 Pasal 1 dan 15 (dicek di JDIH BPK; aturan ini ada di Pasal 15, bukan Pasal 9).</td></tr>
+          <tr><td>Juri C 5</td><td>Label slot</td><td>"Tembusan merah muda ke buku kas", "Tembusan kuning ke pengingat".</td></tr>
+          <tr><td>Juri B (opsional)</td><td>Status ganda, tautan WA terpotong</td><td>Tombol disembunyikan setelah lunas (status hanya di chip). Tautan neracaku.id/n/DN-0451 di gelembung WA selalu tampil di baris sendiri.</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </section>
+
+    <section class="k-sek" aria-labelledby="k-ubah4">
+      <h2 id="k-ubah4">Perubahan ronde 4</h2>
+      <div class="tbl-gulir">
+      <table class="k-tbl">
+        <thead><tr><th scope="col">Sumber</th><th scope="col">Catatan</th><th scope="col">Yang dikerjakan</th></tr></thead>
+        <tbody>
+          <tr><td>Juri C 1</td><td>Tanggal pelunasan salah</td><td>Setelah Tandai lunas, baris buku kas jadi "Sab 3 Okt, Pelunasan Bu Rina, uang masuk" (tanggal bayar), bukan tanggal jatuh tempo. Ulangi contoh mengembalikannya ke "Jum 9 Okt".</td></tr>
+          <tr><td>Juri C 2</td><td>Tautan WA tanpa label</td><td>Gelembung kini berakhir "Rincian dan cara bayar: neracaku.id/n/DN-0451. Terima kasih." di baris sendiri.</td></tr>
+          <tr><td>Juri A 1</td><td>Atas hero masih pembuka SaaS standar</td><td>Bagian atas jadi kop nota: garis kop 1,5 px di bawah judul, "No. 0001" (merah) dan "Tgl." bertitik isian di kanan seperti kepala nota, dan tiga penanda warna lembar di subjudul. Di HP penanda dan nomor disembunyikan, jarak dikompensasi: layar pertama tidak bertambah tinggi (tiga chip tetap berakhir di y 519).</td></tr>
+          <tr><td>Juri A 2</td><td>Kupon "Sobek di sini" + gunting adalah trope</td><td>Gunting dan "Sobek di sini" dibuang. Kupon kini berlabel "No. 0001, lembar asli nota pertamamu": nomor yang sama dengan kop hero, jadi halaman dibuka dan ditutup dengan nota pertama pengunjung. Perforasi tetap jadi tanda sobek.</td></tr>
+          <tr><td>Juri A 3</td><td>Judul melebar serumpun Soluslide</td><td>Archivo lebar tetap (inti resep kepala nota), tapi judul kini selalu duduk di kop bergaris dengan nomor seri, sesuatu yang tidak dimiliki merek lain.</td></tr>
+          <tr><td>Juri B</td><td>Bar lengket menutup fokus di 360</td><td><code>scroll-padding-bottom: 80px</code> di bawah 640 px, ditambah penjaga fokus yang menggulir elemen ke atas bar. Diuji Tab 44 kali di 360x640: 0 elemen tertutup, dengan dan tanpa reduced motion.</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </section>
+
+    <section class="k-sek" aria-labelledby="k-skor">
+      <h2 id="k-skor">Skor juri</h2>
+      <div class="skor"><!--SKOR--><style>.tabel-skor-wrap{max-width:100%;overflow-x:auto}.tabel-skor{border-collapse:collapse;font-size:15px;margin:8px 0 12px;font-variant-numeric:tabular-nums}.tabel-skor th,.tabel-skor td{border:1px solid currentColor;padding:4px 10px;text-align:left}.tabel-skor td+td,.tabel-skor th+th{text-align:right}</style><div class="tabel-skor-wrap"><table class="tabel-skor"><thead><tr><th>Juri</th><th>R1</th><th>R2</th><th>R3</th><th>R4</th></tr></thead><tbody><tr><td>Juri A, keunikan</td><td>77</td><td>84</td><td>93</td><td>95</td></tr><tr><td>Juri B, craft</td><td>86</td><td>96</td><td>97</td><td>98</td></tr><tr><td>Juri C, pasar</td><td>83</td><td>91</td><td>94</td><td>95</td></tr></tbody></table></div><p><b>Rata-rata ronde 4: 96,0.</b> Target 95 per juri. Lolos 95 di ketiga juri. Sisa: uji metafora nota rangkap dan paku nota ke pemilik warung dan penjual online, termasuk di luar Jawa.</p><p>Diuji di Chromium dengan emulasi ukuran layar 360 sampai 1440 px, belum di HP sungguhan.</p></div>
+    </section>
+
+  </div>
+</div>
+</main>
+
+<div class="lengket" id="lengket"><a class="tombol" href="#daftar" id="cta-lengket">Bikin nota pertama</a></div>
+
+<script>
+(function(){
+  var gerakOk = !window.matchMedia || !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var $ = function(s,r){return (r||document).querySelector(s)};
+  var $$ = function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+  var KUNCI = 'neracaku-draf-nota';
+
+  function angka(v){var d=String(v).replace(/\D/g,'');return d?parseInt(d,10):0}
+  function ribuan(n){return String(n).replace(/\B(?=(\d{3})+(?!\d))/g,'.')}
+  function rp(n){return 'Rp'+ribuan(n)}
+
+  var SAT=['','satu','dua','tiga','empat','lima','enam','tujuh','delapan','sembilan','sepuluh','sebelas'];
+  function tb(n){
+    if(n<12) return SAT[n];
+    if(n<20) return tb(n-10)+' belas';
+    if(n<100) return tb(Math.floor(n/10))+' puluh'+(n%10?' '+tb(n%10):'');
+    if(n<200) return 'seratus'+(n-100?' '+tb(n-100):'');
+    if(n<1000) return tb(Math.floor(n/100))+' ratus'+(n%100?' '+tb(n%100):'');
+    if(n<2000) return 'seribu'+(n-1000?' '+tb(n-1000):'');
+    if(n<1e6) return tb(Math.floor(n/1000))+' ribu'+(n%1000?' '+tb(n%1000):'');
+    if(n<1e9) return tb(Math.floor(n/1e6))+' juta'+(n%1e6?' '+tb(n%1e6):'');
+    if(n<1e12) return tb(Math.floor(n/1e9))+' miliar'+(n%1e9?' '+tb(n%1e9):'');
+    return tb(Math.floor(n/1e12))+' triliun'+(n%1e12?' '+tb(n%1e12):'');
+  }
+  function terbilang(n){return n===0?'nol rupiah':tb(n)+' rupiah'}
+
+  /* ---------- lembar nota ---------- */
+  var modeInvoice=false;
+  var ids=['q0','n0','h0','q1','n1','h1'];
+  try{
+    var simpan=JSON.parse(localStorage.getItem(KUNCI)||'null');
+    if(simpan&&simpan.v){ids.forEach(function(id,i){if(simpan.v[i]!=null) $('#'+id).value=simpan.v[i]})}
+  }catch(e){}
+
+  var rembesT;
+  function hitung(){
+    var total=0;
+    [0,1].forEach(function(i){
+      var j=angka($('#q'+i).value)*angka($('#h'+i).value);
+      total+=j; $('[data-jml="'+i+'"]').textContent=rp(j);
+    });
+    var dp=Math.round(total*0.5), sisa=total-dp;
+    $('#v-total').textContent=rp(total);
+    $('#v-dp').textContent=rp(dp);
+    $('#v-sisa').textContent=rp(sisa);
+    $('#terbilang').textContent=terbilang(sisa);
+    $$('[data-k="sisa"]').forEach(function(el){el.textContent=rp(sisa)});
+    $$('[data-k="dp"]').forEach(function(el){el.textContent=rp(dp)});
+    $('#pesan-wa').textContent='Halo Bu Rina, ini nota pesanan untuk Sabtu, 10 Oktober. Sisa pembayaran '+rp(sisa)+', mohon dilunasi paling lambat Jumat, 9 Oktober.';
+    $('#wa-link').textContent='neracaku.id/n/'+(modeInvoice?'INV-2026-10-0451':'DN-0451');
+    return sisa;
+  }
+  function rembes(){
+    if(!gerakOk) return;
+    $$('[data-karbon]').forEach(function(k){k.classList.add('rembes')});
+    clearTimeout(rembesT);
+    rembesT=setTimeout(function(){$$('[data-karbon]').forEach(function(k){k.classList.remove('rembes')})},160);
+  }
+  ids.forEach(function(id){
+    var el=$('#'+id);
+    el.addEventListener('input',function(){
+      if(el.classList.contains('angka')){var n=angka(el.value);el.value=n?(id.charAt(0)==='h'?ribuan(n):String(n)):'';}
+      hitung(); rembes();
+      try{localStorage.setItem(KUNCI,JSON.stringify({v:ids.map(function(x){return $('#'+x).value}),t:Date.now()}))}catch(e){}
+    });
+  });
+
+  /* ---------- nota / invoice resmi ---------- */
+  $$('.meja .pilih button').forEach(function(b){
+    b.addEventListener('click',function(){
+      modeInvoice=b.getAttribute('data-mode')==='invoice';
+      $$('.meja .pilih button').forEach(function(x){x.setAttribute('aria-pressed',String(x===b))});
+      $('#lembar').classList.toggle('mode-invoice',modeInvoice);
+      $$('[data-k="no"]').forEach(function(el){el.textContent=modeInvoice?'No. INV/2026/10/0451':'No. DN-0451'});
+      $('#slip-no').textContent=modeInvoice?'INV/2026/10/0451':'DN-0451';
+      $('#lembar').setAttribute('aria-label',modeInvoice?'Contoh invoice resmi yang bisa diisi':'Contoh nota yang bisa diisi');
+      hitung();
+    });
+  });
+
+  /* ---------- kirim & lunas ---------- */
+  var tahap=0;
+  var chip=$('#chip-status'), aksi=$('#tombol-aksi');
+  var IKON={
+    nota:'<svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><rect x="2.5" y="1.5" width="9" height="11" rx="1" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M5 5h4M5 7.5h4" stroke="currentColor" stroke-width="1.4"/></svg>',
+    jam:'<svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><circle cx="7" cy="7" r="5.5" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M7 4v3.2l2 1.3" fill="none" stroke="currentColor" stroke-width="1.4"/></svg>',
+    paku:'<svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M7 1.5v8" stroke="currentColor" stroke-width="1.4"/><path d="M3 12.5h8" stroke="currentColor" stroke-width="1.6"/><path d="M4.5 6h5v3h-5z" fill="none" stroke="currentColor" stroke-width="1.2"/></svg>'
+  };
+  function setChip(ikon,teks){chip.innerHTML=IKON[ikon]+'<span>'+teks+'</span>'}
+  var INGAT_AWAL=$('#ingat-teks').innerHTML;
+
+  function terbang(asal,tujuan,tunda){
+    return new Promise(function(selesai){
+      if(!gerakOk||!asal.animate){selesai();return}
+      var a=asal.getBoundingClientRect(), t=tujuan.getBoundingClientRect();
+      var c=asal.cloneNode(true);
+      c.removeAttribute('id'); c.setAttribute('aria-hidden','true');
+      var gaya=getComputedStyle(asal);
+      c.style.cssText='position:fixed;left:'+a.left+'px;top:'+a.top+'px;width:'+a.width+'px;height:'+a.height+'px;margin:0;z-index:50;pointer-events:none;background:'+gaya.backgroundColor+';border:1px solid rgba(21,22,28,.12);border-radius:2px;overflow:hidden';
+      document.body.appendChild(c);
+      var dx=(t.left+t.width/2)-(a.left+a.width/2), dy=(t.top+Math.min(t.height,a.height)/2)-(a.top+a.height/2);
+      var an=c.animate([{transform:'translate(0,0)',opacity:1},{transform:'translate('+dx+'px,'+dy+'px)',opacity:1,offset:.85},{transform:'translate('+dx+'px,'+dy+'px)',opacity:0}],{duration:520,delay:tunda,easing:'cubic-bezier(.2,.8,.2,1)',fill:'both'});
+      an.onfinish=function(){c.remove();selesai()};
+    });
+  }
+  function kirim(){
+    tahap=1; aksi.disabled=true;
+    var tumpuk=$('#tumpuk');
+    Promise.all([
+      terbang($('.kaki',tumpuk),$('#slot-asli .gelembung'),0),
+      terbang($('.t-merah .karbon',tumpuk),$('#slot-kas .kas'),80),
+      terbang($('.t-kuning .karbon',tumpuk),$('#ingat-teks'),160)
+    ]).then(function(){
+      ['#slot-asli','#slot-kas','#slot-ingat'].forEach(function(s){$(s).setAttribute('data-terisi','1')});
+      $('#st-asli').textContent='Terkirim 09.12';
+      $('#st-kas').textContent='Tercatat';
+      $('#st-ingat').textContent='Aktif, Sel 6 Okt';
+      setChip('jam','Belum lunas, jatuh tempo Jum 9 Okt');
+      aksi.textContent='Tandai lunas'; aksi.disabled=false;
+      $('#cta-utama').textContent='Kirim nota ini sungguhan';
+      $('#cta-lengket').textContent='Kirim nota ini sungguhan';
+      $('#mikro-cta').innerHTML='<strong>Isianmu tersimpan di perangkat ini</strong> dan jadi draf nota pertamamu setelah daftar. Daftar lewat nomor WhatsApp atau Google.';
+      $('#catatan-demo').innerHTML='Nota terkirim (contoh). Tekan <b>Tandai lunas</b> untuk menyobek tembusan kuning ke paku nota.';
+    });
+  }
+  function lunas(){
+    tahap=2; aksi.disabled=true;
+    var slip=$('#slip'), tempat=$('#paku-tempat');
+    function akhir(){
+      tempat.appendChild(slip); slip.style.transform='';
+      $('#kas-sisa-tgl').textContent='Sab 3 Okt';
+      $('#kas-sisa-ket').innerHTML='Pelunasan Bu Rina <em>uang masuk</em>';
+      $('#kas-sisa-nom').classList.add('masuk');
+      $('#st-ingat').textContent='Di paku';
+      $('#ingat-teks').innerHTML='<b>Lunas.</b> Tembusan kuning sudah di paku nota, pengingat berhenti.';
+      setChip('paku','Lunas, Sab 3 Okt');
+      aksi.hidden=true;
+      $('#catatan-demo').innerHTML='Lunas. Tembusan kuning sudah tertancap di paku nota. <button type="button" id="ulang">Ulangi contoh</button>';
+      $('#ulang').addEventListener('click',ulang);
+    }
+    $('#tumpuk').classList.add('lunas');
+    if(!gerakOk||!slip.animate){akhir();return}
+    var a=slip.getBoundingClientRect(), t=tempat.getBoundingClientRect();
+    var dx=t.left-a.left, dy=t.top-a.top;
+    var an=slip.animate([
+      {transform:'translate(0,0)'},
+      {transform:'translate(6px,10px)',offset:.3},
+      {transform:'translate('+dx+'px,'+dy+'px)'}
+    ],{duration:560,delay:120,easing:'cubic-bezier(.2,.8,.2,1)',fill:'forwards'});
+    an.onfinish=function(){an.cancel();akhir()};
+  }
+  function ulang(){
+    tahap=0;
+    var slip=$('#slip'); $('#tumpuk').insertBefore(slip,$('#tumpuk').firstChild);
+    $('#tumpuk').classList.remove('lunas');
+    ['#slot-asli','#slot-kas','#slot-ingat'].forEach(function(s){$(s).setAttribute('data-terisi','0')});
+    $('#st-asli').textContent='Belum dikirim';
+    $('#st-kas').textContent='Belum dicatat';
+    $('#st-ingat').textContent='Belum aktif';
+    $('#ingat-teks').innerHTML=INGAT_AWAL; hitung();
+    $('#kas-sisa-tgl').textContent='Jum 9 Okt';
+    $('#kas-sisa-ket').innerHTML='Sisa Bu Rina <em>belum dibayar</em>';
+    $('#kas-sisa-nom').classList.remove('masuk');
+    setChip('nota','Belum dikirim');
+    aksi.hidden=false; aksi.textContent='Kirim nota'; aksi.disabled=false;
+    $('#catatan-demo').innerHTML='Contoh usaha fiktif. Coba ubah jumlah atau harga, lalu tekan <b>Kirim nota</b>.';
+  }
+  aksi.addEventListener('click',function(){if(tahap===0)kirim();else if(tahap===1)lunas()});
+
+  /* ---------- nada pengingat ---------- */
+  var NADA=[
+    ['Halo Bu Rina, sekadar mengingatkan nota DN-0451 sebesar Rp580.000 jatuh tempo Jumat, 9 Oktober. Rincian dan cara bayar ada di tautan ini: neracaku.id/n/DN-0451. Terima kasih, Bu.','Dijadwalkan Selasa, 6 Oktober 2026. Neracaku memberi tahu kamu, lalu kamu kirim dengan satu ketukan.'],
+    ['Halo Bu Rina, hari ini jatuh tempo nota DN-0451 sebesar Rp580.000. Kalau sudah transfer, bukti bayarnya bisa dikirim lewat tautan ini: neracaku.id/n/DN-0451. Terima kasih.','Dijadwalkan Jumat, 9 Oktober 2026.'],
+    ['Halo Bu Rina, nota DN-0451 sebesar Rp580.000 sudah lewat 7 hari dari jatuh tempo (9 Oktober). Mohon dilunasi paling lambat Senin, 19 Oktober. Rincian: neracaku.id/n/DN-0451. Terima kasih.','Dijadwalkan Jumat, 16 Oktober 2026.']
+  ];
+  $$('.nada button').forEach(function(b){
+    b.addEventListener('click',function(){
+      var i=+b.getAttribute('data-nada');
+      $$('.nada button').forEach(function(x){x.setAttribute('aria-pressed',String(x===b))});
+      $('#pesan-nada').textContent=NADA[i][0]; $('#pesan-tgl').textContent=NADA[i][1];
+    });
+  });
+
+  /* ---------- kalkulator PPh 21 TER (baris terverifikasi dari Lampiran PP 58/2023) ---------- */
+  var TER={
+    A:[[5400000,0],[5650000,.25],[5950000,.5],[6300000,.75],[6750000,1],[7500000,1.25],[8550000,1.5],[9650000,1.75],[10050000,2],[10350000,2.25],[10700000,2.5],[11050000,3],[11600000,3.5],[12500000,4],[13750000,5],[15100000,6],[16950000,7],[19750000,8],[24150000,9],[26450000,10]],
+    B:[[6200000,0],[6500000,.25],[6850000,.5],[7300000,.75],[9200000,1],[10750000,1.5],[11250000,2],[11600000,2.5],[12600000,3],[13600000,4],[14950000,5],[16400000,6],[18450000,7],[21850000,8],[26000000,9]],
+    C:[[6600000,0],[6950000,.25],[7350000,.5],[7800000,.75],[8850000,1],[9800000,1.25],[10950000,1.5],[11200000,1.75],[12050000,2],[12950000,3],[14150000,4],[15550000,5],[17050000,6],[19500000,7],[22700000,8]]
+  };
+  var BULAN=['','Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November'];
+  function kat(s){return ({'TK/0':'A','TK/1':'A','K/0':'A','TK/2':'B','TK/3':'B','K/1':'B','K/2':'B','K/3':'C'})[s]}
+  function koma(x){return String(x).replace('.',',')}
+  $('#form-pph').addEventListener('submit',function(e){
+    e.preventDefault();
+    var h=$('#pph-hasil'), bl=$('#pph-bulan').value;
+    if(bl==='akhir'){h.innerHTML='Desember atau bulan terakhir bekerja tidak memakai TER. PPh 21 setahun dihitung ulang dengan tarif Pasal 17, lalu dikurangi potongan bulan-bulan sebelumnya. Butuh total gaji setahun, jadi dihitung di halaman alat lengkap.';return}
+    var k=kat($('#pph-status').value), b=angka($('#pph-bruto').value), t=TER[k], tarif=null;
+    for(var i=0;i<t.length;i++){if(b<=t[i][0]){tarif=t[i][1];break}}
+    if(tarif===null){h.innerHTML=BULAN[+bl]+', kategori '+k+'. Untuk gaji di atas '+rp(t[t.length-1][0])+', lihat tabel TER lengkap di halaman alat.';return}
+    var p=Math.floor(b*tarif/100);
+    h.innerHTML=BULAN[+bl]+', kategori '+k+', tarif '+koma(tarif)+'%. PPh 21 bulan ini <b>'+rp(p)+'</b>.';
+  });
+  $('#pph-bruto').addEventListener('input',function(){var n=angka(this.value);this.value=n?ribuan(n):''});
+
+  /* ---------- perforasi terbuka & CTA lengket ---------- */
+  if('IntersectionObserver' in window){
+    if(gerakOk){
+      var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){var t=e.target.querySelector(':scope>.perfo');t.classList.remove('siap');t.classList.add('bergerak');io.unobserve(e.target)}})},{threshold:.5});
+      $$('.wrap>.perfo').forEach(function(s){if(s.getBoundingClientRect().top>innerHeight){s.classList.add('siap');io.observe(s.parentElement)}});
+    }
+    var lengket=$('#lengket');
+    var io2=new IntersectionObserver(function(es){es.forEach(function(e){lengket.classList.toggle('tampil',!e.isIntersecting&&e.boundingClientRect.top<0)})});
+    io2.observe($('#cta-utama'));
+    document.addEventListener('focusin',function(e){
+      if(!lengket.classList.contains('tampil')||lengket.contains(e.target))return;
+      var r=e.target.getBoundingClientRect(), batas=innerHeight-lengket.offsetHeight-12;
+      if(r.bottom>batas) window.scrollBy({top:r.bottom-batas,behavior:'instant'});
+    });
+  }
+
+  hitung();
+})();
+</script>
+</body>
+</html>

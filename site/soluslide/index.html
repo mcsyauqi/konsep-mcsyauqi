@@ -2,1077 +2,806 @@
 <html lang="id">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
-<title>Soluslide: Konsep Desain</title>
-<meta name="description" content="Konsep desain Soluslide, AI pembuat PPT dengan template lokal, ekspor .pptx yang bisa disunting, dan bayar QRIS. Arah: Ruang Sorot.">
+<title>Soluslide</title>
+<meta name="description" content="Soluslide, AI pembuat presentasi berbahasa Indonesia. Ketik topik atau unggah dokumen, unduh .pptx yang bisa diedit, bayar Rupiah lewat QRIS.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:wght@400..700&family=Lexend+Exa:wght@400..600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Onest:wght@400;500;600;700;800&family=Outfit:wght@400;500;700;800&display=swap">
 <style>
-/* Semua angka memakai digit Lexend Exa (nol tanpa garis); berkasnya sama dengan link css2 Google Fonts di atas */
-@font-face{font-family:"Angka Soluslide";font-style:normal;font-weight:400 600;font-display:swap;src:url(assets/lexend-exa-angka.woff2) format("woff2");unicode-range:U+0030-0039}
 :root{
-  --gelap-ruang:#181614;
-  --dinding:#201E1C;
-  --meja-operator:#2C2621;
-  --tepi-meja:#3D3A36;
-  --panel-uji:#22201E;
-  --garis-kontrol:#7A7772;
-  --teks-terang:#EDEDEB;
-  --teks-redup:#A6A9AF;
-  --layar-menyala:#FFFFFF;
-  --tinta-slide:#15171A;
-  --laser:#FF5A47;
-  --cahaya-sorot:#FFF1D6;
-  --permukaan-terang:#EEEFF1;
-  --abu-terang:#5B5F67;
-  --garis-terang:#8A8E96;
-  --pelat-saklar:#E9EAEC;
-  --aluminium:#8B9097;
-  --aluminium-sorot:#B9BDC3;
-  --pastel-latar:#E6EEF7;
-  --pastel-judul:#4E6C93;
-  --pastel-isi:#6D88AA;
-  --f-display:"Lexend Exa",system-ui,sans-serif;
-  --f-ui:"Angka Soluslide","Atkinson Hyperlegible Next",system-ui,-apple-system,"Segoe UI",sans-serif;
-  --lampu:.15;
-  --faktor:.4;
-  --kontainer:1240px;
+  --ink:#043438;          /* teks utama (peran: navy referensi) */
+  --muted:#64666b;        /* teks sekunder */
+  --body:#38383c;         /* teks daftar */
+  --cta:#0a6567;          /* tombol utama */
+  --accent:#0b7d7f;       /* aksen teal, tombol fitur 1, tautan */
+  --gold:#a16207;         /* aksen fitur 2 */
+  --leaf:#3f7d20;         /* aksen fitur 3 */
+  --line:#dfdfe0;
+  --sky:rgb(120,202,196);
+  --mist:rgb(228,244,241);
+  --wbtn-border:rgb(196,234,229);
+  --sans:'Onest',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --display:'Outfit','Onest',system-ui,sans-serif;
+  --serif:'DM Serif Display',Georgia,serif;
 }
-*,*::before,*::after{box-sizing:border-box}
-html{-webkit-text-size-adjust:100%}
-body{margin:0;background:var(--gelap-ruang);color:var(--teks-terang);font:400 18px/1.55 var(--f-ui);font-variant-numeric:tabular-nums}
-img,svg{display:block;max-width:100%}
-a{color:inherit}
-button,input,select{font:inherit;color:inherit}
-:focus-visible{outline:2px solid var(--laser);outline-offset:2px}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{font-family:var(--sans);font-weight:500;font-size:16px;line-height:1.5;color:var(--ink);background:#fff;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+img{display:block;max-width:100%}
+.wrap{width:min(1268px,calc(100% - 32px));margin:0 auto}
+.ic{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-.wrap{width:min(var(--kontainer),100% - 64px);margin-inline:auto}
-h1,h2,h3{font-family:var(--f-display);font-weight:600;letter-spacing:-.01em;margin:0}
-h2,h3{text-wrap:balance}
-.harga-angka{font-family:var(--f-display);font-weight:600;letter-spacing:-.01em}
 
-/* ---------- NAV ---------- */
-.nav{position:relative;z-index:5;display:flex;align-items:center;gap:28px;height:64px;padding-inline:32px}
-.merek{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:var(--f-display);font-weight:600;font-size:18px;letter-spacing:0}
-.merek svg{width:30px;height:22px}
-.nav-tautan{display:flex;gap:24px;margin-left:12px;font-size:15px}
-.nav-tautan a{text-decoration:none;color:var(--teks-terang)}
-.nav-tautan a:hover{text-decoration:underline;text-underline-offset:4px}
-.nav-kanan{margin-left:auto;display:flex;align-items:center;gap:16px;font-size:15px}
-.bahasa{display:flex;border:1px solid var(--teks-redup);border-radius:4px;overflow:hidden}
-.bahasa button{background:none;border:0;padding:6px 10px;font-size:14px;font-weight:700;cursor:pointer;color:var(--teks-terang);min-width:40px}
-.bahasa button[aria-pressed="true"]{background:var(--teks-terang);color:var(--gelap-ruang)}
-.nav-masuk{text-decoration:none;color:var(--teks-terang)}
-.tombol-layar{position:relative;isolation:isolate;display:inline-flex;align-items:center;justify-content:center;gap:0;background:transparent;color:var(--gelap-ruang);border:0;border-radius:2px;padding:0 18px;height:44px;font-weight:700;font-size:16px;text-decoration:none;cursor:pointer;white-space:nowrap}
-.tombol-layar .sm{margin-left:.28em}
-.tombol-layar::before{content:"";position:absolute;inset:0;z-index:-1;background:var(--layar-menyala);clip-path:polygon(0 0,100% 0,calc(100% - 6px) 100%,6px 100%)}
-.tombol-layar:hover::before{background:#E3E4E6}
-.nav .tombol-layar{height:38px;font-size:15px;padding:0 14px}
+/* ---------- tombol ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;height:48px;padding:0 32px;border-radius:24px;border:1px solid transparent;font:600 18px/1.2 var(--sans);white-space:nowrap;transition:transform .15s ease,filter .15s ease,box-shadow .15s ease}
+.btn:hover{transform:translateY(-1px);filter:brightness(1.08)}
+.btn-cta{background:var(--cta);color:#fff}
+.btn-ghost{background:#fff;color:var(--ink);border-color:var(--wbtn-border);box-shadow:0 2px 4px rgba(255,255,255,.48);padding:0 24px}
+.btn-sm{height:40px;padding:0 24px;font-size:16px}
 
-/* ---------- HERO: RUANG PROYEKSI ---------- */
-.ruang{position:relative;min-height:max(780px,100svh);display:grid;grid-template-rows:auto 1fr auto;grid-template-columns:minmax(0,1fr);
-  background:color-mix(in srgb,#55524E calc(var(--lampu)*100%),var(--gelap-ruang));overflow:hidden}
-.dinding{--lebar:min(680px,calc(100vw - 460px),max(600px,calc((100svh - 520px) * 1.778)));position:relative;padding:6px 24px 62px;min-width:0;align-self:center}
-.sorot{position:relative;width:var(--lebar);display:grid;container-type:inline-size}
-.papan{--pkiri:72px;--pkanan:190px;position:relative;width:max-content;max-width:100%;
-  margin-left:max(0px,calc(50% - var(--lebar) / 2 - var(--pkiri) - 6px));
-  padding:22px var(--pkanan) 28px var(--pkiri);border:6px solid color-mix(in srgb,var(--aluminium) calc(45% + var(--lampu)*55%),#3E4146);border-radius:3px;
-  box-shadow:inset 0 0 0 1px var(--aluminium-sorot);
-  background:color-mix(in srgb,#E4E5E7 calc(var(--lampu)*100%),#262422)}
-.bekas-spidol{position:absolute;right:28px;top:34px;width:min(190px,calc(var(--pkanan) - 50px));height:auto;opacity:.07;pointer-events:none}
-.baki{position:absolute;left:10%;right:10%;bottom:-16px;height:10px;border-radius:1px;background:var(--aluminium);box-shadow:inset 0 1px 0 var(--aluminium-sorot)}
-.baki span{position:absolute;top:-5px;height:6px;border-radius:3px}
-.baki .sp-a{left:14%;width:46px;background:#2B2D31}
-.baki .sp-b{left:calc(14% + 54px);width:40px;background:#4E5157}
-.baki .penghapus{right:16%;width:54px;height:9px;top:-8px;border-radius:2px;background:#3B3E44;box-shadow:inset 0 3px 0 #6B6F76}
-.layar-tarik{display:none}
-.jejak{position:absolute;z-index:1;inset:-7% -6.5% -2.5% -6.5%;clip-path:polygon(0 0,100% 0,94.5% 100%,5.5% 100%);
-  background:var(--cahaya-sorot);opacity:calc(.16 * (1 - var(--lampu) * .85));pointer-events:none}
-.gambar{position:relative;z-index:3;display:grid;aspect-ratio:16/9;min-width:0;transform-origin:50% 100%}
-.gambar > *{grid-area:1/1}
-.gambar.koreksi{animation:koreksi .52s cubic-bezier(.2,.8,.2,1) both}
-@keyframes koreksi{from{transform:perspective(900px) rotateX(-11deg) scaleX(1.07)}to{transform:none}}
-.slide{position:relative;background:var(--layar-menyala);color:var(--tinta-slide);display:flex;flex-direction:column;padding:5.6cqw 6.2cqw 3.8cqw;transition:background-color .2s}
-.slide h1{font-size:max(22px,6.3cqw);line-height:1.1;letter-spacing:-.015em}
-.slide h1 span{display:block;text-wrap:balance}
-.slide h1 .baris-dua{font-size:max(15px,3.35cqw);line-height:1.25;margin-top:1.6cqw;letter-spacing:-.005em}
-.slide-badan{display:grid;grid-template-columns:minmax(0,1.12fr) minmax(0,1fr);gap:4.4cqw;align-items:start;margin-top:3cqw}
-.slide-isi{font-size:max(14px,2.3cqw);line-height:1.5;margin:0;text-wrap:pretty}
-.slide-kaki{display:flex;justify-content:space-between;gap:12px;margin-top:auto;padding-top:1.6cqw;border-top:1px solid currentColor;font-size:max(14px,1.5cqw)}
-.slide[data-tema="pastel"]{background:var(--pastel-latar);color:var(--pastel-isi)}
-.slide[data-tema="pastel"] h1 .baris-satu{color:var(--pastel-judul)}
-.cahaya-ruang{position:absolute;inset:0;background:var(--cahaya-sorot);opacity:calc(var(--lampu)*var(--faktor));pointer-events:none}
-.hotspot{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 72% 70% at 50% 46%,transparent 52%,rgba(20,21,23,.08) 100%)}
+/* ---------- navbar ---------- */
+.nav{position:sticky;top:0;z-index:60;height:56px;padding:2px 0;background:rgba(255,255,255,.8);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
+.nav-in{display:flex;align-items:center;height:52px}
+.logo{display:flex;align-items:center;height:33px;padding:0 8px;margin-left:-8px;width:144px}
+.logo svg{height:20px;width:auto}
+.nav-links{display:flex;gap:8px;margin-left:0}
+.nl{display:inline-flex;align-items:center;height:40px;padding:0 16px;border-radius:24px;font:500 16px/1.2 var(--sans);color:var(--ink);transition:background .15s}
+.nl:hover{background:rgba(4,52,56,.06)}
+.nav-right{display:flex;align-items:center;gap:7px;margin-left:auto}
+.lang{position:relative}
+.lang .nl{gap:8px}
+.lang-menu{position:absolute;right:0;top:46px;min-width:170px;padding:6px;background:#fff;border-radius:12px;box-shadow:0 10px 30px rgba(4,52,56,.14),0 1px 2px rgba(0,0,0,.06);display:none}
+.lang.open .lang-menu{display:block}
+.lang-menu a{display:flex;justify-content:space-between;padding:9px 12px;border-radius:8px;font-size:15px}
+.lang-menu a:hover{background:var(--mist)}
+.lang-menu a[aria-current] {color:var(--accent);font-weight:700}
+.nav-right .btn{height:40px;min-width:164px;font-size:16px;font-weight:500;margin-left:13px}
+.burger,.globe-m{display:none;width:40px;height:40px;align-items:center;justify-content:center}
+.mnav{display:none}
 
-/* Figur pembanding statis: aula terang */
-.banding{margin:0;font-size:max(14px,1.75cqw);line-height:1.35}
-.banding-judul{display:block;font-weight:700;margin-bottom:1.2cqw}
-.banding-duo{display:grid;grid-template-columns:1fr 1fr;gap:2.2cqw}
-.banding-duo figcaption,.banding-ket{display:block;margin-top:.9cqw}
-.mini-proj{position:relative;aspect-ratio:16/9;padding:9% 10%;display:flex;flex-direction:column;gap:7%;border:1px solid rgba(21,23,26,.18)}
-.mini-proj i{display:block;height:6%;min-height:3px;border-radius:1px}
-.mini-proj i.mp-judul{height:11%;width:70%}
-.mini-proj i.pendek{width:55%}
-.mini-proj.pastel{background:#F0EFEA}
-.mini-proj.pastel i{background:#A7B2BC}
-.mini-proj.pastel i.mp-judul{background:#95A1AE}
-.mini-proj.solus{background:#FFF9EF}
-.mini-proj.solus i{background:#736E65}
-.titik-laser{position:absolute;left:58%;top:15%;width:10px;height:10px;border-radius:50%;background:var(--laser);box-shadow:0 0 0 3px rgba(255,90,71,.28)}
-.banding-ket b{font-weight:700}
-.banding-angka{margin:.9cqw 0 0;font-size:max(14px,1.5cqw);color:#4A4E56}
-.banding-ket .buruk{color:inherit;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:3px}
+/* ---------- hero ---------- */
+.hero{position:relative;height:660px;overflow:hidden}
+.hero .wrap{display:grid;grid-template-columns:507px minmax(0,1fr);column-gap:50px;height:100%}
+.hero-copy{align-self:center;position:relative;z-index:2}
+.mark{display:block;width:44px;height:62px;margin-bottom:22px}
+.hero h1{font:700 60px/60px var(--display);letter-spacing:-1.2px;color:var(--ink)}
+.hero p{margin-top:24px;font-size:18px;line-height:27px;color:var(--muted)}
+.hero-btns{display:flex;gap:12px;margin-top:24px}
+.hero-btns .btn{min-width:178px}
+.play{width:14px;height:14px;fill:currentColor}
+.hero-media{position:relative;height:100%}
+.vmarq{position:absolute;left:0;right:0;top:0;transform:translateY(-117px);animation:vmarq 60s linear infinite;will-change:transform}
+@keyframes vmarq{from{transform:translateY(-117px)}to{transform:translateY(-1825px)}}
+.slide{position:relative;height:400px;margin-bottom:27px;border-radius:24px;overflow:hidden;background-size:cover;background-position:right center}
+.slide .stitle{position:absolute;left:32px;top:50px;padding:6px 14px 10px;border:1px solid rgba(255,255,255,.55);font:400 57px/1.04 var(--serif);letter-spacing:-.3px}
+.slide .bars{position:absolute;left:42px;top:200px;width:252px}
+.slide .bars i{display:block;height:11px;border-radius:3px;margin-bottom:10px;background:rgba(255,255,255,.45)}
+.slide .bars i:last-child{width:52%}
+.s1 .bars i{background:rgba(11,74,77,.16)}
+.s1{background-image:url(assets/hero-1.webp),linear-gradient(170deg,#3fa7a3 0%,#7fc8c0 45%,#f2b8a2 100%)}
+.s1 .stitle{color:#0b4a4d;border-color:rgba(11,74,77,.35);top:170px}
+.s1 .bars{top:312px}
+.s2{background-image:url(assets/hero-2.webp),linear-gradient(180deg,#9fd8d1 0%,#c7ece6 60%,#eef9f6 100%);background-position:left center}
+.s2 .stitle{left:auto;right:47px;top:94px;padding:14px 16px 17px;color:#0d5557;border-color:rgba(11,125,127,.45);min-width:308px;font-size:60px}
+.s2 .bars{left:auto;right:48px;top:274px;width:290px}
+.s2 .bars i{background:rgba(11,125,127,.22)}
+.s3{background-image:url(assets/hero-3.webp),linear-gradient(160deg,#f6c8a8 0%,#f4dccb 40%,#9fd3cd 100%)}
+.s3 .stitle{color:#0b4a4d;border-color:rgba(11,74,77,.35)}
+.s3 .bars i{background:rgba(11,74,77,.16)}
+.s4{background-image:url(assets/hero-4.webp),linear-gradient(160deg,#0f6f72 0%,#2f9e98 50%,#b7e3d9 100%)}
+.s4 .stitle{color:#0b4a4d;border-color:rgba(11,74,77,.35)}
+.s4 .bars i{background:rgba(11,74,77,.16)}
+.aipill{position:absolute;display:flex;align-items:center;gap:7px;height:30px;padding:0 10px 0 12px;background:#fff;border-radius:6px;box-shadow:0 2px 8px rgba(4,52,56,.15);font:500 14px/1 var(--sans);color:#245e60}
+.aipill .ic{color:var(--accent);width:18px;height:18px}
+.s2 .aipill{right:166px;top:76px}
+.cursor{position:absolute;width:26px;height:26px}
+.s2 .cursor{right:194px;top:100px}
+.vbar{position:absolute;right:27px;top:26px;bottom:18px;width:44px;background:#fff;border-radius:8px;box-shadow:0 2px 10px rgba(4,52,56,.16);display:flex;flex-direction:column;align-items:center;gap:20px;padding-top:16px;color:var(--accent)}
+.vbar .ic{width:17px;height:17px}
+.vbar hr{width:24px;border:0;border-top:1px solid #e3e7e7;margin:-6px 0}
 
-/* Bingkai varian layar */
-.bingkai-tv,.bingkai-daring{display:none}
-.ruang[data-layar="aula"] .papan{border-color:transparent;box-shadow:none;background:transparent}
-.ruang[data-layar="aula"] .baki,.ruang[data-layar="aula"] .bekas-spidol{display:none}
-.ruang[data-layar="aula"] .layar-tarik{display:block;position:absolute;left:calc(var(--pkiri) - 30px);width:calc(var(--lebar) + 60px);top:6px;height:10px;border-radius:3px;background:#3A3D43}
-.ruang[data-layar="aula"] .jejak{inset:-9% -8% -3% -8%}
-.ruang[data-layar="tv"] .papan,.ruang[data-layar="daring"] .papan{border-color:transparent;box-shadow:none;background:transparent}
-.ruang[data-layar="tv"] .baki,.ruang[data-layar="tv"] .bekas-spidol,.ruang[data-layar="daring"] .baki,.ruang[data-layar="daring"] .bekas-spidol{display:none}
-.ruang[data-layar="tv"] .bingkai-tv{display:block;position:absolute;z-index:4;inset:-14px;border:14px solid #0B0C0D;border-radius:6px;pointer-events:none}
-.ruang[data-layar="daring"] .bingkai-daring{display:flex;position:absolute;z-index:4;left:0;right:0;top:-30px;height:30px;align-items:center;gap:6px;padding:0 10px;background:#2B2E33;border-radius:4px 4px 0 0;font-size:14px;color:var(--teks-terang)}
-.bingkai-daring i{width:9px;height:9px;border-radius:50%;background:#5C6067;display:block}
-.bingkai-daring span{margin-left:8px}
-.ruang[data-layar="tv"] .beam,.ruang[data-layar="daring"] .beam,.ruang[data-layar="tv"] .jejak,.ruang[data-layar="daring"] .jejak{opacity:0}
+/* ---------- produk ---------- */
+.products{position:relative;height:1020px;padding-top:96px;background:linear-gradient(var(--sky) 13%,var(--sky) 50%,var(--mist) 90%,#fff 100%)}
+.pgrid{display:grid;grid-template-columns:1fr 1fr;column-gap:16px;position:relative;z-index:1}
+.pcol{display:flex;flex-direction:column;gap:16px}
+.pcard{display:flex;align-items:center;gap:24px;padding:0 24px 0 32px;background:#fff;border-radius:12px;box-shadow:0 1px 2px rgba(0,0,0,.05);transition:transform .2s ease,box-shadow .2s ease}
+.pcard:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(4,52,56,.10)}
+.pcard h3{font:700 30px/33px var(--sans);letter-spacing:-.6px;color:var(--ink)}
+.pcard p{margin-top:8px;color:var(--muted);font-size:16px;line-height:24px}
+.ptxt{flex:1;min-width:0}
+.thumb{position:relative;width:200px;flex:none}
+.clouds{position:absolute;left:0;right:0;top:840px;height:280px;z-index:3;pointer-events:none;overflow:hidden}
+.cloud{position:absolute;top:0;-webkit-mask-image:linear-gradient(#000 62%,transparent 96%);mask-image:linear-gradient(#000 62%,transparent 96%)}
+.cloud.l{left:-48px;width:535px;height:280px}
+.cloud.r{left:calc(50% + 248px);width:520px;height:280px}
 
-/* Berkas cahaya: lensa ke empat sudut jejak keystone */
-.beam{position:absolute;inset:0;z-index:2;pointer-events:none;width:100%;height:100%;transition:opacity .3s}
-.beam polygon{fill:var(--cahaya-sorot);opacity:calc(.28 * (1 - var(--lampu) * .8))}
-.beam line{stroke:var(--cahaya-sorot);stroke-width:1;opacity:calc(.35 * (1 - var(--lampu) * .8))}
-.beam .hangat{animation:hangat .9s ease-in both}
-@keyframes hangat{from{opacity:0}to{opacity:1}}
+/* thumbnail mini (CSS) */
+.t1 .sl{position:absolute;left:0;top:0;width:200px;height:122px;border-radius:5px;overflow:hidden;background:linear-gradient(160deg,#08474a,#0f6a6c 60%,#137b7c)}
+.t1 .sl b{position:absolute;left:14px;top:26px;width:170px;color:#fff;font:700 15px/17px var(--sans)}
+.t1 .sl i{position:absolute;left:14px;height:3px;border-radius:2px;background:rgba(255,255,255,.45)}
+.t1 .wave{position:absolute;left:-20px;right:-20px;top:72px;height:70px;background:linear-gradient(90deg,#9fe3d6,#f7c6a7 30%,#e9a6c0 55%,#a7d8f0 80%,#c6f0dc);border-radius:50% 50% 0 0/60% 40% 0 0;transform:rotate(-6deg);opacity:.95}
+.t1 .wave+.wave{top:88px;opacity:.7;transform:rotate(4deg);filter:hue-rotate(40deg)}
+.t1 .pl{position:absolute;left:12px;width:176px;top:122px;height:12px;border-radius:0 0 5px 5px;background:#7fb8b6}
+.t1 .pl+.pl{left:24px;width:152px;top:134px;height:13px;background:#c6dfdd}
+.t2{height:179px}
+.t2 .pg{position:absolute;top:0;height:179px;border-radius:4px;background:linear-gradient(#e2f2f0,#eef8f6 60%,rgba(255,255,255,0));}
+.t2 .pg.c{left:34px;width:136px;background:linear-gradient(#d3ece9,#e6f4f2 55%,rgba(255,255,255,0))}
+.t2 .pg.a{left:0;width:40px;top:20px;height:150px;opacity:.6}
+.t2 .pg.b{right:0;width:40px;top:20px;height:150px;opacity:.6}
+.t2 b{position:absolute;left:48px;top:20px;width:110px;font:600 15px/17px var(--sans);color:#13797a}
+.t2 i{position:absolute;left:48px;height:3px;border-radius:2px;background:#a9d6d2}
+.t2 .pie{position:absolute;top:84px;width:26px;height:26px;border-radius:50%;background:conic-gradient(#8fcfca 0 70%,#d9efec 0)}
+.t3{height:193px}
+.t3 .cd{position:absolute;left:40px;top:38px;width:124px;height:112px;border-radius:5px;background:linear-gradient(180deg,#5fb8b2,#8fcfc0 40%,#f0b79c 100%)}
+.t3 .cd b{position:absolute;left:12px;top:46px;width:100px;color:#fff;font:700 12px/14px var(--sans);text-align:center}
+.t3 .sq{position:absolute;width:20px;height:20px;border-radius:5px}
+.t4{height:147px}
+.t4 .pc{position:absolute;top:0;border-radius:4px}
+.t4 .pc.c{left:52px;width:91px;height:147px;background:linear-gradient(180deg,#5cbab3 0%,#8fd0c2 30%,#f3b38f 75%,#f6d7b0 100%);box-shadow:0 2px 6px rgba(0,0,0,.08)}
+.t4 .pc.a{left:3px;top:12px;width:54px;height:128px;background:linear-gradient(#cdebe7,#f5e4d7);opacity:.75;transform:rotate(-4deg)}
+.t4 .pc.b{left:139px;top:12px;width:56px;height:128px;background:linear-gradient(#cdebe7,#e8f1d7);opacity:.75;transform:rotate(4deg)}
+.t4 b{position:absolute;left:58px;top:54px;width:80px;color:#fff;text-align:center;font:700 13px/15px var(--sans)}
+.t4 i{position:absolute;height:3px;border-radius:2px;background:rgba(255,255,255,.7)}
+.t5{height:190px}
+.t5 .win{position:absolute;inset:0 0 0 0;border-radius:4px 4px 0 0;overflow:hidden;background:linear-gradient(180deg,#5fb1ad 0%,#7cc4bd 40%,#bfe5dc 70%,rgba(255,255,255,0) 100%)}
+.t5 .bar{height:12px;background:#e3e9e9;display:flex;gap:3px;align-items:center;padding-left:6px}
+.t5 .bar i{width:3px;height:3px;border-radius:50%;background:#7aa6a5}
+.t5 .nav-p{display:flex;gap:6px;justify-content:center;margin-top:18px}
+.t5 .nav-p i{width:26px;height:3px;border-radius:2px;background:rgba(255,255,255,.55)}
+.t5 b{display:block;text-align:center;margin-top:16px;color:#fff;font:600 17px/20px var(--sans)}
+.t5 .hill{position:absolute;bottom:20px;border-radius:50% 50% 0 0;height:46px}
+.t6{height:215px}
+.t6 .fc{position:absolute;top:44px;width:130px;height:150px;border-radius:6px}
+.t6 .fc.a{left:2px;background:#1f8f8c;transform:rotate(-9deg);top:60px}
+.t6 .fc.b{left:68px;background:#1f8f8c;transform:rotate(9deg);top:60px}
+.t6 .fc.c{left:38px;top:44px;background:linear-gradient(180deg,#05393c 0%,#0d5a5c 60%,#7ac9bf 100%)}
+.t6 b{position:absolute;left:44px;top:84px;width:118px;color:#fff;text-align:center;font:700 19px/20px var(--display);letter-spacing:-.3px}
+.t6 small{position:absolute;left:44px;top:128px;width:118px;color:rgba(255,255,255,.75);text-align:center;font:500 8px/1 var(--sans)}
 
-/* Laser interaktif */
-.laser{position:absolute;z-index:6;left:0;top:0;width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:50%;background:var(--laser);
-  box-shadow:0 0 0 4px rgba(255,90,71,.25);transition:transform .22s cubic-bezier(.2,.8,.2,1);pointer-events:none}
-.laser[hidden],.laser-catatan[hidden]{display:none}
-.laser-catatan{position:absolute;z-index:6;left:0;top:0;width:min(300px,calc(100vw - 48px));background:var(--dinding);border:1px solid var(--garis-kontrol);border-radius:4px;
-  padding:12px 14px;font-size:15px;line-height:1.45;color:var(--teks-terang);transition:transform .22s cubic-bezier(.2,.8,.2,1)}
-.laser-catatan b{color:var(--laser)}
-.laser-catatan button{margin-top:10px;height:36px;font-size:15px}
+/* ---------- trust + headline ---------- */
+.trust{position:relative;height:729px;padding-top:96px;text-align:center;background:linear-gradient(0deg,#fff 0%,rgb(178,236,226) 48%,rgb(160,216,210) 71%,rgb(206,234,230) 85%,#fff 100%)}
+.trust-t{font:600 20px/30px var(--sans);color:#2b6566}
+.marks{display:flex;flex-wrap:wrap;justify-content:center;column-gap:80px;row-gap:0;max-width:1240px;margin:12px auto 0}
+.marks .brk{flex-basis:100%;height:0}
+.marks .brk.mb{display:none}
+.marks span{display:flex;align-items:center;height:60px;margin:12px 0;color:#fff;white-space:nowrap;text-shadow:0 1px 0 rgba(4,52,56,.04)}
+.m1{font:700 33px/1 var(--display);letter-spacing:-.5px}
+.m2{font:400 34px/1 var(--serif)}
+.m3{font:800 26px/1 var(--sans);letter-spacing:3px;text-transform:uppercase}
+.m4{font:500 34px/1 var(--display);letter-spacing:-1px}
+.m5{font:400 36px/1 var(--serif);letter-spacing:1px}
+.m6{font:600 32px/1 var(--display);font-style:italic}
+.big{position:relative;max-width:1020px;margin:116px auto 0;font:400 96px/105.6px var(--display);letter-spacing:-1.92px;color:var(--ink)}
+.spark{position:absolute;top:422px;width:74px;height:90px}
+.spark.l{left:calc(50% - 624px)}
+.spark.r{left:calc(50% + 550px)}
 
-/* ---------- MEJA OPERATOR ---------- */
-.meja{position:relative;z-index:4;border-top:3px solid #5A5148;box-shadow:inset 0 1px 0 #6E655B;
-  background:repeating-linear-gradient(179.4deg,rgba(255,236,214,.03) 0 1px,transparent 1px 6px),repeating-linear-gradient(180.6deg,rgba(0,0,0,.09) 0 2px,transparent 2px 15px),var(--meja-operator)}
-.meja-isi{width:min(1376px,100% - 64px);margin-inline:auto;display:grid;grid-template-columns:minmax(0,1fr) 168px minmax(0,1fr);gap:28px;padding:16px 0 18px;align-items:start}
-.prompt{grid-column:1;grid-row:1}
-.proyektor{grid-column:2;grid-row:1;position:relative;justify-self:center;margin-top:-62px;width:150px}
-.proyektor .badan svg{width:150px;height:auto}
-.kabel{position:absolute;left:-96px;top:0;width:106px;height:200px;overflow:visible;pointer-events:none}
-.uji{grid-column:3;grid-row:1}
-.prompt label.judul-kecil{display:block;font-size:15px;color:var(--teks-redup);margin-bottom:8px}
-.prompt .kolom{display:flex;gap:8px}
-.prompt input[type="text"]{flex:1;min-width:0;height:52px;padding:0 14px;background:#1C1A18;border:1px solid var(--garis-kontrol);border-radius:4px;font-size:17px;color:var(--teks-terang)}
-.prompt input::placeholder{color:#8F8B85}
-.prompt .kolom .tombol-layar{height:52px;padding:0 20px;font-size:17px}
-.prompt .baris{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;align-items:stretch}
-.pilih{position:relative}
-.pilih select{appearance:none;height:44px;padding:0 34px 0 12px;background:#1C1A18;border:1px solid var(--garis-kontrol);border-radius:4px;font-size:15px;cursor:pointer}
-.pilih::after{content:"";position:absolute;right:13px;top:50%;width:7px;height:7px;border-right:2px solid var(--teks-redup);border-bottom:2px solid var(--teks-redup);transform:translateY(-70%) rotate(45deg);pointer-events:none}
-.tombol-garis{display:inline-flex;align-items:center;gap:8px;height:44px;padding:0 14px;background:none;border:1px solid var(--garis-kontrol);border-radius:4px;font-size:15px;cursor:pointer;color:var(--teks-terang)}
-.tombol-garis svg{width:18px;height:18px}
-.coba-lampu{display:none}
-.bayar{margin:12px 0 0;font-size:14px;line-height:1.5;color:var(--teks-redup)}
-.bayar strong{color:var(--teks-terang);font-weight:700}
-.bayar .harga-angka{color:var(--teks-terang);font-size:15px}
-.indeks{display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px;margin-top:16px;font-size:14px;color:var(--teks-redup)}
-.kartu-indeks{background:var(--pelat-saklar);color:var(--tinta-slide);border:0;border-top:3px solid var(--aluminium-sorot);border-radius:2px;padding:6px 10px 7px;font-size:14px;cursor:pointer;transform:rotate(var(--r,0deg))}
-.kartu-indeks:hover{background:#FFFFFF}
+/* ---------- fitur ---------- */
+.feats{padding-top:16px}
+.frow{display:grid;grid-template-columns:minmax(0,586fr) minmax(0,618fr);column-gap:64px;align-items:center;min-height:464px}
+.frow+.frow{margin-top:129px}
+.frow.rev{grid-template-columns:minmax(0,618fr) minmax(0,586fr)}
+.frow.rev .fvis{order:2}
+.fvis{position:relative;height:449px;border-radius:24px;overflow:hidden;background:var(--mist);box-shadow:0 10px 15px -3px rgba(0,0,0,.1),0 4px 6px -2px rgba(0,0,0,.05)}
+.tag{display:inline-flex;align-items:center;gap:6px;height:24px;padding:4px 10px;border-radius:9999px;font:700 12px/14.4px var(--sans);letter-spacing:.5px;text-transform:uppercase}
+.tag .ic{width:12px;height:12px}
+.tag.t-teal{background:rgb(209,240,236);color:#075b5d}
+.tag.t-gold{background:rgb(254,239,199);color:#7c4a0c}
+.tag.t-leaf{background:rgb(225,243,212);color:#2d5c16}
+.ftxt h3{margin-top:32px;font:500 48px/48px var(--display);letter-spacing:-.96px;color:var(--ink)}
+.ftxt ul{list-style:none;margin-top:32px}
+.ftxt li{display:flex;gap:16px;align-items:flex-start;font-size:16px;line-height:24px;color:var(--body)}
+.ftxt li+li{margin-top:12px}
+.ftxt li .ic{margin-top:4px}
+.ftxt .btn{margin-top:32px}
+.c-teal{color:var(--accent)} .c-gold{color:#b86e0a} .c-leaf{color:#4b8f27}
+.b-teal{background:var(--accent);color:#fff} .b-gold{background:var(--gold);color:#fff} .b-leaf{background:var(--leaf);color:#fff}
 
-.uji{position:relative;color:var(--tinta-slide);border-radius:6px;padding:14px 26px 14px;border-bottom:4px solid var(--aluminium-sorot);
-  background:radial-gradient(circle 4px at 12px 12px,#A9ADB4 96%,transparent 100%),radial-gradient(circle 4px at calc(100% - 12px) 12px,#A9ADB4 96%,transparent 100%),
-  radial-gradient(circle 4px at 12px calc(100% - 12px),#A9ADB4 96%,transparent 100%),radial-gradient(circle 4px at calc(100% - 12px) calc(100% - 12px),#A9ADB4 96%,transparent 100%),var(--pelat-saklar)}
-.uji :focus-visible{outline-color:var(--tinta-slide)}
-.uji-kepala{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
-.uji-kepala h2{font-size:15px;letter-spacing:0;display:flex;align-items:center;gap:8px}
-.uji-kepala h2::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--laser)}
-.uji-kepala p{margin:0;font-size:14px;color:#4F535A;text-align:right}
-.layar-pilih{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:10px}
-.layar-pilih button,.tema button{position:relative;min-height:34px;padding:4px 10px 3px 25px;background:#FFFFFF;border:1px solid #74787F;border-bottom-width:3px;border-radius:3px;font-size:14px;line-height:1.25;cursor:pointer;color:var(--tinta-slide);text-align:left}
-.layar-pilih button::before,.tema button::before{content:"";position:absolute;left:9px;top:50%;width:7px;height:7px;margin-top:-3.5px;border-radius:50%;background:#C9CCD1}
-.layar-pilih button[aria-pressed="true"],.tema button[aria-pressed="true"]{background:var(--tinta-slide);color:#FFFFFF;border-color:var(--tinta-slide);font-weight:700}
-.layar-pilih button[aria-pressed="true"]::before,.tema button[aria-pressed="true"]::before{background:var(--laser)}
-.pelat{position:relative;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:4px 10px;margin-top:10px;padding:7px 12px 6px;background:#DCDEE1;border-radius:4px;color:var(--tinta-slide);font-size:14px}
-.pelat label{grid-column:1/-1;font-weight:700}
-.pelat .sekrup{display:none}
-input[type="range"]{-webkit-appearance:none;appearance:none;width:100%;height:30px;background:none;cursor:pointer;margin:0}
-input[type="range"]::-webkit-slider-runnable-track{height:4px;background:var(--abu-terang);border-radius:2px}
-input[type="range"]::-moz-range-track{height:4px;background:var(--abu-terang);border-radius:2px}
-input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:26px;margin-top:-11px;border-radius:3px;background:var(--tinta-slide);box-shadow:inset 0 0 0 2px #FFFFFF,0 0 0 1px var(--tinta-slide)}
-input[type="range"]::-moz-range-thumb{width:14px;height:24px;border-radius:3px;background:var(--tinta-slide);border:2px solid #FFFFFF}
-input[type="range"]:disabled{opacity:.45;cursor:not-allowed}
-.tema{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:8px}
-.meter{display:block;margin-top:8px;padding:6px 10px;background:#1C1A18;border-radius:3px;font-size:14px;line-height:1.4;color:var(--teks-terang)}
-.meter .status-buruk{color:var(--laser);font-weight:700}
-.meter .rasio{color:var(--teks-redup)}
+/* visual fitur 1 */
+.v1 h4{position:absolute;left:0;right:0;top:89px;text-align:center;font:500 30px/36px var(--display);letter-spacing:-.4px;color:var(--ink)}
+.v1 .sub{position:absolute;left:0;right:0;top:134px;text-align:center;font:500 11px/14px var(--sans);color:var(--muted)}
+.v1 .opts{position:absolute;left:77px;top:193px;display:flex;gap:7px}
+.opt{width:140px;height:135px;background:#fff;border-radius:6px;box-shadow:0 4px 14px rgba(4,52,56,.12);padding:6px;text-align:left}
+.opt .art{position:relative;height:68px;border-radius:4px;overflow:hidden}
+.opt b{display:block;margin:14px 0 0 6px;font:500 13px/16px var(--sans);color:var(--ink)}
+.opt small{display:block;margin:4px 0 0 6px;font:500 7px/1 var(--sans);color:var(--muted)}
+.opt .pop{display:inline-block;margin-left:6px;padding:2px 5px;border-radius:6px;background:#9fd9d3;color:#064b4d;font:700 6px/1 var(--sans);letter-spacing:.3px;vertical-align:middle}
+.a1{background:linear-gradient(180deg,#3d9f9b 0%,#79c3b9 55%,#f0a98c 56%,#f4c4a4 100%)}
+.a1 em{position:absolute;left:44px;top:12px;font:700 32px/1 var(--sans);font-style:normal;color:#fff}
+.a1 i{position:absolute;right:10px;top:8px;width:20px;height:20px;border-radius:50%;background:radial-gradient(#ffe39a,#f5c15a)}
+.a2{background:linear-gradient(160deg,#032e33 0%,#0a4b52 45%,#1b7f7a 70%,#d98f8a 100%)}
+.a2 svg{position:absolute;left:50px;top:16px;width:38px;height:38px;color:#fff}
+.a3{background:linear-gradient(180deg,#8fd0ca 0%,#c8ece4 45%,#f5c3a4 60%,#7cbf7a 75%,#5aa864 100%)}
+.a3 .fold{position:absolute;left:50px;top:20px;width:30px;height:24px;border-radius:3px;background:#fff;display:grid;place-items:center;color:var(--accent)}
+.a3 .fold svg{width:13px;height:13px}
+.v1 .cursor{left:350px;top:331px}
 
-/* ---------- SECTIONS ---------- */
-.seksi{padding:104px 0}
-.seksi-kepala{max-width:760px}
-.seksi-kepala h2{font-size:clamp(26px,3vw,40px);line-height:1.2}
-.seksi-kepala p{margin:16px 0 0;color:var(--teks-redup);font-size:18px;text-wrap:pretty}
-.terang{background:var(--layar-menyala);color:var(--tinta-slide)}
+/* visual fitur 2 */
+.v2 .doc{position:absolute;left:51px;right:51px;background:#fff;border-radius:10px;box-shadow:0 4px 18px rgba(4,52,56,.10);overflow:hidden}
+.v2 .d0{top:-60px;height:120px}
+.v2 .d0 small{position:absolute;bottom:14px;font:500 7px/1 var(--sans);color:var(--ink)}
+.v2 .d0 .halfc{position:absolute;left:50%;bottom:6px;width:96px;height:48px;margin-left:-48px;border-radius:0 0 48px 48px;background:linear-gradient(90deg,#1b8f8c 50%,#0b6668 50%)}
+.v2 .d1{top:84px;height:283px}
+.v2 .hd{position:relative;height:99px;background:linear-gradient(120deg,#0b6e70 0%,#1a8c88 40%,#4fb5a9 70%,#f2b394 100%);overflow:hidden}
+.v2 .hd .blob{position:absolute;border-radius:50%}
+.v2 .tools{position:absolute;left:8px;top:10px;display:flex;gap:4px}
+.v2 .tools i{display:block;height:18px;border-radius:4px;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.15)}
+.v2 .d1 h5{margin-top:18px;text-align:center;font:700 17px/20px var(--sans);letter-spacing:-.2px;color:#0b5c5e}
+.v2 .cols{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:20px 15px 0}
+.v2 .cols div{height:108px;border-radius:4px;background:#d8f0ec;padding:9px 8px}
+.v2 .cols b{display:block;font:700 8px/10px var(--sans);color:#0b4a4c}
+.v2 .cols span{display:block;margin-top:8px;font:500 6.5px/9.5px var(--sans);color:#24494a}
+.v2 .d2{top:390px;height:120px}
+.v2 .d2 h6{position:absolute;left:26px;top:30px;font:700 20px/1 var(--sans);color:#0b5c5e;letter-spacing:-.3px}
+.v2 .d2 .im{position:absolute;right:0;top:0;width:208px;height:100%;background:linear-gradient(160deg,#04363a,#0d5d61 60%,#2d8f8a)}
 
-/* Kursi */
-.kursi-baris{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:56px;align-items:end}
-.kursi{display:flex;flex-direction:column;align-items:center;gap:16px}
-.jarak{height:180px;display:flex;align-items:flex-end;justify-content:center;width:100%}
-.mini{width:320px;max-width:100%;aspect-ratio:16/9;background:var(--layar-menyala);color:var(--tinta-slide);padding:24px 26px;display:flex;flex-direction:column;border-radius:2px}
-.jarak .mini{transform:scale(var(--s));transform-origin:50% 100%;flex:none}
-.mini b{font-family:var(--f-display);font-weight:600;font-size:24px;line-height:1.15}
-.mini span{font-size:16px;margin-top:12px;line-height:1.4}
-.kursi-ket{display:flex;align-items:center;gap:10px;font-size:15px;color:var(--teks-redup)}
-.kursi-ket svg{width:22px;height:22px}
-.aturan{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:64px;padding-top:32px;border-top:1px solid var(--tepi-meja)}
-.aturan h3{font-size:19px;line-height:1.3;display:flex;gap:12px;align-items:flex-start}
-.aturan h3::before{content:"";flex:none;width:9px;height:9px;margin-top:7px;border-radius:50%;background:var(--laser)}
-.aturan p{margin:10px 0 0 21px;color:var(--teks-redup);font-size:16px}
+/* visual fitur 3 */
+.v3{background:#fff}
+.v3 .low{position:absolute;left:0;right:0;top:297px;bottom:0;background:var(--mist)}
+.v3 .sharebtn{position:absolute;left:216px;top:167px;display:flex;align-items:center;gap:14px;height:66px;padding:0 33px 0 28px;border-radius:33px;background:var(--cta);color:#fff;font:400 30px/1 var(--sans);letter-spacing:-.2px}
+.v3 .sharebtn .ic{width:31px;height:31px;stroke-width:1.6}
+.v3 .rb{position:absolute;top:167px;width:66px;height:66px;border-radius:50%;background:#eef7f6;display:grid;place-items:center;color:var(--cta)}
+.v3 .rb .ic{width:26px;height:26px}
+.v3 .rb.a{left:418px}
+.v3 .rb.b{left:500px}
+.v3 .rb.c{left:582px;background:#2c6b2f}
+.v3 .night{position:absolute;left:0;top:376px;width:433px;height:120px;border-radius:0 52px 0 0;background:#0a3c40 url(assets/stars.svg) 0 0/240px}
+.v3 .cursor{left:452px;top:395px;width:58px;height:58px}
 
-/* Template: papan petunjuk ruangan */
-.gedung{display:grid;grid-template-columns:minmax(0,400px) minmax(0,1fr);gap:40px;align-items:start}
-.petunjuk{background:var(--gelap-ruang);color:var(--teks-terang);border-radius:4px;padding:26px 0 10px;border:6px solid var(--aluminium);box-shadow:inset 0 0 0 1px var(--aluminium-sorot)}
-.petunjuk h2{font-size:clamp(24px,2.2vw,30px);line-height:1.22;padding:0 24px 18px;border-bottom:1px solid #3D3A36}
-.petunjuk [role="tablist"]{display:flex;flex-direction:column}
-.pintu{display:grid;grid-template-columns:1fr auto 22px;align-items:center;gap:12px;width:100%;padding:14px 24px;background:none;border:0;border-bottom:1px solid #3D3A36;color:var(--teks-terang);text-align:left;cursor:pointer;font-size:16px}
-.pintu:last-child{border-bottom:0}
-.pintu b{font-family:var(--f-display);font-weight:600;font-size:16px;letter-spacing:0}
-.pintu small{font-size:14px;color:var(--teks-redup)}
-.pintu svg{width:22px;height:14px}
-.pintu[aria-selected="true"]{background:var(--layar-menyala);color:var(--tinta-slide)}
-.pintu[aria-selected="true"] small{color:var(--abu-terang)}
-.ruang-lihat{background:var(--permukaan-terang);border-radius:4px;padding:26px 28px 28px;border:1px solid #D2D4D8}
-.ruang-lihat[hidden]{display:none}
-.ruang-lihat .ilustrasi{position:relative;max-width:560px;margin:0 auto}
-.ruang-lihat .ilustrasi svg{width:100%;height:auto}
-.urutan{list-style:none;padding:0;margin:20px 0 0;display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;transform-origin:50% 100%}
-.urutan.koreksi{animation:koreksi .52s cubic-bezier(.2,.8,.2,1) both}
-.urutan li{aspect-ratio:16/9;background:var(--layar-menyala);border:1px solid #C8CBD0;padding:10px 12px;display:flex;flex-direction:column;justify-content:space-between;font-size:14px;line-height:1.25}
-.urutan li b{font-family:var(--f-display);font-weight:600;font-size:14px;letter-spacing:0}
-.urutan li span{color:var(--abu-terang)}
-.ruang-kaki{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;margin-top:20px;font-size:16px;color:var(--abu-terang)}
-.ruang-kaki a{font-weight:700;color:var(--tinta-slide);text-underline-offset:4px}
-
-/* Alur: jalur cahaya */
-.jalur{padding-top:0}
-.jalur h2{font-size:clamp(26px,3vw,40px);line-height:1.2;max-width:26ch}
-.jalur-cahaya{position:relative;display:grid;grid-template-columns:96px repeat(3,minmax(0,1fr));gap:24px;align-items:stretch;margin-top:44px;padding:36px 0}
-.jalur-berkas{position:absolute;left:58px;right:0;top:0;bottom:0;background:var(--permukaan-terang);clip-path:polygon(0 47%,100% 0,100% 100%,0 53%)}
-.jalur-tepi{position:absolute;left:58px;right:0;top:0;bottom:0;width:calc(100% - 58px);height:100%;overflow:visible}
-.jalur-proyektor{position:relative;z-index:1;align-self:center}
-.jalur-proyektor svg{width:96px;height:auto}
-.langkah{position:relative;z-index:1;background:var(--layar-menyala);border:1px solid #C8CBD0;padding:18px 18px 16px;display:flex;flex-direction:column;min-height:300px}
-.langkah h3{font-size:18px;line-height:1.3;margin-bottom:6px}
-.langkah > p{margin:0 0 14px;color:var(--abu-terang);font-size:15px;line-height:1.45}
-.kerangka{list-style:none;padding:0;margin:0;font-size:14px}
-.kerangka li{display:flex;justify-content:space-between;gap:12px;padding:6px 0;border-bottom:1px solid #E1E3E6}
-.kerangka li:last-child{border-bottom:0}
-.kerangka li.total{border-top:2px solid var(--tinta-slide);font-weight:700}
-.kerangka li.total span:last-child{color:var(--tinta-slide)}
-.kerangka span:last-child{color:var(--abu-terang);white-space:nowrap}
-.langkah .mini{width:100%;padding:16px 18px;border:1px solid #D2D4D8}
-.langkah .mini b{font-size:19px}
-.langkah .mini span{font-size:14px;margin-top:8px}
-.berkas{display:flex;gap:12px;align-items:center;padding-bottom:12px;border-bottom:1px solid #E1E3E6}
-.berkas svg{width:34px;height:40px;flex:none}
-.berkas b{display:block;font-size:15px}
-.berkas span{font-size:14px;color:var(--abu-terang)}
-.ceklis{list-style:none;padding:0;margin:12px 0 0;font-size:15px}
-.ceklis li{display:flex;gap:10px;padding:4px 0}
-.ceklis li::before{content:"";flex:none;width:12px;height:7px;margin-top:7px;border-left:2px solid var(--tinta-slide);border-bottom:2px solid var(--tinta-slide);transform:rotate(-45deg)}
-
-/* Harga: slide yang diproyeksikan */
-.harga-ruang{background:var(--gelap-ruang);padding:96px 0 40px}
-.harga-sorot{position:relative;padding:3% 4%}
-.harga-sorot::before{content:"";position:absolute;inset:0;background:var(--cahaya-sorot);opacity:.12;clip-path:polygon(0 0,100% 0,96.5% 100%,3.5% 100%)}
-.harga-slide{position:relative;background:var(--layar-menyala);color:var(--tinta-slide);padding:44px 48px 28px}
-.harga-slide h2{font-size:clamp(26px,3vw,40px);line-height:1.2}
-.harga-slide > p{margin:10px 0 0;color:var(--abu-terang);font-size:17px}
-.paket-baris{display:grid;grid-template-columns:repeat(3,1fr);margin-top:32px;border-top:2px solid var(--tinta-slide)}
-.paket{padding:22px 26px 24px;display:flex;flex-direction:column}
-.paket + .paket{border-left:1px solid #D2D4D8}
-.paket.utama{background:var(--permukaan-terang)}
-.paket .label{align-self:flex-start;font-size:14px;font-weight:700;background:var(--tinta-slide);color:var(--layar-menyala);padding:3px 8px;border-radius:2px;margin-bottom:10px}
-.paket h3{font-size:18px}
-.paket .angka{font-family:var(--f-display);font-weight:600;font-size:32px;margin:10px 0 2px;letter-spacing:-.02em}
-.paket .angka small{font-family:var(--f-ui);font-weight:400;font-size:15px;color:var(--abu-terang);letter-spacing:0}
-.paket ul{padding:0;list-style:none;margin:12px 0 20px;font-size:16px}
-.paket li{padding:5px 0}
-.paket .tombol-layar{margin-top:auto;color:var(--layar-menyala)}
-.paket .tombol-layar::before{background:var(--tinta-slide)}
-.paket .tombol-layar:hover::before{background:#2C2F34}
-.paket .tombol-garis-terang{margin-top:auto;display:inline-flex;align-items:center;justify-content:center;height:44px;border:1px solid var(--tinta-slide);border-radius:4px;font-weight:700;text-decoration:none}
-.harga-kaki{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;margin-top:20px;padding-top:12px;border-top:1px solid #D2D4D8;font-size:15px}
-.harga-kaki em{font-style:normal;color:var(--abu-terang);margin-left:auto}
-
-/* Penutup */
-.penutup{position:relative;padding:72px 0 64px;overflow:hidden}
-.penutup h2{font-size:clamp(30px,4.4vw,60px);line-height:1.12;max-width:22ch}
-.penutup p{color:var(--teks-redup);max-width:52ch;margin:18px 0 28px}
-.kaki{margin-top:96px;padding-top:24px;border-top:1px solid var(--tepi-meja);display:flex;flex-wrap:wrap;gap:16px 28px;font-size:15px;color:var(--teks-redup)}
-.kaki a{text-decoration:none}
-
-/* ---------- DOKUMEN KONSEP ---------- */
-.pemisah{background:var(--layar-menyala);color:var(--tinta-slide);padding:56px 0;border-top:8px solid var(--laser)}
-.pemisah h2{font-size:clamp(26px,3.4vw,44px)}
-.pemisah p{margin:12px 0 0;color:var(--abu-terang);max-width:70ch}
-.dok{padding:72px 0 120px}
-.dok section{padding:40px 0;border-bottom:1px solid var(--tepi-meja)}
-.dok h3{font-size:22px;line-height:1.3;margin-bottom:16px}
-.dok p,.dok li{color:#D4D5D7;font-size:17px}
-.dok p{max-width:78ch}
-.dok strong{color:var(--teks-terang)}
-.dok ul{padding-left:20px;max-width:80ch}
-.dok li{margin:6px 0}
-.dua-kolom{display:grid;grid-template-columns:1fr 1fr;gap:32px}
-.swatch-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-.swatch{border:1px solid var(--tepi-meja);border-radius:4px;overflow:hidden;background:var(--dinding)}
-.swatch-warna{height:72px;display:flex;align-items:flex-end;padding:8px 10px;font-size:14px;font-weight:700}
-.swatch-isi{padding:10px;font-size:14px;line-height:1.45;color:#D4D5D7}
-.swatch-isi b{display:block;color:var(--teks-terang);font-size:15px}
-.spesimen{border:1px solid var(--tepi-meja);border-radius:4px;padding:20px;background:var(--dinding)}
-.spesimen .besar{font-family:var(--f-display);font-weight:600;font-size:clamp(28px,4vw,52px);line-height:1.1;color:var(--teks-terang)}
-.spesimen .ui7{font-weight:700;font-size:20px;color:var(--teks-terang)}
-.spesimen p{margin:8px 0 0}
-table{border-collapse:collapse;width:100%;font-size:15px}
-th,td{text-align:left;vertical-align:top;padding:10px 12px;border-bottom:1px solid var(--tepi-meja)}
-th{color:var(--teks-terang);font-weight:700}
-td{color:#D4D5D7}
-.tabel-gulir{overflow-x:auto}
-.skor{border:1px solid var(--garis-kontrol);border-radius:4px;padding:20px;color:var(--teks-redup)}
-
-dialog{border:1px solid var(--garis-kontrol);border-radius:4px;background:var(--dinding);color:var(--teks-terang);padding:24px;width:min(460px,calc(100vw - 32px));max-height:calc(100svh - 32px)}
-dialog::backdrop{background:rgba(10,10,11,.72)}
-dialog h2{font-size:20px;line-height:1.3}
-dialog p{color:var(--teks-redup);font-size:16px;margin:10px 0}
-.hasil-topik{color:var(--teks-terang)!important;font-weight:700}
-.kerangka-hasil{list-style:none;padding:0;margin:12px 0 14px;border:1px solid var(--tepi-meja);border-radius:4px;background:var(--gelap-ruang);font-size:15px}
-.kerangka-hasil li{display:flex;justify-content:space-between;gap:12px;padding:7px 12px;border-bottom:1px solid #2E2B28}
-.kerangka-hasil li:last-child{border-bottom:0}
-.kerangka-hasil li span:last-child{color:var(--teks-redup);white-space:nowrap}
-dialog .tombol-layar,dialog .tombol-garis{width:100%;margin-top:8px;justify-content:center}
-
-/* ---------- RESPONSIF ---------- */
-@media (max-width:1100px){
-  .nav-tautan{display:none}
-  .papan{--pkiri:40px;--pkanan:120px}
-  .dinding{--lebar:min(640px,calc(100vw - 260px))}
-  .meja-isi{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px}
-  .proyektor{grid-column:1/-1;grid-row:1;margin-top:-58px;margin-bottom:-14px}
-  .kabel{display:none}
-  .prompt{grid-column:1;grid-row:2}
-  .uji{grid-column:2;grid-row:2}
-  .gedung{grid-template-columns:1fr}
-  .jalur-cahaya{grid-template-columns:1fr;gap:20px;padding:24px 0}
-  .jalur-berkas{left:0;top:40px;clip-path:polygon(47% 0,53% 0,100% 100%,0 100%)}
-  .jalur-tepi{display:none}
-  .jalur-proyektor{justify-self:center}
-  .paket-baris{grid-template-columns:1fr}
-  .paket + .paket{border-left:0;border-top:1px solid #D2D4D8}
-}
+/* visual fitur 3, bingkai mobile (keadaan zoom-out) */
+.zf{display:none}
 @media (max-width:767px){
-  body{font-size:17px}
-  .wrap{width:calc(100% - 32px)}
-  .nav{padding-inline:16px;gap:10px;height:56px}
-  .nav-masuk{display:none}
-  .merek{font-size:16px;gap:8px}
-  .merek svg{width:26px;height:19px}
-  .bahasa button{min-width:34px;padding:6px 8px}
-  .nav .tombol-layar{height:36px;padding:0 10px;font-size:14px}
-  .ruang{min-height:0}
-  .dinding{padding:4px 10px 60px}
-  .papan{--pkiri:5px;--pkanan:5px;margin-left:0;width:auto;padding:7px 5px 9px;border-width:5px}
-  .dinding{--lebar:calc(100vw - 50px)}
-  .bekas-spidol{display:none}
-  .baki{bottom:-14px;left:12%;right:12%}
-  .jejak{inset:-4% -2.2% -2% -2.2%}
-  .gambar{aspect-ratio:4/3}
-  .slide{padding:4.6cqw 5cqw 3.6cqw}
-  .slide h1{font-size:30px;line-height:1.08}
-  .slide h1 .baris-dua{font-size:18px;margin-top:6px}
-  .slide-badan{grid-template-columns:1fr;margin-top:9px}
-  .slide-isi{display:none}
-  .banding-slide{display:block}
-  .banding{font-size:14px}
-  .banding-judul{margin-bottom:6px}
-  .banding-slide .banding-duo{grid-template-columns:1fr;gap:6px}
-  .banding-slide .banding-duo > div{display:grid;grid-template-columns:64px 1fr;align-items:center;gap:10px}
-  .banding-slide .mini-proj{width:64px}
-  .banding-slide .banding-ket{margin-top:0}
-  .banding-slide .banding-angka{display:none}
-  .titik-laser{width:8px;height:8px}
-  .slide-kaki{margin-top:10px;padding-top:7px;font-size:14px}
-  .meja-isi{grid-template-columns:minmax(0,1fr);width:calc(100% - 32px);gap:18px;padding:16px 0 22px}
-  .proyektor{position:absolute;left:50%;top:-46px;margin:0 0 0 -55px;width:110px}
-  .proyektor .badan svg{width:110px}
-  .prompt{grid-column:1;grid-row:auto;min-width:0}
-  .uji{grid-column:1;grid-row:auto;min-width:0;padding:16px 18px 14px}
-  .coba-lampu{display:inline-flex;align-items:center;gap:10px;margin-top:12px;font-size:15px;font-weight:700;color:var(--teks-terang);text-underline-offset:4px}
-  .coba-lampu::after{content:"";width:7px;height:7px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:translateY(-3px) rotate(45deg)}
-  .prompt .kolom{flex-direction:column}
-  .prompt input[type="text"]{flex:none;width:100%;height:52px}
-  .prompt .kolom .tombol-layar{width:100%}
-  .prompt .baris{display:grid;grid-template-columns:minmax(0,1fr) auto}
-  .prompt .baris .pilih:first-child{grid-column:1/-1}
-  .prompt .baris .pilih select{width:100%}
-  .prompt .tombol-garis .teks-unggah{display:none}
-  .indeks{display:none}
-  .uji-kepala p{display:none}
-  .layar-pilih button{min-height:44px}
-  .tema button{min-height:44px}
-  .seksi{padding:72px 0}
-  .kursi-baris{grid-template-columns:1fr;gap:20px}
-  .jarak{height:calc(180px * var(--s))}
-  .aturan,.dua-kolom{grid-template-columns:1fr}
-  .petunjuk h2{padding:0 18px 16px}
-  .pintu{padding:13px 18px;grid-template-columns:1fr auto}
-  .pintu svg{display:none}
-  .ruang-lihat{padding:18px 14px 20px}
-  .urutan{grid-template-columns:1fr 1fr}
-  .harga-ruang{padding:72px 0 24px}
-  .harga-sorot{padding:14px 8px}
-  .harga-slide{padding:28px 18px 20px}
-  .paket{padding:20px 4px}
-  .harga-kaki em{margin-left:0}
-  .swatch-grid{grid-template-columns:1fr 1fr}
-  .penutup{padding:64px 0 48px}
+  .v3>*:not(.zf){display:none}
+  .v3 .zf{display:block;position:absolute;inset:0;zoom:1}
+  .m3-top{position:absolute;left:0;right:0;top:0;height:61px;background:#fff}
+  .zf::before{content:"";position:absolute;left:0;right:0;top:61px;bottom:0;background:var(--mist)}
+  .m3-pill{position:absolute;left:244px;top:29px;height:17px;padding:0 7px;border-radius:9px;background:var(--cta);color:#fff;display:flex;align-items:center;gap:3px;font:500 8px/1 var(--sans)}
+  .m3-pill .ic{width:8px;height:8px}
+  .m3-c{position:absolute;top:29px;width:17px;height:17px;border-radius:50%;background:#eef7f6;color:var(--cta);display:grid;place-items:center}
+  .m3-c .ic{width:8px;height:8px}
+  .m3-c:nth-child(2){left:295px}.m3-c:nth-child(3){left:316px}
+  .m3-av{position:absolute;left:336px;top:28px;width:18px;height:18px;border-radius:50%;background:#a16207;color:#fff;font:700 7px/18px var(--sans);text-align:center}
+  .m3-card{position:absolute;left:0;top:82px;width:299px;height:220px;border-radius:0 12px 0 0;overflow:hidden;background:#0a3c40 url(assets/stars.svg) 0 0/200px}
+  .m3-sun{position:absolute;left:9px;top:39px;width:87px;height:87px;border-radius:50%;background:linear-gradient(160deg,#e98d8d,#f2b394)}
+  .m3-card small,.m3-card b{z-index:2}
+  .m3-card small{position:absolute;left:6px;top:100px;color:#fff;font:400 15px/1 var(--sans)}
+  .m3-card b{position:absolute;left:-14px;top:128px;color:#fff;font:700 34px/38px var(--display);letter-spacing:-.6px;white-space:nowrap}
+  .m3-planet{position:absolute;left:150px;top:28px;width:150px;height:150px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#2c6f72,#082a2e 70%);box-shadow:inset -14px -10px 0 rgba(0,0,0,.25)}
+  .m3-planet::after{content:"";position:absolute;left:-18px;top:60px;width:186px;height:22px;border-radius:50%;border:5px solid #f08fb0;transform:rotate(-12deg)}
+  .m3-base{position:absolute;left:185px;top:170px;width:120px;height:60px;border-radius:50% 50% 0 0;background:#9ad94a}
+  .m3-ai{position:absolute;left:333px;top:164px;width:30px;height:30px;border-radius:6px;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.1);display:grid;place-items:center;color:var(--accent)}
+  .m3-bar{position:absolute;left:333px;top:202px;width:30px;height:80px;border-radius:6px;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.1);display:flex;flex-direction:column;align-items:center;gap:10px;padding-top:12px;color:var(--accent)}
+  .m3-ai .ic,.m3-bar .ic{width:11px;height:11px}
 }
-@media (max-width:380px){
-  .nav .sm{display:none}
-  .merek{font-size:15px}
+
+/* ---------- pita wordmark ---------- */
+.band{position:relative;height:211px;margin-top:32px;padding-top:96px;overflow:hidden;background:linear-gradient(#fff 4%,rgb(178,236,226) 80%,rgb(160,216,210) 100%)}
+.band svg{display:block;width:100%;height:123px}
+
+/* ---------- testimoni ---------- */
+.testi{padding-top:65px;padding-bottom:64px}
+.testi h2{max-width:1268px;margin:0 auto;text-align:center;font:500 60px/60px var(--display);letter-spacing:-1.2px;color:var(--ink);padding:0 16px}
+.tview{position:relative;width:min(1268px,calc(100% - 32px));margin:56px auto 0;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 140px,#000 calc(100% - 140px),transparent 100%);mask-image:linear-gradient(90deg,transparent 0,#000 140px,#000 calc(100% - 140px),transparent 100%)}
+.ttrack{display:flex;gap:16px;transition:transform .5s cubic-bezier(.2,.7,.2,1)}
+.tcard{flex:none;width:618px;height:209px;padding:24px;border-radius:12px;background:linear-gradient(rgb(228,244,241) 30%,rgba(228,244,241,.3) 100%);box-shadow:0 1px 2px rgba(0,0,0,.05);display:flex;flex-direction:column;justify-content:space-between}
+.tcard q{display:block;quotes:none;font-size:18px;line-height:27px;color:var(--ink);max-width:570px}
+.tcard q strong{font-weight:700}
+.who{display:flex;align-items:center;gap:14px}
+.av{width:64px;height:64px;border-radius:50%;display:grid;place-items:center;font:700 20px/1 var(--display);color:#fff;flex:none}
+.who b{display:block;font:700 16px/24px var(--sans)}
+.who small{display:block;font:500 14px/21px var(--sans);color:var(--muted)}
+.tnav{display:flex;justify-content:center;gap:8px;margin-top:24px}
+.tnav button{width:40px;height:40px;border-radius:50%;border:1px solid #d7e3e2;display:grid;place-items:center;color:var(--ink);background:#fff;transition:background .15s}
+.tnav button:hover{background:var(--mist)}
+.tnote{margin-top:14px;text-align:center;font-size:13px;color:var(--muted)}
+
+/* ---------- FAQ ---------- */
+.faq{padding-top:96px;padding-bottom:96px}
+.faq .wrap{display:grid;grid-template-columns:380px minmax(0,1fr);column-gap:96px;align-items:start}
+.faq h2{font:400 48px/48px var(--display);letter-spacing:-.96px;color:var(--ink)}
+.faq-sub{margin-top:16px;color:var(--muted);font-size:16px;line-height:24px}
+.faq-sub a{color:var(--accent);font-weight:600}
+.acc{border-bottom:1px solid var(--line)}
+.acc details{border-top:1px solid var(--line)}
+.acc summary{list-style:none;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:20px 24px;cursor:pointer;font:600 18px/27px var(--sans);color:var(--ink);border-radius:6px}
+.acc summary::-webkit-details-marker{display:none}
+.acc summary:hover{background:#f7fbfa}
+.acc summary .ic{color:var(--accent);transition:transform .2s}
+.acc details[open] summary .ic{transform:rotate(180deg)}
+.acc details p{padding:0 24px 22px;color:var(--muted);font-size:16px;line-height:24px;max-width:700px}
+.faq-sub.m{display:none}
+
+/* ---------- CTA malam ---------- */
+.cta{position:relative;height:822px;padding-top:64px;text-align:center;background:url(assets/stars.svg) 0 0/480px repeat,linear-gradient(180deg,#031c22 0%,#05303a 45%,#0a4952 100%);overflow:hidden}
+.cta h2{position:relative;z-index:2;font:500 60px/66px var(--display);letter-spacing:-1.2px;color:#fff;padding:0 16px}
+.cta .btn{position:relative;z-index:2;margin-top:40px;min-width:210px;padding:0 48px;background:#fff;color:var(--ink);border-color:var(--wbtn-border);box-shadow:0 2px 4px rgba(255,255,255,.48)}
+.dream{position:absolute;left:0;right:0;bottom:0;height:556px;overflow:hidden;background:url(assets/cta.webp) center bottom/cover no-repeat,linear-gradient(180deg,rgba(10,73,82,0) 0%,#2e7f86 30%,#8fc6c0 52%,#f2b9a6 68%,#ee9d8e 82%,#f5b6a0 100%)}
+.dream::before{content:"";position:absolute;left:0;right:0;top:0;height:150px;background:linear-gradient(#042a33,rgba(4,42,51,0))}
+.dream .fl{position:absolute;border-radius:6px;box-shadow:0 8px 24px rgba(3,28,34,.25);overflow:hidden}
+.dream .fl b{position:absolute;left:12px;top:12px;font:700 22px/1.08 var(--sans);letter-spacing:-.3px}
+.dream .fl i{position:absolute;left:12px;height:4px;border-radius:2px;background:currentColor;opacity:.35}
+
+/* ---------- footer ---------- */
+.foot{position:relative;padding:96px 0;color:rgb(250,249,245);background:linear-gradient(rgb(3,28,34) 0%,rgb(9,62,68) 33%,rgb(14,84,90) 50%,rgb(38,124,124) 100%);overflow:hidden}
+.foot::before{content:"";position:absolute;left:0;right:0;top:0;height:450px;background:url(assets/stars.svg) 0 0/480px repeat;opacity:.8;-webkit-mask-image:linear-gradient(#000 40%,transparent);mask-image:linear-gradient(#000 40%,transparent)}
+.foot .wrap{position:relative}
+.fmark{display:block;width:100%;height:219px}
+.foot hr{border:0;border-top:1px solid rgba(250,249,245,.28);margin:48px 0}
+.fcols{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));column-gap:48px}
+.fcols h3{font:700 20px/22px var(--sans);letter-spacing:-.4px}
+.fcols ul{list-style:none;margin-top:24px}
+.fcols li{font-size:16px;line-height:24px}
+.fcols li+li{margin-top:8px}
+.fcols a:hover{text-decoration:underline;text-underline-offset:3px}
+.pay{display:flex;flex-direction:column;gap:5px;margin-top:20px}
+.pay .pb{display:flex;align-items:center;gap:9px;width:135px;height:45px;padding:0 10px;border-radius:7px;background:#000;border:1px solid #a6a6a6;color:#fff}
+.pay .pt{display:block;font:700 17px/1 var(--sans);white-space:nowrap}
+.pay .pt small{display:block;margin-bottom:2px;font:500 8px/1 var(--sans);letter-spacing:.2px}
+.pay .pb .ic{width:22px;height:22px}
+.copy{margin-top:44px;text-align:right;font-size:14px;line-height:21px}
+
+/* ---------- animasi masuk ---------- */
+.rise{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s ease}
+.rise.in{opacity:1;transform:none}
+
+/* ---------- tablet ---------- */
+@media (max-width:1180px){
+  .hero .wrap{grid-template-columns:minmax(0,440px) minmax(0,1fr);column-gap:36px}
+  .hero h1{font-size:50px;line-height:52px}
+  .spark{display:none}
+  .big{font-size:76px;line-height:84px}
+  .pcard{gap:28px}
+  .clouds .cloud.r{left:auto;right:-60px}
+}
+@media (max-width:1023px) and (min-width:768px){
+  .hero{height:auto;padding:72px 0 0}
+  .hero .wrap{grid-template-columns:1fr;row-gap:40px}
+  .hero-media{height:320px;overflow:hidden;border-radius:24px}
+  .frow,.frow.rev{grid-template-columns:1fr;row-gap:40px}
+  .frow.rev .fvis{order:0}
+  .fvis{max-width:586px}
+  .faq .wrap{grid-template-columns:1fr;row-gap:32px}
+  .fcols{grid-template-columns:repeat(3,minmax(0,1fr));row-gap:40px}
+  .pcard{flex-direction:column;align-items:flex-start;padding:24px;height:auto!important}
+  .products{height:auto;padding-bottom:200px}
+  .clouds{top:auto;bottom:-110px}
+  .trust{height:auto;padding-bottom:96px}
+
+  .tcard{width:520px}
+}
+
+@media (max-width:1023px){
+  .nav-links,.nav-right{display:none}
+  .logo{width:auto}
+  .logo svg{height:22px}
+  .globe-m,.burger{display:inline-flex;width:28px}
+  .globe-m{margin-left:auto;margin-right:12px}
+  .burger{margin-right:-1px}
+  .mnav{position:fixed;left:0;right:0;top:56px;bottom:0;z-index:59;background:#fff;padding:16px;overflow:auto}
+  .mnav.open{display:block}
+  .mnav a{display:block;padding:14px 4px;border-bottom:1px solid var(--line);font-size:18px}
+  .mnav .btn{display:flex;margin-top:20px;color:#fff;border:0}
+}
+/* ---------- mobile (mengikuti tata letak mobile referensi) ---------- */
+@media (max-width:767px){
+  .hero{height:auto;padding-top:61px;overflow:visible}
+  .hero .wrap{display:block}
+  .hero-copy{text-align:center}
+  .mark{margin:0 auto 24px;width:34px;height:48px}
+  .hero h1{font-size:36px;line-height:36px;letter-spacing:-.72px}
+  .hero p{margin-top:24px}
+  .hero-btns{flex-direction:column;gap:12px}
+  .hero-btns .btn{width:100%}
+  .hero-media{height:210px;margin:24px 0 24px;overflow:hidden}
+  .vmarq{display:flex;top:16px;left:0;right:auto;transform:translateX(-82px);animation:hmarq 40s linear infinite}
+  @keyframes hmarq{from{transform:translateX(-82px)}to{transform:translateX(-1514px)}}
+  .slide{flex:none;width:314px;height:177px;margin:0 44px 0 0;border-radius:10px}
+  .slide .stitle{font-size:27px;left:14px;top:22px;padding:3px 7px 5px}
+  .s1 .stitle{top:66px}
+  .s2 .stitle{left:auto;right:20px;top:42px;min-width:136px}
+  .slide .bars{left:18px;top:90px;width:110px}
+  .s1 .bars{top:132px}
+  .s2 .bars{right:21px;top:121px;width:128px}
+  .slide .bars i{height:5px;margin-bottom:5px}
+  .aipill,.cursor,.vbar hr{display:none}
+  .vbar{right:12px;top:12px;bottom:8px;width:19px;gap:9px;padding-top:7px;border-radius:4px}
+  .vbar .ic{width:8px;height:8px}
+  .products{height:486px;padding-top:96px;margin-bottom:48px;background:linear-gradient(var(--sky) 13%,var(--sky) 50%,var(--mist) 90%,#fff 100%)}
+  .pgrid{display:flex;gap:8px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-left:23px;padding:16px 23px 0;scrollbar-width:none}
+  .pgrid::-webkit-scrollbar{display:none}
+  .pcol{display:contents}
+  .pcard{flex:none;width:312px;height:358px!important;flex-direction:column;justify-content:flex-start;gap:0;padding:24px 16px;text-align:center;scroll-snap-align:start}
+  .pcard .thumb{zoom:var(--mz,1);margin-bottom:25px}
+  .pcard h3{font-size:20px;line-height:22px;letter-spacing:-.4px}
+  .pcard p{max-width:280px;margin:8px auto 0}
+  .clouds{display:none}
+  .trust{height:729px}
+  .trust-t{font-size:20px;padding:0 0}
+  .marks{column-gap:24px;max-width:300px}
+  .marks span{height:50px}
+  .marks .brk.mb{display:block}
+  .m1{font-size:26px}.m2{font-size:27px}.m3{font-size:20px}.m4{font-size:27px}.m5{font-size:30px}.m6{font-size:26px}
+  .big{max-width:262px;margin-top:36px;font-size:48px;line-height:52.8px;letter-spacing:-.96px}
+  .spark{display:block;top:470px;width:40px;height:48px}
+  .spark.l{left:16px}.spark.r{left:auto;right:16px}
+  .feats{padding-top:24px}
+  .frow,.frow.rev{display:block;min-height:0}
+  .frow+.frow{margin-top:56px}
+  .fvis{height:274px;border-radius:24px}
+  .fvis>*:not(.zf){zoom:.611}
+  .ftxt{margin-top:56px}
+  .ftxt h3{margin-top:24px;font-size:36px;line-height:36px;letter-spacing:-.72px}
+  .ftxt ul{margin-top:24px}
+  .ftxt li+li{margin-top:8px}
+  .ftxt .btn{margin-top:24px}
+  .band{height:96px;margin-top:16px;padding-top:96px}
+  .band svg{display:none}
+  .testi{padding-top:64px;padding-bottom:48px}
+  .testi h2{font-size:36px;line-height:36px;letter-spacing:-.72px;max-width:390px}
+  .tview{width:100%;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 40px,#000 calc(100% - 40px),transparent 100%);mask-image:linear-gradient(90deg,transparent 0,#000 40px,#000 calc(100% - 40px),transparent 100%)}
+  .ttrack{gap:17px}
+  .tcard{width:288px;height:256px}
+  .tcard q{font-size:16px;line-height:24px}
+  .av{width:48px;height:48px;font-size:16px}
+  .who b{font-size:14px;line-height:21px}
+  .who small{font-size:12px;line-height:18px}
+  .faq{padding-top:64px;padding-bottom:48px}
+  .faq .wrap{display:block}
+  .faq h2{text-align:center;font-size:30px;line-height:33px;letter-spacing:-.6px}
+  .faq h2 br{display:none}
+  .faq-sub{display:none}
+  .faq-sub.m{display:block;text-align:center;margin-top:32px}
+  .acc{margin-top:32px}
+  .acc summary{padding:20px 16px;font-size:16px;line-height:24px;align-items:center}
+  .acc summary span{max-width:294px}
+  .acc details p{padding:0 16px 20px}
+  .cta{height:398px;padding-top:48px}
+  .cta h2{font-size:36px;line-height:39.6px;letter-spacing:-.72px}
+  .cta .btn{margin-top:24px}
+  .dream{height:150px}
+      .dream .fl{zoom:.32}
+  .foot{padding:48px 0}
+  .fmark{height:62px}
+  .foot hr{margin:47px 0 49px}
+  .fcols ul{margin-top:20px}
+  .fcols{grid-template-columns:1fr 1fr;row-gap:48px}
+  .fcols .getapp{grid-column:1/-1}
+  .pay{flex-direction:row;gap:6px;margin-top:20px}
+  .pay .pb{width:120px;height:40px}
+  .copy{margin-top:42px}
 }
 @media (prefers-reduced-motion:reduce){
-  *,*::before,*::after{animation:none!important;transition:none!important}
+  .vmarq{animation:none!important}
+  .rise{opacity:1;transform:none;transition:none}
+  .ttrack,.btn,.pcard{transition:none}
 }
 </style>
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 9h16M4 15h16"/></symbol>
+  <symbol id="i-down" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="i-left" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></symbol>
+  <symbol id="i-right" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+  <symbol id="i-file" viewBox="0 0 24 24"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8M16 13H8M16 17H8"/></symbol>
+  <symbol id="i-list" viewBox="0 0 24 24"><path d="M3 12h.01M3 18h.01M3 6h.01M8 12h13M8 18h13M8 6h13"/></symbol>
+  <symbol id="i-wand" viewBox="0 0 24 24"><path d="m21.64 3.64-1.28-1.28a1.21 1.21 0 0 0-1.72 0L2.36 18.64a1.21 1.21 0 0 0 0 1.72l1.28 1.28a1.2 1.2 0 0 0 1.72 0L21.64 5.36a1.2 1.2 0 0 0 0-1.72"/><path d="m14 7 3 3M5 6v4M19 14v4M10 2v2M7 8H3M21 16h-4M11 3H9"/></symbol>
+  <symbol id="i-palette" viewBox="0 0 24 24"><circle cx="13.5" cy="6.5" r=".6"/><circle cx="17.5" cy="10.5" r=".6"/><circle cx="8.5" cy="7.5" r=".6"/><circle cx="6.5" cy="12.5" r=".6"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.93 0 1.65-.75 1.65-1.69 0-.44-.18-.84-.44-1.13-.29-.29-.44-.65-.44-1.13a1.64 1.64 0 0 1 1.67-1.67h2c3.05 0 5.55-2.5 5.55-5.55C21.97 6.01 17.46 2 12 2z"/></symbol>
+  <symbol id="i-edit" viewBox="0 0 24 24"><path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.4 2.6a1 1 0 0 1 3 3l-9 9a2 2 0 0 1-.85.5l-2.87.84a.5.5 0 0 1-.62-.62l.84-2.87a2 2 0 0 1 .5-.85z"/></symbol>
+  <symbol id="i-image" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="3" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.09-3.09a2 2 0 0 0-2.82 0L6 21"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
+  <symbol id="i-dl" viewBox="0 0 24 24"><path d="M12 15V3M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5"/></symbol>
+  <symbol id="i-pres" viewBox="0 0 24 24"><path d="M2 3h20M21 3v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V3M7 21l5-5 5 5"/></symbol>
+  <symbol id="i-wallet" viewBox="0 0 24 24"><path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1"/><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"/></symbol>
+  <symbol id="i-qr" viewBox="0 0 24 24"><rect width="5" height="5" x="3" y="3" rx="1"/><rect width="5" height="5" x="16" y="3" rx="1"/><rect width="5" height="5" x="3" y="16" rx="1"/><path d="M21 16h-3a2 2 0 0 0-2 2v3M21 21v.01M12 7v3a2 2 0 0 1-2 2H7M3 12h.01M12 3h.01M12 16v.01M16 12h1M21 12v.01M12 21v-1"/></symbol>
+  <symbol id="i-share" viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.59 13.51 6.83 3.98M15.41 6.51l-6.82 3.98"/></symbol>
+  <symbol id="i-spark" viewBox="0 0 24 24"><path d="M9.94 15.5A2 2 0 0 0 8.5 14.06l-6.14-1.58a.5.5 0 0 1 0-.96L8.5 9.94A2 2 0 0 0 9.94 8.5l1.58-6.14a.5.5 0 0 1 .96 0l1.58 6.14a2 2 0 0 0 1.44 1.44l6.14 1.58a.5.5 0 0 1 0 .96l-6.14 1.58a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z"/><path d="M20 3v4M22 5h-4"/></symbol>
+  <symbol id="i-dots" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.2"/><circle cx="12" cy="12" r="1.2"/><circle cx="19" cy="12" r="1.2"/></symbol>
+  <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 19V7M17 11l-5-5-5 5"/></symbol>
+  <symbol id="i-layers" viewBox="0 0 24 24"><path d="m12 2 9 5-9 5-9-5z"/><path d="m3 12 9 5 9-5M3 17l9 5 9-5"/></symbol>
+  <symbol id="i-layout" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18M9 21V9"/></symbol>
+  <symbol id="i-type" viewBox="0 0 24 24"><path d="M4 7V4h16v3M9 20h6M12 4v16"/></symbol>
+  <symbol id="i-film" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M7 3v18M3 7.5h4M3 12h18M3 16.5h4M17 3v18M17 7.5h4M17 16.5h4"/></symbol>
+  <symbol id="i-card" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/></symbol>
+  <symbol id="i-cursor" viewBox="0 0 24 24"><path d="M4.04 4.04 10.5 20.5l2.1-6.6 6.9-2.3z" fill="#fff"/></symbol>
+</svg>
 
-<!-- ================= BAGIAN 1: MOCKUP LANDING PAGE ================= -->
-<section class="ruang" id="ruang" data-layar="lcd" aria-label="Soluslide, AI pembuat PPT">
-  <header class="nav">
-    <a class="merek" href="#ruang" aria-label="Soluslide beranda">
-      <svg viewBox="0 0 30 22" aria-hidden="true"><polygon points="1.5,1.5 28.5,1.5 24.5,20.5 5.5,20.5" fill="none" stroke="#EDEDEB" stroke-width="2"/><circle cx="21" cy="8" r="2.6" fill="#FF5A47"/></svg>
-      Soluslide
+<header class="nav" id="top">
+  <div class="wrap nav-in">
+    <a class="logo" href="#top" aria-label="Soluslide, beranda">
+      <svg viewBox="0 0 132 20" role="img" aria-hidden="true"><text x="0" y="17" font-family="Outfit, sans-serif" font-weight="800" font-size="21" letter-spacing="1.1" fill="#043438">SOLUSLIDE</text></svg>
     </a>
-    <nav class="nav-tautan" aria-label="Utama">
-      <a href="#template" data-i18n="navTemplate">Template</a>
-      <a href="#harga" data-i18n="navHarga">Harga</a>
-      <a href="#template" data-i18n="navKampus">Untuk Kampus</a>
-      <a href="#template" data-i18n="navInstansi">Untuk Instansi</a>
+    <nav class="nav-links" aria-label="Utama">
+      <button class="nl" type="button">Produk</button>
+      <button class="nl" type="button">Solusi</button>
+      <a class="nl" href="#faq">Tentang</a>
+      <a class="nl" href="#faq">Harga</a>
     </nav>
-    <div class="nav-kanan">
-      <div class="bahasa" role="group" aria-label="Bahasa hero">
-        <button type="button" data-lang="id" aria-pressed="true">ID</button>
-        <button type="button" data-lang="en" aria-pressed="false">EN</button>
+    <div class="nav-right">
+      <div class="lang" id="lang">
+        <button class="nl" type="button" aria-haspopup="true" aria-expanded="false" id="langBtn"><svg class="ic"><use href="#i-globe"/></svg>Indonesia</button>
+        <div class="lang-menu" role="menu">
+          <a href="#top" role="menuitem" aria-current="true">Bahasa Indonesia <span>ID</span></a>
+          <a href="#top" role="menuitem" hreflang="en" title="Versi bahasa Inggris sedang disiapkan">English <span>EN</span></a>
+        </div>
       </div>
-      <a class="nav-masuk" href="#masuk" data-i18n="navMasuk">Masuk</a>
-      <a class="tombol-layar" href="#mulai" data-i18n-html="navMulai">Mulai<span class="sm">gratis</span></a>
+      <a class="nl" href="#">Masuk</a>
+      <a class="btn btn-cta" href="#">Mulai gratis</a>
     </div>
-  </header>
+    <button class="globe-m" type="button" aria-label="Pilih bahasa"><svg class="ic" style="width:20px;height:20px;stroke-width:1.8"><use href="#i-globe"/></svg></button>
+    <button class="burger" type="button" aria-label="Buka menu" aria-expanded="false" id="burger"><svg class="ic" style="width:24px;height:24px;stroke-width:1.8"><use href="#i-menu"/></svg></button>
+  </div>
+  <div class="mnav" id="mnav">
+    <a href="#produk">Produk</a><a href="#fitur">Solusi</a><a href="#faq">Tentang</a><a href="#faq">Harga</a><a href="#">Masuk</a>
+    <a href="#top" aria-current="true">Bahasa Indonesia</a><a href="#top" hreflang="en" title="Versi bahasa Inggris sedang disiapkan">English</a>
+    <a class="btn btn-cta" href="#">Mulai gratis</a>
+  </div>
+</header>
 
-  <div class="dinding" id="dinding">
-    <div class="papan" id="papan">
-      <svg class="bekas-spidol" viewBox="0 0 190 150" aria-hidden="true" fill="none" stroke="#15171A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M8 18c22-4 40 3 58-2s30 4 48 0"/><path d="M8 40c30-3 52 4 80 0"/><path d="M14 70h52l-9-8m9 8-9 8"/><rect x="84" y="56" width="70" height="34" rx="4"/><path d="M96 74c10-6 20 6 30 0s16 4 20 0"/><path d="M10 112c18 6 36-6 54 0s34 4 52-2"/><path d="M140 118l14 14m0-14-14 14"/>
+<main>
+<!-- HERO -->
+<section class="hero" aria-label="Pembuka">
+  <div class="wrap">
+    <div class="hero-copy">
+      <svg class="mark" viewBox="0 0 44 62" aria-hidden="true">
+        <path transform="translate(-4 0) scale(1.2 1)" d="M37 13.5C34 8.6 28.7 6 22.4 6 13.9 6 7.6 10.8 7.6 17.6c0 6.7 5 9.6 13.5 11.3l3.1.6c4.6.9 6.4 2 6.4 4.2 0 2.6-2.8 4.3-7.4 4.3-4.7 0-8.3-2-10-5.6L5 36.6C7.7 42.3 14 45.6 22.6 45.6c10 0 16.4-4.9 16.4-12.1 0-6.5-4.4-9.6-13.4-11.3l-3.3-.6c-4.4-.8-6-1.8-6-3.8 0-2.4 2.5-3.9 6.3-3.9 3.7 0 6.6 1.6 8.1 4.4z" fill="#043438"/>
+        <ellipse cx="22" cy="56" rx="13" ry="4" fill="#7acdc6"/>
       </svg>
-      <span class="layar-tarik" aria-hidden="true"></span>
-      <div class="sorot" id="sorot">
-        <div class="jejak" id="jejak" aria-hidden="true"></div>
-        <div class="gambar" id="gambar">
-          <article class="slide" id="slide" data-tema="solus">
-            <h1 id="judul"><span class="baris-satu" data-i18n="h1a">Buat PPT dengan AI.</span><span class="baris-dua" data-i18n="h1b">Terbaca sampai kursi paling belakang.</span></h1>
-            <div class="slide-badan">
-              <p class="slide-isi" data-i18n="sub">Ketik topik atau unggah materi. Soluslide menyusun kerangka dan slide dari template sidang, rapat, pitch, dan materi ajar, lalu memberimu .pptx yang bisa kamu sunting.</p>
-              <figure class="banding banding-slide">
-                <span class="banding-judul" data-i18n="bandingJudul">Sama-sama di aula terang:</span>
-                <div class="banding-duo">
-                  <div>
-                    <div class="mini-proj pastel" aria-hidden="true"><i class="mp-judul"></i><i></i><i></i><i class="pendek"></i><span class="titik-laser"></span></div>
-                    <figcaption class="banding-ket" data-i18n-html="bandingPastel">Pastel biasa: <b class="buruk">tenggelam</b></figcaption>
-                  </div>
-                  <div>
-                    <div class="mini-proj solus" aria-hidden="true"><i class="mp-judul"></i><i></i><i></i><i class="pendek"></i></div>
-                    <span class="banding-ket" data-i18n-html="bandingSolus">Soluslide: <b>tetap terbaca</b></span>
-                  </div>
-                </div>
-                <p class="banding-angka" data-i18n="bandingAngka">Perkiraan kontras 2,3:1 dan 4,8:1</p>
-              </figure>
-            </div>
-            <div class="slide-kaki"><span id="kakiAcara">Sidang skripsi, 15 menit</span><span id="kakiJumlah">12 slide</span></div>
-          </article>
-          <div class="cahaya-ruang" aria-hidden="true"></div>
-          <div class="hotspot" aria-hidden="true"></div>
-        </div>
-        <div class="bingkai-tv" aria-hidden="true"></div>
-        <div class="bingkai-daring" aria-hidden="true"><i></i><i></i><i></i><span data-i18n="daringJudul">Rapat koordinasi mingguan</span></div>
+      <h1>Presentasi AI yang rapi untuk kuliah, kantor, dan usaha</h1>
+      <p>Idemu sudah bagus, tinggal ditampilkan. Ketik topik atau unggah dokumen, AI menyusun slide lengkap dengan desain. Sidang skripsi? Beres. Pitch UMKM? Siap. Unduh .pptx yang bisa diedit.</p>
+      <div class="hero-btns">
+        <a class="btn btn-cta" href="#">Mulai gratis</a>
+        <a class="btn btn-ghost" href="#fitur">Tonton video <svg class="play" viewBox="0 0 24 24"><path d="M5 3.5v17l15-8.5z"/></svg></a>
       </div>
-      <div class="baki" aria-hidden="true"><span class="sp-a"></span><span class="sp-b"></span><span class="penghapus"></span></div>
     </div>
-    <span class="laser" id="laser" hidden></span>
-    <div class="laser-catatan" id="laserCatatan" role="status" hidden>
-      <span id="laserTeks"></span><br>
-      <button type="button" class="tombol-layar" id="perbaiki" data-i18n="perbaiki">Perbaiki dengan Soluslide</button>
+    <div class="hero-media" aria-hidden="true">
+      <div class="vmarq">
+        <div class="slide s1"><div class="stitle">Sidang<br>Skripsi</div><div class="bars"><i></i><i></i><i></i></div>
+          <div class="vbar"><svg class="ic"><use href="#i-spark"/></svg><svg class="ic"><use href="#i-layers"/></svg><svg class="ic"><use href="#i-layout"/></svg><hr><svg class="ic"><use href="#i-type"/></svg><svg class="ic"><use href="#i-image"/></svg><svg class="ic"><use href="#i-film"/></svg><svg class="ic"><use href="#i-card"/></svg><svg class="ic"><use href="#i-edit"/></svg></div></div>
+        <div class="slide s2"><div class="stitle">Strategi<br>Pemasaran</div><div class="bars"><i></i><i></i><i></i></div>
+          <div class="aipill">Rapikan tulisan <svg class="ic"><use href="#i-spark"/></svg></div><svg class="cursor" viewBox="0 0 24 24" style="stroke:#043438;stroke-width:1.4;fill:#fff"><use href="#i-cursor"/></svg></div>
+        <div class="slide s3"><div class="stitle">Pitch<br>Kopi Senja</div><div class="bars"><i></i><i></i><i></i></div></div>
+        <div class="slide s4"><div class="stitle">Materi<br>Geometri</div><div class="bars"><i></i><i></i><i></i></div></div>
+        <div class="slide s1"><div class="stitle">Sidang<br>Skripsi</div><div class="bars"><i></i><i></i><i></i></div>
+          <div class="vbar"><svg class="ic"><use href="#i-spark"/></svg><svg class="ic"><use href="#i-layers"/></svg><svg class="ic"><use href="#i-layout"/></svg><hr><svg class="ic"><use href="#i-type"/></svg><svg class="ic"><use href="#i-image"/></svg><svg class="ic"><use href="#i-film"/></svg><svg class="ic"><use href="#i-card"/></svg><svg class="ic"><use href="#i-edit"/></svg></div></div>
+        <div class="slide s2"><div class="stitle">Strategi<br>Pemasaran</div><div class="bars"><i></i><i></i><i></i></div>
+          <div class="aipill">Rapikan tulisan <svg class="ic"><use href="#i-spark"/></svg></div><svg class="cursor" viewBox="0 0 24 24" style="stroke:#043438;stroke-width:1.4;fill:#fff"><use href="#i-cursor"/></svg></div>
+        <div class="slide s3"><div class="stitle">Pitch<br>Kopi Senja</div><div class="bars"><i></i><i></i><i></i></div></div>
+        <div class="slide s4"><div class="stitle">Materi<br>Geometri</div><div class="bars"><i></i><i></i><i></i></div></div>
+      </div>
     </div>
   </div>
+</section>
 
-  <svg class="beam" id="beam" aria-hidden="true"><g class="hangat"><polygon id="beamPoly" points="0,0 0,0 0,0"/><line id="beamA"/><line id="beamB"/><line id="beamC"/><line id="beamD"/></g></svg>
+<!-- PRODUK -->
+<section class="products" id="produk" aria-label="Apa yang bisa dibuat">
+  <div class="wrap pgrid">
+    <div class="pcol">
+      <a class="pcard" href="#" style="height:241px">
+        <div class="thumb t1" style="height:149px;--mz:1.075"><div class="sl"><i style="top:16px;width:30px"></i><b>Rencana kerja tim tahun 2027</b><i style="top:64px;width:52px;height:3px"></i><i style="top:71px;width:76px"></i><div class="wave"></div><div class="wave"></div></div><div class="pl"></div><div class="pl"></div></div>
+        <div class="ptxt"><h3>Presentasi</h3><p>Ubah ide apa pun jadi slide yang rapi. Unduh sebagai .pptx atau PDF.</p></div>
+      </a>
+      <a class="pcard" href="#" style="height:236px">
+        <div class="thumb t2" style="--mz:.894"><div class="pg a"></div><div class="pg b"></div><div class="pg c"></div><b>Bab 1 Pendahuluan</b><i style="top:62px;width:96px"></i><i style="top:68px;width:70px"></i><span class="pie" style="left:50px"></span><span class="pie" style="left:85px;background:conic-gradient(#8fcfca 0 45%,#d9efec 0)"></span><span class="pie" style="left:120px;background:conic-gradient(#8fcfca 0 85%,#d9efec 0)"></span><i style="top:124px;width:100px"></i><i style="top:131px;width:84px"></i><i style="top:138px;width:92px"></i></div>
+        <div class="ptxt"><h3>Sidang skripsi</h3><p>Kerangka sidang dan proposal lengkap, dari latar belakang sampai simpulan.</p></div>
+      </a>
+      <a class="pcard" href="#" style="height:251px">
+        <div class="thumb t3" style="--mz:.829"><span class="sq" style="left:22px;top:52px;background:#7fb9d6"></span><span class="sq" style="left:150px;top:44px;background:#0b7d7f;width:30px;height:30px"></span><span class="sq" style="left:14px;top:140px;background:#f2a77f;width:24px;height:30px"></span><span class="sq" style="left:144px;top:142px;background:#e98d8d;width:22px;height:16px"></span><div class="cd"><b>Kuis Pecahan untuk Kelas 4</b></div></div>
+        <div class="ptxt"><h3>Materi ajar</h3><p>Bahan ajar untuk guru dan dosen, lengkap dengan ringkasan, kuis, dan catatan pembicara.</p></div>
+      </a>
+    </div>
+    <div class="pcol">
+      <a class="pcard" href="#" style="height:195px">
+        <div class="thumb t4" style="--mz:1.088"><div class="pc a"></div><div class="pc b"></div><div class="pc c"></div><i style="left:80px;top:12px;width:34px"></i><i style="left:86px;top:18px;width:22px"></i><b>Promo Kopi Senja</b><i style="left:72px;top:112px;width:50px"></i><i style="left:76px;top:119px;width:42px"></i></div>
+        <div class="ptxt"><h3>Pitch UMKM</h3><p>Deck jualan dan pengajuan modal yang ringkas, siap dibawa ke investor.</p></div>
+      </a>
+      <a class="pcard" href="#" style="height:254px">
+        <div class="thumb t5" style="--mz:.842"><div class="win"><div class="bar"><i></i><i></i><i></i></div><div class="nav-p"><i></i><i></i><i></i><i></i></div><b>Laporan Triwulan III</b><span class="hill" style="left:-20px;width:120px;background:#f3b799"></span><span class="hill" style="left:70px;width:150px;background:#e98f86;height:34px"></span><span class="hill" style="left:20px;width:100px;background:#86c7c0;height:24px"></span></div></div>
+        <div class="ptxt"><h3>Kantor &amp; instansi</h3><p>Laporan bulanan dan paparan rapat dengan format resmi, tanpa ribet.</p></div>
+      </a>
+      <a class="pcard" href="#" style="height:279px">
+        <div class="thumb t6" style="--mz:.744"><div class="fc a"></div><div class="fc b"></div><div class="fc c"></div><b>Ringkasan Rapat</b><small>Dari notulen 12 halaman</small></div>
+        <div class="ptxt"><h3>Dari dokumen</h3><p>Unggah PDF, Word, atau catatan rapat, lalu AI menyusunnya jadi slide yang enak dibaca.</p></div>
+      </a>
+    </div>
+  </div>
+  <div class="clouds" aria-hidden="true"><svg width="0" height="0" style="position:absolute"><defs><linearGradient id="cgl" gradientUnits="userSpaceOnUse" x1="120" y1="20" x2="200" y2="270"><stop offset="0" stop-color="#fffaf1"/><stop offset=".35" stop-color="#fbe4d3"/><stop offset=".62" stop-color="#d9cfd8"/><stop offset=".85" stop-color="#93acc9"/><stop offset="1" stop-color="#7b9cc4"/></linearGradient><linearGradient id="cgr" gradientUnits="userSpaceOnUse" x1="415" y1="20" x2="335" y2="270"><stop offset="0" stop-color="#fffaf1"/><stop offset=".35" stop-color="#fbe4d3"/><stop offset=".62" stop-color="#d9cfd8"/><stop offset=".85" stop-color="#93acc9"/><stop offset="1" stop-color="#7b9cc4"/></linearGradient><filter id="cb" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur stdDeviation="1.6"/></filter></defs></svg><svg class="cloud l" viewBox="0 0 535 280"><g fill="url(#cgl)" filter="url(#cb)"><circle cx="30" cy="232" r="40"/><circle cx="80" cy="205" r="52"/><circle cx="140" cy="170" r="64"/><circle cx="205" cy="128" r="62"/><circle cx="250" cy="92" r="52"/><circle cx="292" cy="120" r="50"/><circle cx="330" cy="160" r="56"/><circle cx="390" cy="196" r="50"/><circle cx="450" cy="222" r="40"/><circle cx="500" cy="240" r="30"/><circle cx="110" cy="236" r="46"/><circle cx="180" cy="220" r="58"/><circle cx="250" cy="196" r="66"/><circle cx="320" cy="218" r="52"/><circle cx="400" cy="240" r="40"/><circle cx="170" cy="120" r="42"/><circle cx="230" cy="60" r="38"/><circle cx="280" cy="70" r="34"/><circle cx="60" cy="248" r="40"/><circle cx="250" cy="250" r="40"/><circle cx="340" cy="250" r="36"/></g></svg><svg class="cloud r" viewBox="0 0 535 280"><g fill="url(#cgr)" filter="url(#cb)"><circle cx="505" cy="232" r="40"/><circle cx="455" cy="205" r="52"/><circle cx="395" cy="170" r="64"/><circle cx="330" cy="128" r="62"/><circle cx="285" cy="92" r="52"/><circle cx="243" cy="120" r="50"/><circle cx="205" cy="160" r="56"/><circle cx="145" cy="196" r="50"/><circle cx="85" cy="222" r="40"/><circle cx="35" cy="240" r="30"/><circle cx="425" cy="236" r="46"/><circle cx="355" cy="220" r="58"/><circle cx="285" cy="196" r="66"/><circle cx="215" cy="218" r="52"/><circle cx="135" cy="240" r="40"/><circle cx="365" cy="120" r="42"/><circle cx="305" cy="60" r="38"/><circle cx="255" cy="70" r="34"/><circle cx="475" cy="248" r="40"/><circle cx="285" cy="250" r="40"/><circle cx="195" cy="250" r="36"/></g></svg></div>
+</section>
 
-  <div class="meja" id="mulai">
-    <div class="meja-isi">
-      <form class="prompt" id="prompt" action="#" novalidate>
-        <label class="judul-kecil" for="topik" data-i18n="labelTopik">Apa yang mau kamu presentasikan?</label>
-        <div class="kolom">
-          <input type="text" id="topik" name="topik" autocomplete="off" data-i18n-ph="phTopik" placeholder="Contoh: minat beli mahasiswa">
-          <button type="submit" class="tombol-layar" data-i18n="cta">Buat PPT gratis</button>
+<!-- TRUST + HEADLINE -->
+<section class="trust" aria-label="Untuk siapa">
+  <p class="trust-t rise">Untuk kelas, kantor, dan usaha kecil</p>
+  <div class="marks rise" aria-hidden="true">
+    <span class="m1">Solo</span><span class="m2">Bandung</span><i class="brk mb"></i><span class="m3">Medan</span><span class="m4">makassar</span><i class="brk mb"></i><span class="m5">Kota Yogyakarta</span><i class="brk"></i><span class="m6">Denpasar</span>
+  </div>
+  <svg class="spark l" viewBox="0 0 74 90" aria-hidden="true"><path d="M30 18c2 14 6 18 20 20-14 2-18 6-20 20-2-14-6-18-20-20 14-2 18-6 20-20z" fill="#fff"/><path d="M56 56c1 8 3 10 11 11-8 1-10 3-11 11-1-8-3-10-11-11 8-1 10-3 11-11z" fill="#fff"/><circle cx="64" cy="20" r="3" fill="#fff"/><circle cx="6" cy="64" r="3" fill="#fff"/></svg>
+  <svg class="spark r" viewBox="0 0 74 90" aria-hidden="true"><path d="M44 18c2 14 6 18 20 20-14 2-18 6-20 20-2-14-6-18-20-20 14-2 18-6 20-20z" fill="#fff"/><path d="M18 56c1 8 3 10 11 11-8 1-10 3-11 11-1-8-3-10-11-11 8-1 10-3 11-11z" fill="#fff"/><circle cx="8" cy="20" r="3" fill="#fff"/><circle cx="68" cy="64" r="3" fill="#fff"/></svg>
+  <h2 class="big">Slide rapi dalam hitungan menit.</h2>
+</section>
+
+<!-- FITUR -->
+<section class="feats" id="fitur" aria-label="Fitur">
+  <div class="wrap">
+    <div class="frow">
+      <div class="fvis v1" aria-hidden="true">
+        <h4>Mulai dengan AI</h4>
+        <div class="sub">Siapkan presentasi dalam hitungan menit. Pilih cara memulainya:</div>
+        <div class="opts">
+          <div class="opt"><div class="art a1"><em>Aa</em><i></i></div><b>Tempel teks</b><small>Tempel atau ketik kerangka</small></div>
+          <div class="opt"><div class="art a2"><svg class="ic" style="stroke-width:1.2;fill:#fff"><use href="#i-spark"/></svg></div><b>Buat dari topik</b><small>Mulai dari satu kalimat <span class="pop">POPULER</span></small></div>
+          <div class="opt"><div class="art a3"><span class="fold"><svg class="ic"><use href="#i-upload"/></svg></span></div><b>Unggah berkas</b><small>PDF, Word, atau tautan</small></div>
         </div>
-        <a class="coba-lampu" href="#uji" data-i18n="cobaLampu">Coba nyalakan lampu ruangan</a>
-        <div class="baris">
-          <div class="pilih">
-            <label class="sr" for="acara" data-i18n="labelAcara">Acara</label>
-            <select id="acara" name="acara">
-              <option data-i18n="a1">Sidang skripsi</option>
-              <option data-i18n="a2">Seminar proposal</option>
-              <option data-i18n="a3">Rapat kantor</option>
-              <option data-i18n="a4">Paparan instansi</option>
-              <option data-i18n="a5">Pitch UMKM</option>
-              <option data-i18n="a6">Materi ajar</option>
-            </select>
+        <svg class="cursor" viewBox="0 0 24 24" style="stroke:#043438;stroke-width:1.3"><use href="#i-cursor"/></svg>
+      </div>
+      <div class="ftxt">
+        <span class="tag t-teal"><svg class="ic"><use href="#i-file"/></svg>Buat</span>
+        <h3>Lewati halaman kosong, slide jadi dalam sekejap.</h3>
+        <ul>
+          <li><svg class="ic c-teal"><use href="#i-list"/></svg>Mulai dari topik, tempel kerangka, atau unggah dokumen</li>
+          <li><svg class="ic c-teal"><use href="#i-wand"/></svg>Template lokal untuk sidang dan kantor</li>
+          <li><svg class="ic c-teal"><use href="#i-palette"/></svg>Pakai warna dan logo sendiri, atau pilih tema siap pakai</li>
+        </ul>
+        <a class="btn btn-sm b-teal" href="#">Mulai gratis</a>
+      </div>
+    </div>
+
+    <div class="frow rev">
+      <div class="fvis v2" aria-hidden="true">
+        <div class="doc d0"><small style="left:48px">Visual bersih membuat poin utama mudah diingat.</small><span class="halfc"></span><small style="right:44px">Cocok untuk rapat dan kelas.</small></div>
+        <div class="doc d1">
+          <div class="hd"><span class="blob" style="left:120px;top:20px;width:120px;height:120px;background:radial-gradient(#ffd7b8,#f39c7b 70%)"></span><span class="blob" style="left:260px;top:-30px;width:150px;height:150px;background:radial-gradient(#bff0e6,#2aa198 70%)"></span><span class="blob" style="left:370px;top:30px;width:110px;height:110px;background:radial-gradient(#ffe8a8,#f2b53a 70%)"></span>
+            <div class="tools"><i style="width:14px"></i><i style="width:34px"></i><i style="width:34px"></i></div></div>
+          <h5>Rencana Pemasaran 2027</h5>
+          <div class="cols">
+            <div><b>Konten Mingguan</b><span>Jadwal unggahan tiap Senin dan Kamis, tema mengikuti kalender promo toko.</span></div>
+            <div><b>Iklan Lokal</b><span>Fokus ke radius 5 km dari toko. Anggaran dibagi rata selama tiga bulan.</span></div>
+            <div><b>Program Member</b><span>Kartu poin digital untuk pelanggan tetap, ditukar menu gratis.</span></div>
+            <div><b>Kolaborasi</b><span>Kerja sama dengan kampus dan komunitas sekitar untuk acara bulanan.</span></div>
           </div>
-          <div class="pilih">
-            <label class="sr" for="durasi" data-i18n="labelDurasi">Durasi</label>
-            <select id="durasi" name="durasi">
-              <option data-i18n="d1">5 menit</option>
-              <option data-i18n="d2">10 menit</option>
-              <option data-i18n="d3" selected>15 menit</option>
-              <option data-i18n="d4">20 menit</option>
-              <option data-i18n="d5">1 JP (40 menit)</option>
-            </select>
-          </div>
-          <button type="button" class="tombol-garis" aria-label="Unggah materi (.docx, .pdf, .pptx)">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 16V4m0 0-5 5m5-5 5 5M4 15v4a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-4"/></svg>
-            <span class="teks-unggah" data-i18n="unggah">Unggah materi</span>
-          </button>
         </div>
-        <p class="bayar" data-i18n-html="bayar"><strong>3 presentasi pertama gratis.</strong> Selanjutnya <span class="harga-angka">Rp19.000</span> per presentasi, bayar pakai QRIS, GoPay, OVO, atau DANA. (harga contoh)</p>
-        <div class="indeks"><span data-i18n="coba">Coba contoh:</span>
-          <button type="button" class="kartu-indeks" style="--r:-1.2deg" data-contoh="0" data-i18n="c1">Skripsi manajemen</button>
-          <button type="button" class="kartu-indeks" style="--r:.8deg" data-contoh="1" data-i18n="c2">Capaian program desa</button>
-          <button type="button" class="kartu-indeks" style="--r:-.5deg" data-contoh="2" data-i18n="c3">Keripik singkong</button>
-        </div>
-      </form>
-
-      <div class="proyektor" aria-hidden="true">
-        <svg class="kabel" viewBox="-96 0 106 200" fill="none"><path d="M8 52C-6 60-18 100-20 140C-22 166-40 176-60 177" stroke="#6B665F" stroke-width="1.5"/><rect x="-74" y="173" width="14" height="8" rx="1" fill="#6B665F"/></svg>
-        <div class="badan"><svg viewBox="0 0 150 70">
-          <rect x="6" y="18" width="138" height="44" rx="5" fill="#2E2C2A" stroke="#4E4A46" stroke-width="1.5"/>
-          <rect x="14" y="62" width="14" height="5" rx="1" fill="#3D3A36"/><rect x="122" y="62" width="14" height="5" rx="1" fill="#3D3A36"/>
-          <circle cx="75" cy="40" r="15" fill="#1A1817" stroke="#5C5853" stroke-width="2"/>
-          <circle cx="75" cy="40" r="8" fill="#0F0E0D" stroke="#2E2C2A" stroke-width="2"/>
-          <circle id="lensa" cx="75" cy="40" r="3.4" fill="#FFF1D6"/>
-          <g stroke="#45413D" stroke-width="2"><line x1="104" y1="30" x2="132" y2="30"/><line x1="104" y1="37" x2="132" y2="37"/><line x1="104" y1="44" x2="132" y2="44"/><line x1="104" y1="51" x2="132" y2="51"/></g>
-          <circle cx="22" cy="30" r="2.5" fill="#EDEDEB"/>
-          <rect x="54" y="12" width="42" height="7" rx="2" fill="#3D3A36"/>
-        </svg></div>
+        <div class="doc d2"><h6>Langkah Berikutnya</h6><div class="im"></div></div>
       </div>
+      <div class="ftxt">
+        <span class="tag t-gold"><svg class="ic"><use href="#i-edit"/></svg>Susun</span>
+        <h3>Edit pakai AI, cukup sekali klik.</h3>
+        <ul>
+          <li><svg class="ic c-gold"><use href="#i-edit"/></svg>Tambah tata letak, tabel, dan grafik dalam sekejap</li>
+          <li><svg class="ic c-gold"><use href="#i-image"/></svg>Rapikan bahasa dan ringkas teks panjang</li>
+          <li><svg class="ic c-gold"><use href="#i-users"/></svg>Kerjakan bareng tim atau teman</li>
+        </ul>
+        <a class="btn btn-sm b-gold" href="#">Mulai gratis</a>
+      </div>
+    </div>
 
-      <div class="uji" id="uji" role="group" aria-labelledby="ujiJudul">
-        <div class="uji-kepala">
-          <h2 id="ujiJudul" data-i18n="ujiJudul">Uji Sorot</h2>
-          <p data-i18n="ujiBantu">Begini slidemu di ruangan sungguhan.</p>
+    <div class="frow">
+      <div class="fvis v3" aria-hidden="true">
+        <div class="low"></div>
+        <div class="sharebtn"><svg class="ic"><use href="#i-dl"/></svg>Unduh</div>
+        <div class="rb a"><svg class="ic"><use href="#i-spark"/></svg></div>
+        <div class="rb b"><svg class="ic" style="stroke-width:3"><use href="#i-dots"/></svg></div>
+        <div class="rb c"></div>
+        <div class="night"></div>
+        <svg class="cursor" viewBox="0 0 24 24" style="stroke:#043438;stroke-width:1.2"><use href="#i-cursor"/></svg>
+        <div class="zf">
+          <div class="m3-top"><span class="m3-pill"><svg class="ic"><use href="#i-dl"/></svg>Unduh</span><span class="m3-c"><svg class="ic"><use href="#i-spark"/></svg></span><span class="m3-c"><svg class="ic" style="stroke-width:3"><use href="#i-dots"/></svg></span><span class="m3-av">RT</span></div>
+          <div class="m3-card"><span class="m3-sun"></span><small>Laporan</small><b>Industri Kopi<br>Nusantara 2027</b><span class="m3-planet"></span><span class="m3-base"></span></div>
+          <div class="m3-ai"><svg class="ic"><use href="#i-spark"/></svg></div>
+          <div class="m3-bar"><svg class="ic"><use href="#i-layers"/></svg><svg class="ic"><use href="#i-layout"/></svg></div>
         </div>
-        <div class="layar-pilih" role="group" aria-label="Tampil di">
-          <button type="button" data-layar="lcd" aria-pressed="true" data-i18n="l1">Proyektor kelas (LCD)</button>
-          <button type="button" data-layar="aula" aria-pressed="false" data-i18n="l2">Aula instansi</button>
-          <button type="button" data-layar="tv" aria-pressed="false" data-i18n="l3">TV rapat</button>
-          <button type="button" data-layar="daring" aria-pressed="false" data-i18n="l4">Rapat daring</button>
-        </div>
-        <div class="pelat">
-          <i class="sekrup ki" aria-hidden="true"></i><i class="sekrup ka" aria-hidden="true"></i>
-          <label for="lampu" data-i18n="lampuLabel">Lampu ruangan</label>
-          <span data-i18n="gelap">Gelap</span>
-          <input type="range" id="lampu" min="0" max="100" value="15" aria-describedby="meter">
-          <span data-i18n="terang">Terang</span>
-        </div>
-        <div class="tema" role="group" aria-label="Tema slide">
-          <button type="button" data-tema="solus" aria-pressed="true" data-i18n="t1">Slide Soluslide</button>
-          <button type="button" data-tema="pastel" aria-pressed="false" data-i18n="t2">Slide pastel biasa</button>
-        </div>
-        <output class="meter" id="meter" aria-live="polite">Terbaca jelas dari kursi belakang. <span class="rasio">(Perkiraan kontras 15,3:1)</span></output>
+      </div>
+      <div class="ftxt">
+        <span class="tag t-leaf"><svg class="ic"><use href="#i-share"/></svg>Bagikan</span>
+        <h3>Siap tampil, di mana pun dibutuhkan.</h3>
+        <ul>
+          <li><svg class="ic c-leaf"><use href="#i-file"/></svg>Unduh .pptx yang bisa diedit, PDF, PNG</li>
+          <li><svg class="ic c-leaf"><use href="#i-dl"/></svg>Buka di PowerPoint atau Google Slides tanpa tata letak berantakan</li>
+          <li><svg class="ic c-leaf"><use href="#i-wallet"/></svg>Bayar Rupiah lewat QRIS dan e-wallet</li>
+        </ul>
+        <a class="btn btn-sm b-leaf" href="#">Mulai gratis</a>
       </div>
     </div>
   </div>
 </section>
 
-<section class="seksi" aria-labelledby="kursiJudul">
-  <div class="wrap">
-    <div class="seksi-kepala">
-      <h2 id="kursiJudul">Kalau penguji di kursi paling belakang bisa baca, semua bisa.</h2>
-      <p>Slide yang cantik di laptop sering pudar di proyektor kelas atau aula yang terang. Soluslide mendesain untuk ruangan tempat kamu benar-benar tampil.</p>
-    </div>
-    <div class="kursi-baris">
-      <div class="kursi"><div class="jarak" style="--s:1"><div class="mini"><b>Rumusan Masalah</b><span>Bagaimana media sosial memengaruhi minat beli mahasiswa?</span></div></div>
-        <p class="kursi-ket"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M7 4v9h10V4M5 13h14v3H5zM7 16v5m10-5v5"/></svg>Baris 1</p></div>
-      <div class="kursi"><div class="jarak" aria-hidden="true" style="--s:.62"><div class="mini"><b>Rumusan Masalah</b><span>Bagaimana media sosial memengaruhi minat beli mahasiswa?</span></div></div>
-        <p class="kursi-ket"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M7 4v9h10V4M5 13h14v3H5zM7 16v5m10-5v5"/></svg>Baris 6</p></div>
-      <div class="kursi"><div class="jarak" aria-hidden="true" style="--s:.38"><div class="mini"><b>Rumusan Masalah</b><span>Bagaimana media sosial memengaruhi minat beli mahasiswa?</span></div></div>
-        <p class="kursi-ket"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M7 4v9h10V4M5 13h14v3H5zM7 16v5m10-5v5"/></svg>Baris 12</p></div>
-    </div>
-    <div class="aturan">
-      <div><h3>Huruf isi minimal 24 pt</h3><p>Ukuran yang masih terbaca dari baris belakang kelas, ruang sidang, dan aula.</p></div>
-      <div><h3>Paling banyak 6 baris per slide</h3><p>Sisanya pindah ke catatan pembicara, tidak dijejalkan ke layar.</p></div>
-      <div><h3>Kontras dicek sebelum diunduh</h3><p>Setiap slide melewati Uji Sorot. Bagian yang tenggelam ditandai titik laser dan bisa diperbaiki sekali klik.</p></div>
-    </div>
-  </div>
-</section>
-
-<section class="seksi terang" id="template" aria-labelledby="templateJudul">
-  <div class="wrap gedung">
-    <div class="petunjuk">
-      <h2 id="templateJudul">Template untuk ruangan yang kamu datangi.</h2>
-      <div role="tablist" aria-label="Pilih ruangan" id="daftarPintu">
-        <button class="pintu" role="tab" id="tab-sidang" aria-controls="r-sidang" aria-selected="true"><span><b>Ruang Sidang</b><br><small>Sidang skripsi</small></span><small>15 menit</small><svg viewBox="0 0 22 14" aria-hidden="true"><path d="M1 7h18m-6-6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></button>
-        <button class="pintu" role="tab" id="tab-seminar" aria-controls="r-seminar" aria-selected="false" tabindex="-1"><span><b>Ruang Seminar</b><br><small>Seminar proposal</small></span><small>10 menit</small><svg viewBox="0 0 22 14" aria-hidden="true"><path d="M1 7h18m-6-6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></button>
-        <button class="pintu" role="tab" id="tab-aula" aria-controls="r-aula" aria-selected="false" tabindex="-1"><span><b>Aula</b><br><small>Paparan instansi</small></span><small>10 menit</small><svg viewBox="0 0 22 14" aria-hidden="true"><path d="M1 7h18m-6-6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></button>
-        <button class="pintu" role="tab" id="tab-rapat" aria-controls="r-rapat" aria-selected="false" tabindex="-1"><span><b>Ruang Rapat</b><br><small>Rapat kantor</small></span><small>5 menit</small><svg viewBox="0 0 22 14" aria-hidden="true"><path d="M1 7h18m-6-6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></button>
-        <button class="pintu" role="tab" id="tab-juri" aria-controls="r-juri" aria-selected="false" tabindex="-1"><span><b>Meja Juri</b><br><small>Pitch UMKM</small></span><small>3 menit</small><svg viewBox="0 0 22 14" aria-hidden="true"><path d="M1 7h18m-6-6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></button>
-        <button class="pintu" role="tab" id="tab-kelas" aria-controls="r-kelas" aria-selected="false" tabindex="-1"><span><b>Kelas</b><br><small>Materi ajar</small></span><small>1 JP</small><svg viewBox="0 0 22 14" aria-hidden="true"><path d="M1 7h18m-6-6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></button>
-      </div>
-    </div>
-
-    <div class="ruang-lihat" role="tabpanel" id="r-sidang" aria-labelledby="tab-sidang">
-      <div class="ilustrasi"><svg viewBox="0 0 320 180" role="img" aria-label="Ruang sidang: papan tulis putih dengan slide, meja penguji bertaplak, tiga kursi">
-        <g fill="none" stroke="#15171A" stroke-width="1.5"><rect x="92" y="18" width="136" height="80"/><line x1="120" y1="104" x2="200" y2="104"/>
-        <rect x="70" y="96" width="24" height="26" rx="3"/><rect x="148" y="96" width="24" height="26" rx="3"/><rect x="226" y="96" width="24" height="26" rx="3"/>
-        <path d="M52 122h216v6H52z"/><path d="M56 128v34M264 128v34M56 162c40-6 168-6 208 0"/><path d="M90 130v26M130 130v28M170 130v28M210 130v28M240 130v26" stroke-width="1"/><line x1="0" y1="170" x2="320" y2="170"/></g>
-        <polygon points="98,24 222,24 218,92 102,92" fill="#FFFFFF" stroke="#15171A" stroke-width="1"/><rect x="110" y="36" width="64" height="7" fill="#15171A"/><rect x="110" y="52" width="92" height="4" fill="#8A8E96"/><rect x="110" y="62" width="80" height="4" fill="#8A8E96"/>
-        <circle cx="196" cy="40" r="3.2" fill="#FF5A47"/></svg></div>
-      <ol class="urutan"><li><b>Judul dan identitas</b><span>1:00</span></li><li><b>Latar Belakang</b><span>2:30</span></li><li><b>Rumusan Masalah</b><span>1:30</span></li><li><b>Tujuan Penelitian</b><span>1:00</span></li><li><b>Metode</b><span>2:30</span></li><li><b>Hasil dan Pembahasan</b><span>5:00</span></li><li><b>Kesimpulan dan Saran</b><span>1:30</span></li><li><b>Tanya jawab penguji</b><span>dicadangkan</span></li></ol>
-      <div class="ruang-kaki"><span>15 menit, sekitar 12 slide, lalu tanya jawab penguji.</span><a href="#mulai">Pakai template sidang skripsi</a></div>
-    </div>
-    <div class="ruang-lihat" role="tabpanel" id="r-seminar" aria-labelledby="tab-seminar" hidden>
-      <div class="ilustrasi"><svg viewBox="0 0 320 180" role="img" aria-label="Ruang seminar: papan tulis putih dengan slide, meja moderator, kursi peserta">
-        <g fill="none" stroke="#15171A" stroke-width="1.5"><rect x="84" y="16" width="152" height="84"/><line x1="110" y1="106" x2="210" y2="106"/>
-        <path d="M226 120h78v6h-78zM232 126v36M298 126v36"/><line x1="0" y1="170" x2="320" y2="170"/>
-        <g stroke-width="1.2"><rect x="30" y="140" width="18" height="16" rx="3"/><rect x="60" y="140" width="18" height="16" rx="3"/><rect x="90" y="140" width="18" height="16" rx="3"/><rect x="120" y="140" width="18" height="16" rx="3"/><rect x="150" y="140" width="18" height="16" rx="3"/></g></g>
-        <polygon points="90,22 230,22 226,94 94,94" fill="#FFFFFF" stroke="#15171A" stroke-width="1"/><rect x="104" y="34" width="66" height="7" fill="#15171A"/><rect x="104" y="50" width="96" height="4" fill="#8A8E96"/><rect x="104" y="60" width="84" height="4" fill="#8A8E96"/>
-        <circle cx="198" cy="37" r="3.2" fill="#FF5A47"/></svg></div>
-      <ol class="urutan"><li><b>Latar Belakang</b><span>2:00</span></li><li><b>Rumusan Masalah</b><span>1:30</span></li><li><b>Tujuan</b><span>1:00</span></li><li><b>Tinjauan Pustaka</b><span>2:00</span></li><li><b>Metode</b><span>2:30</span></li><li><b>Jadwal Penelitian</b><span>1:00</span></li></ol>
-      <div class="ruang-kaki"><span>10 menit, sekitar 9 slide.</span><a href="#mulai">Pakai template seminar proposal</a></div>
-    </div>
-    <div class="ruang-lihat" role="tabpanel" id="r-aula" aria-labelledby="tab-aula" hidden>
-      <div class="ilustrasi"><svg viewBox="0 0 320 180" role="img" aria-label="Aula instansi: layar tarik, podium polos, deretan kursi">
-        <g fill="none" stroke="#15171A" stroke-width="1.5"><rect x="78" y="12" width="164" height="6" rx="2"/><line x1="84" y1="102" x2="236" y2="102"/>
-        <path d="M28 108h40l-6 54H34z"/><path d="M48 108v-14M44 94h8"/><line x1="0" y1="170" x2="320" y2="170"/>
-        <g stroke-width="1.2"><rect x="96" y="140" width="18" height="14" rx="2"/><rect x="124" y="140" width="18" height="14" rx="2"/><rect x="152" y="140" width="18" height="14" rx="2"/><rect x="180" y="140" width="18" height="14" rx="2"/><rect x="208" y="140" width="18" height="14" rx="2"/><rect x="236" y="140" width="18" height="14" rx="2"/><rect x="264" y="140" width="18" height="14" rx="2"/></g></g>
-        <polygon points="86,18 234,18 230,100 90,100" fill="#FFFFFF" stroke="#15171A" stroke-width="1"/><rect x="102" y="32" width="70" height="7" fill="#15171A"/><rect x="102" y="48" width="104" height="4" fill="#8A8E96"/><rect x="102" y="58" width="90" height="4" fill="#8A8E96"/>
-        <circle cx="206" cy="35" r="3.2" fill="#FF5A47"/></svg></div>
-      <ol class="urutan"><li><b>Judul dan unit kerja</b><span>0:30</span></li><li><b>Dasar Kegiatan</b><span>1:30</span></li><li><b>Capaian</b><span>3:30</span></li><li><b>Kendala</b><span>1:30</span></li><li><b>Tindak Lanjut</b><span>2:00</span></li><li><b>Kesimpulan</b><span>1:00</span></li></ol>
-      <div class="ruang-kaki"><span>10 menit, sekitar 10 slide.</span><a href="#mulai">Pakai template paparan instansi</a></div>
-    </div>
-    <div class="ruang-lihat" role="tabpanel" id="r-rapat" aria-labelledby="tab-rapat" hidden>
-      <div class="ilustrasi"><svg viewBox="0 0 320 180" role="img" aria-label="Ruang rapat: TV di dinding, meja panjang, kursi">
-        <g fill="none" stroke="#15171A" stroke-width="1.5"><rect x="92" y="18" width="136" height="80" rx="3" stroke-width="5"/>
-        <path d="M126 168l24-56h20l24 56z"/><line x1="0" y1="170" x2="320" y2="170"/>
-        <g stroke-width="1.2"><rect x="96" y="124" width="18" height="16" rx="3"/><rect x="88" y="148" width="18" height="16" rx="3"/><rect x="206" y="124" width="18" height="16" rx="3"/><rect x="214" y="148" width="18" height="16" rx="3"/></g></g>
-        <rect x="96" y="22" width="128" height="72" fill="#FFFFFF"/><rect x="108" y="34" width="62" height="7" fill="#15171A"/><rect x="108" y="50" width="40" height="22" fill="#5B5F67"/><rect x="154" y="58" width="16" height="14" fill="#8A8E96"/><rect x="176" y="50" width="16" height="22" fill="#15171A"/>
-        <circle cx="200" cy="37" r="3.2" fill="#FF5A47"/></svg></div>
-      <ol class="urutan"><li><b>Ringkasan</b><span>0:30</span></li><li><b>Angka Kunci</b><span>1:00</span></li><li><b>Masalah</b><span>1:00</span></li><li><b>Usulan</b><span>1:30</span></li><li><b>Keputusan yang Dibutuhkan</b><span>1:00</span></li></ol>
-      <div class="ruang-kaki"><span>5 menit, sekitar 6 slide.</span><a href="#mulai">Pakai template rapat kantor</a></div>
-    </div>
-    <div class="ruang-lihat" role="tabpanel" id="r-juri" aria-labelledby="tab-juri" hidden>
-      <div class="ilustrasi"><svg viewBox="0 0 320 180" role="img" aria-label="Pitch: layar di atas tripod, meja juri dengan tiga kursi">
-        <g fill="none" stroke="#15171A" stroke-width="1.5"><path d="M96 96l-18 72M96 96l18 72M96 96v72"/><line x1="0" y1="170" x2="320" y2="170"/>
-        <path d="M176 120h124v6H176zM182 126v40M294 126v40"/><g stroke-width="1.2"><rect x="196" y="100" width="20" height="20" rx="3"/><rect x="228" y="100" width="20" height="20" rx="3"/><rect x="260" y="100" width="20" height="20" rx="3"/></g>
-        <path d="M20 132h46v36H20z"/><path d="M28 132v-10h30v10"/></g>
-        <rect x="34" y="20" width="124" height="74" fill="#FFFFFF" stroke="#15171A" stroke-width="1.5"/><rect x="46" y="32" width="56" height="7" fill="#15171A"/><rect x="46" y="48" width="78" height="4" fill="#8A8E96"/><rect x="46" y="58" width="64" height="4" fill="#8A8E96"/>
-        <circle cx="136" cy="35" r="3.2" fill="#FF5A47"/></svg></div>
-      <ol class="urutan"><li><b>Masalah</b><span>0:30</span></li><li><b>Produk</b><span>0:30</span></li><li><b>Pasar</b><span>0:30</span></li><li><b>Model Usaha</b><span>0:30</span></li><li><b>Tim</b><span>0:30</span></li><li><b>Permintaan</b><span>0:30</span></li></ol>
-      <div class="ruang-kaki"><span>3 menit, sekitar 6 slide.</span><a href="#mulai">Pakai template pitch UMKM</a></div>
-    </div>
-    <div class="ruang-lihat" role="tabpanel" id="r-kelas" aria-labelledby="tab-kelas" hidden>
-      <div class="ilustrasi"><svg viewBox="0 0 320 180" role="img" aria-label="Kelas: papan tulis putih dengan slide, meja guru, bangku murid">
-        <g fill="none" stroke="#15171A" stroke-width="1.5"><rect x="70" y="16" width="180" height="86"/><line x1="96" y1="108" x2="224" y2="108"/>
-        <path d="M22 116h70v6H22zM28 122v26M86 122v26"/><line x1="0" y1="170" x2="320" y2="170"/>
-        <g stroke-width="1.2"><path d="M120 146h46v5h-46zM124 151v14M162 151v14"/><path d="M190 146h46v5h-46zM194 151v14M232 151v14"/><path d="M256 146h46v5h-46zM260 151v14M298 151v14"/></g></g>
-        <polygon points="96,22 224,22 220,96 100,96" fill="#FFFFFF" stroke="#15171A" stroke-width="1"/><rect x="110" y="34" width="60" height="7" fill="#15171A"/><rect x="110" y="50" width="88" height="4" fill="#8A8E96"/><rect x="110" y="60" width="72" height="4" fill="#8A8E96"/>
-        <circle cx="190" cy="37" r="3.2" fill="#FF5A47"/></svg></div>
-      <ol class="urutan"><li><b>Tujuan Pembelajaran</b><span>3 menit</span></li><li><b>Apersepsi</b><span>5 menit</span></li><li><b>Materi</b><span>15 menit</span></li><li><b>Diskusi</b><span>10 menit</span></li><li><b>Kuis</b><span>5 menit</span></li><li><b>Refleksi</b><span>2 menit</span></li></ol>
-      <div class="ruang-kaki"><span>1 JP (35, 40, atau 45 menit), sekitar 10 slide.</span><a href="#mulai">Pakai template materi ajar</a></div>
-    </div>
-  </div>
-</section>
-
-<section class="seksi terang jalur" aria-labelledby="alurJudul">
-  <div class="wrap">
-    <h2 id="alurJudul">Kerangka dulu, lalu .pptx yang bisa kamu sunting.</h2>
-    <div class="jalur-cahaya">
-      <div class="jalur-berkas" aria-hidden="true"></div>
-      <svg class="jalur-tepi" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><line x1="0" y1="47" x2="100" y2="0" stroke="#8A8E96" stroke-width="1" vector-effect="non-scaling-stroke"/><line x1="0" y1="53" x2="100" y2="100" stroke="#8A8E96" stroke-width="1" vector-effect="non-scaling-stroke"/></svg>
-      <div class="jalur-proyektor" aria-hidden="true"><svg viewBox="0 0 96 50"><rect x="2" y="10" width="78" height="32" rx="4" fill="#15171A"/><circle cx="62" cy="26" r="10" fill="#2E2C2A" stroke="#8A8E96" stroke-width="1.5"/><circle cx="62" cy="26" r="3" fill="#FFF1D6"/><rect x="10" y="42" width="10" height="4" fill="#15171A"/><rect x="62" y="42" width="10" height="4" fill="#15171A"/><path d="M80 22h14v8H80z" fill="#15171A"/></svg></div>
-      <div class="langkah">
-        <h3>Kerangka yang bisa diatur</h3>
-        <p>Kamu memeriksa urutan dan perkiraan waktu sebelum AI mendesain.</p>
-        <ol class="kerangka">
-          <li><span>Judul dan identitas</span><span>1:00</span></li>
-          <li><span>Latar Belakang</span><span>2:30</span></li>
-          <li><span>Rumusan Masalah</span><span>1:30</span></li>
-          <li><span>Tujuan Penelitian</span><span>1:00</span></li>
-          <li><span>Metode</span><span>2:30</span></li>
-          <li><span>Hasil dan Pembahasan</span><span>5:00</span></li>
-          <li><span>Kesimpulan dan Saran</span><span>1:30</span></li>
-          <li class="total"><span>Total, sebelum tanya jawab</span><span>15:00</span></li>
-        </ol>
-      </div>
-      <div class="langkah">
-        <h3>Slide yang lolos Uji Sorot</h3>
-        <p>Huruf besar, baris sedikit, kontras dicek untuk ruangan terang.</p>
-        <div class="mini"><b>Rumusan Masalah</b><span>1. Bagaimana media sosial memengaruhi minat beli mahasiswa?</span><span>2. Platform mana yang paling berpengaruh?</span></div>
-      </div>
-      <div class="langkah">
-        <h3>Unduh .pptx atau PDF</h3>
-        <p>Buka di PowerPoint atau Google Slides, lalu sunting seperti file buatanmu sendiri.</p>
-        <div class="berkas"><svg viewBox="0 0 34 40" aria-hidden="true"><path d="M2 2h20l10 10v26H2z" fill="#FFFFFF" stroke="#15171A" stroke-width="1.5"/><path d="M22 2v10h10" fill="none" stroke="#15171A" stroke-width="1.5"/><rect x="6" y="22" width="22" height="10" fill="#15171A"/></svg>
-          <div><b>sidang-skripsi.pptx</b><span>12 slide, 2,4 MB</span></div></div>
-        <ul class="ceklis"><li>Teks tetap teks, bukan gambar</li><li>Bagan bisa diubah datanya</li><li>Font aman untuk komputer kantor dan kampus</li><li>Catatan pembicara ikut terbawa</li></ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="harga-ruang" id="harga" aria-labelledby="hargaJudul">
-  <div class="wrap">
-    <div class="harga-sorot">
-      <div class="harga-slide">
-        <h2 id="hargaJudul">Bayar pakai Rupiah, sesuai kebutuhan.</h2>
-        <p>Coba dulu tanpa bayar. Kalau cocok, bayar per presentasi untuk sidang atau langganan bulanan untuk kerja rutin.</p>
-        <div class="paket-baris">
-          <div class="paket"><h3>Coba gratis</h3><p class="angka">Rp0</p>
-            <ul><li>3 presentasi pertama</li><li>Semua template lokal</li><li>Ekspor .pptx dan PDF</li></ul>
-            <a class="tombol-garis-terang" href="#mulai">Mulai gratis</a></div>
-          <div class="paket utama"><span class="label">Cukup untuk satu sidang</span><h3>Per presentasi</h3><p class="angka">Rp19.000 <small>sekali bayar</small></p>
-            <ul><li>1 presentasi, sunting sepuasnya 30 hari</li><li>Uji Sorot lengkap sebelum unduh</li><li>Catatan pembicara</li></ul>
-            <a class="tombol-layar" href="#mulai">Bayar per presentasi</a></div>
-          <div class="paket"><h3>Bulanan</h3><p class="angka">Rp59.000 <small>per bulan</small></p>
-            <ul><li>Presentasi tanpa batas (pemakaian wajar)</li><li>Logo kampus atau instansi milikmu</li><li>Riwayat versi</li></ul>
-            <a class="tombol-garis-terang" href="#mulai">Pilih bulanan</a></div>
-        </div>
-        <div class="harga-kaki"><span>QRIS, GoPay, OVO, DANA, ShopeePay, transfer bank</span><em>Harga contoh untuk konsep, belum final.</em></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="penutup" aria-labelledby="penutupJudul">
-  <div class="wrap">
-    <h2 id="penutupJudul">Lampu diredupkan. Giliranmu.</h2>
-    <p>Ketik topiknya sekarang. Kerangkamu siap diperiksa dalam hitungan menit, slidenya siap tampil di ruangan mana pun.</p>
-    <a class="tombol-layar" href="#mulai">Buat PPT gratis</a>
-    <div class="kaki"><span>Soluslide (konsep, 2026)</span><a href="#template">Template</a><a href="#harga">Harga</a><a href="#ruang">English</a><a href="#ruang">Kebijakan privasi</a></div>
-  </div>
-</section>
-
-<!-- ================= BAGIAN 2: DOKUMEN KONSEP ================= -->
-<section class="pemisah" aria-labelledby="dokJudul">
-  <div class="wrap">
-    <h2 id="dokJudul">Dokumen konsep: Ruang Sorot</h2>
-    <p>Di atas garis ini adalah mockup situs. Di bawahnya penjelasan sistem desain untuk juri dan tim yang akan membangun.</p>
-  </div>
-</section>
-
-<div class="dok">
-  <div class="wrap">
-    <section>
-      <h3>Ide besar</h3>
-      <p>Presentasi diuji di tempat ia akan tampil. Soluslide adalah AI pembuat PPT yang mendesain untuk ruang sidang, aula instansi, kelas, dan ruang rapat yang terang dengan proyektor seadanya, bukan untuk layar laptop pembuatnya.</p>
-      <h3 style="margin-top:28px">Signature: Uji Sorot di ruang proyeksi</h3>
-      <p>Hero adalah ruang gelap dengan proyektor di meja operator. Berkas cahaya bertepi tegas keluar dari lensa ke empat sudut jejak keystone di papan tulis putih beraluminium, dan judul situs (H1) adalah teks HTML di dalam slide yang diproyeksikan. Tanpa menyentuh apa pun, slide itu sudah memperlihatkan momen terkuatnya: dua slide mini di aula terang, yang pastel memudar (2,3:1) dan ditunjuk <strong>titik laser merah</strong>, yang Soluslide tetap terbaca (4,8:1).</p>
-      <p>Slider <strong>Lampu ruangan</strong> duduk di pelat saklar dinding. Saat dinaikkan, ruangan dan papan menerang, cahaya proyektor kalah, dan meter menulis dalam bahasa pengguna ("Terbaca jelas dari kursi belakang", "Judul mulai tenggelam di ruangan terang") dengan angka kontras WCAG yang dihitung dari warna yang tampil sebagai keterangan.</p>
-    </section>
-
-    <section>
-      <h3>Palet: arang hangat ruang proyeksi, layar menyala, satu titik laser</h3>
-      <div class="swatch-grid">
-        <div class="swatch"><div class="swatch-warna" style="background:#181614;color:#EDEDEB">#181614</div><div class="swatch-isi"><b>Gelap Ruang</b>Dasar ruang proyeksi. Teks Terang 15,39:1. dE 7,1 dari aspal Dokurapi</div></div>
-        <div class="swatch"><div class="swatch-warna" style="background:#2C2621;color:#EDEDEB">#2C2621</div><div class="swatch-isi"><b>Meja Operator</b>Kayu laminasi bergaris serat, tepi #5A5148. Teks Terang 12,74:1, Teks Redup 5,83:1 di serat</div></div>
-        <div class="swatch"><div class="swatch-warna" style="background:#8B9097;color:#15171A">#8B9097</div><div class="swatch-isi"><b>Aluminium</b>Bingkai papan tulis 6 px, baki, papan petunjuk. Sorot dalam #B9BDC3</div></div>
-        <div class="swatch"><div class="swatch-warna" style="background:#E9EAEC;color:#15171A">#E9EAEC</div><div class="swatch-isi"><b>Pelat Saklar</b>Saklar lampu dan kartu indeks. Teks slide 14,92:1, track #5B5F67 5,32:1</div></div>
-        <div class="swatch"><div class="swatch-warna" style="background:#FFFFFF;color:#15171A;border-bottom:1px solid #3D3A36">#FFFFFF</div><div class="swatch-isi"><b>Layar Menyala</b>Slide, CTA, section terang. Teks slide 17,96:1</div></div>
-        <div class="swatch"><div class="swatch-warna" style="background:#FF5A47;color:#181614">#FF5A47</div><div class="swatch-isi"><b>Laser</b>Satu-satunya kromatik. 5,85:1 di Gelap Ruang, 5,26:1 di panel Uji. Di putih hanya titik grafis</div></div>
-        <div class="swatch"><div class="swatch-warna" style="background:#FFF1D6;color:#181614">#FFF1D6</div><div class="swatch-isi"><b>Cahaya Sorot</b>Berkas 28%, jejak keystone 16% (keadaan awal 25% dan 14%). Tepi berkas 35%</div></div>
-        <div class="swatch"><div class="swatch-warna" style="background:#A6A9AF;color:#181614">#A6A9AF</div><div class="swatch-isi"><b>Teks Redup</b>7,66:1 di Gelap Ruang, 6,40:1 di Meja</div></div>
-      </div>
-      <p style="margin-top:20px">Teks Terang #EDEDEB tetap 6,63:1 saat ruangan menerang penuh (#55524E). Teks slide di keadaan awal (lampu 15%) 15,3:1; lampu penuh 4,84:1 di mode kelas dan 4,11:1 di mode aula. Pastel pembanding 4,61:1 di laptop, 2,28:1 di ruangan terang. Garis kontrol #7A7772 3,38:1 di Meja. Laser terhadap merah Dokurapi #C8102E 1,91:1.</p>
-    </section>
-
-    <section>
-      <h3>Tipografi</h3>
-      <div class="dua-kolom">
-        <div class="spesimen"><p class="besar">Buat PPT dengan AI.</p><p>Lexend Exa 600, satu bobot (14,8 KB). Desktop: 6,3% lebar slide (sekitar 43 px), baris dua 3,35%. HP: 30 px dua baris ("Buat PPT / dengan AI.") dan baris dua 18 px, karena satu baris di 26 px butuh 312 px sementara ruang isi slide di 360 px hanya sekitar 300 px (diukur di browser). Semua angka di halaman (durasi, harga, rasio, jumlah slide) memakai digit Lexend Exa lewat @font-face "Angka Soluslide" ber-unicode-range 0-9, jadi nol tidak bergaris di mana pun, termasuk di select, input, dan dialog.</p></div>
-        <div class="spesimen"><p class="ui7">Atkinson Hyperlegible Next</p><p>Rancangan Braille Institute untuk keterbacaan maksimal. Satu berkas variabel 400 sampai 700 (33,2 KB). Isi 18/28, UI 15/22, terkecil 14 px. Eksklusif Soluslide di portofolio.</p></div>
-      </div>
-    </section>
-
-    <section>
-      <h3>Grid, radius, bentuk, motion</h3>
-      <ul>
-        <li><strong>Hero:</strong> ruang penuh layar. Papan tulis asimetris (bidang kosong 250 px di kanan slide dengan bekas spidol terhapus 7%), slide tetap di tengah layar sehingga lensa proyektor di meja tepat di bawahnya. Meja operator: tepi 2 px #3D3A36 selebar layar, prompt kiri, proyektor duduk di tepi meja dengan kabel ke prompt, Uji Sorot kanan.</li>
-        <li><strong>Radius:</strong> 2 px slide dan kartu indeks, 3 sampai 4 px tombol, input, pelat. Tidak ada pill.</li>
-        <li><strong>Bentuk merek:</strong> trapesium keystone di logo, jejak cahaya hero, jalur cahaya section alur, dan cahaya di belakang slide harga.</li>
-        <li><strong>Motion:</strong> koreksi keystone 520 ms (rotateX -11 derajat ke datar) saat buka, saat acara, durasi, layar, tema, atau ruangan template berganti; lampu proyektor menghangat 900 ms sekali; dimmer tanpa easing; laser berpindah lurus 220 ms; tanpa gerak masuk section. Reduced motion mematikan semuanya.</li>
-      </ul>
-    </section>
-
-    <section>
-      <h3>Struktur homepage</h3>
-      <ul>
-        <li><strong>Hero ruang proyeksi</strong> dengan figur pembanding statis di dalam slide (HP: di panel Uji Sorot, setelah prompt).</li>
-        <li><strong>Kursi belakang:</strong> slide yang sama dari baris 1, 6, 12 dan tiga aturan keterbacaan.</li>
-        <li><strong>Papan petunjuk ruangan:</strong> enam pintu (Ruang Sidang, Ruang Seminar, Aula, Ruang Rapat, Meja Juri, Kelas) sebagai tab; ruangan terpilih tampil dengan urutan slide dan durasinya.</li>
-        <li><strong>Jalur cahaya:</strong> proyektor kecil menyinari tiga slide berurutan (kerangka, slide lolos Uji Sorot, .pptx).</li>
-        <li><strong>Slide harga</strong> yang diproyeksikan di ruang gelap: tiga paket dalam tata letak slide, bukan grid kartu.</li>
-        <li><strong>Penutup</strong> "Lampu diredupkan. Giliranmu."</li>
-      </ul>
-    </section>
-
-    <section>
-      <h3>Komponen kunci dan alur konversi</h3>
-      <ul>
-        <li><strong>Buat PPT gratis</strong> langsung menampilkan kerangka hasil (judul slide + perkiraan menit sesuai acara dan durasi), lalu "Kerangkamu siap: 12 slide, sekitar 15 menit. Masuk untuk mendesain dan mengunduh .pptx." Login datang setelah hasil terlihat.</li>
-        <li><strong>Panel Uji Sorot</strong> di editor memakai model cahaya yang sama; masalah tampil sebagai titik laser dengan tombol Perbaiki.</li>
-        <li><strong>Ekspor</strong> .pptx bisa disunting dengan font aman Office, PDF, catatan pembicara. Pembayaran QRIS dan e-wallet.</li>
-      </ul>
-    </section>
-
-    <section>
-      <h3>Versi mobile</h3>
-      <ul>
-        <li>Urutan DOM dan visual sama: slide, prompt (field + "Buat PPT gratis" + acara/durasi + harga), lalu panel Uji Sorot. Di 360x640 tombol "Buat PPT gratis" selesai di atas lipatan.</li>
-        <li>Chip layar grid 2x2, tinggi minimal 44 px, label boleh dua baris, tanpa penggulung.</li>
-        <li>Slide 4:3 yang boleh memanjang mengikuti isi; H1 30 px dan 18 px.</li>
-      </ul>
-    </section>
-
-    <section>
-      <h3>Peta pengaruh referensi</h3>
-      <div class="tabel-gulir"><table>
-        <thead><tr><th>Referensi</th><th>Diambil</th><th>Diubah menjadi</th></tr></thead>
-        <tbody>
-          <tr><td>gamma.app</td><td>Hasil slide sebagai bukti di hero</td><td>Satu slide judul yang memuat H1 dan diproyeksikan di ruangannya</td></tr>
-          <tr><td>pitch.com</td><td>Prompt sebagai objek pertama</td><td>Prompt menjadi meja operator dengan proyektor dan kabel; latarnya ruang proyeksi, bukan dinding thumbnail ungu</td></tr>
-          <tr><td>beautiful.ai</td><td>Kesan profesional, editor dipamerkan</td><td>Tanpa gradasi judul; editor tampil lewat panel Uji Sorot dengan pelat saklar</td></tr>
-          <tr><td>plusai.com</td><td>Tenang, login Google/Microsoft</td><td>Hampir monokrom; login muncul setelah kerangka hasil terlihat</td></tr>
-          <tr><td>napkin.ai</td><td>Diagram alur yang bersih</td><td>Jalur cahaya trapesium yang menyinari tiga slide, tanpa roda ikon atau lingkaran berderet</td></tr>
-        </tbody>
-      </table></div>
-    </section>
-
-    <section>
-      <h3>Risiko dan mitigasi</h3>
-      <ul>
-        <li><strong>Papan masih disangka monitor:</strong> bingkai aluminium tipis, bidang kosong dengan bekas spidol, baki dengan dua spidol dan penghapus, berkas dan jejak keystone yang terlihat sejak awal. Kalau tes lima detik masih gagal, keadaan awal dipindah ke "Aula instansi" (layar tarik).</li>
-        <li><strong>Simulasi bukan pengukuran:</strong> model campuran warna sederhana; angka selalu ditulis "perkiraan".</li>
-        <li><strong>Klaim fitur:</strong> "Kontras dicek sebelum diunduh" hanya tayang bila Uji Sorot ada di aplikasi saat peluncuran.</li>
-        <li><strong>Harga:</strong> semua angka diberi label contoh di tempat angka itu muncul.</li>
-        <li><strong>Performa:</strong> tanpa raster, tanpa filter dan blur, satu poligon SVG, dua font sekitar 48 KB.</li>
-      </ul>
-    </section>
-
-    <section>
-      <h3>Skor juri</h3>
-      <div class="skor"><!--SKOR--><style>.tabel-skor-wrap{max-width:100%;overflow-x:auto}.tabel-skor{border-collapse:collapse;font-size:15px;margin:8px 0 12px;font-variant-numeric:tabular-nums}.tabel-skor th,.tabel-skor td{border:1px solid currentColor;padding:4px 10px;text-align:left}.tabel-skor td+td,.tabel-skor th+th{text-align:right}</style><div class="tabel-skor-wrap"><table class="tabel-skor"><thead><tr><th>Juri</th><th>R1</th><th>R2</th><th>R3</th><th>R4</th></tr></thead><tbody><tr><td>Juri A, keunikan</td><td>82</td><td>78</td><td>87</td><td>90</td></tr><tr><td>Juri B, craft</td><td>82</td><td>87</td><td>94</td><td>95</td></tr><tr><td>Juri C, pasar</td><td>76</td><td>86</td><td>91</td><td>93</td></tr></tbody></table></div><p><b>Rata-rata ronde 4: 92,7.</b> Target 95 per juri. Craft lolos; keunikan 90 karena meja operator kiri masih terbaca formulir dan siluet hero sekilas masih "layar besar di ruang gelap"; pasar 93 karena klaim "terbaca sampai kursi paling belakang" baru didukung simulasi yang belum dikalibrasi ke proyektor nyata.</p><p>Diuji di Chromium dengan emulasi ukuran layar 360 sampai 1440 px, belum di HP sungguhan.</p></div>
-    </section>
-  </div>
+<div class="band" aria-hidden="true">
+  <svg viewBox="0 0 1440 123" preserveAspectRatio="none"><defs><linearGradient id="bg1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".95"/><stop offset="1" stop-color="#fff" stop-opacity=".55"/></linearGradient></defs>
+    <text x="0" y="138" textLength="1440" lengthAdjust="spacingAndGlyphs" font-family="Outfit, sans-serif" font-weight="800" font-size="190" fill="url(#bg1)">SOLUSLIDE</text></svg>
 </div>
 
-<dialog id="kerangkaDialog" aria-labelledby="kerangkaJudul">
-  <h2 id="kerangkaJudul">Kerangkamu siap.</h2>
-  <p class="hasil-topik" id="kerangkaTopik"></p>
-  <ol class="kerangka-hasil" id="kerangkaDaftar"></ol>
-  <p id="kerangkaAjak">Masuk untuk mendesain dan mengunduh .pptx.</p>
-  <button type="button" class="tombol-layar" data-i18n="masukGoogle">Lanjut dengan Google</button>
-  <button type="button" class="tombol-garis" data-i18n="masukMs">Lanjut dengan Microsoft</button>
-  <button type="button" class="tombol-garis" data-i18n="masukEmail">Lanjut dengan email</button>
-  <form method="dialog"><button class="tombol-garis" style="margin-top:16px" data-i18n="ubahDulu">Ubah kerangka dulu</button></form>
-</dialog>
+<!-- TESTIMONI -->
+<section class="testi" aria-label="Testimoni">
+  <h2>Presentasi lebih rapi dari ruang kelas sampai ruang rapat</h2>
+  <div class="tview">
+    <div class="ttrack" id="ttrack">
+      <figure class="tcard"><q>Materi ajar satu bab selesai dalam sepuluh menit, lengkap dengan kuis. Murid juga <strong>lebih betah memperhatikan</strong> karena slidenya enak dilihat.</q><figcaption class="who"><span class="av" style="background:#e0925f">RT</span><span><b>Ratna T.</b><small>Guru SD, contoh testimoni</small></span></figcaption></figure>
+      <figure class="tcard"><q>Kerangka sidang langsung rapi, jadi saya bisa fokus ke isi. <strong>Revisi dari dosen pembimbing</strong> juga lebih cepat, latihan presentasi pun lebih tenang.</q><figcaption class="who"><span class="av" style="background:#0b7d7f">NP</span><span><b>Nadia P.</b><small>Mahasiswa tingkat akhir, contoh</small></span></figcaption></figure>
+      <figure class="tcard"><q>Soluslide jadi andalan tim kami untuk <strong>paparan rapat bulanan</strong>, tidak ada lagi lembur hanya untuk merapikan slide laporan.</q><figcaption class="who"><span class="av" style="background:#3f7d20">AS</span><span><b>Arif S.</b><small>Staf perencanaan, contoh</small></span></figcaption></figure>
+      <figure class="tcard"><q>Deck untuk pengajuan modal jadi kelihatan profesional. <strong>Bayar pakai QRIS</strong> juga praktis buat usaha kecil seperti kami.</q><figcaption class="who"><span class="av" style="background:#a16207">DK</span><span><b>Dewi K.</b><small>Pemilik kedai kopi, contoh</small></span></figcaption></figure>
+      <figure class="tcard"><q>File .pptx bisa dibuka dan diedit di PowerPoint kantor <strong>tanpa tata letak yang berantakan</strong>.</q><figcaption class="who"><span class="av" style="background:#2c6f8f">YA</span><span><b>Yoga A.</b><small>Analis data, contoh</small></span></figcaption></figure>
+      <figure class="tcard"><q>Bahasa Indonesianya rapi dan wajar, <strong>tidak terasa seperti hasil terjemahan mesin</strong>. Mahasiswa saya juga ikut memakainya.</q><figcaption class="who"><span class="av" style="background:#7a4f9a">SM</span><span><b>Sari M.</b><small>Dosen, contoh testimoni</small></span></figcaption></figure>
+    </div>
+  </div>
+  <div class="tnav"><button type="button" id="tprev" aria-label="Sebelumnya"><svg class="ic"><use href="#i-left"/></svg></button><button type="button" id="tnext" aria-label="Berikutnya"><svg class="ic"><use href="#i-right"/></svg></button></div>
+</section>
+
+<!-- FAQ -->
+<section class="faq" id="faq" aria-label="Pertanyaan umum">
+  <div class="wrap">
+    <div>
+      <h2>Pertanyaan<br> umum</h2>
+      <p class="faq-sub">Belum menemukan jawabannya? Hubungi kami lewat <a href="#">halaman bantuan</a>.</p>
+    </div>
+    <div class="acc">
+      <details><summary><span>Apakah Soluslide bisa dipakai gratis?</span><svg class="ic"><use href="#i-down"/></svg></summary><p>Bisa. Akun baru mendapat kuota gratis terbatas untuk mencoba membuat presentasi. Setelah itu tersedia paket bulanan atau bayar per presentasi.</p></details>
+      <details><summary><span>Apa saja yang bisa dibuat?</span><svg class="ic"><use href="#i-down"/></svg></summary><p>Presentasi sidang skripsi dan proposal, laporan kantor dan instansi, pitch UMKM, sampai materi ajar untuk guru dan dosen.</p></details>
+      <details><summary><span>Apakah dokumen saya aman?</span><svg class="ic"><use href="#i-down"/></svg></summary><p>Dokumen yang kamu unggah hanya dipakai untuk menyusun presentasimu sendiri, tidak untuk melatih model AI. Rincian penyimpanan data ada di kebijakan privasi.</p></details>
+      <details><summary><span>Bagaimana cara mengunduh ke PowerPoint?</span><svg class="ic"><use href="#i-down"/></svg></summary><p>Pilih Unduh, lalu .pptx. Berkasnya bisa dibuka dan diedit di PowerPoint maupun Google Slides. Tersedia juga ekspor PDF.</p></details>
+      <details><summary><span>Bisakah dipakai bersama tim, kelas, atau kantor?</span><svg class="ic"><use href="#i-down"/></svg></summary><p>Bisa. Undang anggota tim atau teman sekelompok untuk menyunting presentasi yang sama.</p></details>
+      <details><summary><span>Bahasa apa saja yang didukung Soluslide?</span><svg class="ic"><use href="#i-down"/></svg></summary><p>Bahasa Indonesia menjadi bahasa utama, dan bahasa Inggris juga didukung untuk presentasi dwibahasa.</p></details>
+      <details><summary><span>Bagaimana cara bayar, apakah bisa pakai QRIS?</span><svg class="ic"><use href="#i-down"/></svg></summary><p>Bisa. Pembayaran dalam Rupiah lewat QRIS dan e-wallet, tanpa perlu kartu kredit.</p></details>
+    </div>
+    <p class="faq-sub m">Belum menemukan jawabannya? Hubungi kami lewat <a href="#">halaman bantuan</a>.</p>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta" aria-label="Ajakan">
+  <h2>Ide bagus pantas tampil memukau</h2>
+  <a class="btn" href="#">Mulai gratis</a>
+  <div class="dream" aria-hidden="true">
+    <div class="fl" style="left:-10px;top:56px;width:180px;height:180px;background:linear-gradient(160deg,#2e8f6d,#7cc39a);color:#fff"></div>
+    <div class="fl" style="left:171px;top:0;width:239px;height:255px;background:#f7d6c9;color:#7a3b2b"><b>Liburan<br>Keluarga</b><i style="top:80px;width:24px"></i><i style="top:100px;width:120px"></i><i style="top:126px;width:24px"></i><i style="top:146px;width:120px"></i><i style="top:172px;width:24px"></i><i style="top:192px;width:120px"></i></div>
+    <div class="fl" style="left:322px;top:130px;width:282px;height:210px;background:linear-gradient(160deg,#2d7f88,#7fc2c1);color:#fff;opacity:.9"><b style="top:120px">Budidaya<br>Jamur Tiram</b></div>
+    <div class="fl" style="left:114px;top:258px;width:142px;height:180px;background:linear-gradient(180deg,#5aa7a7,#d9a3b9);opacity:.85;color:#fff"></div>
+    <div class="fl" style="left:890px;top:18px;width:301px;height:270px;background:linear-gradient(180deg,#e7efee 0 11px,#3aa6a0 11px,#7cc8bd 60%,#f2a985);color:#fff"><b style="top:70px;left:70px">Portofolio<br>Ilustrasi</b></div>
+    <div class="fl" style="left:1012px;top:228px;width:316px;height:194px;background:linear-gradient(180deg,#9bd8cf,#f4c2a9 60%,#f0a3a0);color:#fff"><b style="top:130px;left:20px">Tips Jualan<br>Online</b></div>
+    <div class="fl" style="left:1245px;top:20px;width:200px;height:110px;background:linear-gradient(160deg,#0a4a50,#2b8a86);color:#e6fffb"><b style="font-size:17px">Tren Kopi<br>Lokal 2027</b></div>
+  </div>
+</section>
+</main>
+
+<footer class="foot" aria-label="Kaki halaman">
+  <div class="wrap">
+    <svg class="fmark" viewBox="0 0 1268 219" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="fg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a7e3dc" stop-opacity=".55"/><stop offset="1" stop-color="#a7e3dc" stop-opacity=".2"/></linearGradient></defs>
+      <text x="0" y="209" textLength="1268" lengthAdjust="spacingAndGlyphs" font-family="Outfit, sans-serif" font-weight="800" font-size="282" fill="url(#fg)">SOLUSLIDE</text></svg>
+    <hr>
+    <div class="fcols">
+      <div class="getapp"><h3>Bayar pakai Rupiah</h3>
+        <div class="pay"><span class="pb"><svg class="ic"><use href="#i-qr"/></svg><span class="pt"><small>Bayar dengan</small>QRIS</span></span><span class="pb"><svg class="ic"><use href="#i-wallet"/></svg><span class="pt"><small>Bayar dengan</small>E-wallet</span></span></div></div>
+      <div><h3>Produk</h3><ul><li><a href="#">Harga</a></li><li><a href="#">Template</a></li><li><a href="#">Sidang skripsi</a></li><li><a href="#">Presentasi kantor</a></li><li><a href="#">Pitch UMKM</a></li><li><a href="#">Materi ajar</a></li><li><a href="#">Panduan prompt</a></li><li><a href="#">Integrasi</a></li><li><a href="#">Aksesibilitas</a></li></ul></div>
+      <div><h3>Perusahaan</h3><ul><li><a href="#">Tentang</a></li><li><a href="#">Karier</a></li><li><a href="#">Tim</a></li><li><a href="#">Bantuan</a></li><li><a href="#">Komunitas</a></li><li><a href="#">Dokumentasi API</a></li><li><a href="#">Merek</a></li><li><a href="#">Keamanan</a></li><li><a href="#">Kontak</a></li></ul></div>
+      <div><h3>Sosial</h3><ul><li><a href="#">Instagram</a></li><li><a href="#">LinkedIn</a></li><li><a href="#">TikTok</a></li><li><a href="#">X</a></li><li><a href="#">YouTube</a></li></ul></div>
+      <div><h3>Legal</h3><ul><li><a href="#">Kebijakan penggunaan</a></li><li><a href="#">Info cookie</a></li><li><a href="#">Preferensi cookie</a></li><li><a href="#">Adendum pemrosesan data</a></li><li><a href="#">Kebijakan privasi</a></li><li><a href="#">Subprosesor</a></li><li><a href="#">Ketentuan layanan</a></li><li><a href="#">Syarat pihak lain</a></li></ul></div>
+    </div>
+    <p class="copy">© 2026 Soluslide. Konsep desain.</p>
+  </div>
+</footer>
 
 <script>
 (function(){
-  var T={
-    id:{navTemplate:"Template",navHarga:"Harga",navKampus:"Untuk Kampus",navInstansi:"Untuk Instansi",navMasuk:"Masuk",navMulai:'Mulai<span class="sm">gratis</span>',
-      h1a:"Buat PPT dengan AI.",h1b:"Terbaca sampai kursi paling belakang.",
-      sub:"Ketik topik atau unggah materi. Soluslide menyusun kerangka dan slide dari template sidang, rapat, pitch, dan materi ajar, lalu memberimu .pptx yang bisa kamu sunting.",
-      bandingJudul:"Sama-sama di aula terang:",bandingPastel:'Pastel biasa: <b class="buruk">tenggelam</b>',bandingSolus:'Soluslide: <b>tetap terbaca</b>',bandingAngka:"Perkiraan kontras 2,3:1 dan 4,8:1",cobaLampu:"Coba nyalakan lampu ruangan",
-      daringJudul:"Rapat koordinasi mingguan",perbaiki:"Perbaiki dengan Soluslide",labelTopik:"Apa yang mau kamu presentasikan?",phTopik:"Contoh: minat beli mahasiswa",
-      labelAcara:"Acara",a1:"Sidang skripsi",a2:"Seminar proposal",a3:"Rapat kantor",a4:"Paparan instansi",a5:"Pitch UMKM",a6:"Materi ajar",
-      labelDurasi:"Durasi",d1:"5 menit",d2:"10 menit",d3:"15 menit",d4:"20 menit",d5:"1 JP (40 menit)",unggah:"Unggah materi",cta:"Buat PPT gratis",
-      bayar:'<strong>3 presentasi pertama gratis.</strong> Selanjutnya <span class="harga-angka">Rp19.000</span> per presentasi, bayar pakai QRIS, GoPay, OVO, atau DANA. (harga contoh)',
-      coba:"Coba contoh:",c1:"Skripsi manajemen",c2:"Capaian program desa",c3:"Keripik singkong",
-      topik:["Pengaruh media sosial terhadap minat beli mahasiswa","Capaian program literasi digital desa tahun 2026","Keripik singkong pedas untuk pasar oleh-oleh"],
-      ujiJudul:"Uji Sorot",ujiBantu:"Begini slidemu di ruangan sungguhan.",l1:"Proyektor kelas (LCD)",l2:"Aula instansi",l3:"TV rapat",l4:"Rapat daring",
-      lampuLabel:"Lampu ruangan",gelap:"Gelap",terang:"Terang",t1:"Slide Soluslide",t2:"Slide pastel biasa",
-      jelas:"Terbaca jelas dari kursi belakang.",besar:"Masih terbaca untuk huruf besar.",tenggelam:"Judul mulai tenggelam di ruangan terang.",
-      daring:"Di rapat daring, lampu ruangan tidak berpengaruh.",rasio:"(Perkiraan kontras {r}:1)",
-      laser:"Judul ini tenggelam di ruangan terang ({j}:1).",
-      siap:"Kerangkamu siap: {n} slide, sekitar {m} menit.",ajak:"Masuk untuk mendesain dan mengunduh .pptx.",tanpaTopik:"Belum ada topik. Ini contoh kerangka untuk {a}.",
-      cadang:"dicadangkan",slide:"slide",masukGoogle:"Lanjut dengan Google",masukMs:"Lanjut dengan Microsoft",masukEmail:"Lanjut dengan email",ubahDulu:"Ubah kerangka dulu",
-      menit:[5,10,15,20,40],
-      kerangka:[
-        [["Judul dan identitas",1],["Latar Belakang",3],["Rumusan Masalah",2],["Tujuan Penelitian",1],["Metode",3],["Hasil dan Pembahasan",6],["Kesimpulan dan Saran",2],["Tanya jawab penguji",0]],
-        [["Judul dan identitas",1],["Latar Belakang",3],["Rumusan Masalah",2],["Tujuan",1],["Tinjauan Pustaka",3],["Metode",3],["Jadwal Penelitian",1],["Tanya jawab",0]],
-        [["Ringkasan",1],["Angka Kunci",2],["Masalah",2],["Usulan",2],["Keputusan yang Dibutuhkan",1]],
-        [["Judul dan unit kerja",1],["Dasar Kegiatan",2],["Capaian",4],["Kendala",2],["Tindak Lanjut",2],["Kesimpulan",1]],
-        [["Masalah",2],["Produk",2],["Pasar",2],["Model Usaha",2],["Tim",1],["Permintaan",1]],
-        [["Tujuan Pembelajaran",1],["Apersepsi",1],["Materi",4],["Diskusi",2],["Kuis",1],["Refleksi",1]]]},
-    en:{navTemplate:"Templates",navHarga:"Pricing",navKampus:"For Campus",navInstansi:"For Government",navMasuk:"Log in",navMulai:'Start<span class="sm">for free</span>',
-      h1a:"Make PPTs with AI.",h1b:"Still readable from the back row.",
-      sub:"Type a topic or upload your notes. Soluslide drafts the outline and slides from thesis defense, meeting, pitch, and lesson templates, then gives you an editable .pptx.",
-      bandingJudul:"Same bright hall:",bandingPastel:'Typical pastel: <b class="buruk">washed out</b>',bandingSolus:'Soluslide: <b>still readable</b>',bandingAngka:"Estimated contrast 2.3:1 and 4.8:1",cobaLampu:"Try the room lights",
-      daringJudul:"Weekly team call",perbaiki:"Fix it with Soluslide",labelTopik:"What are you presenting?",phTopik:"e.g. student buying habits",
-      labelAcara:"Occasion",a1:"Thesis defense",a2:"Research proposal",a3:"Team meeting",a4:"Public sector briefing",a5:"Small business pitch",a6:"Class lesson",
-      labelDurasi:"Length",d1:"5 min",d2:"10 min",d3:"15 min",d4:"20 min",d5:"1 class period (45 min)",unggah:"Upload notes",cta:"Make a deck for free",
-      bayar:'<strong>Your first 3 decks are free.</strong> Then <span class="harga-angka">$3</span> per deck, paid by card. (sample price)',
-      coba:"Try an example:",c1:"Thesis defense",c2:"Program briefing",c3:"Snack pitch",
-      topik:["How social media shapes student purchase intent","Results of a village digital literacy program in 2026","Spicy cassava chips for the souvenir market"],
-      ujiJudul:"Projector Check",ujiBantu:"See your deck in a real room.",l1:"Classroom projector",l2:"Lecture hall",l3:"Meeting room TV",l4:"Video call",
-      lampuLabel:"Room lights",gelap:"Dark",terang:"Bright",t1:"Soluslide slide",t2:"Typical pastel slide",
-      jelas:"Clearly readable from the back row.",besar:"Readable for large text only.",tenggelam:"The title starts to wash out in a bright room.",
-      daring:"On a video call, room lights do not matter.",rasio:"(Estimated contrast {r}:1)",
-      laser:"This title washes out in a bright room ({j}:1).",
-      siap:"Your outline is ready: {n} slides, about {m} minutes.",ajak:"Log in to design it and download the .pptx.",tanpaTopik:"No topic yet. Here is a sample outline for {a}.",
-      cadang:"reserved",slide:"slides",masukGoogle:"Continue with Google",masukMs:"Continue with Microsoft",masukEmail:"Continue with email",ubahDulu:"Edit the outline first",
-      menit:[5,10,15,20,45],
-      kerangka:[
-        [["Title and identity",1],["Background",3],["Research Questions",2],["Objectives",1],["Method",3],["Results and Discussion",6],["Conclusion",2],["Examiner Q&A",0]],
-        [["Title and identity",1],["Background",3],["Research Questions",2],["Objectives",1],["Literature Review",3],["Method",3],["Timeline",1],["Q&A",0]],
-        [["Summary",1],["Key Numbers",2],["Problem",2],["Proposal",2],["Decision Needed",1]],
-        [["Title and unit",1],["Mandate",2],["Results",4],["Constraints",2],["Next Steps",2],["Conclusion",1]],
-        [["Problem",2],["Product",2],["Market",2],["Business Model",2],["Team",1],["The Ask",1]],
-        [["Learning Goals",1],["Warm-up",1],["Lesson",4],["Discussion",2],["Quiz",1],["Reflection",1]]]}
-  };
-  var bahasa="id";
-  var ruang=document.getElementById("ruang"), slide=document.getElementById("slide"), sorot=document.getElementById("sorot"),
-      lampu=document.getElementById("lampu"), meter=document.getElementById("meter"), laser=document.getElementById("laser"),
-      cat=document.getElementById("laserCatatan"), catTeks=document.getElementById("laserTeks"), dinding=document.getElementById("dinding"),
-      gambar=document.getElementById("gambar"), jejak=document.getElementById("jejak"),
-      acara=document.getElementById("acara"), durasi=document.getElementById("durasi");
-  var state={layar:"lcd",tema:"solus"};
-  var FAKTOR={lcd:.4,aula:.45,tv:.15,daring:0}, PRESET={lcd:15,aula:80,tv:30,daring:0}, JUMLAH=[5,9,12,15,10], CONTOH=[[0,2],[3,1],[4,0]];
-  var WARNA={solus:{bg:"#FFFFFF",j:"#15171A",i:"#15171A"},pastel:{bg:"#E6EEF7",j:"#4E6C93",i:"#6D88AA"}};
-
-  function hex(h){h=h.replace("#","");return [0,2,4].map(function(k){return parseInt(h.substr(k,2),16)});}
-  function lum(c){var v=c.map(function(x){x/=255;return x<=.03928?x/12.92:Math.pow((x+.055)/1.055,2.4)});return .2126*v[0]+.7152*v[1]+.0722*v[2];}
-  function campur(c,a){var w=hex("#FFF1D6");return hex(c).map(function(x,k){return x*(1-a)+w[k]*a});}
-  function kontras(t,b,a){var A=lum(campur(t,a)),B=lum(campur(b,a));return (Math.max(A,B)+.05)/(Math.min(A,B)+.05);}
-  function angka(x){var s=x.toFixed(1);return bahasa==="id"?s.replace(".",","):s;}
-
-  function kaki(){
-    var a=acara.options[acara.selectedIndex].text, d=durasi.options[durasi.selectedIndex].text, n=JUMLAH[durasi.selectedIndex];
-    document.getElementById("kakiAcara").textContent=a+", "+d;
-    document.getElementById("kakiJumlah").textContent=n+" "+T[bahasa].slide;
-  }
-  function perbarui(){
-    var l=lampu.value/100, f=FAKTOR[state.layar], a=l*f, d=T[bahasa];
-    ruang.style.setProperty("--lampu",l); ruang.style.setProperty("--faktor",f);
-    var w=WARNA[state.tema], kj=kontras(w.j,w.bg,a), m=kj;
-    var kalimat=m>=4.5?d.jelas:(m>=3?d.besar:'<span class="status-buruk">'+d.tenggelam+"</span>");
-    if(state.layar==="daring")kalimat=d.daring+" "+kalimat;
-    meter.innerHTML=kalimat+' <span class="rasio">'+d.rasio.replace("{r}",angka(m))+"</span>";
-    if(state.tema==="pastel" && kj<3){tunjuk(kj);}else{laser.hidden=true;cat.hidden=true;}
-  }
-  function tunjuk(kj){
-    var t=slide.querySelector(".baris-satu").getBoundingClientRect(), r=dinding.getBoundingClientRect();
-    var x=t.left-r.left+Math.min(t.width,320)*.55, y=t.top-r.top+t.height*.5;
-    laser.hidden=false; cat.hidden=false;
-    laser.style.transform="translate("+x+"px,"+y+"px)";
-    catTeks.innerHTML="<b>●</b> "+T[bahasa].laser.replace("{j}",angka(kj));
-    var cw=cat.offsetWidth, ch=cat.offsetHeight, cx=x+22, cy=y+18;
-    if(cx+cw>r.width-12){cx=Math.max(12,r.width-cw-12);}
-    if(r.width<600){var sb=slide.getBoundingClientRect().bottom-r.top; cy=Math.max(y+18,sb-ch-6);}
-    cat.style.transform="translate("+cx+"px,"+cy+"px)";
-  }
-  function koreksi(el){el=el||gambar;el.classList.remove("koreksi");void el.offsetWidth;el.classList.add("koreksi");}
-
-  function pasangBahasa(lg){
-    bahasa=lg; var d=T[lg];
-    document.querySelectorAll("#ruang [data-i18n], dialog [data-i18n]").forEach(function(el){var k=el.getAttribute("data-i18n");if(typeof d[k]==="string")el.textContent=d[k];});
-    document.querySelectorAll("[data-i18n-ph]").forEach(function(el){el.placeholder=d[el.getAttribute("data-i18n-ph")];});
-    document.querySelectorAll("[data-i18n-html]").forEach(function(el){el.innerHTML=d[el.getAttribute("data-i18n-html")];});
-    ruang.setAttribute("lang",lg);
-    document.querySelectorAll(".bahasa button").forEach(function(b){b.setAttribute("aria-pressed",String(b.dataset.lang===lg));});
-    kaki(); perbarui(); gambarBerkas();
-  }
-  document.querySelectorAll(".bahasa button").forEach(function(b){b.addEventListener("click",function(){pasangBahasa(b.dataset.lang);});});
-  document.querySelectorAll(".layar-pilih button").forEach(function(b){b.addEventListener("click",function(){
-    state.layar=b.dataset.layar; ruang.dataset.layar=state.layar;
-    document.querySelectorAll(".layar-pilih button").forEach(function(x){x.setAttribute("aria-pressed",String(x===b));});
-    lampu.value=PRESET[state.layar]; lampu.disabled=(state.layar==="daring");
-    koreksi(); perbarui(); requestAnimationFrame(gambarBerkas);
-  });});
-  function setTema(t){state.tema=t; slide.dataset.tema=t;
-    document.querySelectorAll(".tema button").forEach(function(x){x.setAttribute("aria-pressed",String(x.dataset.tema===t));});
-    koreksi(); perbarui();}
-  document.querySelectorAll(".tema button").forEach(function(b){b.addEventListener("click",function(){setTema(b.dataset.tema);});});
-  document.getElementById("perbaiki").addEventListener("click",function(){setTema("solus");});
-  lampu.addEventListener("input",perbarui);
-  document.querySelectorAll("[data-contoh]").forEach(function(b){b.addEventListener("click",function(){
-    var i=+b.dataset.contoh; document.getElementById("topik").value=T[bahasa].topik[i];
-    acara.selectedIndex=CONTOH[i][0]; durasi.selectedIndex=CONTOH[i][1]; kaki(); koreksi();
-  });});
-  acara.addEventListener("change",function(){kaki();koreksi();});
-  durasi.addEventListener("change",function(){kaki();koreksi();});
-
-  /* Berkas cahaya: lensa ke empat sudut jejak keystone */
-  var beam=document.getElementById("beam"), poly=document.getElementById("beamPoly");
-  function garis(id,x1,y1,x2,y2){var l=document.getElementById(id);l.setAttribute("x1",x1);l.setAttribute("y1",y1);l.setAttribute("x2",x2);l.setAttribute("y2",y2);}
-  function gambarBerkas(){
-    var R=ruang.getBoundingClientRect(), S=jejak.getBoundingClientRect(), L=document.getElementById("lensa").getBoundingClientRect();
-    var lx=L.left+L.width/2-R.left, ly=L.top+L.height/2-R.top;
-    var tl=[S.left-R.left,S.top-R.top], tr=[S.right-R.left,S.top-R.top], br=[S.right-S.width*.055-R.left,S.bottom-R.top], bl=[S.left+S.width*.055-R.left,S.bottom-R.top];
-    beam.setAttribute("viewBox","0 0 "+R.width+" "+R.height);
-    poly.setAttribute("points",[[lx-7,ly],bl,tl,tr,br,[lx+7,ly]].map(function(p){return p[0]+","+p[1];}).join(" "));
-    garis("beamA",lx-7,ly,bl[0],bl[1]); garis("beamB",lx+7,ly,br[0],br[1]); garis("beamC",lx-7,ly,tl[0],tl[1]); garis("beamD",lx+7,ly,tr[0],tr[1]);
-    if(state.tema==="pastel")perbarui();
-  }
-  gambar.addEventListener("animationend",gambarBerkas);
-  window.addEventListener("resize",function(){requestAnimationFrame(gambarBerkas);});
-  if(document.fonts&&document.fonts.ready){document.fonts.ready.then(gambarBerkas);}
-
-  /* Kerangka hasil dulu, baru login */
-  function mmss(s){var m=Math.floor(s/60),d=s%60;return m+":"+(d<10?"0":"")+d;}
-  document.getElementById("prompt").addEventListener("submit",function(e){
-    e.preventDefault(); var d=T[bahasa], t=document.getElementById("topik").value.trim();
-    var ai=acara.selectedIndex, di=durasi.selectedIndex, total=d.menit[di]*60, n=JUMLAH[di], daftar=d.kerangka[ai];
-    var berat=daftar.reduce(function(s,x){return s+x[1];},0), sisa=total, ol=document.getElementById("kerangkaDaftar"), aktif=daftar.filter(function(x){return x[1]>0;}).length, ke=0;
-    ol.innerHTML="";
-    daftar.forEach(function(x){
-      var li=document.createElement("li"), a=document.createElement("span"), b=document.createElement("span");
-      a.textContent=x[0];
-      if(x[1]===0){b.textContent=d.cadang;}else{ke++; var s=ke===aktif?sisa:Math.max(30,Math.round(total*x[1]/berat/30)*30); sisa-=s; b.textContent=mmss(s);}
-      li.appendChild(a); li.appendChild(b); ol.appendChild(li);
-    });
-    document.getElementById("kerangkaJudul").textContent=d.siap.replace("{n}",n).replace("{m}",d.menit[di]);
-    document.getElementById("kerangkaTopik").textContent=t?(acara.options[ai].text+": "+t):d.tanpaTopik.replace("{a}",acara.options[ai].text.toLowerCase());
-    document.getElementById("kerangkaAjak").textContent=d.ajak;
-    var dlg=document.getElementById("kerangkaDialog"); if(dlg.showModal)dlg.showModal();
-  });
-
-  /* Papan petunjuk ruangan (tab) */
-  var pintu=[].slice.call(document.querySelectorAll(".pintu"));
-  function bukaPintu(p,fokus){
-    pintu.forEach(function(x){var on=x===p;x.setAttribute("aria-selected",String(on));x.tabIndex=on?0:-1;document.getElementById(x.getAttribute("aria-controls")).hidden=!on;});
-    if(fokus)p.focus();
-    var u=document.getElementById(p.getAttribute("aria-controls")).querySelector(".urutan"); if(u)koreksi(u);
-  }
-  pintu.forEach(function(p,i){
-    p.addEventListener("click",function(){bukaPintu(p);});
-    p.addEventListener("keydown",function(e){var j=null;if(e.key==="ArrowDown"||e.key==="ArrowRight")j=(i+1)%pintu.length;if(e.key==="ArrowUp"||e.key==="ArrowLeft")j=(i-1+pintu.length)%pintu.length;if(e.key==="Home")j=0;if(e.key==="End")j=pintu.length-1;if(j!==null){e.preventDefault();bukaPintu(pintu[j],true);}});
-  });
-
-  kaki(); koreksi(); perbarui(); gambarBerkas();
+  var lang=document.getElementById('lang'),lb=document.getElementById('langBtn');
+  lb.addEventListener('click',function(e){e.stopPropagation();var o=lang.classList.toggle('open');lb.setAttribute('aria-expanded',o)});
+  document.addEventListener('click',function(){lang.classList.remove('open');lb.setAttribute('aria-expanded','false')});
+  var bg=document.getElementById('burger'),mn=document.getElementById('mnav');
+  function tog(){var o=mn.classList.toggle('open');bg.setAttribute('aria-expanded',o)}
+  bg.addEventListener('click',tog);document.querySelector('.globe-m').addEventListener('click',tog);
+  mn.addEventListener('click',function(e){if(e.target.tagName==='A'){mn.classList.remove('open')}});
+  // carousel testimoni: kartu indeks 1 di tengah
+  var tr=document.getElementById('ttrack'),idx=1;
+  function place(){var c=tr.children[0],w=c.getBoundingClientRect().width,g=parseFloat(getComputedStyle(tr).columnGap)||16,vw=tr.parentNode.getBoundingClientRect().width;
+    var max=tr.children.length-1;idx=Math.max(0,Math.min(max,idx));tr.style.transform='translateX('+((vw-w)/2-idx*(w+g))+'px)';}
+  document.getElementById('tprev').addEventListener('click',function(){idx--;place()});
+  document.getElementById('tnext').addEventListener('click',function(){idx++;place()});
+  window.addEventListener('resize',place);place();
+  // animasi masuk ringan
+  if('IntersectionObserver' in window){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{rootMargin:'0px 0px -40px 0px'});
+    document.querySelectorAll('.rise').forEach(function(el){io.observe(el)});}
+  else{document.querySelectorAll('.rise').forEach(function(el){el.classList.add('in')})}
 })();
 </script>
 </body>

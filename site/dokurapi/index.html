@@ -4,1516 +4,664 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
-<title>Dokurapi: Konsep Desain</title>
-<meta name="description" content="Konsep desain Dokurapi: Palang Portal. Kompres PDF dan foto sampai lolos batas ukuran portal pendaftaran.">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='5' fill='%231B1F24'/%3E%3Crect x='4' y='9' width='3' height='19' fill='%23D5DAE1'/%3E%3Crect x='25' y='9' width='3' height='19' fill='%23D5DAE1'/%3E%3Crect x='2' y='6' width='28' height='5' fill='%23fff'/%3E%3Cpath d='M4 6h4l-3 5H2zM12 6h4l-3 5H9zM20 6h4l-3 5h-4zM28 6h2v1l-2 4h-3z' fill='%23C8102E'/%3E%3Crect x='11' y='17' width='10' height='11' fill='%23FFC20E'/%3E%3C/svg%3E">
+<title>Dokurapi</title>
+<meta name="description" content="Dokurapi: kompres PDF dan foto ke ukuran target, ubah foto ke PDF, gabung PDF, dan pas foto latar merah atau biru, langsung di browser.">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Overpass:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-<style>
-:root{
-  --putih:#FFFFFF;--aspal:#1B1F24;--aspal-2:#2E343C;--abu:#5A6472;--abu-aspal:#AEB6C2;
-  --garis:#DDE2E8;--beton:#D5DAE1;--pemberat:#6B7380;
-  --merah:#C8102E;--kuning:#FFC20E;--hijau:#00763A;--biru:#0057B8;
-  --pad:64px;--maxw:1216px;
-  --tekstur:url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%27160%27%20height%3D%27160%27%3E%3Cfilter%20id%3D%27a%27%3E%3CfeTurbulence%20type%3D%27fractalNoise%27%20baseFrequency%3D%27.9%27%20numOctaves%3D%272%27%20stitchTiles%3D%27stitch%27/%3E%3CfeColorMatrix%20values%3D%270%200%200%200%20.84%200%200%200%200%20.86%200%200%200%200%20.89%200%200%200%207%20-3.4%27/%3E%3C/filter%3E%3Crect%20width%3D%27160%27%20height%3D%27160%27%20filter%3D%27url%28%23a%29%27%20opacity%3D%27.16%27/%3E%3C/svg%3E");
-}
-*{box-sizing:border-box}
-html{-webkit-text-size-adjust:100%}
-body{margin:0;background:var(--putih);color:var(--aspal);font-family:Overpass,system-ui,sans-serif;font-size:18px;line-height:1.55}
-img,svg,canvas{display:block}
-a{color:var(--aspal);text-decoration-thickness:2px;text-underline-offset:3px}
-a:hover{background:var(--kuning)}
-:focus-visible{outline:3px solid var(--biru);outline-offset:2px}
-.num{font-variant-numeric:tabular-nums}
-.vh{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-.skip{position:absolute;left:-999px;top:8px;background:var(--aspal);color:#fff;padding:8px 12px;z-index:50}
-.skip:focus{left:8px}
-.wrap{max-width:calc(var(--maxw) + var(--pad)*2);margin:0 auto;padding:0 var(--pad)}
-h1,h2,h3{margin:0;letter-spacing:-.01em}
-p{margin:0}
-button{font:inherit;color:inherit}
-
-/* ---------- header ---------- */
-.top{border-bottom:2px solid var(--garis);background:#fff}
-.top .wrap{height:68px;display:flex;align-items:center;gap:36px}
-.logo{display:block;flex:none;text-decoration:none}
-.logo:hover{background:none}
-.nav{display:flex;gap:22px;font-weight:600;font-size:15px;line-height:1.2}
-.nav a{text-decoration:none}
-.nav a:hover{text-decoration:underline;background:none}
-.lang{margin-left:auto;display:flex;border:2px solid var(--aspal);border-radius:3px;flex:none}
-.menu-b{display:none;font-weight:800;font-size:15px;text-decoration:none;border:2px solid var(--aspal);border-radius:3px;padding:9px 12px 6px;line-height:1;margin-left:auto}
-.lang button{background:none;border:0;font-weight:800;font-size:14px;padding:7px 10px 4px;min-width:44px;min-height:38px;cursor:pointer}
-.lang button[aria-pressed="true"]{background:var(--aspal);color:#fff}
-
-/* ---------- hero grid ---------- */
-.hero{display:grid;grid-template-columns:[full-start] minmax(var(--pad),1fr) [c-start] minmax(0,520px) [mid] minmax(0,696px) [c-end] minmax(var(--pad),1fr) [full-end];padding:36px 0 40px}
-.hero h1{grid-column:c-start/c-end;grid-row:1;font-weight:900;font-size:64px;line-height:1.02}
-.hero h1 span{display:block}
-.hero .sub{grid-column:c-start/mid;grid-row:2;margin-top:18px;color:var(--abu);font-size:18px;max-width:46ch;align-self:end}
-.hero .plates{grid-column:mid/c-end;grid-row:2;align-self:end;margin-top:18px}
-.hero .lane{grid-column:full-start/full-end;grid-row:3;margin-top:22px}
-.hero .forkrow{grid-column:full-start/full-end;grid-row:4}
-.hero .below{grid-column:c-start/c-end;grid-row:5}
-.hero .after{grid-column:c-start/c-end;grid-row:6}
-
-/* ---------- plates (rambu batas) ---------- */
-.plates{display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap}
-.plate{background:var(--kuning);color:var(--aspal);border:3px solid var(--aspal);border-radius:4px;font-weight:800;font-size:17px;line-height:1;padding:11px 12px 8px;display:inline-flex;align-items:center;gap:7px;min-height:46px;cursor:pointer;white-space:nowrap}
-.plate .gl{width:12px;height:18px;flex:none}
-.plate .ck,.plate .dn,.plate .st{display:none}
-.plate .ck{width:16px;height:16px;flex:none}
-.plate .dn{width:10px;height:12px;flex:none}
-.plate .st{font-weight:700;font-size:14px}
-.plate[aria-checked="true"]{background:var(--aspal);color:var(--kuning);border-color:var(--aspal)}
-.plate[aria-checked="true"] .gl{display:none}
-.plate[aria-checked="true"] .ck,.plate[aria-checked="true"] .dn{display:block}
-.plate[aria-checked="true"] .st{display:inline}
-.plate[aria-checked="true"]:hover{box-shadow:none}
-.plate:hover{box-shadow:inset 0 -3px 0 var(--aspal)}
-.plate.edit{cursor:default;padding:5px 6px 5px 10px}
-.plate .pin{width:64px;font:inherit;font-size:17px;border:2px solid var(--aspal);border-radius:3px;padding:5px 6px 3px;background:#fff;color:var(--aspal)}
-.plate .pok{background:var(--aspal);color:#fff;border:0;border-radius:3px;font-weight:800;font-size:15px;padding:8px 10px 5px;cursor:pointer}
-.flyer{position:fixed;z-index:60;pointer-events:none;margin:0}
-
-/* ---------- lane (jalur aspal) ---------- */
-.lane{--H:380px;--gr:56px;--rp:56px;--span:300px;--post:14px;--bw:128px;--bar:24px;--wt:30px;--clear:calc(var(--H)*.34);--seg:calc(var(--bar)/2);
-  position:relative;background:var(--aspal) var(--tekstur);color:#fff;padding-top:24px;overflow:hidden}
-.lane :focus-visible,.foot :focus-visible,.mbar :focus-visible,.docband :focus-visible{outline-color:var(--kuning)}
-.nw{white-space:nowrap}
-.lane-sky{position:relative;height:var(--H)}
-.lane-ground{height:var(--gr);border-top:3px solid #fff;border-bottom:3px solid #fff;
-  background:linear-gradient(90deg,var(--kuning) 0 28px,transparent 28px) 0 50%/48px 4px repeat-x}
-.lane.go .lane-ground{animation:marka .5s linear infinite}
-@keyframes marka{to{background-position:48px 50%}}
-.post{position:absolute;bottom:0;width:var(--post);height:calc(var(--clear) + var(--bar) + 10px);background:var(--beton);z-index:1}
-.post-r{right:var(--rp);z-index:4}
-.post-l{right:calc(var(--rp) + var(--span))}
-.bar{position:absolute;bottom:var(--clear);right:calc(var(--rp) - var(--wt));width:calc(var(--span) + var(--post) + var(--wt));height:var(--bar);z-index:4;
-  background:repeating-linear-gradient(-45deg,var(--merah) 0 var(--seg),#fff var(--seg) calc(var(--seg)*2))}
-.bar::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(-45deg,var(--hijau) 0 var(--seg),#fff var(--seg) calc(var(--seg)*2));clip-path:inset(0 100% 0 0);transition:clip-path .18s linear .3s}
-.lane.ok .bar::after{clip-path:inset(0 0 0 0)}
-.wt{position:absolute;right:2px;top:100%;width:calc(var(--wt) - 6px);height:calc(var(--bar)*1.4);background:var(--pemberat)}
-.hang{position:absolute;bottom:calc(var(--clear) + var(--bar) + 9px);right:calc(var(--rp) + var(--post) + (var(--span) - var(--post))/2);transform:translateX(50%);z-index:4;
-  background:var(--kuning);color:var(--aspal);border:3px solid var(--aspal);border-radius:4px;font-weight:900;font-size:20px;line-height:1;padding:9px 11px 6px;display:flex;align-items:center;gap:7px;white-space:nowrap}
-.hang::before,.hang::after{content:"";position:absolute;top:calc(100% + 3px);width:3px;height:9px;background:var(--beton)}
-.hang::before{left:22%}.hang::after{right:22%}
-.hang .gl{width:12px;height:18px}
-.blkw{position:absolute;bottom:0;right:calc(var(--rp) + var(--span) + var(--post) + 6px);width:var(--bw);height:40px;z-index:2;
-  transition:height .12s ease-out,right .32s cubic-bezier(.2,.8,.2,1)}
-.blkw.through{right:calc(var(--rp) + var(--post) + (var(--span) - var(--post) - var(--bw))/2)}
-.blkw.through .tag{right:calc(100% + (var(--span) - var(--post) - var(--bw))/2 + var(--post) + 10px)}
-.blkw.bump{animation:bump .42s cubic-bezier(.2,.8,.2,1)}
-@keyframes bump{0%{transform:translateX(-56px)}78%{transform:translateX(5px)}100%{transform:none}}
-.blk{position:absolute;inset:0;background:#fff center top/cover no-repeat;clip-path:polygon(0 0,calc(100% - 16px) 0,100% 16px,100% 100%,0 100%)}
-.blk::after{content:"";position:absolute;top:0;right:0;width:16px;height:16px;background:linear-gradient(225deg,transparent 50%,var(--beton) 50%)}
-.blk.pdf{background-image:repeating-linear-gradient(180deg,transparent 0 14px,#C9CED6 14px 17px);background-size:70% 100%;background-position:50% 22px;background-repeat:no-repeat}
-.blk.bad{background:#8A94A6}
-.blkw.reading .blk{opacity:.45}
-.tag{position:absolute;right:calc(100% + 10px);top:0;font-weight:800;font-size:14px;line-height:1.25;padding:7px 9px 5px;border-radius:3px;white-space:nowrap;background:var(--aspal-2);color:#fff}
-.tag small{display:block;font-weight:600;font-size:13px}
-.tag.t-over{background:var(--merah)}
-.tag.t-work{background:var(--kuning);color:var(--aspal)}
-.tag.t-ok{background:var(--hijau)}
-.tag.t-warn{background:var(--kuning);color:var(--aspal)}
-.lane-cta{position:absolute;z-index:5;left:max(var(--pad),calc((100% - var(--maxw))/2));top:calc(24px + var(--H)*.18);
-  width:min(430px,calc(100% - var(--rp) - var(--span) - var(--post) - var(--bw) - 160px - max(var(--pad),calc((100% - var(--maxw))/2))))}
-.lane-cta .lead{font-weight:800;font-size:22px;line-height:1.25;margin-bottom:16px}
-.lane-cta .hint{color:var(--abu-aspal);font-size:16px;margin-top:12px}
-.lane-cta .row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
-.lane-cta .fmt{display:none;color:var(--abu-aspal);font-size:15px;line-height:1.35}
-.btn{font-weight:800;font-size:18px;line-height:1;border-radius:3px;padding:15px 22px 12px;border:2px solid transparent;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:50px;text-decoration:none}
-.btn svg{width:20px;height:20px;flex:none}
-.btn-w{background:#fff;color:var(--aspal)}
-.btn-w:hover{background:var(--kuning)}
-.btn-o{background:transparent;color:#fff;border-color:#fff}
-.btn-o:hover{background:#fff;color:var(--aspal)}
-.btn-a{background:var(--aspal);color:#fff}
-.btn-a:hover{background:#000}
-.btn-l{background:transparent;color:var(--aspal);border-color:var(--aspal)}
-.btn[disabled]{opacity:.55;cursor:not-allowed}
-.lane .sr-note{position:absolute;left:12px;top:6px;font-size:13px;color:var(--abu-aspal)}
-
-/* ---------- below lane ---------- */
-.below{display:flex;flex-wrap:wrap;align-items:center;gap:10px 28px;padding:16px 0 4px}
-.trust{display:flex;align-items:center;gap:10px;font-weight:600;font-size:16px}
-.trust svg{width:26px;height:26px;flex:none}
-.chip-b{display:inline-flex;align-items:center;gap:8px;background:var(--biru);color:#fff;border-radius:3px;padding:9px 12px 6px;font-weight:800;font-size:15px;text-decoration:none;margin-left:auto;line-height:1}
-.chip-b:hover{background:#00438F}
-.chip-b svg{width:18px;height:18px}
-.status{flex-basis:100%;font-size:16px;color:var(--abu);min-height:25px}
-.status b{color:var(--aspal)}
-.engine{flex-basis:100%;font-size:16px;color:var(--abu)}
-.engine.ask{color:var(--aspal);border:2px solid var(--aspal);border-radius:4px;padding:14px 16px 12px;display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;font-size:16px}
-.engine .demo{background:var(--kuning);font-weight:800;padding:3px 6px 1px;border-radius:3px;font-size:13px}
-
-/* result card */
-.result{border:3px solid var(--aspal);border-radius:6px;padding:22px 24px;margin:16px 0 8px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:20px 32px}
-.result .okplate{display:inline-flex;align-items:center;gap:10px;background:var(--hijau);color:#fff;font-weight:900;font-size:20px;line-height:1;padding:11px 14px 8px;border-radius:4px;border:3px solid var(--aspal)}
-.result .okplate svg{width:22px;height:22px}
-.result .lines .big{color:var(--aspal);max-width:none;font-weight:900;font-size:44px;line-height:1.05;margin:14px 0 6px}
-.result .lines p{font-size:16px;color:var(--abu);max-width:62ch;margin-top:6px}
-.result .lines p b{color:var(--aspal)}
-.result .acts{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px;align-items:center}
-.result .fname{font-size:15px;color:var(--abu)}
-.loupe{display:flex;gap:12px;align-items:flex-start}
-.loupe figure{margin:0}
-.loupe canvas{width:168px;height:168px;border:2px solid var(--aspal);border-radius:3px;background:#fff}
-.loupe figcaption{font-size:14px;font-weight:700;margin-top:6px}
-.loupe-t{font-weight:800;font-size:15px;margin-bottom:8px}
-
-/* fork: jalan alternatif */
-.fork{position:relative;padding:0 0 26px;--rp:56px;--span:300px;--post:14px;--bw:128px;--tw:52px}
-.fork .trunk{position:absolute;top:0;bottom:26px;right:calc(var(--rp) + var(--span) + var(--post) + 6px + var(--bw)/2 - var(--tw)/2);width:var(--tw);background:var(--aspal) var(--tekstur);
-  border-left:3px solid #fff;box-shadow:inset -3px 0 0 #fff}
-.fork .trunk::after{content:"";position:absolute;left:50%;top:0;bottom:0;width:4px;transform:translateX(-50%);background:linear-gradient(180deg,var(--kuning) 0 22px,transparent 22px) 0 0/4px 38px repeat-y}
-.fork .fhead{max-width:calc(var(--maxw) + var(--pad)*2);margin:0 auto;padding:22px var(--pad) 14px;display:flex;gap:12px;align-items:flex-start}
-.fork .fhead svg{width:34px;height:34px;flex:none}
-.fork .fhead h3{font-weight:800;font-size:22px;line-height:1.2}
-.fork .fhead p{color:var(--abu);font-size:16px;margin-top:4px}
-.exits{display:flex;flex-direction:column;gap:14px;align-items:flex-end;padding-right:calc(var(--rp) + var(--span) + var(--post) + 6px + var(--bw)/2 + var(--tw)/2)}
-.exit{display:flex;align-items:center}
-.exit .road{width:110px;height:30px;background:var(--aspal) var(--tekstur);border-top:3px solid #fff;border-bottom:3px solid #fff;position:relative}
-.exit .road::after{content:"";position:absolute;left:0;right:0;top:50%;height:3px;transform:translateY(-50%);background:linear-gradient(90deg,var(--kuning) 0 14px,transparent 14px) 0 0/24px 3px repeat-x}
-.exit button{display:flex;align-items:center;gap:12px;background:var(--biru);color:#fff;border:3px solid var(--aspal);border-radius:4px;padding:11px 14px 8px;cursor:pointer;text-align:left;min-height:56px;width:400px;max-width:100%}
-.exit button svg{width:28px;height:28px;flex:none}
-.exit button b{display:block;font-weight:800;font-size:17px;line-height:1.2}
-.exit button small{display:block;font-size:14px;line-height:1.3;margin-top:2px}
-.exit button:hover{background:#00438F}
-.exit button[disabled]{background:#fff;color:var(--abu);border-color:var(--abu);cursor:not-allowed}
-.exit button[disabled] svg{opacity:.6}
-
-/* after download */
-.after{margin:0}
-#next{border-top:3px solid var(--aspal);padding-top:16px;margin:12px 0 4px}
-.after h3{font-weight:800;font-size:20px;margin-bottom:12px}
-.after .row{display:flex;flex-wrap:wrap;gap:10px}
-.after .chip-b{margin-left:0}
-.sign-g{display:inline-flex;align-items:center;gap:10px;background:var(--hijau);color:#fff;border-radius:4px;border:3px solid #fff;box-shadow:0 0 0 2px var(--hijau);padding:10px 14px 7px;font-weight:800;font-size:16px;line-height:1.15;text-decoration:none}
-.sign-g:hover{background:#005C2D}
-.sign-g svg{width:22px;height:22px;flex:none}
-
-/* mobile sticky result bar */
-.mbar{position:fixed;left:0;right:0;bottom:0;z-index:40;background:var(--aspal) var(--tekstur);color:#fff;display:none;align-items:center;gap:12px;padding:10px 16px calc(10px + env(safe-area-inset-bottom))}
-.mbar .p{background:var(--hijau);font-weight:900;font-size:14px;padding:7px 8px 5px;border-radius:3px;line-height:1}
-.mbar .s{font-weight:800;font-size:18px}
-.mbar .btn{margin-left:auto;min-height:44px;padding:12px 16px 9px;font-size:16px}
-
-/* ---------- sections ---------- */
-.marka{height:3px;background:linear-gradient(90deg,var(--garis) 0 24px,transparent 24px) 0 0/40px 3px repeat-x}
-.sec{padding:72px 0}
-.sec h2{font-weight:800;font-size:40px;line-height:1.1}
-.sec .lede{color:var(--abu);margin-top:12px;max-width:62ch}
-.note{font-size:14px;color:var(--abu);margin-top:18px;max-width:80ch}
-.signs{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:0;margin-top:36px}
-.rsign{display:flex;flex-direction:column;align-items:center;text-align:center;background:none;border:0;cursor:pointer;padding:0 10px}
-.rsign .plate{pointer-events:none;font-size:18px}
-.rsign .pole{width:8px;height:48px;background:var(--beton)}
-.rsign .base{align-self:stretch;margin:0 -10px;height:5px;background:var(--beton)}
-.rsign b{margin-top:12px;font-weight:800;font-size:17px;line-height:1.25}
-.rsign small{color:var(--abu);font-size:14px}
-.rsign:hover .plate{box-shadow:inset 0 -3px 0 var(--aspal)}
-/* lajur alat: rambu petunjuk bertiang di atas lajur */
-.lajur{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));margin-top:40px}
-.ljr{display:flex;flex-direction:column;align-items:center;min-width:0}
-.rp{display:inline-flex;align-items:center;gap:8px;background:var(--biru);color:#fff;border-radius:4px;padding:10px 13px 7px;box-shadow:inset 0 0 0 3px var(--biru),inset 0 0 0 5px #fff;font-weight:800;font-size:15px;line-height:1.15;max-width:calc(100% - 20px)}
-.rp svg{width:18px;height:18px;flex:none}
-.ljr .tiang{width:6px;height:22px;background:var(--beton);flex:none}
-.bdn{align-self:stretch;flex:1;border-top:3px solid var(--aspal);padding:14px 20px 4px}
-.ljr + .ljr .bdn{background:linear-gradient(180deg,var(--garis) 0 18px,transparent 18px) 0 0/3px 30px repeat-y}
-.bdn p{font-size:15px;color:var(--abu)}
-.bdn .tl{display:flex;flex-wrap:wrap;gap:6px 12px;margin-top:12px;font-weight:700;font-size:15px}
-/* rambu peringatan + papan tambahan */
-.peringatan{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin-top:40px}
-.pr{display:flex;flex-direction:column;align-items:center;text-align:center;padding:0 22px}
-.pr .wajik{width:76px;height:76px}
-.pr .tambahan{margin-top:6px;background:#fff;border:2px solid var(--aspal);border-radius:3px;padding:8px 12px 5px;font-weight:800;font-size:17px;line-height:1.25;max-width:100%}
-.pr .tiang{width:6px;height:30px;background:var(--beton);flex:none}
-.pr p{align-self:stretch;margin:0 -22px;border-top:4px solid var(--beton);padding:14px 22px 0;font-size:16px;color:var(--abu)}
-.pr a{font-weight:700;font-size:16px;margin-top:8px}
-.ad .legs{max-width:970px;margin:0 auto;display:flex;justify-content:space-between;padding:0 16%;height:30px}
-.ad .legs span{width:10px;background:var(--beton)}
-.ad{padding:8px 0 64px}
-.ad .lbl{font-size:13px;color:var(--abu);max-width:970px;margin:0 auto 6px}
-.ad .slot{height:250px;max-width:970px;margin:0 auto;border:2px solid var(--garis);display:flex;align-items:center;justify-content:center;text-align:center;color:var(--abu);font-size:15px;padding:16px}
-.priv{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:48px;align-items:center;margin-top:8px}
-.priv .dia{width:100%;height:auto}
-.check{list-style:none;padding:0;margin:20px 0 0;display:grid;gap:14px}
-.check li{display:grid;grid-template-columns:28px 1fr;gap:12px;font-size:17px}
-.check svg{width:28px;height:28px}
-.honest{margin-top:20px;border-left:6px solid var(--kuning);padding:4px 0 4px 16px;font-size:16px;color:var(--abu)}
-.faq{margin-top:28px;max-width:860px}
-.faq details{border-top:2px solid var(--aspal);padding:14px 0}
-.faq details:last-child{border-bottom:2px solid var(--aspal)}
-.faq summary{font-weight:800;font-size:19px;cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:16px}
-.faq summary::-webkit-details-marker{display:none}
-.faq summary::after{content:"+";font-weight:900;font-size:22px;line-height:1}
-.faq details[open] summary::after{content:"\2212"}
-.faq details p{margin-top:10px;color:var(--abu);font-size:17px;max-width:70ch}
-.foot{background:var(--aspal) var(--tekstur);color:#fff;padding:48px 0 40px}
-.foot .signs-g{display:flex;flex-wrap:wrap;gap:14px}
-.foot .fine{margin-top:28px;font-size:14px;color:var(--abu-aspal);display:flex;flex-wrap:wrap;gap:8px 24px}
-.foot .fine a{color:#fff}
-.foot .fine a:hover{background:none;color:var(--kuning)}
-
-/* ---------- concept document ---------- */
-.docband{background:var(--aspal) var(--tekstur);color:#fff;padding:40px 0 0;margin-top:72px;border-top:10px solid var(--kuning)}
-.split{max-width:calc(var(--maxw) + var(--pad)*2);margin:56px auto 0;padding:0 var(--pad);font-weight:800;font-size:15px;color:var(--abu)}
-.doc code{font-family:inherit;font-weight:800;font-size:.95em}
-.docband .t{font-weight:900;font-size:44px;line-height:1.05}
-.docband p{color:var(--abu-aspal);margin-top:10px;max-width:70ch}
-.docband .road{height:56px;margin-top:32px;border-top:3px solid #fff;border-bottom:3px solid #fff;background:linear-gradient(90deg,var(--kuning) 0 28px,transparent 28px) 0 50%/48px 4px repeat-x}
-.doc .sec{padding:56px 0}
-.doc h2{font-size:32px}
-.doc h3{font-weight:800;font-size:21px;margin-top:28px}
-.doc p,.doc li{font-size:17px}
-.doc p+p{margin-top:12px}
-.doc ul{padding-left:20px;margin:12px 0 0}
-.doc li+li{margin-top:6px}
-.cols2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:40px}
-.tbl{width:100%;border-collapse:collapse;margin-top:18px;font-size:15px}
-.tbl th,.tbl td{text-align:left;vertical-align:top;padding:10px 12px 8px;border-bottom:2px solid var(--garis)}
-.tbl th{font-weight:800;border-bottom:3px solid var(--aspal);font-size:14px}
-.tblw{overflow-x:auto;-webkit-overflow-scrolling:touch}
-.sw{display:inline-block;width:40px;height:40px;border:2px solid var(--aspal);border-radius:3px;vertical-align:middle}
-.spec{margin-top:18px;border-top:2px solid var(--garis)}
-.spec div{display:grid;grid-template-columns:220px 1fr;gap:16px;padding:14px 0;border-bottom:2px solid var(--garis);align-items:baseline}
-.spec .m{color:var(--abu);font-size:14px}
-.minis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:22px;margin-top:22px}
-.mini figcaption{margin-top:8px;font-size:15px;line-height:1.35}
-.mini figcaption b{display:block;font-size:16px}
-.mini{margin:0}
-.lane.small{--H:130px;--gr:24px;--rp:10px;--span:104px;--post:8px;--bw:46px;--bar:12px;--wt:12px;padding-top:12px}
-.lane.small .hang{font-size:11px;padding:5px 5px 3px;border-width:2px;gap:3px}
-.lane.small .hang .gl{width:7px;height:10px}
-.lane.small .hang::before,.lane.small .hang::after{height:8px;top:calc(100% + 2px);width:2px}
-.lane.small .tag{font-size:11px;padding:4px 5px 3px;right:calc(100% + 6px)}
-.lane.small .tag small{font-size:10px}
-.lane.small .lane-ground{background:linear-gradient(90deg,var(--kuning) 0 14px,transparent 14px) 0 50%/24px 3px repeat-x}
-.lane.small .blk{clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,0 100%)}
-.lane.small .blk::after{width:8px;height:8px}
-.lane .drophint{position:absolute;left:12px;top:40%;font-weight:800;font-size:13px;color:#fff}
-.minifork{display:flex;gap:6px;justify-content:flex-end;padding:6px 10px 0;background:#fff}
-.minifork span{background:var(--biru);color:#fff;font-size:11px;font-weight:800;border-radius:3px;padding:4px 6px 2px;border:2px solid var(--aspal)}
-.icons{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:16px;margin-top:20px}
-.icons figure{margin:0;text-align:center}
-.icons svg{width:48px;height:48px;margin:0 auto}
-.icons figcaption{font-size:13px;margin-top:8px;line-height:1.3}
-.logos{display:flex;flex-wrap:wrap;gap:28px;align-items:flex-end;margin-top:20px}
-.logos figure{margin:0}
-.logos figcaption{font-size:13px;color:var(--abu);margin-top:6px}
-.spec-type .s900{font-weight:900;font-size:56px;line-height:1.02}
-.spec-type .s800{font-weight:800;font-size:32px;line-height:1.1}
-.spec-type .s600{font-weight:600;font-size:16px}
-.spec-type .s400{font-weight:400;font-size:18px}
-.score{border:3px solid var(--aspal);border-radius:6px;padding:20px 24px;margin-top:18px}
-
-/* ---------- responsive ---------- */
-@media (max-width:1180px){
-  .nav{display:none}
-  .menu-b{display:inline-block}
-  .menu-b + .lang{margin-left:0}
-  .signs{grid-template-columns:repeat(3,minmax(0,1fr));row-gap:28px}
-  .lajur{grid-template-columns:repeat(3,minmax(0,1fr));row-gap:32px}
-  .ljr:nth-child(3n+1) .bdn{background:none}
-  .icons{grid-template-columns:repeat(4,minmax(0,1fr))}
-  .minis{grid-template-columns:repeat(2,minmax(0,1fr))}
-}
-@media (max-width:1199px){
-  .lane-cta .lead{font-size:18px;margin-bottom:12px}
-  .lane-cta .row{flex-direction:column;align-items:flex-start}
-}
-@media (max-width:1023px){
-  :root{--pad:32px}
-  .hero{grid-template-columns:[full-start] var(--pad) [c-start] minmax(0,1fr) [mid] minmax(0,1fr) [c-end] var(--pad) [full-end]}
-  .hero h1{font-size:52px}
-  .hero .sub{grid-column:c-start/c-end}
-  .hero .plates{grid-column:c-start/c-end;grid-row:3;justify-content:flex-start}
-  .hero .lane{grid-row:4}.hero .forkrow{grid-row:5}.hero .below{grid-row:6}.hero .after{grid-row:7}
-  .lane{--H:300px;--rp:32px;--span:220px;--post:12px;--bw:100px;--bar:20px;--wt:22px}
-  .fork{--rp:32px;--span:220px;--post:12px;--bw:100px}
-  .lane-cta{top:calc(24px + var(--H)*.12)}
-  .lane-cta .lead{display:none}
-  .result{grid-template-columns:1fr}
-  .priv,.cols2{grid-template-columns:1fr}
-  .peringatan{grid-template-columns:1fr;row-gap:36px}
-}
-@media (max-width:767px){
-  .lane-cta{position:static;width:auto;padding:14px var(--pad) 16px}
-  .lane-cta .lead,.lane-cta .hint{display:none}
-  .lane-cta .row{flex-direction:column;align-items:stretch;gap:8px}
-  .lane-cta .btn{width:100%}
-  .lane-cta .btn-o{border:0;min-height:40px;padding:8px;text-decoration:underline;text-underline-offset:3px}
-  .lane-cta .fmt{display:block;text-align:center;margin:0 0 2px}
-  .mbar.on{display:flex}
-  body.has-mbar{padding-bottom:72px}
-  html.has-mbar{scroll-padding-bottom:80px}
-}
-@media (max-width:639px){
-  :root{--pad:16px}
-  body{font-size:17px}
-  .top .wrap{height:58px;gap:12px}
-  .logo svg{width:138px;height:auto}
-  .lang button{min-width:40px;padding:6px 8px 3px;font-size:13px}
-  .hero{padding-top:18px;grid-template-columns:[full-start] 16px [c-start] minmax(0,1fr) [mid c-end] 16px [full-end]}
-  .hero h1{font-size:34px;line-height:1.05}
-  .hero h1 span{display:inline}
-  .hero .plates{grid-column:full-start/full-end;grid-row:2;margin-top:14px;flex-wrap:nowrap;overflow-x:auto;padding:4px 16px;scrollbar-width:none;justify-content:flex-start}
-  .hero .plates::-webkit-scrollbar{display:none}
-  .plate{font-size:16px;min-height:44px;padding:10px 10px 7px}
-  .hero .lane{grid-row:3;margin-top:10px}
-  .hero .forkrow{grid-row:4}.hero .below{grid-row:5}.hero .after{grid-row:6}
-  .hero .sub{grid-row:7;margin:18px 0 8px;font-size:17px}
-  .lane{--H:220px;--gr:32px;--rp:12px;--span:120px;--post:10px;--bw:64px;--bar:16px;--wt:12px;padding-top:14px}
-  .hang{font-size:14px;padding:6px 7px 4px;gap:4px;border-width:2px}
-  .hang .gl{width:9px;height:13px}
-  .tag{font-size:12px;padding:5px 6px 4px}
-  .tag small{font-size:11px}
-  .below{padding-top:12px;gap:10px}
-  .trust{font-size:15px}
-  .chip-b{margin-left:0}
-  .fork{--rp:12px;--span:120px;--post:10px;--bw:64px;--tw:40px}
-  .fork .trunk{right:auto;left:16px}
-  .fork .fhead{padding:18px 16px 12px 72px}
-  .exits{align-items:stretch;padding:0 16px 0 16px}
-  .exit{flex-direction:row-reverse;justify-content:flex-end}
-  .exit .road{width:30px;flex:none;margin-left:24px}
-  .exit button{flex:1;width:auto;max-width:none}
-  .result{padding:18px 16px;gap:16px}
-  .result .lines .big{color:var(--aspal);max-width:none;font-size:36px}
-  .loupe canvas{width:136px;height:136px}
-  .sec{padding:48px 0}
-  .sec h2{font-size:28px;line-height:1.15}
-  .signs{display:flex;overflow-x:auto;gap:0;padding-bottom:8px;scrollbar-width:none}
-  .signs::-webkit-scrollbar{display:none}
-  .rsign{flex:0 0 164px}
-  .hero .plates,.signs{scroll-snap-type:x mandatory;scroll-padding-inline:16px;-webkit-mask-image:linear-gradient(90deg,#000 86%,transparent);mask-image:linear-gradient(90deg,#000 86%,transparent)}
-  .hero .plates.at-end,.signs.at-end{-webkit-mask-image:none;mask-image:none}
-  .hero .plates>*,.signs>*{scroll-snap-align:start}
-  .lajur{grid-template-columns:1fr;row-gap:0}
-  .ljr{align-items:flex-start}
-  .ljr .tiang{margin-left:34px}
-  .ljr .bdn,.ljr:nth-child(3n+1) .bdn{background:none;padding:14px 0 4px}
-  .ljr + .ljr{margin-top:26px;padding-top:26px;background:linear-gradient(90deg,var(--garis) 0 24px,transparent 24px) 0 0/40px 3px repeat-x}
-  .ad .legs{max-width:300px;padding:0 18%}
-  .ad .slot{height:250px;max-width:300px}
-  .doc h2{font-size:26px}
-  .docband .t{font-size:32px}
-  .spec div{grid-template-columns:1fr;gap:4px}
-  .tbl thead{display:none}
-  .tbl,.tbl tbody,.tbl tr,.tbl td{display:block;width:100%}
-  .tbl tr{border-bottom:2px solid var(--garis);padding:10px 0}
-  .tbl td{border:0;padding:3px 0}
-  .tbl td[data-label]:not([data-label=""])::before{content:attr(data-label) ": ";font-weight:800;color:var(--aspal)}
-  .tbl td:first-child .sw{margin-bottom:4px}
-  .minis{grid-template-columns:1fr}
-  .icons{grid-template-columns:repeat(4,minmax(0,1fr))}
-  .spec-type .s900{font-size:40px}
-}
-@media (prefers-reduced-motion:reduce){
-  *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
-}
-</style>
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
-<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
-    <pattern id="stripe-logo" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="4" height="8" fill="#C8102E"/><rect x="4" width="4" height="8" fill="#fff"/></pattern>
+    <symbol id="g-compress" viewBox="0 0 24 24"><path d="M4 14h6v6M20 10h-6V4M14 10l6.5-6.5M3.5 20.5 10 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="g-merge" viewBox="0 0 24 24"><path d="M8 3h11a2 2 0 0 1 2 2v11M5 7h10a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2zM10 11v6M7 14h6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="g-image" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="9" cy="9.5" r="1.8" fill="currentColor"/><path d="m21 15-5-5-9 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="g-person" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="10" r="3.2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M6.5 20c1-3 3-4.5 5.5-4.5s4.5 1.5 5.5 4.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="g-scissors" viewBox="0 0 24 24"><circle cx="6" cy="6" r="3" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="6" cy="18" r="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8.2 8.2 20 20M8.2 15.8 20 4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="g-rotate" viewBox="0 0 24 24"><path d="M3.5 12a8.5 8.5 0 1 0 2.6-6.1M3.5 4v5h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="g-trash" viewBox="0 0 24 24"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 11v5M14 11v5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="g-pages" viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7" rx="1" fill="none" stroke="currentColor" stroke-width="2"/><rect x="13" y="4" width="7" height="7" rx="1" fill="none" stroke="currentColor" stroke-width="2"/><rect x="4" y="13" width="7" height="7" rx="1" fill="none" stroke="currentColor" stroke-width="2"/><path d="M16.5 13v7M13 16.5h7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="g-sort" viewBox="0 0 24 24"><path d="M4 6h11M4 12h8M4 18h5M18 5v14M15 16l3 3 3-3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="g-pen" viewBox="0 0 24 24"><path d="M4 20l1-4.5L16 4.5l3.5 3.5L8.5 19zM14 7l3.5 3.5M3 22h18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="g-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="g-unlock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 11V8a4 4 0 0 1 7.6-1.8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="g-layers" viewBox="0 0 24 24"><path d="M12 3 3 8l9 5 9-5zM3 13l9 5 9-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="g-spark" viewBox="0 0 24 24"><path d="M12 3l2.1 5.9L20 11l-5.9 2.1L12 19l-2.1-5.9L4 11l5.9-2.1z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+    <symbol id="g-camera" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="13.5" r="3.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 7l1.5-3h5L16 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+    <symbol id="g-file" viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6zM14 3v4h4" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+    <symbol id="g-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="g-text" viewBox="0 0 24 24"><path d="M5 6V4h14v2M12 4v16M9 20h6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="g-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M3 12h18M12 3c2.6 2.6 3.8 5.6 3.8 9s-1.2 6.4-3.8 9M12 3C9.4 5.6 8.2 8.6 8.2 12s1.2 6.4 3.8 9" fill="none" stroke="currentColor" stroke-width="1.6"/></symbol>
+    <symbol id="g-chev" viewBox="0 0 24 24"><path d="M9.5 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="g-arrow" viewBox="0 0 24 24"><path d="M4 12h15M13.5 6.5 19 12l-5.5 5.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="g-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M4.5 20.5c1.2-4 4-6 7.5-6s6.3 2 7.5 6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
+    <symbol id="g-files" viewBox="0 0 24 24"><path d="M9 3h7l4 4v11H9zM16 3v4h4M5 7v14h11" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></symbol>
+    <symbol id="g-phone" viewBox="0 0 24 24"><rect x="6" y="2.5" width="12" height="19" rx="2.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M10.5 18.5h3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="g-laptop" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M2 19h20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="g-download" viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5M4 20h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="g-mark" viewBox="0 0 40 40"><rect width="40" height="40" rx="8" fill="#E4572E"/><path d="M12 7h11.5L30 13.5V33H12z" fill="#fff"/><path d="M23.5 7v6.5H30" fill="#F7B8A3"/><path d="M16.5 19.5 21 24l4.5-4.5M21 15v9" fill="none" stroke="#E4572E" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 28.5h10" stroke="#1A1A1A" stroke-width="2.6" stroke-linecap="round"/></symbol>
   </defs>
-  <symbol id="i-centang" viewBox="0 0 16 16"><path d="M2.5 8.5l3.5 3.5 7.5-8" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
-  <symbol id="g-turun" viewBox="0 0 10 12"><path d="M5 0v9M1 6l4 5 4-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
-  <symbol id="g-batas" viewBox="0 0 12 18"><path d="M1 1h10L6 7z M1 17h10L6 11z" fill="currentColor"/></symbol>
-  <symbol id="i-larangan" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#fff" stroke="#C8102E" stroke-width="3"/><path d="M5.6 5.6l12.8 12.8" stroke="#C8102E" stroke-width="3"/></symbol>
-  <symbol id="i-peringatan" viewBox="0 0 24 24"><path d="M12 1.6L22.4 12 12 22.4 1.6 12z" fill="#FFC20E" stroke="#1B1F24" stroke-width="1.8" stroke-linejoin="round"/><rect x="11" y="6.6" width="2" height="7.4" fill="#1B1F24"/><circle cx="12" cy="16.6" r="1.25" fill="#1B1F24"/></symbol>
-  <symbol id="i-info" viewBox="0 0 24 24"><rect x="1" y="1" width="22" height="22" rx="3" fill="#0057B8"/><rect x="8" y="4.5" width="8" height="15" rx="1.6" fill="none" stroke="#fff" stroke-width="1.8"/><circle cx="12" cy="16.6" r="1" fill="#fff"/></symbol>
-  <symbol id="i-lolos" viewBox="0 0 24 24"><rect x="1" y="1" width="22" height="22" rx="3" fill="#00763A"/><path d="M6.5 12.5l3.6 3.6 7.4-8" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
-  <symbol id="i-belok" viewBox="0 0 24 24"><rect x="1" y="1" width="22" height="22" rx="3" fill="#0057B8"/><path d="M15.5 19V12a3.5 3.5 0 0 0-3.5-3.5H7" fill="none" stroke="#fff" stroke-width="2.4"/><path d="M10 5L6.5 8.5 10 12" fill="none" stroke="#fff" stroke-width="2.4" stroke-linejoin="round"/></symbol>
-  <symbol id="i-buntu" viewBox="0 0 24 24"><rect x="1" y="1" width="22" height="22" rx="3" fill="#0057B8"/><rect x="10.4" y="9" width="3.2" height="11" fill="#fff"/><rect x="5.5" y="5" width="13" height="4" fill="#C8102E"/></symbol>
-  <symbol id="i-arah" viewBox="0 0 24 24"><rect x="1" y="1" width="22" height="22" rx="3" fill="#00763A"/><path d="M5.5 12h11.5M12.5 7l5 5-5 5" fill="none" stroke="#fff" stroke-width="2.4" stroke-linejoin="round"/></symbol>
-  <symbol id="i-batas" viewBox="0 0 24 24"><rect x="1.5" y="1.5" width="21" height="21" rx="3" fill="#FFC20E" stroke="#1B1F24" stroke-width="2"/><path d="M7 5h10l-5 5z M7 19h10l-5-5z" fill="#1B1F24"/></symbol>
-  <symbol id="i-unggah" viewBox="0 0 24 24"><path d="M12 16V4M6.5 9.5L12 4l5.5 5.5M4 20h16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/></symbol>
-  <symbol id="i-unduh" viewBox="0 0 24 24"><path d="M12 4v12M6.5 10.5L12 16l5.5-5.5M4 20h16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/></symbol>
-  <symbol id="i-foto" viewBox="0 0 24 24"><rect x="4" y="2.5" width="16" height="19" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="10" r="3.2" fill="currentColor"/><path d="M6.5 19.5c.8-3.2 3-4.8 5.5-4.8s4.7 1.6 5.5 4.8" fill="currentColor"/></symbol>
-  <symbol id="i-pdf" viewBox="0 0 24 24"><path d="M6 2.5h8.5L19 7v14.5H6z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M14 2.5V7.5h5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M9 12h7M9 15.5h7M9 19h4" stroke="currentColor" stroke-width="2"/></symbol>
-  <symbol id="i-gabung" viewBox="0 0 24 24"><path d="M4 3.5h9v13H4z M11 7.5h9v13h-9z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
-  <symbol id="i-ke-pdf" viewBox="0 0 24 24"><rect x="2.5" y="5" width="9" height="12" fill="none" stroke="currentColor" stroke-width="2"/><path d="M13.5 11h4M15.5 8.5L18 11l-2.5 2.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M19 4v16" stroke="currentColor" stroke-width="2"/></symbol>
-  <symbol id="i-skala" viewBox="0 0 24 24"><rect x="1" y="1" width="22" height="22" rx="3" fill="#FFC20E" stroke="#1B1F24" stroke-width="2"/><path d="M7 17V9M12 17V6M17 17v-4" stroke="#1B1F24" stroke-width="2.6"/></symbol>
 </svg>
 
-<a class="skip" href="#alat">Langsung ke alat</a>
-
-<!-- ===================== BAGIAN 1: MOCKUP LANDING PAGE ===================== -->
-<header class="top">
-  <div class="wrap">
+<header class="nav" data-sec="nav">
+  <div class="nav-in">
     <a class="logo" href="#" aria-label="Dokurapi, beranda">
-      <svg width="176" height="44" viewBox="0 0 176 44" aria-hidden="true">
-        <rect x="3" y="12" width="5" height="32" fill="#1B1F24"/>
-        <rect x="158" y="12" width="5" height="32" fill="#1B1F24"/>
-        <rect x="0" y="4" width="170" height="9" fill="url(#stripe-logo)"/>
-        <rect x="0" y="4" width="170" height="9" fill="none" stroke="#1B1F24" stroke-width="1.5"/>
-        <rect x="165" y="13" width="9" height="11" fill="#6B7380"/>
-        <text x="83" y="39" text-anchor="middle" font-family="Overpass, sans-serif" font-weight="900" font-size="22" letter-spacing="1" textLength="136" lengthAdjust="spacingAndGlyphs" fill="#1B1F24">DOKURAPI</text>
-      </svg>
+      <svg class="logo-mark" width="40" height="40"><use href="#g-mark"/></svg>
+      <span class="wordmark">Dokurapi</span>
     </a>
-    <nav class="nav" aria-label="Alat">
-      <a href="#alat" data-i="nav0">Kompres PDF</a>
-      <a href="#alat" data-i="nav1">Kompres foto/JPG</a>
-      <a href="#alat" data-i="nav2">Foto ke PDF</a>
-      <a href="#alat" data-i="nav3">Gabung PDF</a>
-      <a href="#alat" data-i="nav4">Pas foto</a>
-    </nav>
-    <a class="menu-b" href="#alat-lain" data-i="menu">Alat</a>
-    <div class="lang" role="group" aria-label="Bahasa hero">
-      <button type="button" data-lang="id" aria-pressed="true">ID</button>
-      <button type="button" data-lang="en" aria-pressed="false">EN</button>
+    <div class="tools-wrap">
+      <button class="btn-out tools-btn" type="button" aria-expanded="false" aria-controls="tools-menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><g fill="#1A1A1A"><rect x="4" y="4" width="4" height="4" rx=".5"/><rect x="10" y="4" width="4" height="4" rx=".5"/><rect x="16" y="4" width="4" height="4" rx=".5"/><rect x="4" y="10" width="4" height="4" rx=".5"/><rect x="10" y="10" width="4" height="4" rx=".5"/><rect x="16" y="10" width="4" height="4" rx=".5"/><rect x="4" y="16" width="4" height="4" rx=".5"/><rect x="10" y="16" width="4" height="4" rx=".5"/><rect x="16" y="16" width="4" height="4" rx=".5"/></g></svg>
+        <span class="tools-label" data-en="Tools">Alat</span>
+        <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 6h9L8 10.5z" fill="#1A1A1A"/></svg>
+      </button>
+      <div class="tools-menu" id="tools-menu" hidden>
+        <a href="#alat"><span class="ic" style="background:#E4572E"><svg><use href="#g-compress"/></svg></span><span data-en="Compress PDF">Kompres PDF</span></a>
+        <a href="#alat"><span class="ic" style="background:#F5A524"><svg><use href="#g-image"/></svg></span><span data-en="Photo to PDF">Foto ke PDF</span></a>
+        <a href="#alat"><span class="ic" style="background:#5B5BD6"><svg><use href="#g-merge"/></svg></span><span data-en="Merge PDF">Gabung PDF</span></a>
+        <a href="#alat"><span class="ic" style="background:#C2459A"><svg><use href="#g-person"/></svg></span><span data-en="ID Photo">Pas Foto</span></a>
+        <a href="#alat"><span class="ic" style="background:#14A38B"><svg><use href="#g-image"/></svg></span><span data-en="Compress Photo">Kompres Foto</span></a>
+        <a href="#semua-alat"><span class="ic" style="background:#2F4B7C"><svg><use href="#g-pages"/></svg></span><span data-en="All tools">Semua alat</span></a>
+      </div>
     </div>
+    <nav class="nav-links" aria-label="Menu utama">
+      <a href="#alat" data-en="Compress">Kompres</a>
+      <a href="#alat" data-en="Convert">Ubah</a>
+      <a href="#alat" data-en="Merge">Gabung</a>
+      <a href="#alat" data-en="ID Photo">Pas Foto</a>
+      <a href="#alat" data-en="Photo to PDF">Foto ke PDF</a>
+      <a href="#semua-alat" data-en="Forms">Syarat</a>
+    </nav>
+    <div class="nav-right">
+      <a class="nav-txt" href="#panduan" data-en="Guides">Panduan</a>
+      <a class="nav-txt" href="#tentang" data-en="About">Tentang</a>
+      <button class="btn-out lang-btn" type="button" aria-label="Ganti bahasa / Switch language">
+        <span class="lang-opt" data-lang="id">ID</span><span class="lang-sep" aria-hidden="true">/</span><span class="lang-opt" data-lang="en">EN</span>
+      </button>
+      <a class="btn btn-primary nav-cta" href="#alat" data-en="Start Free">Mulai Gratis</a>
+      <button class="btn-out burger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="m-menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke="#1A1A1A" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+  </div>
+  <div class="m-menu" id="m-menu" hidden>
+    <a href="#alat" data-en="Compress">Kompres</a>
+    <a href="#alat" data-en="Convert">Ubah</a>
+    <a href="#alat" data-en="Merge">Gabung</a>
+    <a href="#alat" data-en="ID Photo">Pas Foto</a>
+    <a href="#panduan" data-en="Guides">Panduan</a>
+    <a class="btn btn-primary" href="#alat" data-en="Start Free">Mulai Gratis</a>
   </div>
 </header>
 
 <main>
-<section class="hero" id="alat" aria-labelledby="h1">
-  <h1 id="h1"><span data-i="h1a">Portal menolak berkasmu?</span> <span data-i="h1b">Kompres sampai lolos.</span></h1>
-  <p class="sub" data-i="sub">Pilih batas ukurannya. Dokurapi mengecilkan PDF dan foto sampai pas di bawah batas itu, langsung di <span class="nw">HP-mu</span>. Berkas tidak diunggah ke server kami.</p>
-  <div class="plates" id="plates" role="radiogroup" aria-label="Batas ukuran dari portal">
-    <button type="button" class="plate" role="radio" aria-checked="false" data-kb="100"><svg class="gl" aria-hidden="true"><use href="#g-batas"/></svg><svg class="ck" aria-hidden="true"><use href="#i-centang"/></svg><span class="num">100 KB</span><span class="st" data-i="setLbl">terpasang</span><svg class="dn" aria-hidden="true"><use href="#g-turun"/></svg></button>
-    <button type="button" class="plate" role="radio" aria-checked="true" data-kb="200"><svg class="gl" aria-hidden="true"><use href="#g-batas"/></svg><svg class="ck" aria-hidden="true"><use href="#i-centang"/></svg><span class="num">200 KB</span><span class="st" data-i="setLbl">terpasang</span><svg class="dn" aria-hidden="true"><use href="#g-turun"/></svg></button>
-    <button type="button" class="plate" role="radio" aria-checked="false" data-kb="500"><svg class="gl" aria-hidden="true"><use href="#g-batas"/></svg><svg class="ck" aria-hidden="true"><use href="#i-centang"/></svg><span class="num">500 KB</span><span class="st" data-i="setLbl">terpasang</span><svg class="dn" aria-hidden="true"><use href="#g-turun"/></svg></button>
-    <button type="button" class="plate" role="radio" aria-checked="false" data-kb="1000"><svg class="gl" aria-hidden="true"><use href="#g-batas"/></svg><svg class="ck" aria-hidden="true"><use href="#i-centang"/></svg><span class="num">1 MB</span><span class="st" data-i="setLbl">terpasang</span><svg class="dn" aria-hidden="true"><use href="#g-turun"/></svg></button>
-    <button type="button" class="plate" role="radio" aria-checked="false" data-kb="custom" id="pcustom"><svg class="gl" aria-hidden="true"><use href="#g-batas"/></svg><svg class="ck" aria-hidden="true"><use href="#i-centang"/></svg><span data-i="custom">Atur sendiri</span><span class="st" data-i="setLbl">terpasang</span><svg class="dn" aria-hidden="true"><use href="#g-turun"/></svg></button>
-  </div>
-
-  <div class="lane" id="lane">
-    <div class="lane-sky">
-      <div class="blkw" hidden><div class="blk"></div><div class="tag"></div></div>
-      <div class="post post-l"></div><div class="post post-r"></div>
-      <div class="bar"><span class="wt"></span></div>
-      <div class="hang" id="hang" aria-hidden="true"><svg class="gl"><use href="#g-batas"/></svg><span class="hang-t num">MAKS 200 KB</span></div>
-    </div>
-    <div class="lane-ground"></div>
-    <div class="lane-cta">
-      <p class="lead" data-i="lead">Taruh berkasmu di jalan ini. Kami kompres sampai bisa lewat di bawah palang.</p>
-      <div class="row">
-        <button type="button" class="btn btn-w" id="pick"><svg aria-hidden="true"><use href="#i-unggah"/></svg><span data-i="cta">Pilih berkas</span></button>
-        <p class="fmt" data-i="fmt">PDF, JPG, atau PNG dari galeri atau file <span class="nw">HP</span></p>
-        <button type="button" class="btn btn-o" id="go"><span id="go-t">Kompres contoh ini</span></button>
-      </div>
-      <p class="hint" data-i="hint">atau seret PDF atau JPG ke jalan ini</p>
-    </div>
-    <input type="file" id="file" class="vh" accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png" tabindex="-1" aria-hidden="true">
-  </div>
-
-  <div class="below">
-    <p class="trust"><svg aria-hidden="true"><use href="#i-info"/></svg><span><span data-i="trust">Diproses di perangkatmu, bukan di server kami.</span> <a href="#cara-kerja" data-i="trustLink">Cara mengeceknya sendiri</a></span></p>
-    <a class="chip-b" href="#alat-lain"><svg aria-hidden="true"><use href="#i-foto"/></svg><span data-i="pasfoto">atau: Pas foto merah/biru</span></a>
-    <p class="status" id="status" aria-live="polite"></p>
-    <div class="engine" id="engine" hidden></div>
-  </div>
-
-  <div class="forkrow" id="forkrow" hidden></div>
-
-  <div class="after" id="after-wrap">
-    <div id="result-slot"></div>
-    <div id="next" hidden></div>
-  </div>
-</section>
-
-<div class="marka" aria-hidden="true"></div>
-
-<section class="sec" aria-labelledby="h-batas">
-  <div class="wrap">
-    <h2 id="h-batas">Batas yang sering diminta portal</h2>
-    <p class="lede">Ketuk rambunya untuk memasang batas itu di portal di atas.</p>
-    <div class="signs">
-      <button type="button" class="rsign" data-kb="200"><span class="plate"><svg class="gl" aria-hidden="true"><use href="#g-batas"/></svg><span class="num">MAKS 200 KB</span></span><span class="pole"></span><span class="base"></span><b>Pas foto (JPG)</b><small>contoh syarat CPNS</small></button>
-      <button type="button" class="rsign" data-kb="200"><span class="plate"><svg class="gl" aria-hidden="true"><use href="#g-batas"/></svg><span class="num">MAKS 200 KB</span></span><span class="pole"></span><span class="base"></span><b>Scan KTP</b><small>contoh syarat CPNS</small></button>
-      <button type="button" class="rsign" data-kb="500"><span class="plate"><svg class="gl" aria-hidden="true"><use href="#g-batas"/></svg><span class="num">MAKS 500 KB</span></span><span class="pole"></span><span class="base"></span><b>Ijazah (PDF)</b><small>contoh syarat beasiswa</small></button>
-      <button type="button" class="rsign" data-kb="1000"><span class="plate"><svg class="gl" aria-hidden="true"><use href="#g-batas"/></svg><span class="num">MAKS 1 MB</span></span><span class="pole"></span><span class="base"></span><b>CV dan surat lamaran</b><small>contoh lamaran kerja</small></button>
-      <button type="button" class="rsign" data-kb="100"><span class="plate"><svg class="gl" aria-hidden="true"><use href="#g-batas"/></svg><span class="num">MAKS 100 KB</span></span><span class="pole"></span><span class="base"></span><b>Tanda tangan (JPG)</b><small>contoh formulir daring</small></button>
-    </div>
-    <p class="note">Contoh isi mockup. Angkanya belum dicek ke panduan resmi. Di situs nanti, setiap rambu menaut ke sumber panduannya beserta tanggal pengecekan.</p>
-  </div>
-</section>
-
-<div class="marka" aria-hidden="true"></div>
-
-<section class="sec" id="alat-lain" aria-labelledby="h-alat">
-  <div class="wrap">
-    <h2 id="h-alat">Semua alat, satu jalan</h2>
-    <p class="lede">Setiap alat punya halaman sendiri untuk tiap batas, jadi pencarian "kompres pdf 200 kb" langsung mendarat di alat yang palangnya sudah terpasang.</p>
-    <div class="lajur" role="list">
-      <div class="ljr" role="listitem"><h3 class="rp"><svg aria-hidden="true"><use href="#i-pdf"/></svg>Kompres PDF</h3><span class="tiang" aria-hidden="true"></span><div class="bdn"><p>Kecilkan scan ijazah, transkrip, dan surat sampai di bawah batas portal.</p><div class="tl num"><a href="#alat">100 KB</a><a href="#alat">200 KB</a><a href="#alat">500 KB</a><a href="#alat">1 MB</a></div></div></div>
-      <div class="ljr" role="listitem"><h3 class="rp"><svg aria-hidden="true"><use href="#i-foto"/></svg>Kompres foto/JPG</h3><span class="tiang" aria-hidden="true"></span><div class="bdn"><p>Pas foto, foto KTP, dan sertifikat yang diminta dalam format JPG.</p><div class="tl num"><a href="#alat">50 KB</a><a href="#alat">100 KB</a><a href="#alat">200 KB</a><a href="#alat">500 KB</a></div></div></div>
-      <div class="ljr" role="listitem"><h3 class="rp"><svg aria-hidden="true"><use href="#i-ke-pdf"/></svg>Foto ke PDF</h3><span class="tiang" aria-hidden="true"></span><div class="bdn"><p>Foto halaman dari HP jadi satu PDF, ukuran kertas A4 atau F4.</p><div class="tl num"><a href="#alat">A4</a><a href="#alat">F4 (Folio)</a></div></div></div>
-      <div class="ljr" role="listitem"><h3 class="rp"><svg aria-hidden="true"><use href="#i-gabung"/></svg>Gabung PDF</h3><span class="tiang" aria-hidden="true"></span><div class="bdn"><p>Urutkan beberapa PDF jadi satu berkas, lalu kompres sekalian.</p><div class="tl num"><a href="#alat">Gabung lalu 500 KB</a></div></div></div>
-      <div class="ljr" role="listitem"><h3 class="rp"><svg aria-hidden="true"><use href="#i-foto"/></svg>Pas foto merah/biru</h3><span class="tiang" aria-hidden="true"></span><div class="bdn"><p>Potong 3x4 atau 4x6, ganti latar merah atau biru, lalu kompres.</p><div class="tl num"><a href="#alat">3x4</a><a href="#alat">4x6</a><a href="#alat">2x3</a></div></div></div>
+<section class="hero" data-sec="hero">
+  <div class="hero-txt">
+    <h1 data-en="Make files fit.">Berkas pas ukuran.</h1>
+    <p data-en="Compress, convert, and merge files for civil service, scholarship, and job applications in your browser.">Kompres, ubah, dan gabung berkas syarat CPNS, beasiswa, dan lamaran kerja di browser.</p>
+    <div class="hero-btns">
+      <a class="btn btn-primary" href="#alat" data-en="Start Compressing">Mulai Kompres</a>
+      <a class="btn btn-secondary" href="#semua-alat" data-en="Explore All Tools">Jelajahi Semua Alat</a>
     </div>
   </div>
-</section>
-
-<aside class="ad" aria-label="Iklan">
-  <div class="wrap">
-    <p class="lbl">Iklan</p>
-    <div class="slot">Slot iklan 970 x 250 (mobile 300 x 250). Tingginya dipesan sejak awal supaya halaman tidak bergeser, dan selalu jauh dari tombol Unduh.</div>
-    <div class="legs" aria-hidden="true"><span></span><span></span></div>
-  </div>
-</aside>
-
-<div class="marka" aria-hidden="true"></div>
-
-<section class="sec" aria-labelledby="h-why">
-  <div class="wrap">
-    <h2 id="h-why">Kenapa berkas ditolak?</h2>
-    <div class="peringatan">
-      <article class="pr"><svg class="wajik" aria-hidden="true"><use href="#i-peringatan"/></svg><h3 class="tambahan">Ukurannya melewati batas</h3><span class="tiang" aria-hidden="true"></span><p>Foto dan scan dari HP sering berukuran beberapa MB, sedangkan portal meminta ratusan KB.</p><a href="#alat">Kompres sekarang</a></article>
-      <article class="pr"><svg class="wajik" aria-hidden="true"><use href="#i-peringatan"/></svg><h3 class="tambahan">Formatnya tidak sesuai</h3><span class="tiang" aria-hidden="true"></span><p>Portal minta PDF padahal yang kamu punya JPG, atau sebaliknya.</p><a href="#alat-lain">Ubah foto ke PDF</a></article>
-      <article class="pr"><svg class="wajik" aria-hidden="true"><use href="#i-peringatan"/></svg><h3 class="tambahan">Fotonya tidak memenuhi syarat</h3><span class="tiang" aria-hidden="true"></span><p>Latar harus merah atau biru, dengan rasio 3x4 atau 4x6.</p><a href="#alat-lain">Buat pas foto</a></article>
-    </div>
-    <p class="note">Dokurapi memeriksa ukuran dan format. Isi dokumen tetap diperiksa oleh portalnya.</p>
-  </div>
-</section>
-
-<div class="marka" aria-hidden="true"></div>
-
-<section class="sec" id="cara-kerja" aria-labelledby="h-priv">
-  <div class="wrap priv">
-    <svg class="dia" viewBox="0 0 440 300" role="img" aria-labelledby="dia-t">
-      <title id="dia-t">Diagram: berkas berputar di dalam HP, jalan ke server berakhir di rambu jalan buntu</title>
-      <rect x="20" y="10" width="190" height="280" rx="22" fill="none" stroke="#1B1F24" stroke-width="4"/>
-      <rect x="92" y="22" width="46" height="6" rx="3" fill="#1B1F24"/>
-      <rect x="52" y="70" width="126" height="150" rx="40" fill="none" stroke="#1B1F24" stroke-width="30"/>
-      <rect x="52" y="70" width="126" height="150" rx="40" fill="none" stroke="#FFC20E" stroke-width="3" stroke-dasharray="14 10"/>
-      <rect x="99" y="118" width="32" height="40" fill="#fff" stroke="#1B1F24" stroke-width="3"/>
-      <path d="M193 145H330" stroke="#1B1F24" stroke-width="30"/>
-      <path d="M193 145H330" stroke="#FFC20E" stroke-width="3" stroke-dasharray="14 10"/>
-      <rect x="330" y="120" width="10" height="50" fill="#C8102E"/>
-      <use href="#i-buntu" x="352" y="40" width="64" height="64"/>
-      <rect x="381" y="104" width="6" height="66" fill="#D5DAE1"/>
-      <text x="384" y="200" text-anchor="middle" font-family="Overpass, sans-serif" font-weight="800" font-size="18" fill="#1B1F24">server</text>
-      <text x="115" y="262" text-anchor="middle" font-family="Overpass, sans-serif" font-weight="800" font-size="16" fill="#1B1F24">HP-mu</text>
+  <div class="hero-ill">
+    <svg viewBox="0 0 624 585" width="624" height="585" role="img" aria-label="Ilustrasi jendela Dokurapi yang mengompres berkas pendaftaran">
+      <rect x="-113" y="-113" width="226" height="226" rx="20" fill="#FFF2EC" transform="translate(461.5 196.5) rotate(64.7)"/>
+      <rect x="-123" y="-123" width="246" height="246" rx="18" fill="#FFE7DD" transform="translate(371 231) rotate(52.8)"/>
+      <rect x="-83" y="-83" width="166" height="166" rx="16" fill="#FFF2EC" transform="translate(118 427) rotate(-21)"/>
+      <rect x="89.5" y="139.5" width="452" height="318" fill="#fff" stroke="#E2E2E2"/>
+      <svg x="98" y="150" width="14" height="14"><use href="#g-mark"/></svg>
+      <text x="117" y="161" font-family="Source Sans 3, sans-serif" font-size="11" font-weight="700" fill="#1A1A1A">Dokurapi</text>
+      <rect x="90" y="171" width="451" height="1" fill="#EDEDED"/>
+      <g fill="#C9C9C9"><rect x="99" y="178" width="8" height="8" rx="1"/><rect x="111" y="178" width="8" height="8" rx="1"/><rect x="127" y="178" width="8" height="8" rx="1"/></g>
+      <g fill="#9A9A9A"><rect x="238" y="178" width="8" height="8" rx="1"/><rect x="254" y="178" width="8" height="8" rx="1"/><rect x="270" y="178" width="8" height="8" rx="1"/><rect x="286" y="178" width="8" height="8" rx="1"/><rect x="302" y="178" width="8" height="8" rx="1"/><rect x="318" y="178" width="12" height="8" rx="1"/><rect x="336" y="178" width="14" height="8" rx="1"/><rect x="356" y="178" width="12" height="8" rx="1"/><rect x="376" y="178" width="8" height="8" rx="1"/></g>
+      <g fill="#B5B5B5"><rect x="500" y="178" width="7" height="7" rx="1"/><rect x="513" y="178" width="7" height="7" rx="1"/><rect x="526" y="178" width="7" height="7" rx="1"/></g>
+      <rect x="90" y="190" width="451" height="267" fill="#F4F4F4"/>
+      <rect x="135" y="225" width="352" height="231" fill="#fff"/>
+      <g fill="#E8E8E8">
+        <rect x="165" y="255" width="225" height="5" rx="2.5"/><rect x="165" y="271" width="225" height="5" rx="2.5"/><rect x="165" y="287" width="182" height="5" rx="2.5"/>
+        <rect x="165" y="334" width="293" height="5" rx="2.5"/><rect x="165" y="347" width="281" height="5" rx="2.5"/><rect x="165" y="360" width="287" height="5" rx="2.5"/><rect x="165" y="373" width="287" height="5" rx="2.5"/>
+        <rect x="165" y="386" width="269" height="5" rx="2.5"/><rect x="165" y="399" width="269" height="5" rx="2.5"/><rect x="165" y="412" width="269" height="5" rx="2.5"/><rect x="165" y="425" width="269" height="5" rx="2.5"/>
+      </g>
+      <rect x="406" y="258" width="52" height="56" rx="3" fill="#F6B19B"/>
+      <circle cx="432" cy="279" r="9" fill="#fff"/>
+      <path d="M415 314c2-11 9-16 17-16s15 5 17 16z" fill="#fff"/>
+      <rect x="400.5" y="254.5" width="64" height="62" fill="none" stroke="#E4572E"/>
+      <g fill="#fff" stroke="#E4572E"><rect x="398.5" y="252.5" width="4" height="4"/><rect x="430.5" y="252.5" width="4" height="4"/><rect x="462.5" y="252.5" width="4" height="4"/><rect x="398.5" y="283.5" width="4" height="4"/><rect x="462.5" y="283.5" width="4" height="4"/><rect x="398.5" y="314.5" width="4" height="4"/><rect x="430.5" y="314.5" width="4" height="4"/><rect x="462.5" y="314.5" width="4" height="4"/></g>
+      <rect x="168.5" y="300.5" width="40" height="26" fill="none" stroke="#E4572E"/>
+      <text x="171" y="317" font-family="Source Sans 3, sans-serif" font-size="10" font-weight="600" fill="#1A1A1A">196 KB</text>
+      <g fill="#fff" stroke="#E4572E"><rect x="166.5" y="298.5" width="4" height="4"/><rect x="186.5" y="298.5" width="4" height="4"/><rect x="206.5" y="298.5" width="4" height="4"/><rect x="166.5" y="324.5" width="4" height="4"/><rect x="186.5" y="324.5" width="4" height="4"/><rect x="206.5" y="324.5" width="4" height="4"/></g>
+      <rect x="254.5" y="384.5" width="94" height="36" fill="#fff" stroke="#E4572E"/>
+      <text x="262" y="399" font-family="Source Sans 3, sans-serif" font-size="9" font-weight="700" fill="#C4411D">Target 200 KB</text>
+      <rect x="262" y="405" width="78" height="6" rx="3" fill="#FBD9CC"/>
+      <rect x="262" y="405" width="56" height="6" rx="3" fill="#E4572E"/>
+      <circle cx="318" cy="408" r="5" fill="#fff" stroke="#E4572E" stroke-width="2"/>
+      <g fill="#fff" stroke="#E4572E"><rect x="252.5" y="382.5" width="4" height="4"/><rect x="299.5" y="382.5" width="4" height="4"/><rect x="346.5" y="382.5" width="4" height="4"/><rect x="252.5" y="400.5" width="4" height="4"/><rect x="346.5" y="400.5" width="4" height="4"/><rect x="252.5" y="418.5" width="4" height="4"/><rect x="299.5" y="418.5" width="4" height="4"/><rect x="346.5" y="418.5" width="4" height="4"/></g>
+      <path d="M334 438l0 38 9-9 7 15 7-3-7-15 13-1z" fill="#1A1A1A"/>
+      <rect x="197" y="77" width="47" height="47" rx="2" fill="#14A38B"/><svg x="206" y="86" width="29" height="29" color="#fff"><use href="#g-compress"/></svg>
+      <rect x="255" y="122" width="32" height="32" rx="2" fill="#5B5BD6"/><svg x="261" y="128" width="20" height="20" color="#fff"><use href="#g-merge"/></svg>
+      <rect x="59" y="264" width="47" height="47" rx="2" fill="#C2459A"/><svg x="68" y="273" width="29" height="29" color="#fff"><use href="#g-person"/></svg>
+      <rect x="472" y="395" width="32" height="32" rx="2" fill="#F5A524"/><svg x="478" y="401" width="20" height="20" color="#fff"><use href="#g-image"/></svg>
+      <rect x="519" y="429" width="47" height="47" rx="2" fill="#E4572E"/><text x="542.5" y="461" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="22" font-weight="800" fill="#fff">KB</text>
+      <rect x="464" y="483" width="32" height="32" rx="2" fill="#B8323A"/><svg x="470" y="489" width="20" height="20" color="#fff"><use href="#g-scissors"/></svg>
+      <circle cx="78" cy="94" r="5.5" fill="none" stroke="#E4572E" stroke-width="3"/>
+      <path d="M48 126v14M41 133h14M555 41v14M548 48h14" stroke="#F5A524" stroke-width="3"/>
+      <path d="M580 79l12 12M592 79l-12 12" stroke="#14A38B" stroke-width="3"/>
+      <path d="M232 508l12 12M244 508l-12 12" stroke="#E4572E" stroke-width="3"/>
+      <circle cx="197" cy="534" r="5.5" fill="none" stroke="#14A38B" stroke-width="3"/>
     </svg>
-    <div>
-      <h2 id="h-priv">Berkas diproses di <span class="nw">HP-mu</span>. Jalan ke server kami buntu.</h2>
-      <p class="lede">Mesin kompres dimuat ke browser, lalu bekerja di perangkatmu. Server kami hanya mengirim halaman dan mesinnya, tidak menerima berkas.</p>
-      <ul class="check">
-        <li><svg aria-hidden="true"><use href="#i-info"/></svg><span>Buka tab Network di DevTools, lalu kompres berkas. Tidak ada permintaan yang membawa isi berkasmu.</span></li>
-        <li><svg aria-hidden="true"><use href="#i-info"/></svg><span>Setelah halaman termuat, nyalakan mode pesawat. Kompres foto tetap jalan.</span></li>
-        <li><svg aria-hidden="true"><use href="#i-info"/></svg><span>Selesai? Tekan Hapus dari memori, berkas dilepas dari halaman ini.</span></li>
-      </ul>
-      <p class="honest">Halaman ini menampilkan iklan dari jaringan iklan, jadi kami tidak memakai kata "100% aman". Yang kami pegang: berkas tidak dikirim ke server Dokurapi, dan halaman alat tidak memakai perekam layar atau perekam sesi.</p>
+  </div>
+</section>
+
+<section class="tools" id="alat" data-sec="tools">
+  <h2 data-en="Most Popular Tools">Alat PDF Paling Populer</h2>
+  <p class="sub" data-en="50 free tools to compress, convert, and tidy up files. Try one now!">50 alat gratis untuk kompres, ubah, dan rapikan berkas. Coba sekarang!</p>
+  <div class="tool-grid">
+    <a class="tool-card" href="#kompres-pdf">
+      <span class="ic32" style="background:#E4572E"><svg><use href="#g-compress"/></svg></span>
+      <span class="t" data-en="Compress PDF">Kompres PDF</span>
+      <span class="d" data-en="Shrink a PDF to fit any upload limit">Kecilkan PDF sesuai batas ukuran upload</span>
+      <svg class="chev"><use href="#g-chev"/></svg>
+    </a>
+    <a class="tool-card" href="#gabung-pdf">
+      <span class="ic32" style="background:#5B5BD6"><svg><use href="#g-merge"/></svg></span>
+      <span class="t" data-en="Merge PDF">Gabung PDF</span>
+      <span class="d" data-en="Combine diplomas, transcripts, and ID cards into one PDF">Satukan ijazah, transkrip, dan KTP jadi satu berkas PDF</span>
+      <svg class="chev"><use href="#g-chev"/></svg>
+    </a>
+    <a class="tool-card" href="#foto-ke-pdf">
+      <span class="ic32" style="background:#F5A524"><svg><use href="#g-image"/></svg></span>
+      <span class="t" data-en="Photo to PDF">Foto ke PDF</span>
+      <span class="d" data-en="Turn JPG, PNG, or phone scans into a PDF document">Ubah foto JPG, PNG, atau hasil scan HP menjadi dokumen PDF</span>
+      <svg class="chev"><use href="#g-chev"/></svg>
+    </a>
+    <a class="tool-card" href="#pas-foto">
+      <span class="ic32" style="background:#C2459A"><svg><use href="#g-person"/></svg></span>
+      <span class="t" data-en="ID Photo">Pas Foto</span>
+      <span class="d" data-en="Switch your ID photo background to red or blue as required">Ganti latar pas foto jadi merah atau biru sesuai syarat</span>
+      <svg class="chev"><use href="#g-chev"/></svg>
+    </a>
+    <a class="tool-card" href="#kompres-foto">
+      <span class="ic32" style="background:#14A38B"><svg><use href="#g-image"/></svg></span>
+      <span class="t" data-en="Compress Photo">Kompres Foto</span>
+      <span class="d" data-en="Shrink a JPG to 100 KB or 200 KB without visible blur">Kecilkan foto JPG ke 100 KB atau 200 KB tanpa terlihat buram</span>
+      <svg class="chev"><use href="#g-chev"/></svg>
+    </a>
+    <a class="tool-card" href="#pdf-ke-jpg">
+      <span class="ic32" style="background:#2F4B7C"><svg><use href="#g-file"/></svg></span>
+      <span class="t" data-en="PDF to JPG">PDF ke JPG</span>
+      <span class="d" data-en="Turn every PDF page into a sharp JPG image">Ubah tiap halaman PDF menjadi gambar JPG yang tajam</span>
+      <svg class="chev"><use href="#g-chev"/></svg>
+    </a>
+  </div>
+  <div class="center"><a class="btn btn-primary" href="#semua-alat" data-en="See All Tools">Lihat Semua Alat</a></div>
+</section>
+
+<section class="intro" id="tentang" data-sec="intro">
+  <h2 data-en="File Chores Made Simple">Urusan Berkas Jadi Sederhana</h2>
+  <p data-en="Dokurapi has one goal: application files that pass every upload rule. Compress, convert, and tidy everything in one place.">Dokurapi dibuat untuk satu tujuan: berkas pendaftaran yang lolos syarat upload. Kompres, ubah, dan rapikan semuanya di satu tempat.</p>
+</section>
+
+<div class="features">
+  <section class="feat" data-sec="feat1" id="kompres-pdf">
+    <div class="txt">
+      <h3 data-en="Compress to the Upload Limit">Kompres Sesuai Batas Upload</h3>
+      <p data-en="Pick a target of 100 KB, 200 KB, 500 KB, or 1 MB and Dokurapi finds the best quality that still fits. Made for civil service and scholarship portals with strict limits on file size.">Pilih target 100 KB, 200 KB, 500 KB, atau 1 MB, lalu Dokurapi mencari kualitas terbaik yang masih muat. Cocok untuk portal pendaftaran CPNS dan beasiswa yang membatasi ukuran berkas.</p>
+      <a class="more" href="#alat"><span data-en="Compress a PDF now">Kompres PDF sekarang</span><svg><use href="#g-arrow"/></svg></a>
+    </div>
+    <div class="ill">
+      <svg viewBox="0 0 573 497" role="img" aria-label="Ilustrasi pilihan target ukuran 100 KB sampai 1 MB">
+        <rect x="-112" y="-112" width="224" height="224" rx="20" fill="#FFF2EC" transform="translate(422 158) rotate(66.7)"/>
+        <rect x="-104" y="-104" width="208" height="208" rx="18" fill="#FFE7DD" transform="translate(357 174) rotate(50)"/>
+        <rect x="-81" y="-81" width="162" height="162" rx="16" fill="#F8F8F8" transform="translate(97 385) rotate(-16)"/>
+        <rect x="63.5" y="100.5" width="442" height="309" fill="#fff" stroke="#E2E2E2"/>
+        <svg x="70" y="108" width="15" height="15"><use href="#g-mark"/></svg>
+        <text x="90" y="114" font-family="Source Sans 3, sans-serif" font-size="8" font-weight="700" fill="#1A1A1A">Kompres</text>
+        <text x="90" y="123" font-family="Source Sans 3, sans-serif" font-size="6.5" fill="#888">berkas-cpns.pdf</text>
+        <rect x="64" y="132" width="441" height="1" fill="#EDEDED"/>
+        <g font-family="Source Sans 3, sans-serif" font-size="7.5" font-weight="600">
+          <rect x="70.5" y="139.5" width="34" height="17" rx="2" fill="#fff" stroke="#DADADA"/><text x="78" y="151" fill="#555">100 KB</text>
+          <rect x="108.5" y="139.5" width="34" height="17" rx="2" fill="#FFEDE6" stroke="#E4572E"/><text x="116" y="151" fill="#C4411D">200 KB</text>
+          <rect x="146.5" y="139.5" width="34" height="17" rx="2" fill="#fff" stroke="#DADADA"/><text x="154" y="151" fill="#555">500 KB</text>
+          <rect x="184.5" y="139.5" width="28" height="17" rx="2" fill="#fff" stroke="#DADADA"/><text x="191" y="151" fill="#555">1 MB</text>
+        </g>
+        <g fill="none" stroke="#7A7A7A" stroke-width="1.2" stroke-linecap="round"><path d="M444 144a5 5 0 1 0 1.5-3.6M444 140v3h3"/><path d="M471 144a5 5 0 1 1-1.5-3.6M471 140v3h-3"/><circle cx="491" cy="147" r="4.5"/><path d="M494.5 150.5l3 3"/></g>
+        <rect x="64" y="163" width="441" height="246" fill="#F2F2F2"/>
+        <rect x="107" y="183" width="346" height="225" fill="#fff"/>
+        <g fill="#E8E8E8">
+          <rect x="137" y="214" width="223" height="5" rx="2.5"/><rect x="137" y="230" width="223" height="5" rx="2.5"/><rect x="137" y="246" width="178" height="5" rx="2.5"/>
+          <rect x="137" y="293" width="287" height="5" rx="2.5"/><rect x="137" y="305" width="275" height="5" rx="2.5"/><rect x="137" y="317" width="281" height="5" rx="2.5"/><rect x="137" y="329" width="281" height="5" rx="2.5"/>
+          <rect x="137" y="342" width="263" height="5" rx="2.5"/><rect x="137" y="355" width="263" height="5" rx="2.5"/><rect x="137" y="368" width="263" height="5" rx="2.5"/><rect x="137" y="381" width="263" height="5" rx="2.5"/>
+        </g>
+        <circle cx="399" cy="243" r="29" fill="#FFE3D8"/>
+        <circle cx="399" cy="243" r="22" fill="none" stroke="#F8C7B6" stroke-width="5"/>
+        <path d="M399 221a22 22 0 1 1-20.6 14.3" fill="none" stroke="#E4572E" stroke-width="5" stroke-linecap="round"/>
+        <text x="399" y="247" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="11" font-weight="800" fill="#C4411D">-89%</text>
+        <rect x="367.5" y="213.5" width="64" height="60" fill="none" stroke="#E4572E"/>
+        <g fill="#fff" stroke="#E4572E"><rect x="365.5" y="211.5" width="4" height="4"/><rect x="397.5" y="211.5" width="4" height="4"/><rect x="429.5" y="211.5" width="4" height="4"/><rect x="365.5" y="241.5" width="4" height="4"/><rect x="429.5" y="241.5" width="4" height="4"/><rect x="365.5" y="271.5" width="4" height="4"/><rect x="397.5" y="271.5" width="4" height="4"/><rect x="429.5" y="271.5" width="4" height="4"/></g>
+        <rect x="139.5" y="258.5" width="40" height="26" fill="none" stroke="#E4572E"/>
+        <text x="143" y="275" font-family="Source Sans 3, sans-serif" font-size="9.5" font-weight="600" fill="#1A1A1A">1,8 MB</text>
+        <g fill="#fff" stroke="#E4572E"><rect x="137.5" y="256.5" width="4" height="4"/><rect x="157.5" y="256.5" width="4" height="4"/><rect x="177.5" y="256.5" width="4" height="4"/><rect x="137.5" y="282.5" width="4" height="4"/><rect x="157.5" y="282.5" width="4" height="4"/><rect x="177.5" y="282.5" width="4" height="4"/></g>
+        <rect x="223.5" y="340.5" width="93" height="37" fill="#fff" stroke="#E4572E"/>
+        <text x="231" y="355" font-family="Source Sans 3, sans-serif" font-size="8.5" font-weight="700" fill="#C4411D">Hasil 196 KB</text>
+        <rect x="231" y="361" width="78" height="6" rx="3" fill="#FBD9CC"/><rect x="231" y="361" width="60" height="6" rx="3" fill="#E4572E"/>
+        <g fill="#fff" stroke="#E4572E"><rect x="221.5" y="338.5" width="4" height="4"/><rect x="267.5" y="338.5" width="4" height="4"/><rect x="314.5" y="338.5" width="4" height="4"/><rect x="221.5" y="356.5" width="4" height="4"/><rect x="314.5" y="356.5" width="4" height="4"/><rect x="221.5" y="375.5" width="4" height="4"/><rect x="267.5" y="375.5" width="4" height="4"/><rect x="314.5" y="375.5" width="4" height="4"/></g>
+        <path d="M137 369v14l3.5-3.5 2.6 5.6 2.4-1.1-2.6-5.6h5z" fill="#1A1A1A"/>
+        <rect x="447" y="346" width="29" height="29" rx="2" fill="#5B5BD6"/><svg x="452" y="351" width="19" height="19" color="#fff"><use href="#g-pages"/></svg>
+        <rect x="486" y="368" width="38" height="38" rx="2" fill="#E4572E"/><svg x="493" y="375" width="24" height="24" color="#fff"><use href="#g-compress"/></svg>
+        <rect x="437" y="388" width="38" height="38" rx="2" fill="#14A38B"/><svg x="444" y="395" width="24" height="24" color="#fff"><use href="#g-file"/></svg>
+        <circle cx="228" cy="85" r="3.5" fill="none" stroke="#F5A524" stroke-width="2"/>
+        <path d="M36 287l8 8M44 287l-8 8" stroke="#5B5BD6" stroke-width="2"/>
+        <circle cx="520" cy="351" r="3.5" fill="none" stroke="#F5A524" stroke-width="2"/>
+      </svg>
+    </div>
+  </section>
+
+  <section class="feat rev" data-sec="feat2" id="pas-foto">
+    <div class="txt">
+      <h3 data-en="Red and Blue ID Photos">Pas Foto Latar Merah &amp; Biru</h3>
+      <p data-en="Upload a photo from your phone, choose a red or blue background, then crop to 3x4 or 4x6. Ready for civil service and job applications.">Unggah foto dari HP, pilih latar merah atau biru, lalu potong ke ukuran 3x4 atau 4x6. Hasilnya siap untuk berkas CPNS dan lamaran.</p>
+      <a class="more" href="#alat"><span data-en="Make an ID photo">Buat pas foto</span><svg><use href="#g-arrow"/></svg></a>
+    </div>
+    <div class="ill">
+      <svg viewBox="0 0 573 497" role="img" aria-label="Ilustrasi editor pas foto dengan pilihan latar merah dan biru">
+        <rect x="-107" y="-107" width="214" height="214" rx="20" fill="#FFF2EC" transform="translate(143 337) rotate(-22)"/>
+        <rect x="-94" y="-94" width="188" height="188" rx="18" fill="#FFE7DD" transform="translate(244 339) rotate(-33)"/>
+        <rect x="-80" y="-80" width="160" height="160" rx="18" fill="#F8F8F8" transform="translate(458 138) rotate(-16.5)"/>
+        <rect x="70.5" y="98.5" width="442" height="309" fill="#fff" stroke="#E2E2E2"/>
+        <svg x="77" y="105" width="15" height="15"><use href="#g-mark"/></svg>
+        <text x="97" y="111" font-family="Source Sans 3, sans-serif" font-size="8" font-weight="700" fill="#1A1A1A">Pas Foto</text>
+        <text x="97" y="120" font-family="Source Sans 3, sans-serif" font-size="6.5" fill="#888">foto-andi.jpg</text>
+        <rect x="71" y="128" width="441" height="1" fill="#EDEDED"/>
+        <rect x="70.5" y="128.5" width="282" height="30" fill="#fff" stroke="#E2E2E2"/>
+        <g fill="none" stroke="#555" stroke-width="1.2"><path d="M84 138l5 11 1.5-4.5 4.5-1.5z" fill="#333" stroke="none"/><rect x="102" y="138" width="10" height="10" rx="1"/><path d="M268 143a5 5 0 1 0 1.5-3.6M268 139v3h3"/><path d="M294 143a5 5 0 1 1-1.5-3.6M294 139v3h-3"/><circle cx="317" cy="142" r="4.5"/><path d="M320.5 145.5l3 3"/></g>
+        <rect x="71" y="159" width="281" height="248" fill="#F2F2F2"/>
+        <rect x="77" y="165" width="258" height="240" fill="#fff"/>
+        <g fill="#E8E8E8">
+          <rect x="97" y="188" width="164" height="4" rx="2"/><rect x="97" y="200" width="180" height="4" rx="2"/><rect x="97" y="212" width="105" height="4" rx="2"/>
+          <rect x="97" y="244" width="212" height="4" rx="2"/><rect x="97" y="256" width="212" height="4" rx="2"/><rect x="97" y="268" width="212" height="4" rx="2"/><rect x="97" y="280" width="212" height="4" rx="2"/><rect x="97" y="292" width="212" height="4" rx="2"/><rect x="97" y="304" width="212" height="4" rx="2"/>
+          <rect x="97" y="333" width="88" height="4" rx="2"/><rect x="97" y="343" width="66" height="4" rx="2"/>
+        </g>
+        <rect x="352.5" y="128.5" width="160" height="279" fill="#fff" stroke="#E2E2E2"/>
+        <text x="362" y="145" font-family="Source Sans 3, sans-serif" font-size="7.5" font-weight="700" fill="#1A1A1A">Pilih latar</text>
+        <rect x="362" y="150" width="140" height="32" fill="#F6F6F6"/><rect x="362" y="150" width="3" height="32" fill="#E4572E"/>
+        <rect x="376" y="157" width="18" height="18" rx="2" fill="#D9412B"/><text x="402" y="169" font-family="Source Sans 3, sans-serif" font-size="8" fill="#333">Merah</text>
+        <rect x="362" y="186" width="140" height="32" fill="#F6F6F6"/><rect x="362" y="186" width="3" height="32" fill="#D8D8D8"/>
+        <rect x="376" y="193" width="18" height="18" rx="2" fill="#2B5FB8"/><text x="402" y="205" font-family="Source Sans 3, sans-serif" font-size="8" fill="#333">Biru</text>
+        <g fill="#888"><circle cx="494" cy="166" r="1.6"/><circle cx="494" cy="202" r="1.6"/></g>
+        <rect x="357" y="380" width="149" height="21" rx="2" fill="#C4411D"/>
+        <text x="431.5" y="393.5" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="7.5" font-weight="700" fill="#fff">Unduh Pas Foto</text>
+        <rect x="265.5" y="263.5" width="120" height="50" fill="#fff" stroke="#E4572E"/>
+        <g><rect x="276" y="268" width="30" height="40" rx="1.5" fill="#D9412B"/><circle cx="291" cy="283" r="6" fill="#FCE3D6"/><path d="M280 308c1.5-8 6-11 11-11s9.5 3 11 11z" fill="#3A3A3A"/></g>
+        <g><rect x="311" y="268" width="30" height="40" rx="1.5" fill="#2B5FB8"/><circle cx="326" cy="283" r="6" fill="#FCE3D6"/><path d="M315 308c1.5-8 6-11 11-11s9.5 3 11 11z" fill="#3A3A3A"/></g>
+        <g><rect x="346" y="276" width="24" height="32" rx="1.5" fill="#D9412B"/><circle cx="358" cy="288" r="4.8" fill="#FCE3D6"/><path d="M349 308c1.2-6.5 5-9 9-9s7.8 2.5 9 9z" fill="#3A3A3A"/></g>
+        <g fill="#fff" stroke="#E4572E"><rect x="263.5" y="261.5" width="4" height="4"/><rect x="263.5" y="311.5" width="4" height="4"/><rect x="383.5" y="311.5" width="4" height="4"/></g>
+        <circle cx="385" cy="263" r="6" fill="#E4572E"/><path d="M382.5 260.5l5 5M387.5 260.5l-5 5" stroke="#fff" stroke-width="1.4"/>
+        <rect x="224.5" y="325.5" width="67" height="35" fill="#FFF3D6" stroke="#F0C060" stroke-dasharray="3 2"/>
+        <text x="258" y="346" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="8" font-weight="600" fill="#6B5200">3x4 cm</text>
+        <rect x="82.5" y="370.5" width="47" height="28" fill="#FFF3D6" stroke="#F0C060" stroke-dasharray="3 2"/>
+        <text x="106" y="388" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="7" font-weight="600" fill="#6B5200">4x6 cm</text>
+        <rect x="489" y="303" width="36" height="36" rx="2" fill="#C2459A"/><svg x="496" y="310" width="22" height="22" color="#fff"><use href="#g-person"/></svg>
+        <circle cx="52" cy="84" r="3" fill="none" stroke="#F5A524" stroke-width="2"/>
+        <path d="M34 96l8 8M42 96l-8 8M490 428l8 8M498 428l-8 8" stroke="#E4572E" stroke-width="2"/>
+        <circle cx="543" cy="168" r="3" fill="none" stroke="#F5A524" stroke-width="2"/>
+      </svg>
+    </div>
+  </section>
+
+  <section class="feat" data-sec="feat3" id="gabung-pdf">
+    <div class="txt">
+      <h3 data-en="Bundle Every Required File">Satukan Semua Berkas Syarat</h3>
+      <p data-en="ID card photo, diploma, and transcript all over the place? Convert, merge, reorder the pages, then compress. All done in one place.">Foto KTP, ijazah, dan transkrip berserakan? Ubah foto ke PDF, gabungkan, urutkan halamannya, lalu kompres. Semua beres di satu tempat.</p>
+      <a class="more" href="#semua-alat"><span data-en="View all PDF tools">Lihat semua alat PDF</span><svg><use href="#g-arrow"/></svg></a>
+    </div>
+    <div class="ill">
+      <svg viewBox="0 0 573 497" role="img" aria-label="Ilustrasi foto KTP dan ijazah digabung menjadi satu PDF">
+        <rect x="-118" y="-118" width="236" height="236" rx="20" fill="#FFF2EC" transform="translate(188 167) rotate(-23)"/>
+        <rect x="-80" y="-80" width="160" height="160" rx="18" fill="#F8F8F8" transform="translate(371 110) rotate(-15)"/><rect x="-94" y="-94" width="188" height="188" rx="18" fill="#FFE7DD" transform="translate(171 320) rotate(-38)"/>
+        <rect x="160.5" y="90.5" width="287" height="363" fill="#fff" stroke="#E0E0E0"/>
+        <g fill="#E8E8E8">
+          <rect x="185" y="116" width="205" height="5" rx="2.5"/><rect x="185" y="128" width="225" height="5" rx="2.5"/><rect x="185" y="140" width="170" height="5" rx="2.5"/>
+          <rect x="185" y="178" width="205" height="5" rx="2.5"/><rect x="185" y="190" width="225" height="5" rx="2.5"/><rect x="185" y="202" width="225" height="5" rx="2.5"/><rect x="185" y="214" width="225" height="5" rx="2.5"/><rect x="185" y="226" width="225" height="5" rx="2.5"/><rect x="185" y="238" width="225" height="5" rx="2.5"/><rect x="185" y="250" width="225" height="5" rx="2.5"/>
+          <rect x="260" y="282" width="150" height="5" rx="2.5"/><rect x="260" y="294" width="120" height="5" rx="2.5"/><rect x="260" y="306" width="150" height="5" rx="2.5"/><rect x="260" y="318" width="150" height="5" rx="2.5"/><rect x="260" y="330" width="110" height="5" rx="2.5"/>
+          <rect x="185" y="362" width="240" height="5" rx="2.5"/><rect x="185" y="374" width="230" height="5" rx="2.5"/><rect x="185" y="386" width="190" height="5" rx="2.5"/>
+        </g>
+        <rect x="185" y="275" width="62" height="70" rx="2" fill="#F0F0F0"/>
+        <circle cx="216" cy="300" r="10" fill="#E2E2E2"/><path d="M196 345c3-14 11-19 20-19s17 5 20 19z" fill="#E2E2E2"/>
+        <rect x="322" y="140" width="221" height="82" fill="#F1F1F1"/>
+        <path d="M340.5 155.5h30l12 12v40h-42z" fill="#fff" stroke="#E0E0E0"/>
+        <rect x="335" y="183" width="32" height="15" rx="2" fill="#F5A524"/><text x="351" y="194" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="9" font-weight="800" fill="#fff">JPG</text>
+        <path d="M395 187h28M417 181l6 6-6 6" fill="none" stroke="#8A8A8A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M450.5 110.5h42l16 16v58h-58z" fill="#fff" stroke="#E0E0E0"/>
+        <rect x="440" y="150" width="48" height="25" rx="2" fill="#E4572E"/><text x="464" y="168" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="15" font-weight="800" fill="#fff">PDF</text>
+        <path d="M430.5 198.5h34l12 12v42h-46z" fill="#fff" stroke="#E0E0E0"/>
+        <rect x="426" y="223" width="36" height="17" rx="2" fill="#14A38B"/><text x="444" y="235.5" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="10" font-weight="800" fill="#fff">KTP</text>
+        <path d="M494.5 198.5h28l10 10v32h-38z" fill="#fff" stroke="#E0E0E0"/>
+        <rect x="497" y="213" width="26" height="13" rx="2" fill="#5B5BD6"/><text x="510" y="223" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="8" font-weight="800" fill="#fff">PNG</text>
+        <svg x="113" y="313" width="40" height="40" color="#5B5BD6"><use href="#g-scissors"/></svg>
+        <path d="M168 80c-14 2-26 10-32 22M150 168c-14 20-14 48-6 72" fill="none" stroke="#C9CDF5" stroke-width="1.6" stroke-dasharray="5 5"/>
+        <path d="M186 73l14 0M194 67l6 6-6 6" fill="none" stroke="#9FA6EE" stroke-width="1.6" stroke-linecap="round"/>
+        <rect x="136" y="377" width="52" height="52" rx="2" fill="#C2459A"/><svg x="148" y="389" width="28" height="28" color="#fff"><use href="#g-lock"/></svg>
+        <rect x="199" y="410" width="39" height="39" rx="2" fill="#F5A524"/><svg x="207" y="418" width="23" height="23" color="#fff"><use href="#g-merge"/></svg>
+        <rect x="148" y="448" width="40" height="40" rx="2" fill="#E4572E"/><svg x="156" y="456" width="24" height="24" color="#fff"><use href="#g-compress"/></svg>
+        <path d="M427 433l7 7M434 433l-7 7M412 463l7 7M419 463l-7 7" stroke="#F5A524" stroke-width="2"/>
+        <path d="M462 446c3 12-5 22-16 22M446 468l5-5M446 468l6 3" fill="none" stroke="#F5A524" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </div>
+  </section>
+
+  <section class="feat rev" data-sec="feat4" id="pdf-ke-jpg">
+    <div class="txt">
+      <h3 data-en="Processed Right in Your Browser">Diproses di Browser, Tanpa Unggah</h3>
+      <p data-en="Your files never go to any server. Everything runs right on your phone or laptop, so your ID card and diploma data stay safely with you.">Berkasmu tidak dikirim ke server mana pun. Semua proses berjalan langsung di HP atau laptopmu, jadi data KTP dan ijazah tetap aman di tanganmu.</p>
+      <a class="more" href="#alat"><span data-en="Try it now">Coba sekarang</span><svg><use href="#g-arrow"/></svg></a>
+    </div>
+    <div class="ill">
+      <svg viewBox="0 0 573 497" role="img" aria-label="Ilustrasi daftar berkas yang tersimpan di perangkat">
+        <rect x="-69" y="-104" width="138" height="208" rx="18" fill="#FFF2EC" transform="translate(94 164) rotate(10.4)"/>
+        <rect x="-93" y="-93" width="186" height="186" rx="18" fill="#F8F8F8" transform="translate(234 161) rotate(43)"/><rect x="-90" y="-90" width="180" height="180" rx="18" fill="#FFE7DD" transform="translate(397 340) rotate(-35)"/>
+        <rect x="63.5" y="100.5" width="442" height="308" fill="#fff" stroke="#E2E2E2"/>
+        <svg x="70" y="106" width="14" height="14"><use href="#g-mark"/></svg>
+        <text x="88" y="117" font-family="Source Sans 3, sans-serif" font-size="8" font-weight="700" fill="#1A1A1A">Dokurapi <tspan font-weight="400" fill="#888">Berkas</tspan></text>
+        <rect x="190.5" y="104.5" width="170" height="18" rx="2" fill="#F2F2F2" stroke="#E2E2E2"/>
+        <circle cx="200" cy="113" r="3.5" fill="none" stroke="#777"/><text x="208" y="116" font-family="Source Sans 3, sans-serif" font-size="6.5" fill="#999">Cari berkas</text>
+        <circle cx="490" cy="113" r="7" fill="#E4572E"/><text x="490" y="116" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="7" font-weight="700" fill="#fff">A</text>
+        <rect x="64" y="129" width="441" height="1" fill="#EDEDED"/>
+        <rect x="64" y="130" width="119" height="278" fill="#FAFAFA"/><rect x="183" y="130" width="1" height="278" fill="#EDEDED"/>
+        <rect x="92" y="140" width="63" height="18" rx="2" fill="#C4411D"/><text x="123.5" y="152" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="7" font-weight="700" fill="#fff">+ Tambah</text>
+        <rect x="64" y="170" width="119" height="25" fill="#F1F1F1"/><rect x="64" y="170" width="2" height="25" fill="#E4572E"/>
+        <g font-family="Source Sans 3, sans-serif" font-size="6.5" fill="#333"><text x="74" y="185">Beranda</text><text x="74" y="208">Alat</text><text x="74" y="233">Semua Berkas</text></g>
+        <rect x="64" y="195" width="119" height="1" fill="#EDEDED"/><rect x="64" y="220" width="119" height="1" fill="#EDEDED"/>
+        <rect x="193" y="137" width="300" height="60" fill="#F5F5F5"/>
+        <text x="203" y="151" font-family="Source Sans 3, sans-serif" font-size="7.5" font-weight="700" fill="#1A1A1A">Alat <tspan font-weight="400" font-size="6" fill="#C4411D">Lihat semua</tspan></text>
+        <rect x="203" y="160" width="135" height="31" fill="#fff"/><rect x="350" y="160" width="135" height="31" fill="#fff"/>
+        <rect x="211" y="169" width="13" height="13" rx="2" fill="#E4572E"/><text x="231" y="178" font-family="Source Sans 3, sans-serif" font-size="6.5" font-weight="600" fill="#333">Kompres PDF</text>
+        <rect x="358" y="169" width="13" height="13" rx="2" fill="#F5A524"/><text x="378" y="178" font-family="Source Sans 3, sans-serif" font-size="6.5" font-weight="600" fill="#333">Foto ke PDF</text>
+        <text x="203" y="234" font-family="Source Sans 3, sans-serif" font-size="7.5" font-weight="700" fill="#1A1A1A">Berkas terbaru <tspan font-weight="400" font-size="6" fill="#C4411D">Lihat semua</tspan></text>
+        <rect x="193" y="245" width="312" height="1" fill="#EDEDED"/>
+        <g font-family="Source Sans 3, sans-serif" font-size="6.5" fill="#333">
+          <rect x="198" y="276" width="362" height="38" fill="#FAFAFA"/>
+          <path d="M213.5 280.5h14l5 5v20h-19z" fill="#fff" stroke="#DDD"/><rect x="211" y="291" width="16" height="7" rx="1" fill="#E4572E"/>
+          <text x="250" y="300">ijazah-sma.pdf</text><text x="440" y="300" fill="#888">476 KB</text><text x="480" y="300" fill="#888">Di HP</text>
+          <rect x="156.5" y="325.5" width="371" height="29" fill="#FFF3EE" stroke="#E2E2E2"/>
+          <rect x="167" y="333" width="9" height="9" rx="1.5" fill="#E4572E"/><path d="M169 337.5l2 2 3.5-3.5" stroke="#fff" stroke-width="1.2" fill="none"/>
+          <rect x="185" y="333" width="16" height="8" rx="1" fill="#1A1A1A"/><text x="193" y="339.5" text-anchor="middle" font-size="5" font-weight="700" fill="#fff">JPG</text>
+          <text x="214" y="340">ktp-andi.jpg</text><text x="398" y="340" fill="#888">182 KB</text><text x="440" y="340" fill="#888">Di HP</text>
+          <rect x="198" y="362" width="362" height="38" fill="#FAFAFA"/>
+          <path d="M213.5 366.5h14l5 5v20h-19z" fill="#fff" stroke="#DDD"/><rect x="211" y="377" width="16" height="7" rx="1" fill="#F5A524"/>
+          <text x="250" y="386">transkrip-nilai.pdf</text><text x="440" y="386" fill="#888">912 KB</text><text x="480" y="386" fill="#888">Di HP</text>
+        </g>
+        <rect x="52" y="343" width="37" height="37" rx="2" fill="#14A38B"/><svg x="60" y="351" width="21" height="21" color="#fff"><use href="#g-check"/></svg>
+        <circle cx="66" cy="411" r="23" fill="#E4572E"/><svg x="53" y="398" width="26" height="26" color="#fff"><use href="#g-rotate"/></svg>
+        <rect x="98" y="383" width="28" height="28" rx="2" fill="#C2459A"/><svg x="104" y="389" width="16" height="16" color="#fff"><use href="#g-lock"/></svg>
+        <path d="M66 84a6 6 0 0 1 11-3 5 5 0 0 1 9 3 4 4 0 0 1 0 8H67a4.5 4.5 0 0 1-1-8z" fill="none" stroke="#E4572E" stroke-width="1.6"/>
+        <path d="M518 262a5 5 0 0 1 9-2.5 4 4 0 0 1 7 2.5 3.5 3.5 0 0 1 0 7h-15a3.8 3.8 0 0 1-1-7z" fill="none" stroke="#F5A524" stroke-width="1.6"/>
+        <path d="M21 91v12M15 97h12M540 239v12M534 245h12" stroke="#F3B9A6" stroke-width="1.6"/>
+      </svg>
+    </div>
+  </section>
+</div>
+
+<section class="app" data-sec="app" id="panduan">
+  <div class="app-txt">
+    <h2 data-en="Works on Your Phone">Pakai di HP Juga</h2>
+    <p data-en="Open Dokurapi in your phone browser to snap documents, turn them into PDFs, and compress them before uploading, wherever you are.">Buka Dokurapi dari browser HP untuk memotret dokumen, mengubahnya jadi PDF, lalu mengompres sebelum upload, di mana pun kamu berada.</p>
+    <div class="badges">
+      <a class="badge" href="#alat"><svg><use href="#g-globe"/></svg><span><small data-en="OPEN IN">BUKA DI</small><b data-en="Phone Browser">Browser HP</b></span></a>
+      <a class="badge" href="#alat"><svg><use href="#g-download"/></svg><span><small data-en="INSTALL AS">PASANG SEBAGAI</small><b data-en="Web App">Aplikasi Web</b></span></a>
+    </div>
+  </div>
+  <div class="app-ill">
+    <svg viewBox="0 0 560 549" role="img" aria-label="Ilustrasi daftar berkas Dokurapi di laptop dan HP">
+      <rect x="-85" y="-85" width="170" height="170" rx="20" fill="#FDFAF8" transform="translate(443 140) rotate(21)"/>
+      <rect x="31.5" y="110.5" width="485" height="342" fill="#fff" stroke="#EADBD4"/>
+      <svg x="38" y="119" width="16" height="16"><use href="#g-mark"/></svg>
+      <text x="58" y="131" font-family="Source Sans 3, sans-serif" font-size="9" font-weight="700" fill="#1A1A1A">Dokurapi <tspan font-weight="400" fill="#888">Berkas</tspan></text>
+      <rect x="170.5" y="118.5" width="187" height="19" rx="2" fill="#F2F2F2" stroke="#E2E2E2"/><circle cx="181" cy="128" r="4" fill="none" stroke="#777"/>
+      <circle cx="500" cy="127" r="9" fill="#E4572E"/><text x="500" y="131" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="9" font-weight="700" fill="#fff">A</text>
+      <rect x="32" y="142" width="484" height="1" fill="#EDEDED"/>
+      <rect x="32" y="143" width="132" height="309" fill="#FAFAFA"/><rect x="164" y="143" width="1" height="309" fill="#EDEDED"/>
+      <rect x="62" y="156" width="70" height="20" rx="2" fill="#C4411D"/><text x="97" y="169.5" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="7.5" font-weight="700" fill="#fff">+ Tambah</text>
+      <g font-family="Source Sans 3, sans-serif" font-size="7.5" fill="#333"><text x="43" y="205">Beranda</text><text x="43" y="233">Alat</text><text x="43" y="262">Semua Berkas</text></g>
+      <rect x="32" y="216" width="132" height="1" fill="#EDEDED"/><rect x="32" y="245" width="132" height="27" fill="#F0F0F0"/><rect x="32" y="245" width="2" height="27" fill="#E4572E"/>
+      <text x="185" y="167" font-family="Source Sans 3, sans-serif" font-size="9" font-weight="700" fill="#1A1A1A">Semua berkas</text>
+      <g font-family="Source Sans 3, sans-serif" font-size="8" fill="#333">
+        <g><path d="M201.5 196.5h12l4 4v17h-16z" fill="#fff" stroke="#DDD"/><rect x="199" y="205" width="15" height="6" rx="1" fill="#E4572E"/><text x="232" y="209">ijazah-sma.pdf</text></g>
+        <g><path d="M201.5 233.5h12l4 4v17h-16z" fill="#fff" stroke="#DDD"/><rect x="199" y="242" width="15" height="6" rx="1" fill="#E4572E"/><text x="232" y="246">transkrip-nilai.pdf</text></g>
+        <g><path d="M201.5 271.5h12l4 4v17h-16z" fill="#fff" stroke="#DDD"/><rect x="199" y="280" width="15" height="6" rx="1" fill="#F5A524"/><text x="232" y="284">ktp-andi.jpg</text></g>
+        <g><path d="M201.5 311.5h12l4 4v17h-16z" fill="#fff" stroke="#DDD"/><rect x="199" y="320" width="15" height="6" rx="1" fill="#E4572E"/><text x="232" y="324">surat-lamaran.pdf</text></g>
+        <g><path d="M201.5 351.5h12l4 4v17h-16z" fill="#fff" stroke="#DDD"/><rect x="199" y="360" width="15" height="6" rx="1" fill="#E4572E"/><text x="232" y="364">sertifikat-toefl.pdf</text></g>
+        <g><path d="M201.5 391.5h12l4 4v17h-16z" fill="#fff" stroke="#DDD"/><rect x="199" y="400" width="15" height="6" rx="1" fill="#F5A524"/><text x="232" y="404">pas-foto-merah.jpg</text></g>
+      </g>
+      <g transform="rotate(-7 452 335)">
+        <rect x="362" y="165" width="182" height="340" rx="24" fill="#fff" stroke="#E6E6E6" stroke-width="2"/>
+        <text x="380" y="190" font-family="Source Sans 3, sans-serif" font-size="7" font-weight="700" fill="#1A1A1A">12:22</text>
+        <text x="388" y="214" font-family="Source Sans 3, sans-serif" font-size="9" font-weight="700" fill="#1A1A1A">Berkas</text>
+        <path d="M377 210h7M377 213h7M377 216h7" stroke="#555"/>
+        <g font-family="Source Sans 3, sans-serif" font-size="6.5" fill="#333">
+          <rect x="377" y="232" width="18" height="22" fill="#F0F0F0"/><text x="402" y="241">ijazah-sma.pdf</text><text x="402" y="250" fill="#999" font-size="5.5">476 KB</text>
+          <rect x="377" y="270" width="18" height="22" fill="#F0F0F0"/><text x="402" y="279">ktp-andi.jpg</text><text x="402" y="288" fill="#999" font-size="5.5">182 KB</text>
+          <rect x="377" y="308" width="18" height="22" fill="#F0F0F0"/><text x="402" y="317">transkrip.pdf</text><text x="402" y="326" fill="#999" font-size="5.5">912 KB</text>
+          <rect x="377" y="346" width="18" height="22" fill="#F0F0F0"/><text x="402" y="355">lamaran.pdf</text><text x="402" y="364" fill="#999" font-size="5.5">204 KB</text>
+          <rect x="377" y="384" width="18" height="22" fill="#F0F0F0"/><text x="402" y="393">pas-foto.jpg</text><text x="402" y="402" fill="#999" font-size="5.5">96 KB</text>
+          <rect x="377" y="422" width="18" height="22" fill="#F0F0F0"/><text x="402" y="431">toefl.pdf</text><text x="402" y="440" fill="#999" font-size="5.5">388 KB</text>
+        </g>
+        <circle cx="453" cy="474" r="11" fill="#E4572E"/><path d="M453 469v10M448 474h10" stroke="#fff" stroke-width="2"/>
+        <rect x="425" y="492" width="56" height="3" rx="1.5" fill="#1A1A1A"/>
+      </g>
+      <circle cx="430" cy="112" r="22" fill="#FFE1D4"/><path d="M420 118a5 5 0 0 1 1-9.5 7 7 0 0 1 13.5 1.5 4 4 0 0 1 0 8z" fill="none" stroke="#E4572E" stroke-width="2"/>
+      <circle cx="28" cy="385" r="20" fill="#FFE1D4"/><svg x="17" y="374" width="22" height="22" color="#C4411D"><use href="#g-phone"/></svg>
+      <circle cx="90" cy="400" r="20" fill="#FFE1D4"/><svg x="79" y="389" width="22" height="22" color="#C4411D"><use href="#g-laptop"/></svg>
+      <circle cx="40" cy="440" r="20" fill="#FFE1D4"/><svg x="29" y="429" width="22" height="22" color="#C4411D"><use href="#g-globe"/></svg>
+      <path d="M14 92l11 11M25 92l-11 11" stroke="#E4572E" stroke-width="2.4"/>
+      <path d="M8 120v12M2 126h12M465 81v12M459 87h12" stroke="#F3B9A6" stroke-width="2"/>
+      <circle cx="329" cy="477" r="4" fill="none" stroke="#F5A524" stroke-width="2.4"/>
+    </svg>
+  </div>
+</section>
+
+<section class="pricing" data-sec="pricing">
+  <div class="pr-txt">
+    <h2 data-en="Free, Always">Gratis Selamanya</h2>
+    <p data-en="Every tool works without an account or a subscription. Running costs are covered by ads.">Semua alat bisa dipakai tanpa akun dan tanpa langganan. Biayanya ditutup dari iklan.</p>
+    <a class="btn btn-primary" href="#alat" data-en="Start Now">Mulai Sekarang</a>
+  </div>
+  <div class="pr-cards">
+    <div class="pr-card">
+      <div class="pr-top"><h3 data-en="Single">Satuan</h3><span class="pr-count"><svg><use href="#g-file"/></svg><span>1</span></span></div>
+      <div class="pr-price">Rp0</div>
+      <div class="pr-per" data-en="/file">/berkas</div>
+      <div class="pr-note" data-en="no account, no daily limit.">tanpa akun, tanpa batas harian.</div>
+    </div>
+    <div class="pr-card">
+      <div class="pr-top"><h3 data-en="Batch">Massal</h3><span class="pr-count"><svg><use href="#g-files"/></svg><span>2-20</span></span></div>
+      <div class="pr-price">Rp0</div>
+      <div class="pr-per" data-en="/file">/berkas</div>
+      <div class="pr-note" data-en="up to 20 files at once.">hingga 20 berkas sekaligus.</div>
     </div>
   </div>
 </section>
 
-<div class="marka" aria-hidden="true"></div>
-
-<section class="sec" aria-labelledby="h-faq">
-  <div class="wrap">
-    <h2 id="h-faq">Tanya jawab</h2>
-    <div class="faq">
-      <details open><summary>Kenapa hasilnya sedikit di bawah 195 KB, bukan pas 200 KB?</summary><p>Portal bisa menghitung 1 KB sebagai 1.000 byte atau 1.024 byte. Dokurapi memakai hitungan yang lebih ketat (1.000 byte) dan menyisakan margin 2,5%, jadi batas 200 KB menjadi target paling besar 195.000 byte. Hasilnya aman di kedua cara hitung.</p></details>
-      <details><summary>Ukurannya sudah di bawah batas, kok masih ditolak?</summary><p>Portal juga memeriksa format (PDF atau JPG), dimensi, warna latar pas foto, dan isi dokumen. Baca pesan penolakannya, lalu pakai alat yang sesuai, misalnya Foto ke PDF atau Pas foto merah/biru.</p></details>
-      <details><summary>Apakah berkasku diunggah?</summary><p>Tidak ke server Dokurapi. Berkas dibaca dan dikompres di browser HP atau laptopmu. Cara mengeceknya sendiri ada di bagian di atas.</p></details>
-      <details><summary>Tulisan ijazah jadi buram setelah dikompres?</summary><p>Lihat kaca baca di kartu hasil sebelum mengunduh. Kalau batasnya terlalu kecil, Dokurapi berhenti sebelum tulisan rusak dan menawarkan jalan lain, misalnya hitam-putih.</p></details>
+<section class="why" data-sec="why">
+  <h2 data-en="Why Dokurapi?">Kenapa Pakai Dokurapi?</h2>
+  <div class="why-grid">
+    <div class="why-item">
+      <div class="why-h"><svg class="wi" viewBox="0 0 32 32" aria-hidden="true"><rect x="2" y="6" width="28" height="20" rx="3" fill="#FFE1D4"/><path d="M16 9l7 3v5c0 4-3 6.5-7 8-4-1.5-7-4-7-8v-5z" fill="#E4572E"/><path d="M12.5 17l2.5 2.5 4.5-4.5" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg><h3 data-en="No Server Uploads">Tanpa Unggah ke Server</h3></div>
+      <p data-en="Files are processed on your own device, so personal data stays in your browser.">Berkas diproses di perangkatmu sendiri, data pribadi tidak keluar dari browser.</p>
+    </div>
+    <div class="why-item">
+      <div class="why-h"><svg class="wi" viewBox="0 0 32 32" aria-hidden="true"><rect x="3" y="20" width="26" height="8" rx="2" fill="#F5A524"/><rect x="6" y="8" width="5" height="12" fill="#FFD9A0"/><rect x="13.5" y="4" width="5" height="16" fill="#E4572E"/><rect x="21" y="11" width="5" height="9" fill="#FFD9A0"/><path d="M7 24h18" stroke="#fff" stroke-width="1.6" stroke-dasharray="2 2"/></svg><h3 data-en="Fits the Size Limit">Pas di Batas Ukuran</h3></div>
+      <p data-en="Sizes are recalculated until the result is under the limit, for example 196 KB for a 200 KB maximum.">Ukuran dihitung ulang sampai hasilnya di bawah batas, misalnya 196 KB untuk syarat maksimal 200 KB.</p>
+    </div>
+    <div class="why-item">
+      <div class="why-h"><svg class="wi" viewBox="0 0 32 32" aria-hidden="true"><path d="M8 3h11l6 6v20H8z" fill="#fff" stroke="#C9C9C9"/><path d="M19 3v6h6" fill="#EDEDED"/><rect x="4" y="13" width="16" height="8" rx="1.5" fill="#14A38B"/><text x="12" y="19.5" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="6" font-weight="800" fill="#fff">PDF</text><circle cx="23" cy="24" r="5" fill="#5B5BD6"/><path d="M20.8 24l1.6 1.6 2.8-2.8" stroke="#fff" stroke-width="1.4" fill="none"/></svg><h3 data-en="Formats That Match">Format Sesuai Syarat</h3></div>
+      <p data-en="Prepared for the formats commonly requested by civil service, university, scholarship, and job portals.">Disiapkan untuk format yang umum diminta portal CPNS, PPPK, SNBP, beasiswa, dan lamaran kerja.</p>
+    </div>
+    <div class="why-item">
+      <div class="why-h"><svg class="wi" viewBox="0 0 32 32" aria-hidden="true"><rect x="3" y="7" width="26" height="18" rx="3" fill="#2F4B7C"/><text x="16" y="20" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="10" font-weight="800" fill="#fff">Rp0</text><circle cx="26" cy="8" r="5" fill="#F5A524"/></svg><h3 data-en="Free, No Account">Gratis Tanpa Akun</h3></div>
+      <p data-en="No sign up, no login, and no daily limit.">Tidak perlu daftar, tidak perlu login, dan tidak ada batas harian.</p>
+    </div>
+    <div class="why-item">
+      <div class="why-h"><svg class="wi" viewBox="0 0 32 32" aria-hidden="true"><rect x="9" y="2" width="14" height="28" rx="3" fill="#C2459A"/><rect x="11" y="6" width="10" height="18" rx="1" fill="#fff"/><path d="M13 15l2 2 4-4" stroke="#C2459A" stroke-width="1.8" fill="none" stroke-linecap="round"/><circle cx="16" cy="27" r="1.2" fill="#fff"/></svg><h3 data-en="Light on Any Phone">Ringan di HP Biasa</h3></div>
+      <p data-en="Runs smoothly on entry level Android phones.">Tetap lancar dipakai di HP Android kelas pemula.</p>
+    </div>
+    <div class="why-item">
+      <div class="why-h"><svg class="wi" viewBox="0 0 32 32" aria-hidden="true"><rect x="2" y="5" width="18" height="14" rx="3" fill="#E4572E"/><text x="11" y="15" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="7" font-weight="800" fill="#fff">ID</text><rect x="12" y="13" width="18" height="14" rx="3" fill="#2F4B7C"/><text x="21" y="23" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="7" font-weight="800" fill="#fff">EN</text></svg><h3 data-en="Two Languages">Dua Bahasa</h3></div>
+      <p data-en="Available in Indonesian and English, handy for overseas scholarship files too.">Tersedia dalam Bahasa Indonesia dan Inggris, cocok juga untuk berkas beasiswa luar negeri.</p>
     </div>
   </div>
+</section>
+
+<section class="band" data-sec="band">
+  <h2 data-en="Try Dokurapi for Free">Coba Dokurapi Gratis</h2>
+  <p data-en="No account needed. Pick a tool, drop in a file, and download the result in seconds, free.">Tanpa daftar akun. Pilih alatnya, masukkan berkas, lalu unduh hasilnya dalam hitungan detik, gratis.</p>
+  <a class="btn btn-primary" href="#alat" data-en="Start Compressing">Mulai Kompres</a>
+  <svg class="band-shapes" viewBox="0 0 400 360" aria-hidden="true">
+    <rect x="-62" y="-62" width="124" height="124" rx="14" fill="#C4411D" transform="translate(166 88) rotate(-27)"/>
+    <rect x="-95" y="-95" width="190" height="190" rx="22" fill="#F08A6C" transform="translate(420 30) rotate(23)"/>
+    <rect x="-170" y="-170" width="340" height="340" rx="34" fill="#F5A524" transform="translate(275 345) rotate(-27)"/>
+    <circle cx="41" cy="133" r="5" fill="none" stroke="#C4411D" stroke-width="3"/>
+    <path d="M56 197v16M48 205h16" stroke="#F08A6C" stroke-width="3"/>
+    <path d="M378 163v16M370 171h16" stroke="#F5A524" stroke-width="3"/>
+  </svg>
 </section>
 </main>
 
 <footer class="foot">
-  <div class="wrap">
-    <div class="signs-g">
-      <a class="sign-g" href="#"><svg aria-hidden="true"><use href="#i-arah"/></svg>Latihan soal CPNS<br>Target Lulus</a>
-      <a class="sign-g" href="#"><svg aria-hidden="true"><use href="#i-arah"/></svg>Siapkan CV lamaran<br>Karir Pintar</a>
+  <nav class="dir" id="semua-alat" data-sec="dir" aria-label="Semua alat">
+    <div class="dir-in">
+      <div class="half">
+        <div class="dcol">
+          <section><div class="gl" data-en="Compress">Kompres</div><ul>
+            <li><a href="#alat"><span class="ic" style="background:#E4572E"><svg><use href="#g-compress"/></svg></span><span data-en="Compress PDF">Kompres PDF</span></a></li></ul></section>
+          <section><div class="gl" data-en="Target Size">Ukuran Target</div><ul>
+            <li><a href="#alat"><span class="ic tx" style="background:#E4572E">200</span><span data-en="PDF to 200 KB">PDF ke 200 KB</span></a></li>
+            <li><a href="#alat"><span class="ic tx" style="background:#E4572E">500</span><span data-en="PDF to 500 KB">PDF ke 500 KB</span></a></li>
+            <li><a href="#alat"><span class="ic tx" style="background:#E4572E">1MB</span><span data-en="PDF to 1 MB">PDF ke 1 MB</span></a></li></ul></section>
+          <section><div class="gl" data-en="Compress Photo">Kompres Foto</div><ul>
+            <li><a href="#alat"><span class="ic tx" style="background:#F5A524">100</span><span data-en="JPG to 100 KB">JPG ke 100 KB</span></a></li>
+            <li><a href="#alat"><span class="ic tx" style="background:#F5A524">200</span><span data-en="Photo to 200 KB">Foto ke 200 KB</span></a></li></ul></section>
+        </div>
+        <div class="dcol">
+          <section><div class="gl" data-en="Photo to PDF">Foto ke PDF</div><ul>
+            <li><a href="#alat"><span class="ic" style="background:#F5A524"><svg><use href="#g-image"/></svg></span><span data-en="JPG to PDF">JPG ke PDF</span></a></li></ul></section>
+          <section><div class="gl" data-en="PDF to Photo">PDF ke Foto</div><ul>
+            <li><a href="#alat"><span class="ic tx" style="background:#14A38B">JPG</span><span data-en="PDF to JPG">PDF ke JPG</span></a></li>
+            <li><a href="#alat"><span class="ic tx" style="background:#14A38B">PNG</span><span data-en="PDF to PNG">PDF ke PNG</span></a></li>
+            <li><a href="#alat"><span class="ic tx" style="background:#14A38B">WEBP</span><span data-en="PDF to WebP">PDF ke WebP</span></a></li></ul></section>
+          <section><div class="gl" data-en="Convert Format">Ubah Format</div><ul>
+            <li><a href="#alat"><span class="ic tx" style="background:#5B5BD6">PNG</span><span data-en="PNG to JPG">PNG ke JPG</span></a></li>
+            <li><a href="#alat"><span class="ic tx" style="background:#5B5BD6">HEIC</span><span data-en="HEIC to JPG">HEIC ke JPG</span></a></li>
+            <li><a href="#alat"><span class="ic tx" style="background:#5B5BD6">WEBP</span><span data-en="WebP to JPG">WebP ke JPG</span></a></li></ul></section>
+        </div>
+        <div class="dcol">
+          <section><div class="gl" data-en="Text to PDF">Teks ke PDF</div><ul>
+            <li><a href="#alat"><span class="ic tx" style="background:#2F4B7C">TXT</span><span data-en="TXT to PDF">TXT ke PDF</span></a></li>
+            <li><a href="#alat"><span class="ic tx" style="background:#2F4B7C">HTML</span><span data-en="HTML to PDF">HTML ke PDF</span></a></li>
+            <li><a href="#alat"><span class="ic tx" style="background:#2F4B7C">MD</span><span data-en="Markdown to PDF">Markdown ke PDF</span></a></li></ul></section>
+        </div>
+        <div class="dcol">
+          <section><div class="gl" data-en="Requirements">Syarat Daftar</div><ul>
+            <li><a href="#alat"><span class="ic tx" style="background:#1F8A5B">ASN</span><span data-en="CPNS files">Berkas CPNS</span></a></li>
+            <li><a href="#alat"><span class="ic tx" style="background:#1F8A5B">PPPK</span><span data-en="PPPK files">Berkas PPPK</span></a></li>
+            <li><a href="#alat"><span class="ic tx" style="background:#1F8A5B">BSW</span><span data-en="Scholarship files">Berkas Beasiswa</span></a></li>
+            <li><a href="#alat"><span class="ic tx" style="background:#1F8A5B">SNBP</span><span data-en="SNBP files">Berkas SNBP</span></a></li>
+            <li><a href="#alat"><span class="ic tx" style="background:#1F8A5B">UTBK</span><span data-en="UTBK files">Berkas UTBK</span></a></li>
+            <li><a href="#alat"><span class="ic tx" style="background:#1F8A5B">CV</span><span data-en="Job application">Lamaran Kerja</span></a></li>
+            <li><a href="#alat"><span class="ic tx" style="background:#1F8A5B">KIP</span><span data-en="KIP Kuliah files">Berkas KIP Kuliah</span></a></li></ul></section>
+          <section><div class="gl" data-en="Check Files">Cek Berkas</div><ul>
+            <li><a href="#alat"><span class="ic" style="background:#2F4B7C"><svg><use href="#g-check"/></svg></span><span data-en="Check file size">Cek Ukuran Berkas</span></a></li></ul></section>
+        </div>
+      </div>
+      <div class="half">
+        <div class="dcol">
+          <section><div class="gl" data-en="Organize">Atur PDF</div><ul>
+            <li><a href="#alat"><span class="ic" style="background:#5B5BD6"><svg><use href="#g-merge"/></svg></span><span data-en="Merge PDF">Gabung PDF</span></a></li>
+            <li><a href="#alat"><span class="ic" style="background:#5B5BD6"><svg><use href="#g-scissors"/></svg></span><span data-en="Split PDF">Pisah PDF</span></a></li>
+            <li><a href="#alat"><span class="ic" style="background:#5B5BD6"><svg><use href="#g-rotate"/></svg></span><span data-en="Rotate PDF">Putar PDF</span></a></li>
+            <li><a href="#alat"><span class="ic" style="background:#5B5BD6"><svg><use href="#g-trash"/></svg></span><span data-en="Delete pages">Hapus Halaman</span></a></li>
+            <li><a href="#alat"><span class="ic" style="background:#5B5BD6"><svg><use href="#g-pages"/></svg></span><span data-en="Extract pages">Ambil Halaman</span></a></li>
+            <li><a href="#alat"><span class="ic" style="background:#5B5BD6"><svg><use href="#g-sort"/></svg></span><span data-en="Reorder pages">Urutkan Halaman</span></a></li></ul></section>
+        </div>
+        <div class="dcol">
+          <section><div class="gl" data-en="ID Photo">Pas Foto</div><ul>
+            <li><a href="#pas-foto"><span class="ic" style="background:#D9412B"><svg><use href="#g-person"/></svg></span><span data-en="Red background">Latar Merah</span></a></li>
+            <li><a href="#pas-foto"><span class="ic" style="background:#2B5FB8"><svg><use href="#g-person"/></svg></span><span data-en="Blue background">Latar Biru</span></a></li>
+            <li><a href="#pas-foto"><span class="ic" style="background:#C2459A"><svg><use href="#g-image"/></svg></span><span data-en="Change background">Ganti Latar</span></a></li>
+            <li><a href="#pas-foto"><span class="ic tx" style="background:#C2459A">3x4</span><span data-en="Crop to 3x4">Potong 3x4</span></a></li>
+            <li><a href="#pas-foto"><span class="ic tx" style="background:#C2459A">4x6</span><span data-en="Crop to 4x6">Potong 4x6</span></a></li>
+            <li><a href="#pas-foto"><span class="ic" style="background:#C2459A"><svg><use href="#g-compress"/></svg></span><span data-en="Resize photo">Ubah Ukuran Foto</span></a></li>
+            <li><a href="#pas-foto"><span class="ic tx" style="background:#C2459A">DPI</span><span data-en="Change DPI">Ubah DPI</span></a></li>
+            <li><a href="#pas-foto"><span class="ic" style="background:#555555"><svg><use href="#g-image"/></svg></span><span data-en="Black and white">Foto Hitam Putih</span></a></li>
+            <li><a href="#pas-foto"><span class="ic" style="background:#C2459A"><svg><use href="#g-pen"/></svg></span><span data-en="Signature to PNG">Tanda Tangan PNG</span></a></li></ul></section>
+        </div>
+        <div class="dcol">
+          <section><div class="gl" data-en="Sign">Tanda Tangan</div><ul>
+            <li><a href="#alat"><span class="ic" style="background:#C2459A"><svg><use href="#g-pen"/></svg></span><span data-en="Sign PDF">Tanda Tangan PDF</span></a></li>
+            <li><a href="#alat"><span class="ic" style="background:#F5A524"><svg><use href="#g-files"/></svg></span><span data-en="Request signatures from others">Minta Tanda Tangan Orang Lain</span></a></li></ul></section>
+          <section><div class="gl" data-en="Security">Keamanan</div><ul>
+            <li><a href="#alat"><span class="ic" style="background:#E4572E"><svg><use href="#g-unlock"/></svg></span><span data-en="Unlock PDF">Buka Kunci PDF</span></a></li>
+            <li><a href="#alat"><span class="ic" style="background:#E4572E"><svg><use href="#g-lock"/></svg></span><span data-en="Protect PDF">Kunci PDF</span></a></li>
+            <li><a href="#alat"><span class="ic" style="background:#E4572E"><svg><use href="#g-layers"/></svg></span><span data-en="Flatten PDF">Ratakan PDF</span></a></li></ul></section>
+        </div>
+        <div class="dcol">
+          <section><div class="gl" data-en="Smart Help">Bantuan Pintar</div><ul>
+            <li><a href="#alat"><span class="ic" style="background:#2F4B7C"><svg><use href="#g-spark"/></svg></span><span data-en="Requirement checker">Cek Syarat Berkas</span></a></li>
+            <li><a href="#alat"><span class="ic" style="background:#2F4B7C"><svg><use href="#g-text"/></svg></span><span data-en="Summarize PDF">Ringkas PDF</span></a></li>
+            <li><a href="#alat"><span class="ic" style="background:#2F4B7C"><svg><use href="#g-globe"/></svg></span><span data-en="Translate PDF">Terjemahkan PDF</span></a></li>
+            <li><a href="#alat"><span class="ic" style="background:#2F4B7C"><svg><use href="#g-sort"/></svg></span><span data-en="Tidy file names">Rapikan Nama Berkas</span></a></li>
+            <li><a href="#alat"><span class="ic tx" style="background:#2F4B7C">KB</span><span data-en="Size calculator">Hitung Ukuran</span></a></li></ul></section>
+          <section><div class="gl" data-en="Scan">Pindai</div><ul>
+            <li><a href="#alat"><span class="ic" style="background:#2F4B7C"><svg><use href="#g-camera"/></svg></span><span data-en="Scan document">Pindai Dokumen</span></a></li></ul></section>
+        </div>
+      </div>
     </div>
-    <div class="fine"><span>Dokurapi tidak berafiliasi dengan instansi atau portal pendaftaran mana pun.</span><a href="#cara-kerja">Cara kerjanya</a><a href="#">Privasi</a><span>2026 Dokurapi (mockup konsep)</span></div>
+  </nav>
+
+  <div class="foot-main" data-sec="footmain">
+    <div class="foot-brand">
+      <a class="logo" href="#" aria-label="Dokurapi">
+        <svg class="logo-mark" width="40" height="40"><use href="#g-mark"/></svg>
+        <span class="wordmark">Dokurapi</span>
+      </a>
+      <div class="tagline" data-en="Make files fit.">Berkas pas ukuran.</div>
+    </div>
+    <nav class="foot-cols" aria-label="Tautan footer">
+      <ul><li class="fh" data-en="For">Untuk</li><li><a href="#" data-en="Civil service">CPNS &amp; PPPK</a></li><li><a href="#" data-en="Scholarships">Beasiswa</a></li><li><a href="#" data-en="University entry">SNBP &amp; SNBT</a></li><li><a href="#" data-en="Job applications">Lamaran Kerja</a></li></ul>
+      <ul><li class="fh">Dokurapi</li><li><a href="#tentang" data-en="About us">Tentang Kami</a></li><li><a href="#" data-en="Help">Bantuan</a></li><li><a href="#">Blog</a></li><li><a href="#" data-en="File statistics">Statistik Berkas</a></li></ul>
+      <ul><li class="fh" data-en="Product">Produk</li><li><a href="#semua-alat" data-en="All tools">Semua Alat</a></li><li><a href="#panduan" data-en="Size guide">Panduan Ukuran</a></li><li><a href="#">Target Lulus</a></li><li><a href="#">Karir Pintar</a></li><li><a href="#" data-en="Embed on your site">Pasang di Situsmu</a></li><li><a href="#" data-en="Compare">Bandingkan</a></li><li><a href="#" data-en="Accessibility">Aksesibilitas</a></li></ul>
+      <ul><li class="fh" data-en="Access">Akses</li><li><a href="#" data-en="Web version">Versi Web</a></li><li><a href="#" data-en="Install on phone">Pasang di HP</a></li><li><a href="#" data-en="Laptop shortcut">Pintasan Laptop</a></li></ul>
+    </nav>
+  </div>
+
+  <div class="foot-row">
+    <ul class="socials">
+      <li><a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="#212121" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="#212121" stroke-width="2"/><circle cx="17.3" cy="6.7" r="1.2" fill="#212121"/></svg></a></li>
+      <li><a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M13.5 21v-8h2.7l.4-3.1h-3.1V8c0-.9.3-1.5 1.6-1.5h1.7V3.7c-.3 0-1.3-.1-2.4-.1-2.4 0-4 1.4-4 4.1v2.3H7.7V13h2.7v8z" fill="#212121"/></svg></a></li>
+      <li><a href="#" aria-label="YouTube"><svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="4" fill="#212121"/><path d="M10 9v6l5.2-3z" fill="#fff"/></svg></a></li>
+      <li><a href="#" aria-label="X"><svg viewBox="0 0 24 24"><path d="M4 4l16 16M20 4L4 20" stroke="#212121" stroke-width="1.8" stroke-linecap="round"/></svg></a></li>
+    </ul>
+    <div class="foot-badges">
+      <a class="badge" href="#"><svg><use href="#g-phone"/></svg><span><small data-en="INSTALL ON">PASANG DI</small><b>Android</b></span></a>
+      <a class="badge" href="#"><svg><use href="#g-phone"/></svg><span><small data-en="INSTALL ON">PASANG DI</small><b>iPhone</b></span></a>
+      <a class="badge" href="#"><svg><use href="#g-laptop"/></svg><span><small data-en="INSTALL ON">PASANG DI</small><b>Laptop</b></span></a>
+    </div>
+  </div>
+
+  <div class="foot-bar">
+    <div class="copy">&copy; 2026 Dokurapi. <span data-en="Made with">Dibuat dengan</span> <svg class="heart" viewBox="0 0 24 24" aria-label="cinta"><path d="M12 20.5s-7.5-4.6-9.2-9.4C1.6 7.7 3.8 4.5 7.2 4.5c2 0 3.6 1.1 4.8 2.8 1.2-1.7 2.8-2.8 4.8-2.8 3.4 0 5.6 3.2 4.4 6.6-1.7 4.8-9.2 9.4-9.2 9.4z" fill="#E4572E"/></svg> <span data-en="for applicants across Indonesia.">untuk pejuang berkas di seluruh Indonesia.</span></div>
+    <div class="bar-links">
+      <a href="#" data-en="Privacy Policy">Kebijakan Privasi</a>
+      <a href="#" data-en="Terms &amp; Conditions">Syarat &amp; Ketentuan</a>
+      <a href="#" data-en="Ad Policy">Kebijakan Iklan</a>
+      <a href="#" data-en="Contact Us">Hubungi Kami</a>
+      <button class="bar-lang" type="button"><svg><use href="#g-globe"/></svg><span data-en="English">Indonesia</span></button>
+    </div>
   </div>
 </footer>
 
-<div class="mbar" id="mbar" aria-hidden="true"><span class="p" data-i="okPlate">LOLOS UKURAN</span><span class="s num" id="mbar-s"></span><a class="btn btn-w" id="mbar-dl" href="#"><span data-i="dl">Unduh</span></a></div>
-
-<!-- ===================== BAGIAN 2: DOKUMEN KONSEP ===================== -->
-<p class="split" aria-hidden="true">Akhir mockup situs. Di bawah ini dokumen konsep.</p>
-<div class="docband" id="dokumen">
-  <div class="wrap">
-    <p style="margin:0;color:#FFC20E;font-weight:800;font-size:16px">Di bawah garis ini: dokumen konsep, bukan bagian situs</p>
-    <h2 class="t">Palang Portal, konsep final</h2>
-    <p>Setiap portal pendaftaran punya palang batas ukuran. Dokurapi memperlihatkan seberapa tinggi berkasmu dibanding palang itu, lalu mengompresnya sampai bisa lewat.</p>
-  </div>
-  <div class="road" aria-hidden="true"></div>
-</div>
-
-<div class="doc">
-<section class="sec"><div class="wrap cols2">
-  <div>
-    <h2>Ide besar dan signature</h2>
-    <p>Signature: <b>portal ukuran</b>. Jalur aspal selebar layar, portal pembatas tinggi lengkap (dua tiang, palang bergaris merah-putih, pemberat di ujung, pelat MAKS di atas palang) berdiri di tepi kanan. Berkas tampil sebagai balok yang tingginya sebanding ukurannya. Yang terlalu tinggi tertahan di depan palang, lalu turun mengikuti putaran kompresi sungguhan dan lewat.</p>
-    <p>Momen kedua: <b>jalan alternatif</b>. Kalau batasnya tidak tercapai tanpa merusak tulisan, jalan bercabang turun dari depan portal dan setiap cabang berakhir di rambu petunjuk biru berisi pilihan beserta perkiraan ukurannya.</p>
-    <p>Kata "portal" punya dua arti yang sama-sama akrab di Indonesia: portal pendaftaran online dan portal besi di mulut gang. Versi EN tetap terbaca lewat palang pembatas tinggi di gedung parkir, dan selalu didampingi teks polos.</p>
-  </div>
-  <div>
-    <h2>Rasa merek</h2>
-    <p><b>Sigap, tegas, melegakan.</b> Dalam bahasa sehari-hari, "rapi" juga berarti beres dan sesuai aturan. Rambu membuat jalan tertib; Dokurapi memakai bahasa rambu untuk membuat berkas tertib. Tegas di angka, hangat di kalimat.</p>
-    <h3>Semantik warna lalu lintas</h3>
-    <ul>
-      <li><b>Merah</b> berarti berhenti: belum lolos, palang.</li>
-      <li><b>Kuning</b> berarti perhatikan: batas ukuran dan peringatan.</li>
-      <li><b>Hijau</b> berarti jalan terus: lolos ukuran dan arah ke tujuan berikutnya.</li>
-      <li><b>Biru</b> berarti petunjuk: info, pilihan jalan, alat.</li>
-    </ul>
-  </div>
-</div></section>
-
-<div class="marka" aria-hidden="true"></div>
-
-<section class="sec"><div class="wrap">
-  <h2>Perubahan dari ronde 1</h2>
-  <div class="tblw"><table class="tbl">
-    <thead><tr><th>Juri</th><th>Perbaikan wajib</th><th>Yang diubah</th></tr></thead>
-    <tbody>
-      <tr><td>A</td><td>Hapus persegi garis putus-putus di jalur</td><td>Jalur hanya dibatasi marka jalan: garis tepi putih utuh dan marka tengah kuning putus-putus di strip jalan. Tidak ada dropzone bergaris.</td></tr>
-      <tr><td>A</td><td>Chip batas jadi pelat rambu</td><td>Pelat kuning berbingkai hitam dengan glyph batas tinggi. Pelat yang dipilih terbang dan terpasang di atas palang (tampilan pelat terpilih diperbarui di ronde 3).</td></tr>
-      <tr><td>A, Portofolio</td><td>Pecah hero 5/7</td><td>Judul di atas, jalur aspal dari tepi kiri ke tepi kanan layar, portal di tepi kanan. Di 360 px jalur tetap horizontal selebar layar.</td></tr>
-      <tr><td>A, B</td><td>Bedakan dari pita konstruksi, spesifikasi garis</td><td>Portal lengkap dengan dua tiang, pemberat, dan pelat. Garis 45 derajat, ruas 12 px pada palang 24 px (8 px pada 16 px), hanya di palang dan logo. Logo menjadi siluet portal yang membingkai wordmark.</td></tr>
-      <tr><td>A</td><td>Momen kedua yang khas</td><td>Jalan alternatif sebagai cabang jalan dengan rambu belok biru dan perkiraan ukuran yang dihitung sungguhan.</td></tr>
-      <tr><td>B</td><td>Kunci geometri jalur</td><td>Celah palang = 34% tinggi jalur (129 px di 380 px, 75 px di 220 px), balok = celah x akar(ukuran/batas), maksimum 95%. Delapan keadaan jalur dirender langsung di bawah.</td></tr>
-      <tr><td>B</td><td>Ukuran judul</td><td>64 px di desktop (2 baris), 34 px di mobile (3 baris, diukur di browser), jalur tetap di layar pertama 360x640.</td></tr>
-      <tr><td>B</td><td>Hijau untuk teks kecil, proporsi warna</td><td>Hijau lolos jadi #00763A (putih 5,75:1). Aturan: merah + kuning maksimal 8% area satu layar.</td></tr>
-      <tr><td>B, C</td><td>Anggaran mesin dan kuota</td><td>Pustaka, ukuran terukur, cara muat, dan protokol pesan worker ditulis. Ukuran mesin tampil sebelum diunduh, Save-Data dihormati.</td></tr>
-      <tr><td>C</td><td>Kosakata pencarian</td><td>Menu, tombol, dan H1 memakai "Kompres"; "kecilkan" hanya di kalimat isi.</td></tr>
-      <tr><td>C</td><td>Target aman per byte, hasil jujur</td><td>Target = batas x 1.000 x 0,975 (200 KB jadi 195.000 byte). Kartu hasil memuat angka byte. Pelat jadi "LOLOS UKURAN" plus kalimat "Portal juga memeriksa format dan isi".</td></tr>
-      <tr><td>C</td><td>Klaim privasi yang bisa dibuktikan</td><td>"Diproses di perangkatmu, bukan di server kami" menaut ke cara cek sendiri; tombol Hapus dari memori; perekam sesi dilarang; tanpa kata "100% aman".</td></tr>
-      <tr><td>C</td><td>Langkah sesudah unduh, pas foto di hero</td><td>Panel "Masih ada berkas lain?" setelah Unduh; chip "atau: Pas foto merah/biru" di bawah jalur.</td></tr>
-      <tr><td>C</td><td>FAQ bukan nilai SEO</td><td>FAQ tetap ada sebagai konten. Schema FAQPage tidak dihitung sebagai keuntungan SEO.</td></tr>
-      <tr><td>C</td><td>Copy EN</td><td>"Pick a limit (100 KB, 200 KB, 500 KB or 1 MB)" dan "Done. 195 KB, under the 200 KB limit."</td></tr>
-    </tbody>
-  </table></div>
-</div></section>
-
-<div class="marka" aria-hidden="true"></div>
-
-<section class="sec"><div class="wrap">
-  <h2>Perubahan ronde 3</h2>
-  <p class="lede">Skor ronde 2: Juri A 90, Juri B 92, Juri C 92. Semua perbaikan wajib dikerjakan, plus amandemen portofolio (aspal bertekstur, garis putus-putus milik Dokurapi, section bawah hero dari metafora sendiri).</p>
-  <div class="tblw"><table class="tbl">
-    <thead><tr><th>Juri</th><th>Perbaikan wajib</th><th>Yang diubah</th></tr></thead>
-    <tbody>
-      <tr><td>A1, B1, C1</td><td>Pelat terpilih harus tampak paling kuat</td><td>Pelat terpilih jadi Aspal dengan teks Kuning Rambu (10,23:1), ikon centang, label "terpasang" (EN "set"), dan panah kecil ke bawah yang menunjuk pelat di palang. Pelat lain tetap kuning. Juri C mengusulkan bingkai kuning di atas putih; tidak dipakai karena bingkai kuning di putih hanya sekitar 1,6:1 (gagal syarat 3:1 komponen), sedangkan usulan A/B lebih kuat dan tetap menjawab keberatan C.</td></tr>
-      <tr><td>A2, Portofolio</td><td>Aspal bertekstur, bukan bidang hitam polos</td><td>SVG feTurbulence sebagai data URI (519 byte) di atas Aspal: jalur, cabang jalan, footer, pita dokumen, bar lengket. Diukur dari piksel screenshot: Abu Aspal paling buruk 5,03:1 (rata-rata 6,86:1), putih 10,29:1.</td></tr>
-      <tr><td>A3, Portofolio</td><td>Kepala kartu alat jadi rambu petunjuk; section bawah hero tanpa kerangka generik</td><td>"Semua alat" jadi lima lajur: rambu petunjuk biru selebar isi dengan garis dalam putih, tiang Beton 6 px ke garis tanah, lajur dipisah marka putus-putus. Luas biru di section ini turun 56% (desktop) dan 73% (mobile) dibanding ronde 2. "Batas yang sering diminta" berdiri di trotoar, "Kenapa berkas ditolak" jadi rambu peringatan dengan papan tambahan, papan iklan berkaki.</td></tr>
-      <tr><td>B2</td><td>Bar lengket menutupi Pilih berkas di 360</td><td>Bar hanya tampil di 767 px ke bawah saat tombol Pilih berkas dan kartu hasil sama-sama di luar layar (IntersectionObserver), dan saat tampil body diberi padding 72 px. Diuji di 360x640: tersembunyi di atas dan di kartu hasil, tampil setelah keduanya lewat.</td></tr>
-      <tr><td>B3</td><td>"HP-mu" patah di tanda hubung</td><td>"HP-mu" di subjudul hero dan H2 dibungkus white-space:nowrap. Di 360 H2 kini 3 baris tanpa patahan di tanda hubung.</td></tr>
-      <tr><td>B4</td><td>Cincin fokus di Aspal 2,41:1</td><td>Di jalur, footer, bar lengket, dan pita dokumen cincin fokus jadi Kuning Rambu 3 px (6,36:1 di piksel aspal paling terang). Biru Petunjuk tetap untuk permukaan putih.</td></tr>
-      <tr><td>B5</td><td>Rak pelat dan rambu yang bisa digeser tanpa penanda</td><td>scroll-snap, scroll-padding 16 px, dan masker pudar di tepi kanan yang hilang saat rak sudah di ujung.</td></tr>
-      <tr><td>C2</td><td>Format yang diterima tak terlihat di HP</td><td>Di bawah Pilih berkas (767 px ke bawah): "PDF, JPG, atau PNG dari galeri atau file HP" (EN "PDF, JPG or PNG from your phone").</td></tr>
-      <tr><td>C3</td><td>Angka tanya jawab tidak cocok dengan hasil</td><td>"Kenapa hasilnya sedikit di bawah 195 KB, bukan pas 200 KB?" dan "target paling besar 195.000 byte".</td></tr>
-    </tbody>
-  </table></div>
-</div></section>
-
-<div class="marka" aria-hidden="true"></div>
-
-<section class="sec"><div class="wrap">
-  <h2>Palet</h2>
-  <p class="lede">Nama token milik Dokurapi sendiri. Kuning Rambu dan Merah Palang adalah warna pemilik Dokurapi di portofolio.</p>
-  <div class="tblw"><table class="tbl">
-    <thead><tr><th></th><th>Token</th><th>Hex</th><th>Peran</th><th>Kontras</th></tr></thead>
-    <tbody>
-      <tr><td><span class="sw" style="background:#FFFFFF"></span></td><td>Putih Jalan</td><td>#FFFFFF</td><td>Dasar halaman</td><td>-</td></tr>
-      <tr><td><span class="sw" style="background:#1B1F24"></span></td><td>Aspal</td><td>#1B1F24</td><td>Teks utama, jalur, tombol utama, footer</td><td>16,56:1 di putih</td></tr>
-      <tr><td><span class="sw" style="background:#5A6472"></span></td><td>Abu Marka</td><td>#5A6472</td><td>Teks sekunder, slot pelat kosong</td><td>6,00:1 di putih</td></tr>
-      <tr><td><span class="sw" style="background:#AEB6C2"></span></td><td>Abu Aspal</td><td>#AEB6C2</td><td>Teks sekunder di atas Aspal</td><td>8,10:1 di Aspal</td></tr>
-      <tr><td><span class="sw" style="background:#C8102E"></span></td><td>Merah Palang</td><td>#C8102E</td><td>Garis palang, label "di atas batas"</td><td>putih 5,88:1</td></tr>
-      <tr><td><span class="sw" style="background:#FFC20E"></span></td><td>Kuning Rambu</td><td>#FFC20E</td><td>Pelat batas, marka tengah, peringatan</td><td>Aspal 10,23:1</td></tr>
-      <tr><td><span class="sw" style="background:#00763A"></span></td><td>Hijau Lolos</td><td>#00763A</td><td>Lolos ukuran, papan arah</td><td>putih 5,75:1</td></tr>
-      <tr><td><span class="sw" style="background:#0057B8"></span></td><td>Biru Petunjuk</td><td>#0057B8</td><td>Rambu info, pilihan jalan, kepala alat (hue 212, di luar keluarga biru tinta)</td><td>putih 6,87:1</td></tr>
-      <tr><td><span class="sw" style="background:#2E343C"></span></td><td>Aspal Muda</td><td>#2E343C</td><td>Label netral di jalur</td><td>putih 12,56:1</td></tr>
-      <tr><td><span class="sw" style="background:#D5DAE1"></span></td><td>Beton</td><td>#D5DAE1</td><td>Tiang portal dan tiang rambu (bukan teks)</td><td>11,79:1 di Aspal</td></tr>
-      <tr><td><span class="sw" style="background:#6B7380"></span></td><td>Pemberat</td><td>#6B7380</td><td>Pemberat palang (bukan teks)</td><td>3,46:1 di Aspal</td></tr>
-      <tr><td><span class="sw" style="background:#1B1F24 var(--tekstur)"></span></td><td>Tekstur Aspal</td><td>feTurbulence, butir #D6DBE3, opasitas .16</td><td>Semua bidang Aspal (jalur, footer, pita dokumen, bar lengket)</td><td>Abu Aspal paling buruk 5,03:1, putih 10,29:1</td></tr>
-    </tbody>
-  </table></div>
-  <p class="note">Aturan proporsi: dalam satu layar, Merah Palang + Kuning Rambu maksimal 8% area, Biru Petunjuk maksimal 4%. Hijau hanya muncul setelah lolos atau sebagai papan arah. Diukur dari screenshot hero halaman ini (keadaan awal, ronde 3): desktop 1440x900 merah + kuning 2,6%, biru 0,5%; mobile 390x844 merah + kuning 3,5%, biru 2,2%.</p>
-</div></section>
-
-<div class="marka" aria-hidden="true"></div>
-
-<section class="sec"><div class="wrap cols2">
-  <div class="spec-type">
-    <h2>Tipografi: Overpass</h2>
-    <p class="lede">Keluarga OFL yang terinspirasi Highway Gothic, huruf rambu jalan. Satu berkas variabel latin 39 KB untuk semua bobot (diukur dari Google Fonts). Angka ukuran memakai tabular-nums.</p>
-    <p class="s900" style="margin-top:24px">Kompres sampai lolos.</p>
-    <p class="m" style="color:#5A6472;font-size:14px">Black 900, H1 64/65 desktop, 34/36 mobile</p>
-    <p class="s800" style="margin-top:18px">Batas yang sering diminta</p>
-    <p class="m" style="color:#5A6472;font-size:14px">ExtraBold 800, H2 40/44 desktop, 28/32 mobile; pelat 17-20 px</p>
-    <p class="s600" style="margin-top:18px">Kompres PDF, Kompres foto/JPG, Foto ke PDF</p>
-    <p class="m" style="color:#5A6472;font-size:14px">SemiBold 600, navigasi 15 px</p>
-    <p class="s400" style="margin-top:18px">Berkas dibaca dan dikompres di browser HP atau laptopmu. <span class="num">195.000 byte</span>, di bawah batas <span class="num">200 KB</span>.</p>
-    <p class="m" style="color:#5A6472;font-size:14px">Regular 400, body 18/28 desktop, 17/26 mobile</p>
-  </div>
-  <div>
-    <h2>Grid, radius, motion</h2>
-    <div class="spec">
-      <div><b>Grid</b><span>12 kolom, isi maks 1216 px, margin 64 / 32 / 16 px, kelipatan 8. Jalur dan cabang jalan selalu full-bleed.</span></div>
-      <div><b>Radius</b><span>3 px tombol, 4 px pelat, 6 px kartu hasil. Tidak ada pill.</span></div>
-      <div><b>Bayangan</b><span>Tidak ada. Kedalaman dari blok Aspal dan garis 2-3 px.</span></div>
-      <div><b>Turun sesuai kerja</b><span>Balok turun satu langkah per putaran kompresi yang masih di atas target, 120 ms ease-out. Angka yang tampil selalu ukuran percobaan sungguhan.</span></div>
-      <div><b>Lewat portal</b><span>Balok meluncur ke celah portal 320 ms, lalu garis palang tersapu jadi hijau-putih 180 ms dari kiri.</span></div>
-      <div><b>Mentok sekali</b><span>Berkas kebesaran masuk dari kiri dan tertahan 6 px sebelum tiang dengan satu hentakan 5 px. Tanpa getar berulang.</span></div>
-      <div><b>Pelat terpasang</b><span>Pelat yang dipilih terbang lurus ke atas palang 360 ms; tanpa skala memantul, tanpa rotasi.</span></div>
-      <div><b>Marka bergerak hanya saat kerja</b><span>Marka tengah bergeser saat berkas diseret atau diproses, diam di luar itu. prefers-reduced-motion mematikan semuanya.</span></div>
-    </div>
-  </div>
-</div></section>
-
-<div class="marka" aria-hidden="true"></div>
-
-<section class="sec"><div class="wrap">
-  <h2>Geometri jalur dan delapan keadaannya</h2>
-  <p class="lede">Celah palang = 34% tinggi jalur. Balok = celah x akar(ukuran / batas), maksimum 95% tinggi jalur, sehingga berkas 9x batas tetap muat dan labelnya tetap menyebut kelipatan sebenarnya. Desktop 380 px (celah 129 px), tablet 300 px (102 px), mobile 220 px (75 px). Gambar di bawah dirender oleh kode yang sama dengan hero.</p>
-  <div class="minis" id="minis"></div>
-</div></section>
-
-<div class="marka" aria-hidden="true"></div>
-
-<section class="sec"><div class="wrap">
-  <h2>Logo, favicon, ikon pelat rambu</h2>
-  <div class="logos">
-    <figure><svg width="176" height="44" viewBox="0 0 176 44" aria-label="Logo Dokurapi"><rect x="3" y="12" width="5" height="32" fill="#1B1F24"/><rect x="158" y="12" width="5" height="32" fill="#1B1F24"/><rect x="0" y="4" width="170" height="9" fill="url(#stripe-logo)"/><rect x="0" y="4" width="170" height="9" fill="none" stroke="#1B1F24" stroke-width="1.5"/><rect x="165" y="13" width="9" height="11" fill="#6B7380"/><text x="83" y="39" text-anchor="middle" font-family="Overpass, sans-serif" font-weight="900" font-size="22" letter-spacing="1" textLength="136" lengthAdjust="spacingAndGlyphs" fill="#1B1F24">DOKURAPI</text></svg><figcaption>Siluet portal membingkai wordmark</figcaption></figure>
-    <figure><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='5' fill='%231B1F24'/%3E%3Crect x='4' y='9' width='3' height='19' fill='%23D5DAE1'/%3E%3Crect x='25' y='9' width='3' height='19' fill='%23D5DAE1'/%3E%3Crect x='2' y='6' width='28' height='5' fill='%23fff'/%3E%3Cpath d='M4 6h4l-3 5H2zM12 6h4l-3 5H9zM20 6h4l-3 5h-4zM28 6h2v1l-2 4h-3z' fill='%23C8102E'/%3E%3Crect x='11' y='17' width='10' height='11' fill='%23FFC20E'/%3E%3C/svg%3E" width="64" height="64" alt="Favicon 64 px"><figcaption>64 px</figcaption></figure>
-    <figure><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='5' fill='%231B1F24'/%3E%3Crect x='4' y='9' width='3' height='19' fill='%23D5DAE1'/%3E%3Crect x='25' y='9' width='3' height='19' fill='%23D5DAE1'/%3E%3Crect x='2' y='6' width='28' height='5' fill='%23fff'/%3E%3Cpath d='M4 6h4l-3 5H2zM12 6h4l-3 5H9zM20 6h4l-3 5h-4zM28 6h2v1l-2 4h-3z' fill='%23C8102E'/%3E%3Crect x='11' y='17' width='10' height='11' fill='%23FFC20E'/%3E%3C/svg%3E" width="32" height="32" alt="Favicon 32 px"><figcaption>32 px</figcaption></figure>
-    <figure><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='5' fill='%231B1F24'/%3E%3Crect x='4' y='9' width='3' height='19' fill='%23D5DAE1'/%3E%3Crect x='25' y='9' width='3' height='19' fill='%23D5DAE1'/%3E%3Crect x='2' y='6' width='28' height='5' fill='%23fff'/%3E%3Cpath d='M4 6h4l-3 5H2zM12 6h4l-3 5H9zM20 6h4l-3 5h-4zM28 6h2v1l-2 4h-3z' fill='%23C8102E'/%3E%3Crect x='11' y='17' width='10' height='11' fill='%23FFC20E'/%3E%3C/svg%3E" width="16" height="16" alt="Favicon 16 px"><figcaption>16 px</figcaption></figure>
-  </div>
-  <div class="icons">
-    <figure><svg aria-hidden="true"><use href="#i-batas"/></svg><figcaption>Batas tinggi (pelat target)</figcaption></figure>
-    <figure><svg aria-hidden="true"><use href="#i-larangan"/></svg><figcaption>Larangan (di atas batas)</figcaption></figure>
-    <figure><svg aria-hidden="true"><use href="#i-peringatan"/></svg><figcaption>Peringatan belah ketupat (format)</figcaption></figure>
-    <figure><svg aria-hidden="true"><use href="#i-info"/></svg><figcaption>Info (diproses di perangkat)</figcaption></figure>
-    <figure><svg aria-hidden="true"><use href="#i-lolos"/></svg><figcaption>Lolos ukuran</figcaption></figure>
-    <figure><svg aria-hidden="true"><use href="#i-belok"/></svg><figcaption>Belok (jalan alternatif)</figcaption></figure>
-    <figure><svg aria-hidden="true"><use href="#i-buntu"/></svg><figcaption>Jalan buntu (ke server)</figcaption></figure>
-    <figure><svg aria-hidden="true"><use href="#i-arah"/></svg><figcaption>Papan arah (situs saudara)</figcaption></figure>
-  </div>
-  <p class="note">Grid 24 px, garis 1,8-2,6 px. Garis diagonal merah-putih hanya ada di palang dan logo, tidak pernah sebagai pita, pemisah, atau latar.</p>
-</div></section>
-
-<div class="marka" aria-hidden="true"></div>
-
-<section class="sec"><div class="wrap cols2">
-  <div>
-    <h2>Struktur homepage</h2>
-    <ul>
-      <li><b>Header</b>: logo portal, menu "Kompres PDF, Kompres foto/JPG, Foto ke PDF, Gabung PDF, Pas foto", tombol bahasa ID/EN (EN di root, ID di /id).</li>
-      <li><b>Hero</b>: H1 dua baris di atas, subjudul kiri dan rak pelat batas kanan, jalur aspal selebar layar dengan portal di tepi kanan, tombol Pilih berkas di bahu jalan. Baris kepercayaan dan chip pas foto di bawah jalur.</li>
-      <li><b>Hasil</b>: kartu LOLOS UKURAN dengan byte, kaca baca, Unduh, Hapus dari memori; atau cabang jalan alternatif.</li>
-      <li><b>Masih ada berkas lain?</b> muncul setelah Unduh.</li>
-      <li><b>Batas yang sering diminta</b>: rambu bertiang yang berdiri di satu garis trotoar; ketuk rambu untuk memasang batas di portal.</li>
-      <li><b>Semua alat</b>: lima lajur, tiap lajur punya rambu petunjuk biru bertiang di atas garis tanah, dipisah marka putus-putus; tautan per batas (satu URL per alat per target).</li>
-      <li><b>Papan iklan</b>: slot tinggi tetap di atas dua kaki Beton, bingkai netral, jauh dari jalur kerja.</li>
-      <li><b>Kenapa berkas ditolak</b>: tiga rambu peringatan belah ketupat, masing-masing dengan papan tambahan putih berisi judul, tiang ke trotoar, lalu penjelasan.</li>
-      <li><b>Jalur pribadi</b>: diagram jalan buntu ke server, cara cek sendiri, catatan jujur soal iklan.</li>
-      <li><b>Tanya jawab</b> sebagai konten. Schema FAQPage tidak dihitung sebagai nilai SEO karena rich result FAQ dibatasi Google sejak Agustus 2023.</li>
-      <li><b>Footer Aspal</b> dengan papan arah hijau ke Target Lulus dan Karir Pintar.</li>
-    </ul>
-    <h3>Aturan iklan</h3>
-    <ul>
-      <li>Tidak ada iklan di antara jalur dan tombol Unduh, tidak ada iklan di atas alat pada mobile.</li>
-      <li>Tinggi slot dipesan, label "Iklan" selalu terlihat, tanpa iklan jangkar di halaman alat.</li>
-      <li>Saat Save-Data aktif, iklan baru dimuat setelah berkas diunduh.</li>
-    </ul>
-  </div>
-  <div>
-    <h2>Komponen kunci</h2>
-    <h3>Anggaran mesin (transfer brotli, diukur 3 Okt 2026 dari jsDelivr)</h3>
-    <div class="tblw"><table class="tbl">
-      <thead><tr><th>Alat</th><th>Mesin</th><th>Ukuran</th></tr></thead>
-      <tbody>
-        <tr><td>Kompres foto/JPG</td><td>Encoder JPEG bawaan browser (OffscreenCanvas). Opsi lanjut: MozJPEG WASM (@jsquash/jpeg 1.6.0)</td><td class="num">0 KB, opsi 58 KB</td></tr>
-        <tr><td>Kompres PDF</td><td>pdf.js 4.10.38 (main 100 KB + worker 404 KB) untuk membaca dan merender, pdf-lib 1.17.1 untuk menyusun ulang</td><td class="num">sekitar 690 KB</td></tr>
-        <tr><td>Foto ke PDF</td><td>Penulis PDF kecil buatan sendiri (halaman JPEG langsung)</td><td class="num">perkiraan di bawah 5 KB</td></tr>
-        <tr><td>Gabung PDF</td><td>pdf-lib 1.17.1</td><td class="num">185 KB</td></tr>
-        <tr><td>Pas foto</td><td>MediaPipe tasks-vision 0.10.21 + model selfie segmenter</td><td class="num">sekitar 2,9 MB</td></tr>
-        <tr><td>Halaman awal</td><td>HTML, CSS, JS inline + Overpass latin</td><td class="num">target di bawah 100 KB</td></tr>
-      </tbody>
-    </table></div>
-    <p class="note">Mesin dimuat setelah berkas dijatuhkan, ukurannya tampil lebih dulu, lalu disimpan service worker untuk kunjungan berikutnya dan mode offline.</p>
-    <h3>Protokol pesan worker</h3>
-    <ul>
-      <li>Ke worker: <code>load {bitmap}</code>, <code>run {target, minEdge, gray, maxEdge}</code>, <code>probe {long, q, gray}</code>.</li>
-      <li>Dari worker: <code>step {n, bytes}</code> untuk tiap percobaan yang masih di atas target (menggerakkan balok), <code>done {blob, bytes, q, scale}</code>, <code>unreachable {bestBytes}</code>, <code>error {code}</code>.</li>
-      <li>Pencarian: kualitas JPEG dibelah dua (0,3 sampai 0,9, maksimal 7 percobaan per skala), lalu skala x 0,8 sampai batas keterbacaan (setara 150 dpi untuk A4, 1200 px untuk foto lain).</li>
-    </ul>
-    <h3>Kartu hasil</h3>
-    <p>Pelat LOLOS UKURAN, ukuran besar, byte, cara hitung 1.000/1.024, ukuran versi Windows, kalimat "Portal juga memeriksa format dan isi", kaca baca 100% (area paling padat tulisan), nama berkas usulan, Unduh, Hapus dari memori.</p>
-  </div>
-</div></section>
-
-<div class="marka" aria-hidden="true"></div>
-
-<section class="sec"><div class="wrap cols2">
-  <div>
-    <h2>Versi mobile (360 px)</h2>
-    <ul>
-      <li>H1 34 px tiga baris, rak pelat satu baris geser, jalur 220 px selebar layar dengan portal di tepi kanan, tombol Pilih berkas lebar penuh di bahu jalan. Semua masuk layar pertama 360x640.</li>
-      <li>Subjudul turun ke bawah jalur, setelah baris kepercayaan. Di bawah Pilih berkas ada baris format: PDF, JPG, atau PNG dari galeri atau file HP.</li>
-      <li>Rak pelat dan rambu batas bisa digeser dengan scroll-snap; tepi kanan memudar sampai rak di ujung.</li>
-      <li>Cabang jalan alternatif berpindah: batang jalan di kiri, rambu belok lebar penuh di kanannya.</li>
-      <li>Setelah lolos, bar bawah lengket berisi LOLOS UKURAN, ukuran, dan Unduh, hanya saat tombol Pilih berkas dan kartu hasil sama-sama di luar layar. Iklan pertama baru setelah bagian panduan.</li>
-    </ul>
-  </div>
-  <div>
-    <h2>Peta pengaruh</h2>
-    <div class="tblw"><table class="tbl">
-      <thead><tr><th>Referensi</th><th>Diambil</th><th>Diubah jadi</th></tr></thead>
-      <tbody>
-        <tr><td>tinypng</td><td>Unggah sebagai hal pertama, maskot</td><td>Maskot diganti benda yang bekerja: portal bereaksi pada berkas.</td></tr>
-        <tr><td>squoosh.app</td><td>Satu aksi satu layar, momen main-main</td><td>Satu alat per URL; momen main-main hanya balok lewat portal.</td></tr>
-        <tr><td>cloudconvert</td><td>Unggah sebagai fokus, penanda keamanan</td><td>Fokusnya jalan aspal full-bleed; keamanan jadi diagram jalan buntu dan cara cek sendiri.</td></tr>
-        <tr><td>vert.sh</td><td>Pesan diproses di perangkat</td><td>Satu baris rambu info tetap di bawah jalur, menaut ke cara cek.</td></tr>
-        <tr><td>smallpdf</td><td>Banyak alat satu situs</td><td>Alat sebagai keluarga rambu, satu URL per batas.</td></tr>
-      </tbody>
-    </table></div>
-  </div>
-</div></section>
-
-<div class="marka" aria-hidden="true"></div>
-
-<section class="sec"><div class="wrap">
-  <h2>Risiko dan mitigasi</h2>
-  <div class="tblw"><table class="tbl">
-    <thead><tr><th>Risiko</th><th>Mitigasi</th></tr></thead>
-    <tbody>
-      <tr><td>Portal menghitung KB dengan cara berbeda</td><td>Target 1.000 byte x 0,975; byte tampil di hasil; uji unggah ke portal nyata sebelum klaim.</td></tr>
-      <tr><td>"LOLOS" dibaca sebagai jaminan diterima</td><td>Pelat berbunyi LOLOS UKURAN, selalu dengan kalimat soal format dan isi.</td></tr>
-      <tr><td>Metafora tidak sampai ke pembaca EN</td><td>Teks polos selalu ada di tag ("1.8 MB, 9x over the limit"); uji 5 orang per bahasa.</td></tr>
-      <tr><td>Merah-putih terbaca pita polisi</td><td>Hanya di palang dan logo, area kecil, portal lengkap dengan tiang dan pemberat.</td></tr>
-      <tr><td>Terasa situs dinas</td><td>Batas proporsi warna, ruang putih lega, kalimat hangat.</td></tr>
-      <tr><td>Mesin pas foto berat (2,9 MB)</td><td>Ukuran tampil dan perlu persetujuan; opsi tanpa mesin untuk foto yang latarnya sudah polos.</td></tr>
-      <tr><td>Iklan menyaru rambu</td><td>Bingkai netral, label Iklan, tidak pernah memakai warna rambu.</td></tr>
-      <tr><td>Tekstur aspal menurunkan kontras teks</td><td>Butir disetel dan diukur dari piksel: Abu Aspal paling buruk 5,03:1. Teks di jalur tidak lebih kecil dari 15 px.</td></tr>
-    </tbody>
-  </table></div>
-  <h3>Skor juri</h3>
-  <div class="score"><!--SKOR--><style>.tabel-skor-wrap{max-width:100%;overflow-x:auto}.tabel-skor{border-collapse:collapse;font-size:15px;margin:8px 0 12px;font-variant-numeric:tabular-nums}.tabel-skor th,.tabel-skor td{border:1px solid currentColor;padding:4px 10px;text-align:left}.tabel-skor td+td,.tabel-skor th+th{text-align:right}</style><div class="tabel-skor-wrap"><table class="tabel-skor"><thead><tr><th>Juri</th><th>R1</th><th>R2</th><th>R3</th><th>R4</th></tr></thead><tbody><tr><td>Juri A, keunikan</td><td>88</td><td>90</td><td>95</td><td>95</td></tr><tr><td>Juri B, craft</td><td>88</td><td>92</td><td>96</td><td>97</td></tr><tr><td>Juri C, pasar</td><td>86</td><td>92</td><td>95</td><td>95</td></tr></tbody></table></div><p><b>Rata-rata ronde 4: 95,7.</b> Target 95 per juri. Lolos 95 di ketiga juri. Sisa: uji unggah ke portal nyata (cara portal menghitung KB) dan cek angka syarat portal ke panduan resmi.</p><p>Diuji di Chromium dengan emulasi ukuran layar 360 sampai 1440 px, belum di HP sungguhan.</p></div>
-</div></section>
-</div>
-
-<script>
-(() => {
-'use strict';
-const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
-const $ = (s, el = document) => el.querySelector(s);
-const $$ = (s, el = document) => Array.from(el.querySelectorAll(s));
-
-/* ---------- teks dwibahasa (hero dan alat) ---------- */
-const T = {
-  id: {
-    menu:'Alat', nav0:'Kompres PDF', nav1:'Kompres foto/JPG', nav2:'Foto ke PDF', nav3:'Gabung PDF', nav4:'Pas foto',
-    h1a:'Portal menolak berkasmu?', h1b:'Kompres sampai lolos.',
-    sub:'Pilih batas ukurannya. Dokurapi mengecilkan PDF dan foto sampai pas di bawah batas itu, langsung di <span class="nw">HP-mu</span>. Berkas tidak diunggah ke server kami.',
-    setLbl:'terpasang', fmt:'PDF, JPG, atau PNG dari galeri atau file <span class="nw">HP</span>',
-    custom:'Atur sendiri', set:'Pasang', max:'MAKS',
-    lead:'Taruh berkasmu di jalan ini. Kami kompres sampai bisa lewat di bawah palang.',
-    cta:'Pilih berkas', ctaOther:'Pilih berkas lain', hint:'atau seret PDF atau JPG ke jalan ini',
-    sample:'Kompres contoh ini', compressTo:l => 'Kompres ke ' + l,
-    trust:'Diproses di perangkatmu, bukan di server kami.', trustLink:'Cara mengeceknya sendiri', pasfoto:'atau: Pas foto merah/biru',
-    sampleName:'contoh_ijazah.jpg', preparing:'Menyiapkan contoh...',
-    timesOver:m => m + 'x di atas batas', pctOver:p => p + '% di atas batas', under:'di bawah batas',
-    stIdle:'Pilih berkas atau seret ke jalan.',
-    stSample:(n,s,m) => `Contoh di jalan: <b>${n}</b>, ${s}, ${m}. Ini berkas fiktif buatan browser, kompres sungguhan.`,
-    stOver:(n,s,m) => `<b>${n}</b>: ${s}, ${m}. Tenang, masih bisa dikompres.`,
-    stFits:(n,s,l) => `<b>${n}</b>: ${s}, sudah di bawah batas ${l}. Tidak perlu dikompres.`,
-    stWork:(k,s,t) => `Mengompres. Langkah ${k}, terkecil sejauh ini <b>${s}</b>. Target aman ${t}.`,
-    stPass:'Lolos ukuran. Hasilnya ada di bawah.', stUnreach:l => `Belum bisa lewat di ${l} tanpa merusak tulisan.`,
-    stFormat:e => `Portal biasanya minta PDF atau JPG. Berkas .${e} belum bisa dibaca di sini.`,
-    stCleared:'Berkas dihapus dari memori halaman ini.', stReading:'Membaca berkas...',
-    tagWork:k => 'Langkah ' + k, tagReading:'Membaca', tagBest:'Terkecil', tagStuck:'belum lewat', tagOk:'lolos ukuran', tagFmt:'Format',
-    engImg:'Mesin: encoder JPEG bawaan browser, 0 KB tambahan.',
-    engPdf:'Mesin kompres PDF sekitar 690 KB (pdf.js + pdf-lib). Sekali unduh, lalu tersimpan untuk offline.',
-    engDemo:'DEMO', engDemoNote:'Di halaman konsep ini kompresi PDF disimulasikan dan hasilnya tidak bisa diunduh. Kompres foto/JPG di halaman ini sungguhan.',
-    engGo:'Lanjutkan demo', engCancel:'Batal', saveData:'Mode hemat kuota aktif: iklan ditunda sampai berkas diunduh.',
-    okPlate:'LOLOS UKURAN', okDemo:'LOLOS UKURAN (DEMO)',
-    okLine:(kb,l) => `${kb}, di bawah batas ${l}.`,
-    okBytes:(b,lb,kib) => `<b>${b} byte</b> dari batas ${lb} byte. Kami menghitung 1 KB = 1.000 byte dan menyisakan margin 2,5%, jadi aman untuk portal yang menghitung 1.000 maupun 1.024 byte. Di Windows ukurannya tampil sekitar ${kib} KB.`,
-    okCheck:'Portal juga memeriksa format dan isi. Cek tulisan di kaca baca sebelum mengunggah.',
-    dl:'Unduh', dlDemo:'Unduh tidak tersedia di demo PDF', clear:'Hapus dari memori', fname:'Nama berkas:',
-    loupe:'Kaca baca, potongan 100%', orig:'Asli', res:'Hasil',
-    fkTitle:l => `Belum bisa lewat di ${l}.`, fkSub:b => `Terkecil yang masih menjaga tulisan terbaca: ${b}. Ambil jalan lain:`,
-    fkGray:'Hitam-putih', fkGrayD:e => `cocok untuk scan ijazah, bisa sampai sekitar ${e}`,
-    fkLow:d => d ? `Resolusi lebih rendah (${d} dpi)` : 'Resolusi lebih rendah', fkLowD:e => `tulisan kecil bisa kurang tajam, sekitar ${e}`,
-    fkLoose:l => `Pakai batas ${l}`, fkLooseD:'hanya kalau portalnya mengizinkan', fkNo:e => `tetap belum lolos (${e})`, fkCalc:'menghitung perkiraan...',
-    nxTitle:'Masih ada berkas lain?', nx1:'Pas foto merah/biru', nx2:'Foto ke PDF', nx3:'Gabung PDF', nxSis:'Daftar CPNS? Latihan soal di Target Lulus',
-    customAsk:'Batas dalam KB', locale:'id-ID'
-  },
-  en: {
-    menu:'Tools', nav0:'Compress PDF', nav1:'Compress image/JPG', nav2:'Photo to PDF', nav3:'Merge PDF', nav4:'ID photo',
-    h1a:'Upload rejected?', h1b:'Compress it until it passes.',
-    setLbl:'set', fmt:'PDF, JPG or PNG from your phone',
-    sub:'Pick a limit (100 KB, 200 KB, 500 KB or 1 MB). Dokurapi compresses your PDF or photo to just under it, right on your phone, not on our servers.',
-    custom:'Custom', set:'Set', max:'MAX',
-    lead:'Put your file on this road. We compress it until it fits under the bar.',
-    cta:'Choose file', ctaOther:'Choose another file', hint:'or drag a PDF or JPG onto the road',
-    sample:'Compress the sample', compressTo:l => 'Compress to ' + l,
-    trust:'Processed on your device, not on our servers.', trustLink:'How to check it yourself', pasfoto:'or: Red/blue ID photo',
-    sampleName:'sample_certificate.jpg', preparing:'Preparing the sample...',
-    timesOver:m => m + 'x over the limit', pctOver:p => p + '% over the limit', under:'under the limit',
-    stIdle:'Choose a file or drag it onto the road.',
-    stSample:(n,s,m) => `Sample on the road: <b>${n}</b>, ${s}, ${m}. A fictional file made in your browser, compressed for real.`,
-    stOver:(n,s,m) => `<b>${n}</b>: ${s}, ${m}. Don't worry, it can be compressed.`,
-    stFits:(n,s,l) => `<b>${n}</b>: ${s}, already under the ${l} limit. No need to compress.`,
-    stWork:(k,s,t) => `Compressing. Step ${k}, smallest so far <b>${s}</b>. Safe target ${t}.`,
-    stPass:'Size OK. Your result is below.', stUnreach:l => `Can't fit under ${l} without ruining the text.`,
-    stFormat:e => `Portals usually ask for PDF or JPG. A .${e} file can't be read here yet.`,
-    stCleared:'File cleared from this page\'s memory.', stReading:'Reading the file...',
-    tagWork:k => 'Step ' + k, tagReading:'Reading', tagBest:'Smallest', tagStuck:'still too big', tagOk:'size OK', tagFmt:'Format',
-    engImg:'Engine: the browser\'s built-in JPEG encoder, 0 KB extra.',
-    engPdf:'PDF engine about 690 KB (pdf.js + pdf-lib). Downloaded once, then kept for offline use.',
-    engDemo:'DEMO', engDemoNote:'On this concept page PDF compression is simulated and can\'t be downloaded. Photo/JPG compression here is real.',
-    engGo:'Continue demo', engCancel:'Cancel', saveData:'Data saver is on: ads wait until you download your file.',
-    okPlate:'SIZE OK', okDemo:'SIZE OK (DEMO)',
-    okLine:(kb,l) => `Done. ${kb}, under the ${l} limit.`,
-    okBytes:(b,lb,kib) => `<b>${b} bytes</b> of a ${lb} byte limit. We count 1 KB as 1,000 bytes and keep a 2.5% margin, so it fits portals that count 1,000 or 1,024 bytes. Windows shows it as about ${kib} KB.`,
-    okCheck:'Portals also check format and content. Check the text in the reading loupe before you upload.',
-    dl:'Download', dlDemo:'Download not available in the PDF demo', clear:'Clear from memory', fname:'File name:',
-    loupe:'Reading loupe, 100% crop', orig:'Original', res:'Result',
-    fkTitle:l => `Can't fit under ${l} yet.`, fkSub:b => `Smallest size that keeps the text readable: ${b}. Take another route:`,
-    fkGray:'Black and white', fkGrayD:e => `good for scanned certificates, down to about ${e}`,
-    fkLow:d => d ? `Lower resolution (${d} dpi)` : 'Lower resolution', fkLowD:e => `small text may look softer, about ${e}`,
-    fkLoose:l => `Use a ${l} limit`, fkLooseD:'only if the portal allows it', fkNo:e => `still too big (${e})`, fkCalc:'estimating...',
-    nxTitle:'More files to prepare?', nx1:'Red/blue ID photo', nx2:'Photo to PDF', nx3:'Merge PDF', nxSis:'',
-    customAsk:'Limit in KB', locale:'en-US'
-  }
-};
-let L = 'id';
-const t = k => T[L][k];
-
-/* ---------- format angka ---------- */
-const fmtSize = b => {
-  if (b >= 1e6) return (b / 1e6).toFixed(1).replace('.', L === 'id' ? ',' : '.') + ' MB';
-  return Math.max(1, Math.floor(b / 1000)) + ' KB';
-};
-const fmtLimit = kb => kb >= 1000 && kb % 1000 === 0 ? (kb / 1000) + ' MB' : kb + ' KB';
-const fmtInt = n => n.toLocaleString(t('locale'));
-const safeTarget = kb => Math.floor(kb * 1000 * 0.975);
-const overText = (bytes, limB) => {
-  const r = bytes / limB;
-  if (r <= 1) return t('under');
-  return r >= 2 ? t('timesOver')(Math.round(r)) : t('pctOver')(Math.max(1, Math.round((r - 1) * 100)));
-};
-
-/* ---------- geometri jalur ---------- */
-function laneGeom(lane) {
-  const H = parseFloat(getComputedStyle(lane).getPropertyValue('--H')) || 380;
-  return { H, clear: H * 0.34 };
-}
-function blockHeight(lane, bytes, limB) {
-  const { H, clear } = laneGeom(lane);
-  return Math.max(14, Math.min(clear * Math.sqrt(bytes / limB), H * 0.95));
-}
-
-/* ---------- elemen ---------- */
-const lane = $('#lane'), blkw = $('.blkw', lane), blk = $('.blk', lane), tag = $('.tag', lane);
-const hangT = $('#hang .hang-t'), statusEl = $('#status'), engineEl = $('#engine');
-const forkrow = $('#forkrow'), resultSlot = $('#result-slot'), nextEl = $('#next');
-const fileIn = $('#file'), pickBtn = $('#pick'), goBtn = $('#go'), goT = $('#go-t');
-const mbar = $('#mbar');
-const vis = { pick: true, card: false }; let cardEl = null;
-const io = ('IntersectionObserver' in window) ? new IntersectionObserver(es => { es.forEach(e => { if (e.target === pickBtn) vis.pick = e.isIntersecting; else if (e.target === cardEl) vis.card = e.isIntersecting; }); syncBar(); }) : null;
-if (io) io.observe(pickBtn);
-function syncBar() { const on = !!(S && S.phase === 'pass' && S.result) && matchMedia('(max-width:767px)').matches && !vis.pick && !vis.card; mbar.classList.toggle('on', on); document.body.classList.toggle('has-mbar', on); document.documentElement.classList.toggle('has-mbar', on); }
-function observeCard() { if (io && cardEl) io.unobserve(cardEl); cardEl = $('.result', resultSlot); vis.card = true; if (io && cardEl) io.observe(cardEl); syncBar(); }
-
-const S = { limitKB: 200, src: null, phase: 'idle', result: null, opts: null, isSample: false, urls: [] };
-
-function setTag(cls, html) { tag.className = 'tag ' + (cls || ''); tag.innerHTML = html; }
-function setStatus(html) { statusEl.innerHTML = html; }
-function track(u) { S.urls.push(u); return u; }
-
-function updateHang() { hangT.textContent = t('max') + ' ' + fmtLimit(S.limitKB); }
-
-/* ---------- bahasa ---------- */
-function applyLang(lang) {
-  L = lang;
-  $$('.lang button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.lang === lang)));
-  $('#alat').setAttribute('lang', lang);
-  $$('[data-i]').forEach(el => { const v = T[lang][el.dataset.i]; if (typeof v === 'string') el.innerHTML = v; });
-  markPlate(S.limitKB);
-  $('#plates').setAttribute('aria-label', lang === 'id' ? 'Batas ukuran dari portal' : 'Upload limit from the portal');
-  updateHang();
-  refreshView();
-}
-$$('.lang button').forEach(b => b.addEventListener('click', () => applyLang(b.dataset.lang)));
-
-/* ---------- pelat batas ---------- */
-const plates = $$('#plates .plate');
-function markPlate(kb) {
-  let found = false;
-  plates.forEach(p => {
-    const on = p.dataset.kb !== 'custom' && Number(p.dataset.kb) === kb;
-    if (on) found = true;
-    p.setAttribute('aria-checked', String(on));
-  });
-  const pcEl = $('#pcustom'); pcEl.setAttribute('aria-checked', String(!found));
-  const lab = $('[data-i="custom"]', pcEl); if (lab) lab.textContent = found ? t('custom') : fmtLimit(kb);
-}
-const customInner = () => `<svg class="gl" aria-hidden="true"><use href="#g-batas"/></svg><svg class="ck" aria-hidden="true"><use href="#i-centang"/></svg><span data-i="custom">${t('custom')}</span><span class="st" data-i="setLbl">${t('setLbl')}</span><svg class="dn" aria-hidden="true"><use href="#g-turun"/></svg>`;
-function flyPlate(fromEl, done) {
-  const hang = $('#hang');
-  if (RM || !fromEl || !fromEl.getBoundingClientRect().width) { done(); return; }
-  const a = fromEl.getBoundingClientRect(), b = hang.getBoundingClientRect();
-  if (b.top > innerHeight || b.bottom < 0) { done(); return; }
-  const fly = fromEl.cloneNode(true);
-  fly.classList.add('flyer'); fly.removeAttribute('id'); fly.setAttribute('aria-hidden', 'true');
-  Object.assign(fly.style, { left: a.left + 'px', top: a.top + 'px', width: a.width + 'px', height: a.height + 'px', background: '#FFC20E', color: '#1B1F24', borderColor: '#1B1F24' });
-  document.body.appendChild(fly);
-  hang.style.visibility = 'hidden';
-  const dx = b.left + b.width / 2 - (a.left + a.width / 2), dy = b.top + b.height / 2 - (a.top + a.height / 2);
-  const anim = fly.animate([{ transform: 'translate(0,0)' }, { transform: `translate(${dx}px,${dy}px)` }], { duration: 360, easing: 'cubic-bezier(.2,.8,.2,1)' });
-  anim.onfinish = () => { fly.remove(); hang.style.visibility = ''; done(); };
-}
-function setLimit(kb, fromEl) {
-  kb = Math.max(10, Math.min(20000, Math.round(kb)));
-  const apply = () => { S.limitKB = kb; updateHang(); markPlate(kb); afterLimitChange(); };
-  if (fromEl) flyPlate(fromEl, apply); else apply();
-  markPlate(kb);
-}
-plates.forEach(p => {
-  if (p.dataset.kb === 'custom') return;
-  p.addEventListener('click', () => setLimit(Number(p.dataset.kb), p));
-});
-const pc = $('#pcustom');
-pc.addEventListener('click', e => {
-  if (pc.classList.contains('edit')) return;
-  pc.classList.add('edit');
-  pc.innerHTML = `<label class="vh" for="pin">${t('customAsk')}</label><input id="pin" class="pin num" type="number" inputmode="numeric" min="10" max="20000" value="${S.limitKB}"><span>KB</span><button type="button" class="pok">${t('set')}</button>`;
-  const pin = $('#pin', pc); pin.focus(); pin.select();
-  const commit = () => {
-    const v = Number(pin.value);
-    pc.classList.remove('edit');
-    pc.innerHTML = customInner(); markPlate(S.limitKB);
-    if (v >= 10) setLimit(v, pc);
-  };
-  $('.pok', pc).addEventListener('click', ev => { ev.stopPropagation(); commit(); });
-  pin.addEventListener('keydown', ev => { if (ev.key === 'Enter') { ev.preventDefault(); commit(); } if (ev.key === 'Escape') { pc.classList.remove('edit'); pc.innerHTML = customInner(); markPlate(S.limitKB); } });
-});
-$$('.rsign').forEach(r => r.addEventListener('click', () => {
-  const kb = Number(r.dataset.kb);
-  $('#alat').scrollIntoView({ behavior: RM ? 'auto' : 'smooth' });
-  setTimeout(() => setLimit(kb, plates.find(p => Number(p.dataset.kb) === kb)), RM ? 0 : 450);
-}));
-
-/* ---------- mesin kompres (worker dengan cadangan main thread) ---------- */
-async function searchJPEG(enc, W, H, o, post) {
-  const long = Math.max(W, H);
-  let s = Math.min(1, o.maxEdge / long), n = 0, best = null, smallest = Infinity, last = null;
-  for (;;) {
-    const w = Math.max(1, Math.round(W * s)), h = Math.max(1, Math.round(H * s));
-    let lo = 0.3, hi = 0.9;
-    let b = await enc(w, h, hi, o.gray); n++;
-    if (b.size <= o.target) { best = { blob: b, q: hi, s }; break; }
-    smallest = Math.min(smallest, b.size); post({ type: 'step', n, bytes: smallest });
-    b = await enc(w, h, lo, o.gray); n++; last = b;
-    if (b.size <= o.target) {
-      best = { blob: b, q: lo, s };
-      for (let i = 0; i < 5; i++) {
-        const q = (lo + hi) / 2, tb = await enc(w, h, q, o.gray); n++;
-        if (tb.size <= o.target) { best = { blob: tb, q, s }; lo = q; }
-        else { hi = q; smallest = Math.min(smallest, tb.size); post({ type: 'step', n, bytes: smallest }); }
-      }
-      break;
-    }
-    smallest = Math.min(smallest, b.size); post({ type: 'step', n, bytes: smallest });
-    if (Math.max(w, h) * 0.8 < o.minEdge) return { type: 'unreachable', n, bestBytes: b.size, s };
-    s *= 0.8;
-  }
-  return { type: 'done', n, blob: best.blob, bytes: best.blob.size, q: best.q, s: best.s };
-}
-const encBody = `async function enc(w,h,q,gray){const c=new OffscreenCanvas(w,h);const x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,w,h);x.imageSmoothingQuality='high';x.drawImage(bmp,0,0,w,h);if(gray){const d=x.getImageData(0,0,w,h),a=d.data;for(let i=0;i<a.length;i+=4){const y=a[i]*.299+a[i+1]*.587+a[i+2]*.114;a[i]=a[i+1]=a[i+2]=y;}x.putImageData(d,0,0);}return await c.convertToBlob({type:'image/jpeg',quality:q});}`;
-const workerSrc = `let bmp=null;${encBody}const searchJPEG=${searchJPEG.toString()};
-onmessage=async e=>{const m=e.data;try{
-if(m.type==='load'){if(bmp&&bmp.close)bmp.close();bmp=m.bitmap;postMessage({type:'loaded',id:m.id});return;}
-if(m.type==='run'){const r=await searchJPEG(enc,bmp.width,bmp.height,m.o,p=>postMessage(Object.assign(p,{id:m.id})));postMessage(Object.assign(r,{id:m.id}));return;}
-if(m.type==='probe'){const s=Math.min(1,m.long/Math.max(bmp.width,bmp.height));const b=await enc(Math.round(bmp.width*s),Math.round(bmp.height*s),m.q,m.gray);postMessage({type:'probe',id:m.id,bytes:b.size});return;}
-}catch(err){postMessage({type:'error',id:m.id,msg:String(err)});}};`;
-let worker = null, jobId = 0;
-try {
-  if (typeof OffscreenCanvas !== 'undefined' && OffscreenCanvas.prototype.convertToBlob) {
-    worker = new Worker(URL.createObjectURL(new Blob([workerSrc], { type: 'text/javascript' })));
-    worker.onerror = () => { worker = null; };
-  }
-} catch (e) { worker = null; }
-let mainBmp = null;
-async function encMain(w, h, q, gray) {
-  const c = document.createElement('canvas'); c.width = w; c.height = h;
-  const x = c.getContext('2d'); x.fillStyle = '#fff'; x.fillRect(0, 0, w, h); x.drawImage(mainBmp, 0, 0, w, h);
-  if (gray) { const d = x.getImageData(0, 0, w, h), a = d.data; for (let i = 0; i < a.length; i += 4) { const y = a[i] * .299 + a[i + 1] * .587 + a[i + 2] * .114; a[i] = a[i + 1] = a[i + 2] = y; } x.putImageData(d, 0, 0); }
-  return await new Promise(r => c.toBlob(r, 'image/jpeg', q));
-}
-function call(msg, onStep) {
-  return new Promise((res, rej) => {
-    const id = ++jobId; msg.id = id;
-    if (worker) {
-      const h = e => {
-        const m = e.data; if (m.id !== id) return;
-        if (m.type === 'step') { onStep && onStep(m); return; }
-        worker.removeEventListener('message', h);
-        m.type === 'error' ? rej(m) : res(m);
-      };
-      worker.addEventListener('message', h);
-      worker.postMessage(msg, msg.bitmap ? [msg.bitmap] : []);
-    } else {
-      if (msg.type === 'load') { res({ type: 'loaded' }); return; }
-      if (msg.type === 'run') { searchJPEG(encMain, mainBmp.width, mainBmp.height, msg.o, onStep || (() => {})).then(res, rej); return; }
-      if (msg.type === 'probe') { const s = Math.min(1, msg.long / Math.max(mainBmp.width, mainBmp.height)); encMain(Math.round(mainBmp.width * s), Math.round(mainBmp.height * s), msg.q, msg.gray).then(b => res({ type: 'probe', bytes: b.size }), rej); }
-    }
-  });
-}
-
-/* ---------- antrean langkah (balok turun) ---------- */
-let stepQ = [], stepTimer = null, stepDrain = null;
-function pushStep(m) { stepQ.push(m); if (!stepTimer) pumpStep(); }
-function pumpStep() {
-  const m = stepQ.shift();
-  if (!m) { stepTimer = null; if (stepDrain) { const d = stepDrain; stepDrain = null; d(); } return; }
-  const limB = S.limitKB * 1000;
-  blkw.style.height = blockHeight(lane, m.bytes, limB) + 'px';
-  setTag('t-work', `${t('tagWork')(m.n)}<small class="num">${fmtSize(m.bytes)}</small>`);
-  setStatus(t('stWork')(m.n, fmtSize(m.bytes), fmtInt(safeTarget(S.limitKB)) + ' byte'));
-  stepTimer = setTimeout(pumpStep, RM ? 0 : 130);
-}
-const drained = () => new Promise(r => { if (!stepTimer && !stepQ.length) r(); else stepDrain = r; });
-
-/* ---------- contoh fiktif buatan browser ---------- */
-async function makeSample() {
-  try { await document.fonts.ready; } catch (e) {}
-  const W = 1654, H = 2339, c = document.createElement('canvas'); c.width = W; c.height = H;
-  const x = c.getContext('2d');
-  x.fillStyle = '#F6F4EE'; x.fillRect(0, 0, W, H);
-  x.strokeStyle = '#2B4A6F'; x.lineWidth = 10; x.strokeRect(70, 70, W - 140, H - 140);
-  x.lineWidth = 3; x.strokeRect(96, 96, W - 192, H - 192);
-  x.fillStyle = '#1D2A3A'; x.textAlign = 'center';
-  x.font = '900 46px Overpass, sans-serif'; x.fillText('CONTOH FIKTIF UNTUK DEMO', W / 2, 250);
-  x.font = '900 120px Overpass, sans-serif'; x.fillText('IJAZAH', W / 2, 420);
-  x.font = '600 40px Overpass, sans-serif'; x.fillText('Sekolah Menengah Atas Contoh, Tahun Ajaran 2025/2026', W / 2, 500);
-  x.textAlign = 'left'; x.font = '400 38px Overpass, sans-serif';
-  const rows = [['Nama', 'Rina Putri Lestari (fiktif)'], ['Tempat, tanggal lahir', 'Sleman, 14 Februari 2008'], ['Nomor induk', '0081234567 (contoh)'], ['Nomor seri ijazah', '2026-CONTOH-0147'], ['Program', 'Ilmu Pengetahuan Alam']];
-  rows.forEach((r, i) => { const y = 680 + i * 78; x.fillText(r[0], 200, y); x.fillText(': ' + r[1], 700, y); });
-  x.font = '400 34px Overpass, sans-serif';
-  const para = 'telah menyelesaikan seluruh program pembelajaran dan dinyatakan lulus dari satuan pendidikan berdasarkan hasil ujian dan penilaian akhir yang ditetapkan sekolah. Dokumen ini dibuat otomatis oleh browser untuk mencoba alat kompres dan tidak berlaku untuk keperluan apa pun.';
-  let line = '', y = 1150; para.split(' ').forEach(w => { const tst = line + w + ' '; if (x.measureText(tst).width > W - 400) { x.fillText(line, 200, y); line = w + ' '; y += 58; } else line = tst; }); x.fillText(line, 200, y);
-  x.font = '700 34px Overpass, sans-serif'; x.fillText('Mata pelajaran', 200, 1560); x.fillText('Nilai', 1250, 1560);
-  x.font = '400 32px Overpass, sans-serif';
-  ['Pendidikan Agama', 'Bahasa Indonesia', 'Matematika', 'Fisika', 'Kimia', 'Biologi', 'Bahasa Inggris'].forEach((m, i) => { const yy = 1625 + i * 54; x.fillText(m, 200, yy); x.fillText(String(78 + ((i * 7) % 17)), 1250, yy); x.fillStyle = '#C9C6BD'; x.fillRect(200, yy + 14, 1250, 2); x.fillStyle = '#1D2A3A'; });
-  x.font = '400 32px Overpass, sans-serif'; x.fillText('Sleman, 12 Juni 2026', 1050, 2080);
-  x.strokeStyle = '#1D2A3A'; x.lineWidth = 4; x.beginPath(); x.moveTo(1060, 2190); x.bezierCurveTo(1120, 2120, 1160, 2240, 1230, 2160); x.bezierCurveTo(1280, 2110, 1300, 2210, 1380, 2170); x.stroke();
-  x.fillText('Kepala sekolah (fiktif)', 1050, 2250);
-  const d = x.getImageData(0, 0, W, H), a = d.data;
-  for (let i = 0; i < a.length; i += 4) { const n = (Math.random() - .5) * 26; a[i] += n; a[i + 1] += n * .9; a[i + 2] += n * 1.1; }
-  x.putImageData(d, 0, 0);
-  return await new Promise(r => c.toBlob(r, 'image/jpeg', 0.95));
-}
-
-/* ---------- memuat berkas ---------- */
-async function thumbURL(bmp) {
-  const w = 220, h = Math.round(bmp.height * w / bmp.width), c = document.createElement('canvas'); c.width = w; c.height = h;
-  c.getContext('2d').drawImage(bmp, 0, 0, w, h);
-  const b = await new Promise(r => c.toBlob(r, 'image/jpeg', .7));
-  return track(URL.createObjectURL(b));
-}
-function resetOutputs() {
-  forkrow.hidden = true; forkrow.innerHTML = '';
-  resultSlot.innerHTML = ''; nextEl.hidden = true; nextEl.innerHTML = '';
-  engineEl.hidden = true; engineEl.innerHTML = '';
-  lane.classList.remove('ok'); blkw.classList.remove('through');
-  if (io && cardEl) io.unobserve(cardEl); cardEl = null; vis.card = false;
-  mbar.classList.remove('on'); document.body.classList.remove('has-mbar'); document.documentElement.classList.remove('has-mbar');
-  if (S.result && S.result.url) URL.revokeObjectURL(S.result.url);
-  S.result = null;
-}
-async function loadFile(file, isSample) {
-  resetOutputs();
-  const ext = ((file.name || '').split('.').pop() || '').toLowerCase();
-  const isPdf = file.type === 'application/pdf' || ext === 'pdf';
-  const isImg = /^image\/(jpeg|png)$/.test(file.type) || ['jpg', 'jpeg', 'png'].includes(ext);
-  S.isSample = !!isSample;
-  blkw.hidden = false; blk.className = 'blk'; blk.style.backgroundImage = '';
-  if (!isPdf && !isImg) {
-    S.src = { name: file.name, bytes: file.size, kind: 'bad', ext };
-    S.phase = 'format'; refreshView(); return;
-  }
-  S.phase = 'reading'; S.src = { name: file.name, bytes: file.size, kind: isPdf ? 'pdf' : 'img', ext, file };
-  refreshView();
-  if (isImg) {
-    try {
-      const b1 = await createImageBitmap(file), b2 = await createImageBitmap(file);
-      if (mainBmp && mainBmp.close) mainBmp.close();
-      mainBmp = b2; S.src.w = b1.width; S.src.h = b1.height;
-      await call({ type: 'load', bitmap: b1 });
-      blk.style.backgroundImage = `url(${await thumbURL(b2)})`;
-    } catch (e) { S.src.kind = 'bad'; S.phase = 'format'; refreshView(); return; }
-  } else { blk.classList.add('pdf'); }
-  S.phase = file.size <= S.limitKB * 1000 * 0.975 && isImg ? 'fits' : 'over';
-  refreshView(true);
-}
-
-/* ---------- tampilan sesuai fase ---------- */
-function refreshView(bump) {
-  const limB = S.limitKB * 1000;
-  goBtn.hidden = false;
-  if (!S.src) {
-    blkw.hidden = true; setTag('', ''); setStatus(t('stIdle'));
-    goT.textContent = t('sample'); $('[data-i="cta"]').textContent = t('cta');
-    return;
-  }
-  const src = S.src, name = L === 'en' && S.isSample ? t('sampleName') : src.name;
-  $('[data-i="cta"]').textContent = S.isSample ? t('cta') : t('ctaOther');
-  goT.textContent = S.isSample ? t('sample') : t('compressTo')(fmtLimit(S.limitKB));
-  switch (S.phase) {
-    case 'reading':
-      blkw.classList.add('reading'); blkw.style.height = blockHeight(lane, Math.max(src.bytes, limB * .5), limB) + 'px';
-      setTag('', t('tagReading')); setStatus(t('stReading')); break;
-    case 'format':
-      blkw.classList.remove('reading'); blk.className = 'blk bad'; blkw.style.height = laneGeom(lane).clear * .8 + 'px';
-      setTag('t-warn', `${t('tagFmt')} .${src.ext || '?'}`); setStatus(t('stFormat')(src.ext || '?')); goBtn.hidden = true; break;
-    case 'fits':
-      blkw.classList.remove('reading'); blkw.style.height = blockHeight(lane, src.bytes, limB) + 'px';
-      setTag('t-ok', `${fmtSize(src.bytes)}<small>${t('under')}</small>`);
-      setStatus(t('stFits')(name, fmtSize(src.bytes), fmtLimit(S.limitKB))); break;
-    case 'over': {
-      blkw.classList.remove('reading'); blkw.style.height = blockHeight(lane, src.bytes, limB) + 'px';
-      const m = overText(src.bytes, limB);
-      setTag('t-over', `${fmtSize(src.bytes)}<small>${m}</small>`);
-      setStatus((S.isSample ? t('stSample') : t('stOver'))(name, fmtSize(src.bytes), m));
-      if (bump && !RM) { blkw.classList.remove('bump'); void blkw.offsetWidth; blkw.classList.add('bump'); }
-      break; }
-    case 'pass': {
-      const r = S.result;
-      blkw.style.height = blockHeight(lane, r.bytes, limB) + 'px';
-      setTag('t-ok', `${fmtSize(r.bytes)}<small>${t('tagOk')}</small>`); setStatus(t('stPass'));
-      renderResult(); break; }
-    case 'unreach': {
-      setTag('t-over', `${t('tagBest')} ${fmtSize(S.best)}<small>${t('tagStuck')}</small>`);
-      setStatus(t('stUnreach')(fmtLimit(S.limitKB))); renderFork(); break; }
-    case 'work': break;
-  }
-}
-
-function afterLimitChange() {
-  if (!S.src || S.phase === 'format') { refreshView(); return; }
-  resetOutputs();
-  const limB = S.limitKB * 1000;
-  S.phase = S.src.kind === 'img' && S.src.bytes <= limB * 0.975 ? 'fits' : 'over';
-  refreshView();
-}
-
-/* ---------- kompres ---------- */
-function minEdgeFor(w, h) {
-  const long = Math.max(w, h), short = Math.min(w, h), a4 = Math.abs(long / short - 1.414) < 0.05;
-  const m = a4 ? 1754 : 1200;
-  return { minEdge: Math.min(m, long * 0.75), a4, long };
-}
-async function compress(extra) {
-  if (!S.src || S.phase === 'work') return;
-  if (S.src.kind === 'pdf') { showPdfEngine(); return; }
-  if (S.src.kind !== 'img') return;
-  resetOutputs();
-  const me = minEdgeFor(S.src.w, S.src.h);
-  S.opts = Object.assign({ target: safeTarget(S.limitKB), minEdge: me.minEdge, gray: false, maxEdge: 3508 }, extra || {});
-  S.phase = 'work'; lane.classList.add('go'); goBtn.disabled = true;
-  engineEl.hidden = false; engineEl.classList.remove('ask'); engineEl.innerHTML = `<span>${t('engImg')}</span>`;
-  pushStep({ n: 0, bytes: S.src.bytes });
-  let r;
-  try { r = await call({ type: 'run', o: S.opts }, pushStep); }
-  catch (e) { lane.classList.remove('go'); goBtn.disabled = false; S.phase = 'format'; refreshView(); return; }
-  await drained();
-  lane.classList.remove('go'); goBtn.disabled = false;
-  if (r.type === 'done') {
-    S.result = { blob: r.blob, bytes: r.bytes, q: r.q, s: r.s, url: URL.createObjectURL(r.blob), demo: false };
-    S.phase = 'pass';
-    blkw.style.height = blockHeight(lane, r.bytes, S.limitKB * 1000) + 'px';
-    await new Promise(z => setTimeout(z, RM ? 0 : 140));
-    blkw.classList.add('through'); lane.classList.add('ok');
-    refreshView();
-  } else {
-    S.best = r.bestBytes; S.phase = 'unreach'; S.lastScale = r.s; refreshView();
-  }
-}
-goBtn.addEventListener('click', () => {
-  if (!S.src && !S.phase.startsWith('work')) { startSample(); return; }
-  compress();
-});
-
-/* ---------- demo PDF (simulasi berlabel) ---------- */
-function showPdfEngine() {
-  engineEl.hidden = false; engineEl.classList.add('ask');
-  engineEl.innerHTML = `<span class="demo">${t('engDemo')}</span><span>${t('engPdf')}</span><span style="flex-basis:100%;color:#5A6472">${t('engDemoNote')}</span><button type="button" class="btn btn-a" id="pdfgo">${t('engGo')}</button><button type="button" class="btn btn-l" id="pdfno">${t('engCancel')}</button>`;
-  $('#pdfgo').onclick = runPdfDemo;
-  $('#pdfno').onclick = () => { engineEl.hidden = true; };
-}
-async function runPdfDemo() {
-  engineEl.hidden = true; resetOutputs();
-  S.phase = 'work'; lane.classList.add('go');
-  const start = S.src.bytes, end = Math.floor(safeTarget(S.limitKB) * 0.97), steps = 8;
-  for (let i = 1; i <= steps; i++) pushStep({ n: i, bytes: Math.round(start * Math.pow(end / start, i / (steps + 1))) });
-  await drained();
-  lane.classList.remove('go');
-  S.result = { bytes: end, demo: true };
-  S.phase = 'pass';
-  blkw.style.height = blockHeight(lane, end, S.limitKB * 1000) + 'px';
-  await new Promise(z => setTimeout(z, RM ? 0 : 140));
-  blkw.classList.add('through'); lane.classList.add('ok');
-  refreshView();
-}
-
-/* ---------- kartu hasil + kaca baca ---------- */
-function renderResult() {
-  const r = S.result, lim = fmtLimit(S.limitKB);
-  const base = (S.isSample ? (L === 'en' ? 'sample_certificate' : 'contoh_ijazah') : (S.src.name || 'berkas').replace(/\.[^.]+$/, '')).slice(0, 40);
-  const fname = `${base}_${S.limitKB}kb.${S.src.kind === 'pdf' ? 'pdf' : 'jpg'}`;
-  resultSlot.innerHTML = `<div class="result" role="region" aria-label="${t('okPlate')}">
-    <div class="lines">
-      <span class="okplate"><svg aria-hidden="true"><use href="#i-lolos"/></svg>${r.demo ? t('okDemo') : t('okPlate')}</span>
-      <p class="big num">${fmtSize(r.bytes)}</p>
-      <p><b>${t('okLine')(fmtSize(r.bytes), lim)}</b></p>
-      <p class="num">${t('okBytes')(fmtInt(r.bytes), fmtInt(S.limitKB * 1000), Math.floor(r.bytes / 1024))}</p>
-      <p>${t('okCheck')}</p>
-      <div class="acts">
-        ${r.demo ? `<button class="btn btn-a" disabled>${t('dlDemo')}</button>` : `<a class="btn btn-a" id="dl" href="${r.url}" download="${fname}"><svg aria-hidden="true"><use href="#i-unduh"/></svg>${t('dl')}</a>`}
-        <button type="button" class="btn btn-l" id="clr">${t('clear')}</button>
-      </div>
-      <p class="fname">${t('fname')} <b>${fname}</b></p>
-    </div>
-    ${r.demo ? '' : `<div><p class="loupe-t">${t('loupe')}</p><div class="loupe"><figure><canvas id="lo-o" width="168" height="168"></canvas><figcaption>${t('orig')}</figcaption></figure><figure><canvas id="lo-r" width="168" height="168"></canvas><figcaption>${t('res')}</figcaption></figure></div></div>`}
-  </div>`;
-  $('#clr').onclick = clearAll;
-  const dl = $('#dl'); if (dl) dl.addEventListener('click', showNext);
-  if (!r.demo) drawLoupe();
-  observeCard();
-  $('#mbar-s').textContent = fmtSize(r.bytes);
-  const md = $('#mbar-dl');
-  if (r.demo) { md.removeAttribute('href'); md.removeAttribute('download'); md.setAttribute('aria-disabled', 'true'); }
-  else { md.href = r.url; md.download = fname; md.onclick = showNext; md.removeAttribute('aria-disabled'); }
-}
-async function drawLoupe() {
-  const r = S.result; if (!r || !r.blob || !mainBmp) return;
-  const out = await createImageBitmap(r.blob);
-  const sw = 120, sh = Math.round(out.height * sw / out.width), c = document.createElement('canvas'); c.width = sw; c.height = sh;
-  const x = c.getContext('2d'); x.drawImage(out, 0, 0, sw, sh);
-  const d = x.getImageData(0, 0, sw, sh).data; let best = -1, bx = 0, by = 0; const cell = 12;
-  for (let cy = Math.round(sh * .2); cy + cell < sh * .9; cy += 4) for (let cx = Math.round(sw * .1); cx + cell < sw * .9; cx += 4) {
-    let e = 0; for (let yy = cy; yy < cy + cell; yy++) for (let xx = cx; xx < cx + cell - 1; xx++) { const i = (yy * sw + xx) * 4; e += Math.abs(d[i] - d[i + 4]); }
-    if (e > best) { best = e; bx = cx; by = cy; }
-  }
-  const fx = (bx + cell / 2) / sw, fy = (by + cell / 2) / sh, size = 168;
-  const cr = $('#lo-r'), co = $('#lo-o'); if (!cr || !co) return;
-  const rx = Math.max(0, Math.min(out.width - size, fx * out.width - size / 2)), ry = Math.max(0, Math.min(out.height - size, fy * out.height - size / 2));
-  cr.getContext('2d').drawImage(out, rx, ry, size, size, 0, 0, size, size);
-  const k = mainBmp.width / out.width;
-  co.getContext('2d').drawImage(mainBmp, rx * k, ry * k, size * k, size * k, 0, 0, size, size);
-}
-function showNext() {
-  nextEl.hidden = false;
-  nextEl.innerHTML = `<h3>${t('nxTitle')}</h3><div class="row">
-    <a class="chip-b" href="#alat-lain"><svg aria-hidden="true"><use href="#i-foto"/></svg>${t('nx1')}</a>
-    <a class="chip-b" href="#alat-lain"><svg aria-hidden="true"><use href="#i-ke-pdf"/></svg>${t('nx2')}</a>
-    <a class="chip-b" href="#alat-lain"><svg aria-hidden="true"><use href="#i-gabung"/></svg>${t('nx3')}</a>
-    ${t('nxSis') ? `<a class="sign-g" href="#"><svg aria-hidden="true"><use href="#i-arah"/></svg>${t('nxSis')}</a>` : ''}</div>`;
-}
-function clearAll() {
-  resetOutputs();
-  S.urls.forEach(u => URL.revokeObjectURL(u)); S.urls = [];
-  if (mainBmp && mainBmp.close) mainBmp.close(); mainBmp = null;
-  S.src = null; S.phase = 'idle'; S.isSample = false;
-  blkw.hidden = true; blkw.classList.remove('through');
-  refreshView(); setStatus(t('stCleared'));
-}
-
-/* ---------- jalan alternatif (cabang jalan) ---------- */
-async function renderFork() {
-  const lim = S.limitKB, nextLim = [100, 200, 500, 1000, 2000].find(v => v > lim) || lim * 2;
-  const me = minEdgeFor(S.src.w, S.src.h);
-  const lowLong = Math.round(me.a4 ? 1169 : me.minEdge * 0.66), dpi = me.a4 ? 100 : 0;
-  forkrow.hidden = false;
-  forkrow.innerHTML = `<div class="fork"><div class="trunk" aria-hidden="true"></div>
-    <div class="fhead"><svg aria-hidden="true"><use href="#i-larangan"/></svg><div><h3>${t('fkTitle')(fmtLimit(lim))}</h3><p>${t('fkSub')(fmtSize(S.best))}</p></div></div>
-    <div class="exits">
-      <div class="exit"><button type="button" data-x="gray"><svg aria-hidden="true"><use href="#i-belok"/></svg><span><b>${t('fkGray')}</b><small>${t('fkCalc')}</small></span></button><span class="road" aria-hidden="true"></span></div>
-      <div class="exit"><button type="button" data-x="low"><svg aria-hidden="true"><use href="#i-belok"/></svg><span><b>${t('fkLow')(dpi)}</b><small>${t('fkCalc')}</small></span></button><span class="road" aria-hidden="true"></span></div>
-      <div class="exit"><button type="button" data-x="loose"><svg aria-hidden="true"><use href="#i-belok"/></svg><span><b>${t('fkLoose')(fmtLimit(nextLim))}</b><small>${t('fkLooseD')}</small></span></button><span class="road" aria-hidden="true"></span></div>
-    </div></div>`;
-  const bg = $('[data-x="gray"]', forkrow), bl = $('[data-x="low"]', forkrow), bo = $('[data-x="loose"]', forkrow);
-  bo.onclick = () => setLimit(nextLim, null);
-  const target = safeTarget(lim);
-  const pg = await call({ type: 'probe', long: me.minEdge, q: 0.3, gray: true });
-  const pl = await call({ type: 'probe', long: lowLong, q: 0.3, gray: false });
-  if (S.phase !== 'unreach') return;
-  const fill = (btn, bytes, okText, act) => {
-    const sm = $('small', btn);
-    if (bytes <= target) { sm.textContent = okText(fmtSize(bytes)); btn.onclick = act; }
-    else { sm.textContent = t('fkNo')(fmtSize(bytes)); btn.disabled = true; }
-  };
-  fill(bg, pg.bytes, t('fkGrayD'), () => compress({ gray: true }));
-  fill(bl, pl.bytes, t('fkLowD'), () => compress({ minEdge: Math.round(lowLong * 0.9) }));
-}
-
-/* ---------- pilih / seret berkas ---------- */
-pickBtn.addEventListener('click', () => fileIn.click());
-fileIn.addEventListener('change', () => { if (fileIn.files[0]) loadFile(fileIn.files[0], false); fileIn.value = ''; });
-let dragDepth = 0;
-addEventListener('dragenter', e => { if (e.dataTransfer && [...e.dataTransfer.types].includes('Files')) { dragDepth++; lane.classList.add('go'); } });
-addEventListener('dragleave', () => { dragDepth = Math.max(0, dragDepth - 1); if (!dragDepth && S.phase !== 'work') lane.classList.remove('go'); });
-addEventListener('dragover', e => e.preventDefault());
-addEventListener('drop', e => {
-  e.preventDefault(); dragDepth = 0; if (S.phase !== 'work') lane.classList.remove('go');
-  const f = e.dataTransfer && e.dataTransfer.files[0]; if (f) loadFile(f, false);
-});
-
-async function startSample() {
-  blkw.hidden = false; S.src = null;
-  setTag('', t('preparing')); blkw.style.height = laneGeom(lane).clear * .6 + 'px';
-  const b = await makeSample();
-  const f = new File([b], 'contoh_ijazah.jpg', { type: 'image/jpeg' });
-  await loadFile(f, true);
-}
-
-$$('#plates, .signs').forEach(sc => { const upd = () => sc.classList.toggle('at-end', sc.scrollLeft + sc.clientWidth >= sc.scrollWidth - 4); sc.addEventListener('scroll', upd, { passive: true }); addEventListener('resize', upd); upd(); });
-addEventListener('resize', () => syncBar());
-if (navigator.connection && navigator.connection.saveData) {
-  const p = document.createElement('p'); p.className = 'status'; p.textContent = T.id.saveData; $('.below').appendChild(p);
-}
-addEventListener('resize', () => { if (S.src) { const keep = S.phase; if (keep === 'pass' && S.result) blkw.style.height = blockHeight(lane, S.result.bytes, S.limitKB * 1000) + 'px'; else if (keep !== 'work' && keep !== 'format' && keep !== 'reading') blkw.style.height = blockHeight(lane, keep === 'unreach' ? S.best : S.src.bytes, S.limitKB * 1000) + 'px'; } });
-
-/* ---------- delapan keadaan jalur (dokumen) ---------- */
-function miniLane(cfg) {
-  const fig = document.createElement('figure'); fig.className = 'mini';
-  fig.innerHTML = `<div class="lane small${cfg.go ? ' go' : ''}${cfg.ok ? ' ok' : ''}"><div class="lane-sky">
-    ${cfg.hint ? `<span class="drophint">${cfg.hint}</span>` : ''}
-    <div class="blkw${cfg.through ? ' through' : ''}${cfg.reading ? ' reading' : ''}" ${cfg.bytes ? '' : 'hidden'}><div class="blk${cfg.bad ? ' bad' : ''}"></div><div class="tag ${cfg.tc || ''}">${cfg.tag || ''}</div></div>
-    <div class="post post-l"></div><div class="post post-r"></div><div class="bar"><span class="wt"></span></div>
-    <div class="hang"><svg class="gl" aria-hidden="true"><use href="#g-batas"/></svg><span class="num">MAKS ${fmtLimit(cfg.lim || 200)}</span></div>
-  </div><div class="lane-ground"></div></div>${cfg.fork ? `<div class="minifork" aria-hidden="true"><span>Hitam-putih</span><span>100 dpi</span><span>Batas 200 KB</span></div>` : ''}
-  <figcaption><b>${cfg.title}</b>${cfg.cap}</figcaption>`;
-  $('#minis').appendChild(fig);
-  if (cfg.bytes) { const ln = $('.lane', fig); requestAnimationFrame(() => { $('.blkw', fig).style.height = blockHeight(ln, cfg.bytes, (cfg.lim || 200) * 1000) + 'px'; }); }
-}
-[
-  { title: 'Kosong', cap: 'Hanya portal dan tombol Pilih berkas di bahu jalan.' },
-  { title: 'Diseret', cap: 'Marka tengah bergerak, seluruh layar jadi tempat jatuh.', go: true, hint: 'Lepaskan di sini' },
-  { title: 'Membaca', cap: 'Balok samar, label netral.', bytes: 120000, reading: true, tag: 'Membaca' },
-  { title: 'Di atas batas', cap: 'Balok tertahan, label merah menyebut kelipatan.', bytes: 1800000, tc: 't-over', tag: '1,8 MB<small>9x di atas batas</small>' },
-  { title: 'Mengompres', cap: 'Turun per langkah, label kuning.', bytes: 412000, go: true, tc: 't-work', tag: 'Langkah 4<small>412 KB</small>' },
-  { title: 'Lolos ukuran', cap: 'Balok di celah portal, palang hijau-putih.', bytes: 195000, through: true, ok: true, tc: 't-ok', tag: '195 KB<small>lolos ukuran</small>' },
-  { title: 'Tidak bisa lolos', cap: 'Balok tertahan, cabang jalan muncul.', bytes: 132000, lim: 100, tc: 't-over', tag: 'Terkecil 132 KB<small>belum lewat</small>', fork: true },
-  { title: 'Format salah', cap: 'Balok abu, label peringatan.', bytes: 120000, bad: true, tc: 't-warn', tag: 'Format .docx' }
-].forEach(miniLane);
-
-/* ---------- label kolom untuk tabel bertumpuk di mobile ---------- */
-$$('.tbl').forEach(tb => { const hs = $$('thead th', tb).map(th => th.textContent.trim()); $$('tbody tr', tb).forEach(tr => $$('td', tr).forEach((td, i) => { td.dataset.label = hs[i] || ''; })); });
-
-/* ---------- mulai ---------- */
-updateHang(); setStatus(t('stIdle'));
-startSample();
-})();
-</script>
+<script src="assets/app.js"></script>
 </body>
 </html>

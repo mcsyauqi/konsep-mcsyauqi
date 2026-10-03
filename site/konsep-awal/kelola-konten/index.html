@@ -1,0 +1,1237 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Kelola Konten: Konsep Desain</title>
+<meta name="description" content="Konsep desain Kelola Konten: jadwalkan posting Instagram, TikTok, Facebook, dan YouTube dari satu kalender, lalu terima rapor akun tiap bulan.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Besley:wght@600;800&family=Gantari:wght@400;500;700&display=swap" rel="stylesheet">
+<script>document.documentElement.classList.add('js')</script>
+<style>
+:root{
+  --hijau-papan:#17392F; --sampul:#0E241D; --panel-papan:#1E4539;
+  --kapur-putih:#F4F7F5; --kapur-redup:#B9CCC3; --kapur-biru:#9FD4FF;
+  --halaman:#FFFFFF; --lipatan:#EEF3F0; --arang:#1A2420; --abu:#5B6661;
+  --merah-nilai:#B3261E; --hijau-tuntas:#1F7A4D; --garis-sel:#C9D3CE;
+  --serif:"Besley",Georgia,"Times New Roman",serif;
+  --sans:"Gantari",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --wadah:1200px;
+  --fokus:var(--hijau-papan);
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--halaman);color:var(--arang);font-family:var(--sans);font-size:17px;line-height:1.6;overflow-x:hidden}
+h1,h2,h3,h4{font-family:var(--serif);font-weight:800;line-height:1.12;margin:0;letter-spacing:-.01em;text-wrap:balance}
+p{margin:0}
+a{color:inherit}
+button,input{font:inherit;color:inherit}
+/* Angka: di dalam kalimat ikut Gantari. Besley hanya di sel tabel, kotak kehadiran, dan daftar hadir. */
+.num{font-variant-numeric:lining-nums}
+.nb,.tabel-rapor td.angka .num,.kotak-hadir .num,.dh .tg,.story .mini b,.minggu-mini .tg{font-family:var(--serif);font-weight:800;font-variant-numeric:lining-nums}
+.vh{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.wadah{max-width:var(--wadah);margin:0 auto;padding:0 32px}
+/* Fokus per permukaan: Kapur Biru hanya di gelap, Hijau Papan di terang */
+.gelap{background:var(--hijau-papan);color:var(--kapur-putih);--fokus:var(--kapur-biru)}
+.isi,.lembar-dh,.terang,.doc{--fokus:var(--hijau-papan)}
+:focus-visible{outline:3px solid var(--fokus);outline-offset:2px}
+abbr{text-decoration:none}
+
+/* tombol */
+.tbl{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 20px;border-radius:2px;border:2px solid transparent;font-family:var(--sans);font-weight:700;font-size:16px;line-height:1.2;text-decoration:none;cursor:pointer;text-align:center}
+.tbl-biru{background:var(--kapur-biru);color:var(--hijau-papan);border-color:var(--kapur-biru);box-shadow:inset 0 0 0 2px var(--kapur-biru),inset 0 0 0 3px var(--hijau-papan)}
+.tbl-biru:hover{background:#B8E0FF;border-color:#B8E0FF;box-shadow:inset 0 0 0 2px #B8E0FF,inset 0 0 0 3px var(--hijau-papan)}
+.tbl-garis-gelap{background:transparent;color:var(--kapur-putih);border:4px double var(--kapur-redup)}
+.tbl-garis-gelap:hover{border-color:var(--kapur-putih)}
+.tbl-hijau{background:var(--hijau-papan);color:var(--kapur-putih);border-color:var(--hijau-papan);box-shadow:inset 0 0 0 2px var(--hijau-papan),inset 0 0 0 3px var(--kapur-redup)}
+.tbl-hijau:hover{background:#21493D;border-color:#21493D;box-shadow:inset 0 0 0 2px #21493D,inset 0 0 0 3px var(--kapur-redup)}
+.tbl-hijau[disabled]{background:#D5DDD9;border-color:#D5DDD9;color:#4A5450;cursor:not-allowed;box-shadow:none}
+.tbl-garis-terang{background:transparent;color:var(--hijau-papan);border:4px double var(--hijau-papan)}
+.tbl-kecil{min-height:40px;padding:0 14px;font-size:15px;white-space:nowrap}
+.tbl[hidden]{display:none}
+
+/* logo + header */
+.logo{display:inline-flex;align-items:center;gap:10px;text-decoration:none;color:inherit}
+.tanda{display:inline-grid;place-items:center;width:34px;height:34px;border:4px double currentColor;font-family:var(--serif);font-weight:800;font-size:12px;letter-spacing:.02em;line-height:1;flex:none}
+.logo b{font-family:var(--serif);font-weight:800;font-size:20px;letter-spacing:-.01em;white-space:nowrap}
+.kepala{padding:18px 0;position:relative}
+.kepala .wadah{display:flex;align-items:center;justify-content:space-between;gap:20px}
+.menu{display:flex;align-items:center;gap:28px}
+.menu a{color:var(--kapur-redup);text-decoration:none;font-weight:500;font-size:15px}
+.menu a:hover{color:var(--kapur-putih)}
+.menu .hanya-hp{display:none}
+.aksi-kepala{display:flex;align-items:center;gap:14px}
+.aksi-kepala .masuk{color:var(--kapur-putih);text-decoration:none;font-weight:700;font-size:15px}
+.tbl-menu{display:none;width:40px;height:40px;border-radius:2px;border:2px solid var(--kapur-redup);background:transparent;cursor:pointer;padding:0;align-items:center;justify-content:center}
+.tbl-menu span{display:block;width:16px;height:2px;background:var(--kapur-putih);box-shadow:0 -5px 0 var(--kapur-putih),0 5px 0 var(--kapur-putih)}
+
+/* hero: papan sampul */
+.hero{padding:6px 0 72px}
+.plakat{max-width:1120px;margin:0 auto;border:4px double var(--kapur-biru);padding:14px 40px 16px;text-align:center}
+.plakat h1{font-size:clamp(32px,3.7vw,52px)}
+.plakat p{color:var(--kapur-redup);margin:10px auto 0;font-size:17px;line-height:1.55;max-width:820px;text-wrap:balance}
+
+/* tab buku (sakelar tampilan, bukan tombol aksi) */
+.baris-tab{max-width:1120px;margin:16px auto 0;display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.tab-buku{display:flex;align-items:flex-end;gap:4px}
+.tab-buku .lbl{color:var(--kapur-redup);font-size:14px;margin-right:8px;padding-bottom:10px}
+.tab-buku button{border:0;background:var(--sampul);color:var(--kapur-redup);font-weight:700;font-size:15px;padding:9px 16px 10px;border-radius:2px 2px 0 0;cursor:pointer;min-height:40px}
+.tab-buku button[aria-selected="true"]{color:var(--kapur-putih);box-shadow:inset 0 -3px 0 var(--kapur-biru)}
+.baris-tab small{color:var(--kapur-redup);font-size:13px;padding-bottom:10px}
+
+/* buku (dipakai hero dan section klien) */
+.buku{position:relative;max-width:1120px;margin:0 auto;background:var(--sampul);padding:14px 14px 18px;border-radius:2px;
+  box-shadow:inset 0 0 0 4px var(--sampul),inset 0 0 0 5.5px var(--kapur-biru),0 2px 0 rgba(0,0,0,.25),0 24px 48px rgba(0,0,0,.35)}
+.buku::before{content:"";position:absolute;top:0;bottom:0;left:calc(50% - 14px);width:28px;background:#081812;box-shadow:inset 1px 0 0 rgba(159,212,255,.45),inset -1px 0 0 rgba(159,212,255,.45);pointer-events:none}
+#buku{overflow:hidden;border-radius:2px 2px 0 0}
+.isi{position:relative;display:grid;grid-template-columns:1fr 24px 1fr;background:var(--halaman);color:var(--arang);
+  box-shadow:0 3px 0 -1px #fff,0 3px 0 0 var(--garis-sel),0 6px 0 -1px #fff,0 6px 0 0 var(--garis-sel)}
+.isi[hidden]{display:none}
+.isi.masuk,.lembar-rapor.masuk{animation:geser .24s ease-out}
+@keyframes geser{from{transform:translateX(24px);opacity:.4}to{transform:none;opacity:1}}
+.punggung{background:
+  linear-gradient(90deg,transparent calc(50% - .5px),rgba(26,36,32,.35) calc(50% - .5px),rgba(26,36,32,.35) calc(50% + .5px),transparent calc(50% + .5px)),
+  linear-gradient(90deg,rgba(0,0,0,0),rgba(0,0,0,.14) 42%,rgba(0,0,0,.14) 58%,rgba(0,0,0,0))}
+.hal{padding:20px 28px 28px;position:relative;min-width:0}
+.no-hal{position:absolute;left:0;right:0;bottom:8px;text-align:center;font-size:12px;color:var(--abu)}
+#buku .hal.kiri{overflow:hidden;transition:opacity .16s}
+.kop{display:flex;gap:14px;align-items:center}
+.kop .tanda{width:46px;height:46px;font-size:15px;color:var(--arang)}
+.kop h2,.kop h3{font-size:22px}
+.kop p{font-size:14px;color:var(--abu);line-height:1.4}
+.data-diri{display:grid;grid-template-columns:auto 1fr;gap:4px 16px;margin:14px 0 0;font-size:15px;line-height:1.4}
+.data-diri dt{color:var(--abu);position:relative;padding-right:14px}
+.data-diri dt::after{content:":";position:absolute;right:0;top:0;color:var(--arang)}
+.data-diri dd{margin:0;font-weight:500;overflow-wrap:break-word}
+.hadir{margin-top:16px}
+.judul-kecil{font-weight:700;font-size:13px;line-height:1.3;margin:0 0 8px}
+.kotak-hadir{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--arang);margin-bottom:12px}
+.kotak-hadir div{padding:6px 10px 7px;border-left:1px solid var(--garis-sel);display:flex;align-items:baseline;justify-content:space-between;gap:6px}
+.kotak-hadir div:first-child{border-left:0}
+.kotak-hadir span{font-size:14px;color:var(--abu)}
+.kotak-hadir .num{font-size:24px;line-height:1.2}
+.bertinta{position:relative;color:var(--merah-nilai)}
+.bertinta::before{content:"";position:absolute;inset:3px;border:1.5px solid var(--merah-nilai);pointer-events:none}
+.kotak-hadir .bertinta span{color:var(--merah-nilai)}
+.ttd{display:grid;grid-template-columns:1fr 1fr;gap:4px 20px;margin-top:14px}
+.ttd .tempat{grid-column:2;font-size:14px;margin:0}
+.ttd div{font-size:14px;line-height:1.4}
+.ttd .peran{display:block}
+.ttd .nama{display:block;margin-top:22px;font-weight:700;overflow-wrap:break-word}
+.ttd .titik{letter-spacing:.12em;font-weight:400;color:var(--abu)}
+.ttd .ket{color:var(--abu)}
+
+/* tabel rapor */
+.tabel-rapor{width:100%;border-collapse:collapse;border:4px double var(--arang);font-size:15px;line-height:1.3}
+.tabel-rapor caption{text-align:left;font-family:var(--serif);font-weight:800;font-size:18px;padding:0 0 8px;color:var(--arang)}
+.tabel-rapor thead th{background:var(--lipatan);text-align:left;font-size:13px;font-weight:700;padding:7px 10px;border-bottom:1px solid var(--arang);vertical-align:bottom}
+.tabel-rapor td{padding:6px 10px;border-top:1px solid var(--garis-sel)}
+.tabel-rapor tbody th{text-align:left;border-top:1px solid var(--garis-sel);font-size:15px;font-weight:500;padding:6px 10px;vertical-align:middle}
+.tabel-rapor td.angka,.tabel-rapor th.angka{text-align:right}
+.tabel-rapor .no{width:34px;text-align:center;color:var(--abu)}
+.tabel-rapor tr.kelompok th{background:#fff;font-size:13px;font-weight:700;padding:6px 10px;border-top:1px solid var(--garis-sel);text-align:left}
+.kel-isi{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.kel-isi a{font-weight:500;color:var(--abu)}
+.tabel-rapor td.angka .num{font-size:20px}
+.tabel-rapor td.bertinta .num{color:var(--merah-nilai)}
+.tuntas{color:var(--hijau-tuntas);font-weight:700}
+.belum{color:var(--merah-nilai);font-weight:700}
+.redup{color:var(--abu)}
+.bantu{position:relative;display:inline-block}
+.bantu button{position:relative;width:24px;height:24px;border-radius:2px;border:1px solid var(--abu);background:#fff;color:var(--arang);font-size:13px;font-weight:700;line-height:1;cursor:help;padding:0;margin-left:4px;vertical-align:middle}
+.bantu button::before{content:"";position:absolute;inset:-10px}
+.bantu .tip{position:absolute;z-index:5;left:50%;top:calc(100% + 8px);transform:translateX(-50%);width:240px;background:var(--arang);color:var(--kapur-putih);font-size:13px;font-weight:500;line-height:1.45;padding:10px 12px;border-radius:2px;opacity:0;visibility:hidden;transition:opacity .12s;text-align:left}
+.bantu:hover .tip,.bantu:focus-within .tip{opacity:1;visibility:visible}
+.catatan{margin-top:12px;font-size:15px;line-height:1.5}
+.catatan-wk{margin-top:10px;border:1px solid var(--arang);font-size:15px;line-height:1.5}
+.catatan-wk b{display:block;background:var(--lipatan);border-bottom:1px solid var(--arang);padding:4px 10px;font-size:13px}
+.catatan-wk span{display:block;padding:7px 10px}
+.keputusan{margin-top:10px;border:1px solid var(--arang);padding:8px 14px;display:flex;flex-wrap:wrap;align-items:center;gap:4px 12px;font-size:15px}
+.keputusan .dasar{flex-basis:100%;font-size:14px;color:var(--arang)}
+.keputusan .lbl{font-weight:700}
+.pilihan{position:relative;font-family:var(--serif);font-weight:800;font-size:17px}
+.dicoret{color:var(--abu)}
+.dicoret::after{content:"";position:absolute;left:-2px;right:-2px;top:52%;height:2px;background:var(--arang);transform-origin:left center}
+.keputusan small{margin-left:auto;color:var(--abu);font-size:12px}
+.keputusan small a{color:var(--abu)}
+.klien{overflow-wrap:break-word;font-weight:500}
+
+/* jadwal mini di halaman kiri */
+.jadwal-mini{position:absolute;inset:0;background:var(--halaman);padding:22px 28px 20px;transform:translateX(-100%);visibility:hidden;transition:transform .24s cubic-bezier(.3,.7,.2,1),visibility 0s .24s;display:flex;flex-direction:column}
+.jadwal-aktif .jadwal-mini{transform:none;visibility:visible;transition:transform .24s cubic-bezier(.3,.7,.2,1),visibility 0s}
+.jadwal-mini h3{font-size:20px}
+.jadwal-mini > p{font-size:14px;color:var(--abu);margin-top:4px}
+.minggu-mini{display:grid;grid-template-columns:repeat(7,1fr);border:1px solid var(--arang);margin:14px 0}
+.minggu-mini div{border-left:1px solid var(--garis-sel);padding:8px 6px;min-height:118px;font-size:12px;line-height:1.35;display:flex;flex-direction:column;gap:2px}
+.minggu-mini div:first-child{border-left:0}
+.minggu-mini .hr{font-weight:700;color:var(--abu)}
+.minggu-mini .tg{font-size:18px;line-height:1.1}
+.minggu-mini .pf{font-weight:700;margin-top:6px}
+.minggu-mini .izin{color:var(--abu);margin-top:6px}
+.aksi-mini{display:flex;gap:10px;flex-wrap:wrap;margin-top:auto}
+.ket-hadir{font-size:14px;color:var(--abu);margin:0}
+.ket-hadir[hidden]{display:none}
+
+/* sampul pembuka */
+.sampul{display:none}
+.js .sampul{display:flex;position:absolute;z-index:4;top:14px;bottom:18px;left:calc(50% + 12px);right:14px;background:var(--sampul);color:var(--kapur-putih);flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;border:1px solid #23463B}
+.sampul .bingkai{position:absolute;inset:18px;border:4px double var(--kapur-biru);pointer-events:none}
+.sampul .tanda{width:56px;height:56px;font-size:17px;color:var(--kapur-biru)}
+.sampul strong{font-family:var(--serif);font-weight:800;font-size:30px;letter-spacing:.06em}
+.sampul span{color:var(--kapur-redup);font-size:15px}
+.sampul .kotak-nama{border:1px solid var(--kapur-biru);padding:8px 18px;margin-top:6px;font-size:14px;color:var(--kapur-putih);text-align:left}
+.sampul .kotak-nama small{display:block;color:var(--kapur-redup);font-size:12px}
+.js #buku.buka .sampul{transform:translateX(calc(-100% - 24px));transition:transform .28s cubic-bezier(.3,.7,.2,1)}
+.js #buku.terbuka .sampul{opacity:0;visibility:hidden;transition:transform .28s cubic-bezier(.3,.7,.2,1),opacity .16s,visibility 0s .16s}
+.js #buku:not(.terbuka) .isi-umkm .hal.kiri{opacity:0}
+.js #buku:not(.ditulis) .tulis > *{clip-path:inset(0 100% 0 0)}
+.tulis > *{clip-path:inset(0 0 0 0);transition:clip-path .16s linear;transition-delay:calc(var(--i,0) * 70ms)}
+.js #buku:not(.ditulis) .dicoret::after{transform:scaleX(0)}
+#buku .dicoret::after{transition:transform .2s ease-out;transition-delay:.46s}
+#buku.reset .tulis > *,#buku.reset .dicoret::after{transition:none!important}
+.catatan-tim{margin-top:14px;border:1px solid var(--arang);padding:10px 14px;font-size:14px;line-height:1.5;background:var(--lipatan)}
+.tabel-rapor.roster td{padding:7px 10px}
+.tabel-rapor.roster td.angka .num{font-size:17px}
+.cara{display:inline-block;margin-top:8px;font-size:13px;color:var(--abu)}
+
+/* form cek */
+.cek{background:var(--panel-papan);padding:16px 24px;border-radius:2px}
+.cek-desk{max-width:1120px;margin:0 auto;border-radius:0 0 2px 2px}
+.cek-hp{display:none}
+.cek-atas{display:flex;align-items:center;gap:10px 12px;flex-wrap:wrap}
+.cek label.besar{font-family:var(--serif);font-weight:800;font-size:18px;flex-basis:100%;line-height:1.3}
+.isian{flex:1 1 240px;display:flex;min-width:0}
+.isian input{width:100%;min-height:48px;border:0;border-radius:2px;background:#fff;color:var(--arang);padding:0 14px;font-size:16px}
+.isian input::placeholder{color:var(--abu)}
+.cek .jujur{color:var(--kapur-redup);font-size:14px;line-height:1.5;margin-top:8px}
+.label-jujur{color:var(--kapur-redup);font-size:13px}
+.status{margin-top:10px;font-size:15px;line-height:1.5;color:var(--kapur-putih)}
+.status:empty{display:none}
+.status .salah{font-weight:700}
+.status a{color:var(--kapur-biru)}
+.manual{margin-top:14px;border-top:1px solid #2F5A4C;padding-top:14px;display:grid;grid-template-columns:repeat(4,1fr) auto;gap:12px;align-items:end}
+.manual[hidden]{display:none}
+.manual label{display:flex;flex-direction:column;gap:6px;font-size:14px;color:var(--kapur-putih);font-weight:500}
+.manual input{min-height:44px;border:0;border-radius:2px;background:#fff;color:var(--arang);padding:0 12px;font-weight:500}
+
+/* section 2: daftar hadir */
+.bagian-dh{background:var(--lipatan);padding:88px 0}
+.lembar-dh{background:#fff;border:1px solid var(--garis-sel);padding:32px 36px 28px;box-shadow:4px 4px 0 -1px #fff,4px 4px 0 0 var(--garis-sel),8px 8px 0 -1px #fff,8px 8px 0 0 var(--garis-sel)}
+.dh-kop{display:grid;grid-template-columns:1fr auto;gap:32px;align-items:start;padding-bottom:20px;margin-bottom:20px;border-bottom:4px double var(--arang)}
+.dh-kop h2{font-size:clamp(28px,3.2vw,40px)}
+.dh-kop p{margin-top:10px;font-size:17px;max-width:600px}
+.dh-id{border:1px solid var(--arang);font-size:14px;line-height:1.45;min-width:300px}
+.dh-id div{display:grid;grid-template-columns:110px 1fr;border-top:1px solid var(--garis-sel)}
+.dh-id div:first-child{border-top:0;background:var(--lipatan);font-weight:700}
+.dh-id dt,.dh-id dd{margin:0;padding:6px 10px}
+.dh-id dt{color:var(--abu)}
+.dh-id div:first-child dt{color:var(--arang)}
+.dh{table-layout:fixed}
+.dh thead th{text-align:center;padding:8px 4px;line-height:1.2}
+.dh thead th:first-child{text-align:left;width:22%;padding-left:12px}
+.dh thead th:last-child{width:9%}
+.dh .hr{display:block;font-size:12px;color:var(--abu);font-weight:700}
+.dh .tg{display:block;font-size:18px}
+.dh tbody th{padding-left:12px}
+.dh td{text-align:center;padding:0;height:52px}
+.dh td.h{color:var(--hijau-tuntas);font-family:var(--serif);font-weight:800;font-size:18px}
+.dh td.i{color:var(--abu);font-family:var(--serif);font-weight:800;font-size:18px}
+.dh td.jml{font-family:var(--serif);font-weight:800;font-size:18px;color:var(--merah-nilai)}
+.sel-a{position:relative;width:100%;height:52px;border:0;background:#fff;color:var(--merah-nilai);font-family:var(--serif);font-weight:800;font-size:19px;cursor:pointer}
+.sel-a::before{content:"";position:absolute;inset:6px 8px;border:1.5px solid var(--merah-nilai)}
+.sel-a:hover{background:var(--lipatan)}
+.sel-a[aria-pressed="true"]{background:var(--lipatan);box-shadow:inset 0 0 0 2px var(--arang)}
+.pf-singkat{display:none}
+.dh-legenda{margin-top:12px;font-size:14px;color:var(--abu);line-height:1.6}
+.dh-legenda b{font-family:var(--serif);font-weight:800}
+.dh-legenda .a{color:var(--merah-nilai)}
+.dh-legenda .h{color:var(--hijau-tuntas)}
+.slip{margin-top:18px;border:1px solid var(--arang);display:grid;grid-template-columns:auto 1fr auto;gap:18px;align-items:center;padding:16px 20px}
+.slip .label-slip{font-size:13px;font-weight:700;color:var(--abu);line-height:1.4}
+.slip .label-slip b{display:block;font-family:var(--serif);font-size:19px;color:var(--arang)}
+.slip .isi-slip{border-left:1px solid var(--garis-sel);padding-left:18px;font-size:15px;line-height:1.5}
+.slip .isi-slip strong{display:block;font-size:17px}
+.slip .aksi{display:flex;gap:10px;flex-wrap:wrap}
+.dh-catatan{margin-top:20px;padding-top:16px;border-top:1px solid var(--garis-sel);font-size:15px;line-height:1.6}
+
+/* section 3: buku tinjauan */
+.bagian-klien{padding:88px 0;background:#fff}
+.buku-klien .hal{padding:30px 32px 28px}
+.buku-klien h2{font-size:clamp(28px,3vw,38px)}
+.buku-klien .pengantar{margin-top:12px;font-size:16px;line-height:1.6}
+.tab-terang{display:flex;gap:4px;margin:20px 0 16px;border-bottom:1px solid var(--garis-sel)}
+.tab-terang button{border:0;background:transparent;color:var(--abu);font-weight:700;font-size:15px;padding:8px 12px 10px;cursor:pointer;min-height:40px}
+.tab-terang button[aria-selected="true"]{color:var(--hijau-papan);box-shadow:inset 0 -3px 0 var(--hijau-papan)}
+.tinjau td,.tinjau tbody th{vertical-align:middle}
+.tinjau td.sudah{text-align:center;width:96px}
+.tinjau .oto{color:var(--hijau-tuntas);font-weight:700;font-size:13px}
+.tinjau input{width:22px;height:22px;accent-color:var(--hijau-papan);margin:0;cursor:pointer}
+.tinjau tfoot td{border-top:1px solid var(--arang);font-size:14px;padding:9px 10px}
+.kirim{margin-top:16px;display:flex;flex-direction:column;gap:10px;align-items:flex-start}
+.kirim p{font-size:13px;color:var(--abu);line-height:1.5}
+.pita-status{background:var(--lipatan);border:1px solid var(--arang);padding:8px 12px;font-size:14px;font-weight:700;margin-bottom:16px}
+.pita-status.siap{color:var(--hijau-tuntas);border-color:var(--hijau-tuntas)}
+.lembar-rapor .tabel-rapor{margin-top:14px}
+.lembar-rapor .tren{font-size:13px;color:var(--abu);white-space:nowrap}
+.grid-bawah{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+.grid-bawah > div{border:1px solid var(--garis-sel);padding:9px 12px;font-size:14px;line-height:1.5}
+.gulir{overflow-x:auto;max-width:100%}
+.legenda-hp{display:none;font-size:13px;color:var(--abu);margin-top:6px}
+
+/* section 4: pengumuman story */
+.bagian-story{padding:88px 0}
+.umum-grid{display:grid;grid-template-columns:1fr 280px;gap:48px;align-items:center}
+.lembar-umum{background:#fff;color:var(--arang);padding:30px 34px 26px;--fokus:var(--hijau-papan);box-shadow:4px 4px 0 -1px #fff,4px 4px 0 0 var(--garis-sel),8px 8px 0 -1px #fff,8px 8px 0 0 var(--garis-sel),0 24px 48px rgba(0,0,0,.35)}
+.lembar-umum .sub-umum{font-size:14px;color:var(--abu);margin-top:4px}
+.lembar-umum h2{font-size:clamp(28px,3vw,38px)}
+.lembar-umum .pengantar{margin-top:12px;font-size:16px;line-height:1.6;max-width:620px}
+.kop-umum{border-bottom:4px double var(--arang);padding-bottom:16px;margin-bottom:18px}
+.umum td{vertical-align:middle}
+.umum .aksi-baris{display:flex;gap:8px;flex-wrap:wrap}
+.umum .hasil{font-size:14px;line-height:1.45}
+.story{width:244px;height:434px;margin:0 auto;background:var(--sampul);border:1px solid #2F5A4C;border-radius:2px;display:flex;flex-direction:column;align-items:center;padding:60px 18px 72px;text-align:center;gap:10px}
+.story strong{font-family:var(--serif);font-weight:800;font-size:30px;line-height:1.05}
+.story .akun{color:var(--kapur-redup);font-size:13px;line-height:1.4}
+.story .mini{background:#fff;color:var(--arang);border:4px double var(--arang);width:100%;padding:8px 10px;text-align:left;font-size:12px;margin-top:4px}
+.story .mini div{display:flex;justify-content:space-between;align-items:baseline;padding:4px 0;border-top:1px solid var(--garis-sel)}
+.story .mini div:first-child{border-top:0}
+.story .mini b{font-size:16px}
+.story .mini .naik{color:var(--hijau-tuntas);font-weight:700;font-size:11px}
+.story .kaki{margin-top:auto;font-size:11px;color:var(--kapur-redup)}
+
+/* penutup: sampul belakang */
+.penutup{padding:80px 0 88px;border-top:1px solid #2F5A4C}
+.penutup .plakat{max-width:760px;padding:36px 40px}
+.penutup h2{font-size:clamp(28px,3.4vw,42px)}
+.penutup p{color:var(--kapur-redup);font-size:17px;margin:12px auto 24px;max-width:540px}
+.penutup .aksi{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.kaki-situs{background:var(--sampul);color:var(--kapur-redup);font-size:14px;padding:28px 0}
+.kaki-situs .wadah{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+
+/* dokumen konsep */
+.pemisah{background:var(--sampul);color:var(--kapur-putih);padding:56px 0;border-top:8px double var(--kapur-biru)}
+.pemisah h2{font-size:clamp(30px,4vw,48px)}
+.pemisah p{color:var(--kapur-redup);margin-top:10px;max-width:640px}
+.doc{padding:72px 0 120px}
+.doc .wadah{max-width:1040px}
+.doc section{margin-top:64px}
+.doc section:first-child{margin-top:0}
+.doc h2{font-size:32px;margin-bottom:14px}
+.doc h3{font-size:21px;margin:28px 0 10px}
+.doc p,.doc li{font-size:16px;line-height:1.65}
+.doc p + p{margin-top:12px}
+.doc ul{padding-left:22px;margin:10px 0}
+.doc li + li{margin-top:6px}
+.tabel-doc{width:100%;border-collapse:collapse;border:4px double var(--arang);font-size:14px;line-height:1.5;margin-top:14px}
+.tabel-doc th{background:var(--lipatan);text-align:left;padding:9px 12px;border-bottom:1px solid var(--arang);font-size:13px}
+.tabel-doc td{padding:9px 12px;border-top:1px solid var(--garis-sel);vertical-align:top}
+.swatch-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;margin-top:16px}
+.swatch{border:1px solid var(--garis-sel);border-radius:2px;overflow:hidden;background:#fff}
+.swatch .warna{height:84px;display:flex;align-items:flex-end;padding:10px 12px;font-family:var(--serif);font-weight:800;font-size:24px}
+.swatch .info{padding:10px 12px;font-size:13px;line-height:1.5}
+.swatch .info b{font-size:15px;display:block}
+.spesimen{border:4px double var(--arang);padding:24px;margin-top:14px}
+.spesimen .lbl{font-size:13px;color:var(--abu);margin-bottom:8px;display:block}
+.keadaan{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:14px}
+.keadaan > div{background:var(--panel-papan);color:var(--kapur-putih);padding:14px;border-radius:2px;font-size:14px;line-height:1.5}
+.keadaan h4{font-family:var(--sans);font-weight:700;font-size:14px;margin-bottom:6px;color:var(--kapur-biru)}
+.story-spek{display:flex;gap:28px;align-items:flex-start;flex-wrap:wrap;margin-top:14px}
+.story-kecil{position:relative;width:216px;height:384px;background:var(--hijau-papan);border:1px solid var(--arang);flex:none}
+.story-kecil .zona{position:absolute;left:0;right:0;border:2px solid var(--kapur-biru);background:rgba(159,212,255,.12);color:var(--kapur-putih);font-size:11px;display:flex;align-items:center;justify-content:center;text-align:center;padding:0 6px}
+.story-kecil .z-atas{top:0;height:50px}
+.story-kecil .z-bawah{bottom:0;height:68px}
+.story-kecil .isi-s{position:absolute;top:62px;bottom:80px;left:14px;right:14px;display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--kapur-putih);text-align:center}
+.story-kecil .isi-s strong{font-family:var(--serif);font-size:24px}
+.story-kecil .isi-s .m{background:#fff;border:3px double var(--arang);width:100%;height:110px}
+.story-kecil .isi-s small{margin-top:auto;font-size:10px;color:var(--kapur-redup)}
+.skor{border:4px double var(--arang);padding:20px;margin-top:14px;color:var(--abu)}
+
+/* responsif */
+@media (max-width:1100px){.menu{gap:18px}}
+@media (max-width:900px){
+  .menu{display:none}
+  .menu.buka{display:flex;position:absolute;left:0;right:0;top:72px;z-index:10;flex-direction:column;align-items:flex-start;background:var(--sampul);padding:16px 20px;gap:14px}
+  .menu.buka .hanya-hp{display:block}
+  .tbl-menu{display:inline-flex}
+  .aksi-kepala .masuk{display:none}
+  .umum-grid{grid-template-columns:1fr;gap:32px}
+  .keadaan{grid-template-columns:1fr 1fr}
+  .dh-kop{grid-template-columns:1fr}
+  .dh-id{min-width:0}
+}
+@media (max-width:760px){
+  body{font-size:16px}
+  .wadah{padding:0 16px}
+  .kepala{padding:14px 0}
+  .kepala .wadah{gap:12px}
+  .logo b{font-size:17px}
+  .logo .tanda{width:30px;height:30px;font-size:11px}
+  .aksi-kepala{gap:8px}
+  .aksi-kepala .tbl-kecil{min-height:40px;padding:0 12px;font-size:14px}
+  .hero{padding:0 0 48px}
+  .plakat{padding:14px 16px 16px}
+  .plakat h1{font-size:30px;line-height:1.15}
+  .plakat p{font-size:15px;line-height:1.5;margin-top:8px}
+  .cek-hp{display:block;margin-top:14px;padding:14px}
+  .cek-desk{display:none}
+  .cek label.besar{font-size:17px}
+  .isian{flex:1 1 100%}
+  .cek-atas button[type=submit]{flex-basis:100%}
+  .cek-atas .f-tbl-manual{flex-basis:100%;font-size:15px}
+  .cek .jujur{font-size:13px}
+  .manual{grid-template-columns:1fr 1fr}
+  .manual .tbl{grid-column:1 / -1}
+  .baris-tab{margin-top:20px}
+  .baris-tab small{display:none}
+  .tab-buku .lbl{font-size:13px;margin-right:4px}
+  .tab-buku button{padding:9px 12px 10px;font-size:14px}
+  .buku{padding:10px 10px 14px}
+  .buku::before{display:none}
+  .isi{grid-template-columns:1fr}
+  .punggung{display:none}
+  #buku .isi .hal{display:contents}
+  #buku .isi .blok{padding:16px 14px;border-top:1px solid var(--garis-sel)}
+  #buku .isi .blok:first-child{border-top:0}
+  .isi-umkm .identitas{order:1}
+  .isi-umkm .blok-nilai{order:2}
+  .isi-umkm .hadir{order:3;margin-top:0}
+  .isi-umkm .jadwal-mini{order:4}
+  .isi-umkm .ttd-blok{order:5}
+  .jadwal-mini{position:static;transform:none;visibility:visible;display:none;padding:16px 14px;border-top:1px solid var(--garis-sel)}
+  .jadwal-aktif .jadwal-mini{display:flex}
+  .minggu-mini{grid-template-columns:1fr}
+  .minggu-mini div{border-left:0;border-top:1px solid var(--garis-sel);min-height:0;flex-direction:row;flex-wrap:wrap;align-items:baseline;gap:4px 8px}
+  .minggu-mini div:first-child{border-top:0}
+  .minggu-mini .pf,.minggu-mini .izin{margin-top:0}
+  .js .sampul{left:10px;right:10px;top:10px;bottom:14px}
+  .js #buku.buka .sampul{transform:translateX(-110%)}
+  .tabel-rapor{font-size:14px}
+  .tabel-rapor thead th,.tabel-rapor td,.tabel-rapor tbody th{padding:7px 6px}
+  .tabel-rapor td.angka .num{font-size:18px}
+  .roster td.klien,.roster th:first-child{min-width:44%;width:44%}
+  .data-diri{font-size:14px}
+  .keputusan small{margin-left:0;flex-basis:100%}
+  .no-hal{display:none}
+  #buku .tabel-rapor .no{display:none}
+  .ttd .tempat{grid-column:1 / -1}
+  .lembar-umum{padding:20px 14px}
+  .umum thead{display:none}
+  .umum tr{display:grid;grid-template-columns:1fr;gap:6px;padding:12px 4px;border-top:1px solid var(--garis-sel)}
+  .umum td,.umum tbody th{border:0;padding:0}
+  .umum .no{display:none}
+}
+@media (max-width:420px){
+  .lembar-rapor .kol-ket{display:none}
+  .legenda-hp{display:block}
+  .ttd{gap:12px}
+  .bagian-dh,.bagian-klien,.bagian-story{padding:56px 0}
+  .lembar-dh{padding:20px 14px;box-shadow:3px 3px 0 -1px #fff,3px 3px 0 0 var(--garis-sel),6px 6px 0 -1px #fff,6px 6px 0 0 var(--garis-sel)}
+  .dh-kop h2{font-size:28px}
+  .dh-kop p{font-size:16px}
+  .dh-id div{grid-template-columns:96px 1fr}
+  .pf-penuh{display:none}
+  .pf-singkat{display:inline}
+  .dh thead th:first-child{width:15%;padding-left:6px}
+  .dh tbody th{padding-left:6px}
+  .dh .kol-jml{display:none}
+  .dh .hr{font-size:11px}
+  .dh .tg{font-size:16px}
+  .dh td{height:46px}
+  .sel-a{height:46px;font-size:17px}
+  .sel-a::before{inset:5px 3px}
+  .slip{grid-template-columns:1fr;gap:10px;padding:14px}
+  .slip .isi-slip{border-left:0;padding-left:0;border-top:1px solid var(--garis-sel);padding-top:10px}
+  .buku-klien .hal{padding:20px 14px}
+  .buku-klien .isi .hal + .punggung + .hal{border-top:6px solid var(--sampul)}
+  .lembar-rapor .kol-predikat{display:none}
+  .grid-bawah{grid-template-columns:1fr}
+  .keadaan{grid-template-columns:1fr}
+  .penutup{padding:56px 0 64px}
+  .penutup .plakat{padding:24px 16px}
+}
+@media (max-width:370px){
+  .logo b{font-size:16px}
+  .aksi-kepala .tbl-kecil{padding:0 10px}
+  .plakat h1{font-size:28px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition:none!important;animation:none!important;scroll-behavior:auto!important}
+  .js .sampul{display:none}
+  .js #buku:not(.terbuka) .isi-umkm .hal.kiri{opacity:1}
+  .js #buku:not(.ditulis) .tulis > *{clip-path:none}
+  .js #buku:not(.ditulis) .dicoret::after{transform:none}
+}
+</style>
+</head>
+<body>
+
+<!-- ===================== BAGIAN 1: MOCKUP LANDING PAGE ===================== -->
+<div class="gelap">
+<header class="kepala">
+  <div class="wadah">
+    <a class="logo" href="#" aria-label="Kelola Konten, beranda"><span class="tanda" aria-hidden="true">KK</span><b>Kelola Konten</b></a>
+    <nav class="menu" id="menu" aria-label="Menu utama">
+      <a href="#jadwal">Fitur</a>
+      <a href="#klien">Untuk Agensi</a>
+      <a href="#penutup">Harga</a>
+      <a href="#cek">Cek Rapor Gratis</a>
+      <a class="hanya-hp" href="#">Masuk</a>
+    </nav>
+    <div class="aksi-kepala">
+      <a class="masuk" href="#">Masuk</a>
+      <a class="tbl tbl-biru tbl-kecil" href="#penutup">Daftar</a>
+      <button class="tbl-menu" type="button" aria-expanded="false" aria-controls="menu" id="tblMenu" aria-label="Buka menu"><span></span></button>
+    </div>
+  </div>
+</header>
+
+<section class="hero" id="cek" aria-labelledby="judul-hero">
+  <div class="wadah">
+    <div class="plakat">
+      <h1 id="judul-hero">Akunmu naik kelas bulan ini?</h1>
+      <p>Jadwalkan posting Instagram, TikTok, Facebook, dan YouTube dari satu kalender, lalu terima rapor tiap akun tiap bulan. Untuk pemilik usaha dan agensi.</p>
+    </div>
+
+    <!-- form untuk HP: tampil di atas buku (urutan DOM = urutan tampilan) -->
+    <form class="cek cek-hp" id="cek-hp" novalidate>
+      <div class="cek-atas">
+        <label class="besar" for="username-hp">Cek rapor Instagram-mu, gratis</label>
+        <div class="isian"><input class="f-user" id="username-hp" name="username" type="text" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="@username"></div>
+        <button class="tbl tbl-biru" type="submit">Cek rapornya</button>
+        <button class="tbl tbl-garis-gelap f-tbl-manual" type="button" aria-expanded="false" aria-controls="manual-hp">Akun pribadi atau TikTok? Isi manual</button>
+      </div>
+      <p class="jujur">Dibaca otomatis hanya untuk akun Instagram Bisnis atau Kreator yang publik, dari 12 posting terakhir.</p>
+      <p class="status f-status" role="status" aria-live="polite"></p>
+      <div class="manual f-manual" id="manual-hp" hidden>
+        <label for="pengikut-hp">Jumlah pengikut<input class="m-pengikut" id="pengikut-hp" type="number" inputmode="numeric" min="1" value="18400"></label>
+        <label for="suka-hp">Rata-rata suka<input class="m-suka" id="suka-hp" type="number" inputmode="numeric" min="0" value="410"></label>
+        <label for="komen-hp">Rata-rata komentar<input class="m-komen" id="komen-hp" type="number" inputmode="numeric" min="0" value="34"></label>
+        <label for="target-hp">Target ER (%)<input class="m-target" id="target-hp" type="number" inputmode="decimal" min="0.1" step="0.1" value="3"></label>
+        <button class="tbl tbl-biru f-hitung" type="button">Hitung nilai</button>
+      </div>
+    </form>
+
+    <div class="baris-tab">
+      <div class="tab-buku" role="tablist" aria-label="Lihat rapor sebagai">
+        <span class="lbl" aria-hidden="true">Lihat sebagai</span>
+        <button type="button" role="tab" aria-selected="true" aria-controls="isiUmkm" id="tabUmkm" data-mode="umkm">Pemilik usaha</button>
+        <button type="button" role="tab" aria-selected="false" aria-controls="isiAgensi" id="tabAgensi" data-mode="agensi">Agensi</button>
+      </div>
+      <small>Contoh rapor September 2026. Akun dan angka fiktif.</small>
+    </div>
+
+    <div class="buku" id="buku">
+      <div class="sampul" aria-hidden="true">
+        <span class="bingkai"></span>
+        <span class="tanda">KK</span>
+        <strong>RAPOR AKUN</strong>
+        <span>Semester September 2026</span>
+        <span class="kotak-nama"><small>Nama akun</small>@dapursambal.contoh</span>
+      </div>
+
+      <div class="isi isi-umkm" id="isiUmkm" role="tabpanel" aria-labelledby="tabUmkm">
+        <div class="hal kiri">
+          <div class="blok identitas">
+            <div class="kop">
+              <span class="tanda" aria-hidden="true">KK</span>
+              <div><h2>Rapor Akun</h2><p>Semester September 2026</p></div>
+            </div>
+            <dl class="data-diri">
+              <dt>Nama akun</dt><dd id="rNama">@dapursambal.<wbr>contoh</dd>
+              <dt>Kelas</dt><dd id="rKelas">10.000 sampai 50.000 pengikut</dd>
+              <dt>Wali kelas</dt><dd>Kelola Konten (otomatis)</dd>
+            </dl>
+          </div>
+          <div class="blok hadir">
+            <p class="judul-kecil" id="rJudulHadir">Kehadiran September: target 26 hari posting, libur tiap Minggu</p>
+            <div class="kotak-hadir">
+              <div><span>Hadir</span><b class="num" id="rHadir">20</b></div>
+              <div><span>Izin</span><b class="num" id="rIzin">4</b></div>
+              <div class="bertinta"><span>Alpa</span><b class="num" id="rAlpa">6</b></div>
+            </div>
+            <button class="tbl tbl-hijau tbl-kecil" type="button" id="tblJadwal" aria-controls="jadwalMini" aria-expanded="false">Jadwalkan&nbsp;<span id="rAlpa2">6</span>&nbsp;konten</button>
+            <p class="ket-hadir" id="rKetHadir" hidden>Kehadiran dihitung setelah akun terhubung.</p>
+          </div>
+          <div class="blok ttd-blok">
+            <div class="ttd">
+              <p class="tempat">Yogyakarta, 1 Oktober 2026</p>
+              <div><span class="peran">Orang tua/wali,</span><span class="nama" id="rOrtu">( Bu Ijah )</span><span class="ket" id="rDibaca">dibaca 2 Okt, 19.40</span></div>
+              <div><span class="peran">Wali kelas,</span><span class="nama">( Kelola Konten )</span><span class="ket">otomatis</span></div>
+            </div>
+          </div>
+          <p class="no-hal" aria-hidden="true">Halaman 1</p>
+          <div class="jadwal-mini" id="jadwalMini" aria-label="Rencana minggu depan">
+            <h3>Rencana 5 sampai 11 Oktober</h3>
+            <p>Enam slot kosong dari hari alpa sudah jadi draf. Tinggal isi caption dan setujui jamnya.</p>
+            <div class="minggu-mini">
+              <div><span class="hr">Sen</span><span class="tg">5</span><span class="pf">Instagram</span><span>19.00</span><span>Reels</span></div>
+              <div><span class="hr">Sel</span><span class="tg">6</span><span class="pf">TikTok</span><span>12.00</span><span>Video</span></div>
+              <div><span class="hr">Rab</span><span class="tg">7</span><span class="pf">Instagram</span><span>19.00</span><span>Carousel</span></div>
+              <div><span class="hr">Kam</span><span class="tg">8</span><span class="pf">YouTube</span><span>18.30</span><span>Shorts</span></div>
+              <div><span class="hr">Jum</span><span class="tg">9</span><span class="pf">TikTok</span><span>19.00</span><span>Video</span></div>
+              <div><span class="hr">Sab</span><span class="tg">10</span><span class="pf">Facebook</span><span>10.00</span><span>Promo 10.10</span></div>
+              <div><span class="hr">Min</span><span class="tg">11</span><span class="izin">Izin, libur terencana</span></div>
+            </div>
+            <div class="aksi-mini">
+              <a class="tbl tbl-hijau tbl-kecil" href="#jadwal">Lihat daftar hadir minggu ini</a>
+              <button class="tbl tbl-garis-terang tbl-kecil" type="button" id="tblKembali">Kembali ke rapor</button>
+            </div>
+          </div>
+        </div>
+        <div class="punggung" aria-hidden="true"></div>
+        <div class="hal kanan">
+          <div class="blok blok-nilai">
+            <table class="tabel-rapor" id="tabelNilai">
+              <caption class="vh">Nilai semester September 2026</caption>
+              <thead>
+                <tr>
+                  <th scope="col" class="no">No</th>
+                  <th scope="col">Mata pelajaran</th>
+                  <th scope="col" class="angka">Target (KKM)<span class="bantu"><button type="button" aria-describedby="tipKkm" aria-label="Apa itu target KKM">?</button><span class="tip" role="tooltip" id="tipKkm">Nilai minimal yang kamu tetapkan sendiri untuk tiap platform. Di sekolah dulu namanya KKM. Kalau performamu pas di target, nilainya 75.</span></span></th>
+                  <th scope="col" class="angka">Nilai</th>
+                  <th scope="col">Keterangan</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="kelompok"><th colspan="5" scope="colgroup"><span class="kel-isi">Kelompok A: platform utama <a href="#cara-nilai">Cara menghitung nilai</a></span></th></tr>
+                <tr class="tulis" style="--i:1" id="rowIg"><td class="no">1</td><th scope="row">Instagram</th><td class="angka"><span class="num">75</span></td><td class="angka bertinta"><span class="num">68</span></td><td><span class="belum">Belum tuntas</span></td></tr>
+                <tr class="tulis" style="--i:2" id="rowTt"><td class="no">2</td><th scope="row">TikTok</th><td class="angka"><span class="num">75</span></td><td class="angka"><span class="num">84</span></td><td><span class="tuntas">Tuntas</span></td></tr>
+                <tr class="tulis" style="--i:3" id="rowFb"><td class="no">3</td><th scope="row">Facebook</th><td class="angka"><span class="num">70</span></td><td class="angka"><span class="num">77</span></td><td><span class="tuntas">Tuntas</span></td></tr>
+                <tr class="tulis" style="--i:4" id="rowYt"><td class="no">4</td><th scope="row">YouTube</th><td class="angka"><span class="num">70</span></td><td class="angka bertinta"><span class="num">59</span></td><td><span class="belum">Belum tuntas</span></td></tr>
+              </tbody>
+            </table>
+            <p class="catatan-wk"><b>Catatan wali kelas</b><span id="rCatatan">Reels-mu banyak ditonton tapi jarang dikomentari. Tutup tiap Reels dengan satu pertanyaan.</span></p>
+            <div class="keputusan">
+              <span class="dasar">Berdasarkan nilai semester ini, akun ditetapkan:</span>
+              <span class="pilihan dicoret" id="pNaik"><span class="vh">dicoret: </span>Naik kelas</span>
+              <span aria-hidden="true">/</span>
+              <span class="pilihan" id="pBelum">Belum naik kelas</span>
+              <small>*) coret yang tidak perlu</small>
+            </div>
+          </div>
+          <p class="no-hal" aria-hidden="true">Halaman 2</p>
+        </div>
+      </div>
+
+      <div class="isi isi-agensi" id="isiAgensi" role="tabpanel" aria-labelledby="tabAgensi" hidden>
+        <div class="hal kiri">
+          <div class="blok identitas">
+            <div class="kop">
+              <span class="tanda" aria-hidden="true">SC</span>
+              <div><h2>Buku Nilai</h2><p>Studio Contoh, semester September 2026</p></div>
+            </div>
+            <dl class="data-diri">
+              <dt>Wali kelas</dt><dd>Dinda (account manager)</dd>
+              <dt>Murid</dt><dd>6 klien aktif</dd>
+              <dt>Perlu ditinjau</dt><dd>4 rapor sebelum dikirim</dd>
+            </dl>
+            <p class="catatan-tim">Buku ini hanya terlihat oleh timmu. Klien menerima rapornya sendiri, setelah kamu meninjau catatannya.</p>
+            <p style="margin-top:14px"><a class="tbl tbl-hijau tbl-kecil" href="#klien">Tinjau 4 rapor</a></p>
+          </div>
+        </div>
+        <div class="punggung" aria-hidden="true"></div>
+        <div class="hal kanan">
+          <div class="blok blok-nilai">
+            <table class="tabel-rapor roster">
+              <caption>Nilai semua klien</caption>
+              <thead><tr><th scope="col">Klien</th><th scope="col" class="angka"><abbr title="Instagram">IG</abbr></th><th scope="col" class="angka"><abbr title="TikTok">TT</abbr></th><th scope="col" class="angka"><abbr title="Facebook">FB</abbr></th><th scope="col" class="angka"><abbr title="YouTube">YT</abbr></th></tr></thead>
+              <tbody>
+                <tr><td class="klien">@dapursambal.<wbr>contoh</td><td class="angka bertinta"><span class="num">68</span></td><td class="angka"><span class="num">84</span></td><td class="angka"><span class="num">77</span></td><td class="angka bertinta"><span class="num">59</span></td></tr>
+                <tr><td class="klien">@kopilereng.<wbr>contoh</td><td class="angka"><span class="num">81</span></td><td class="angka bertinta"><span class="num">72</span></td><td class="angka redup">-</td><td class="angka"><span class="num">70</span></td></tr>
+                <tr><td class="klien">@laundrykilat.<wbr>contoh</td><td class="angka bertinta"><span class="num">63</span></td><td class="angka redup">-</td><td class="angka"><span class="num">71</span></td><td class="angka redup">-</td></tr>
+                <tr><td class="klien">@bengkelmaju.<wbr>contoh</td><td class="angka"><span class="num">77</span></td><td class="angka"><span class="num">90</span></td><td class="angka bertinta"><span class="num">66</span></td><td class="angka"><span class="num">73</span></td></tr>
+                <tr><td class="klien">@batikrumah.<wbr>contoh</td><td class="angka"><span class="num">88</span></td><td class="angka"><span class="num">79</span></td><td class="angka"><span class="num">74</span></td><td class="angka redup">-</td></tr>
+                <tr><td class="klien">@kuebasah.<wbr>contoh</td><td class="angka"><span class="num">92</span></td><td class="angka"><span class="num">86</span></td><td class="angka"><span class="num">80</span></td><td class="angka redup">-</td></tr>
+              </tbody>
+            </table>
+            <p class="cara">Merah: di bawah target klien itu. Tanda "-": platform tidak dipakai.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- form untuk desktop: menempel di bawah buku -->
+    <form class="cek cek-desk" id="cek-d" novalidate>
+      <div class="cek-atas">
+        <label class="besar" for="username-d">Cek rapor Instagram-mu, gratis</label>
+        <div class="isian"><input class="f-user" id="username-d" name="username" type="text" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="@usernameinstagram"></div>
+        <button class="tbl tbl-biru" type="submit">Cek rapornya</button>
+        <button class="tbl tbl-garis-gelap f-tbl-manual" type="button" aria-expanded="false" aria-controls="manual-d">Akun pribadi atau TikTok? Isi angka manual</button>
+      </div>
+      <p class="jujur">Dibaca otomatis hanya untuk akun Instagram Bisnis atau Kreator yang publik, dari 12 posting terakhir. Akun lain tetap bisa dicek dengan angka manual.</p>
+      <p class="status f-status" role="status" aria-live="polite"></p>
+      <div class="manual f-manual" id="manual-d" hidden>
+        <label for="pengikut-d">Jumlah pengikut<input class="m-pengikut" id="pengikut-d" type="number" inputmode="numeric" min="1" value="18400"></label>
+        <label for="suka-d">Rata-rata suka per posting<input class="m-suka" id="suka-d" type="number" inputmode="numeric" min="0" value="410"></label>
+        <label for="komen-d">Rata-rata komentar<input class="m-komen" id="komen-d" type="number" inputmode="numeric" min="0" value="34"></label>
+        <label for="target-d">Target engagement rate (%)<input class="m-target" id="target-d" type="number" inputmode="decimal" min="0.1" step="0.1" value="3"></label>
+        <button class="tbl tbl-biru f-hitung" type="button">Hitung nilai</button>
+      </div>
+    </form>
+  </div>
+</section>
+</div>
+
+<main>
+<!-- section 2: daftar hadir -->
+<section class="bagian-dh" id="jadwal" aria-labelledby="judul-jadwal">
+  <div class="wadah">
+    <div class="lembar-dh">
+      <div class="dh-kop">
+        <div>
+          <h2 id="judul-jadwal">Hari alpa langsung jadi jadwal.</h2>
+          <p>Di daftar hadir minggu depan, tiap A adalah slot target yang masih kosong. Ketuk A dan drafnya langsung jadi. Tinggal tulis caption dan pilih jam.</p>
+        </div>
+        <dl class="dh-id">
+          <div><dt>Daftar hadir</dt><dd>@dapursambal.<wbr>contoh</dd></div>
+          <div><dt>Minggu</dt><dd>5 sampai 11 Oktober 2026</dd></div>
+          <div><dt>Target</dt><dd>9 posting, 6 masih alpa</dd></div>
+        </dl>
+      </div>
+      <div class="gulir">
+        <table class="tabel-rapor dh">
+          <caption class="vh">Daftar hadir posting 5 sampai 11 Oktober 2026</caption>
+          <thead>
+            <tr>
+              <th scope="col"><span class="pf-penuh">Mata pelajaran</span><abbr class="pf-singkat" title="Mata pelajaran">Mapel</abbr></th>
+              <th scope="col"><span class="hr">Sen</span><span class="tg">5</span></th>
+              <th scope="col"><span class="hr">Sel</span><span class="tg">6</span></th>
+              <th scope="col"><span class="hr">Rab</span><span class="tg">7</span></th>
+              <th scope="col"><span class="hr">Kam</span><span class="tg">8</span></th>
+              <th scope="col"><span class="hr">Jum</span><span class="tg">9</span></th>
+              <th scope="col"><span class="hr">Sab</span><span class="tg">10</span></th>
+              <th scope="col"><span class="hr">Min</span><span class="tg">11</span></th>
+              <th scope="col" class="kol-jml">Alpa</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row"><span class="pf-penuh">Instagram</span><abbr class="pf-singkat" title="Instagram">IG</abbr></th>
+              <td><button type="button" class="sel-a" aria-pressed="true" data-pf="Instagram" data-hari="Senin 5 Oktober" data-fm="Reels, 19.00 WIB" data-jdl="Level pedas 1 sampai 5, kamu kuat yang mana?" aria-label="Instagram, Senin 5 Oktober, alpa. Buka draf">A</button></td>
+              <td></td>
+              <td><button type="button" class="sel-a" aria-pressed="false" data-pf="Instagram" data-hari="Rabu 7 Oktober" data-fm="Carousel, 19.00 WIB" data-jdl="5 lauk yang paling cocok dengan sambal bawang" aria-label="Instagram, Rabu 7 Oktober, alpa. Buka draf">A</button></td>
+              <td></td>
+              <td class="h"><abbr title="Hadir, sudah terjadwal">H</abbr></td>
+              <td></td>
+              <td class="i"><abbr title="Izin, libur terencana">I</abbr></td>
+              <td class="jml kol-jml">2</td></tr>
+            <tr><th scope="row"><span class="pf-penuh">TikTok</span><abbr class="pf-singkat" title="TikTok">TT</abbr></th>
+              <td></td>
+              <td><button type="button" class="sel-a" aria-pressed="false" data-pf="TikTok" data-hari="Selasa 6 Oktober" data-fm="Video, 12.00 WIB" data-jdl="Ulek sambal bawang dalam 60 detik" aria-label="TikTok, Selasa 6 Oktober, alpa. Buka draf">A</button></td>
+              <td></td>
+              <td class="h"><abbr title="Hadir, sudah terjadwal">H</abbr></td>
+              <td><button type="button" class="sel-a" aria-pressed="false" data-pf="TikTok" data-hari="Jumat 9 Oktober" data-fm="Video, 19.00 WIB" data-jdl="Tebak level pedas pilihan pembeli" aria-label="TikTok, Jumat 9 Oktober, alpa. Buka draf">A</button></td>
+              <td></td>
+              <td class="i"><abbr title="Izin, libur terencana">I</abbr></td>
+              <td class="jml kol-jml">2</td></tr>
+            <tr><th scope="row"><span class="pf-penuh">Facebook</span><abbr class="pf-singkat" title="Facebook">FB</abbr></th>
+              <td class="h"><abbr title="Hadir, sudah terjadwal">H</abbr></td>
+              <td></td><td></td><td></td><td></td>
+              <td><button type="button" class="sel-a" aria-pressed="false" data-pf="Facebook" data-hari="Sabtu 10 Oktober" data-fm="Foto, 10.00 WIB" data-jdl="Promo 10.10: beli dua botol, gratis kerupuk" aria-label="Facebook, Sabtu 10 Oktober, alpa. Buka draf">A</button></td>
+              <td class="i"><abbr title="Izin, libur terencana">I</abbr></td>
+              <td class="jml kol-jml">1</td></tr>
+            <tr><th scope="row"><span class="pf-penuh">YouTube</span><abbr class="pf-singkat" title="YouTube">YT</abbr></th>
+              <td></td><td></td><td></td>
+              <td><button type="button" class="sel-a" aria-pressed="false" data-pf="YouTube" data-hari="Kamis 8 Oktober" data-fm="Shorts, 18.30 WIB" data-jdl="Sambal matah tanpa ribet" aria-label="YouTube, Kamis 8 Oktober, alpa. Buka draf">A</button></td>
+              <td></td><td></td>
+              <td class="i"><abbr title="Izin, libur terencana">I</abbr></td>
+              <td class="jml kol-jml">1</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="dh-legenda"><b class="h">H</b> hadir, sudah terjadwal. <b>I</b> izin, libur terencana. <b class="a">A</b> alpa, slot target yang masih kosong: ketuk untuk membuat draf.</p>
+      <div class="slip" id="slip" aria-live="polite">
+        <p class="label-slip">Draf dari hari alpa<b id="slipPf">Instagram</b><span id="slipHari">Senin 5 Oktober</span></p>
+        <p class="isi-slip"><strong id="slipJdl">Level pedas 1 sampai 5, kamu kuat yang mana?</strong><span id="slipFm">Reels, 19.00 WIB</span>. <span id="slipStatus">Status: draf. Tulis caption, lalu jadwalkan.</span></p>
+        <div class="aksi"><button class="tbl tbl-hijau tbl-kecil" type="button">Tulis caption</button><button class="tbl tbl-garis-terang tbl-kecil" type="button">Ganti jam</button></div>
+      </div>
+      <p class="dh-catatan"><b>Keterangan posting otomatis:</b> Instagram (akun Bisnis atau Kreator) dan Facebook Page langsung tayang lewat API resmi setelah aplikasi kami disetujui Meta. YouTube dan TikTok mengunci unggahan dari aplikasi yang belum lolos audit, jadi sampai audit lolos kamu dapat pengingat di ponsel tepat di jamnya, lengkap dengan video dan caption yang tinggal dibagikan ke aplikasinya.</p>
+    </div>
+  </div>
+</section>
+
+<!-- section 3: buku tinjauan untuk agensi -->
+<section class="bagian-klien terang" id="klien" aria-labelledby="judul-klien">
+  <div class="wadah">
+    <div class="buku buku-klien">
+      <div class="isi">
+        <div class="hal kiri">
+          <h2 id="judul-klien">Rapor untuk klien, ditinjau dulu olehmu.</h2>
+          <p class="pengantar">Di workspace agensi, rapor tidak langsung terkirim. Nilai di bawah target ditahan sampai account manager menulis catatannya. Klien melihat tren dan target dari KPI kontrak, bukan vonis.</p>
+          <div class="tab-terang" role="tablist" aria-label="Gaya bahasa rapor">
+            <button type="button" role="tab" aria-selected="true" data-gaya="r">Mode rapor</button>
+            <button type="button" role="tab" aria-selected="false" data-gaya="f">Mode formal</button>
+          </div>
+          <table class="tabel-rapor tinjau">
+            <caption>Lembar tinjauan</caption>
+            <thead><tr><th scope="col">Yang ditinjau</th><th scope="col" style="text-align:center">Sudah</th></tr></thead>
+            <tbody>
+              <tr><td>Tren tiga bulan dan target dari KPI kontrak ikut tampil</td><td class="sudah"><span class="oto">Otomatis</span></td></tr>
+              <tr><td><label for="cekTinjau">Catatan wali kelas untuk 2 nilai di bawah target</label></td><td class="sudah"><input type="checkbox" id="cekTinjau"></td></tr>
+              <tr><td>Buku Nilai semua klien tidak ikut terkirim</td><td class="sudah"><span class="oto">Otomatis</span></td></tr>
+              <tr><td>Gaya bahasa sesuai klien ini (rapor atau formal)</td><td class="sudah"><span class="oto">Otomatis</span></td></tr>
+            </tbody>
+            <tfoot><tr><td colspan="2" id="ditinjauOleh">Ditinjau oleh: belum ada</td></tr></tfoot>
+          </table>
+          <div class="kirim">
+            <button class="tbl tbl-hijau" type="button" id="tblKirim" disabled>Kirim ke klien lewat WhatsApp</button>
+            <p>Klien membuka rapor lewat tautan tanpa login. Kolom "Orang tua/wali" terisi saat rapor dibuka.</p>
+          </div>
+        </div>
+        <div class="punggung" aria-hidden="true"></div>
+        <div class="hal kanan lembar-rapor" id="lembar">
+          <p class="pita-status" id="pita">Belum terkirim. 2 nilai di bawah target menunggu tinjauanmu.</p>
+          <div class="kop">
+            <span class="tanda" aria-hidden="true">SC</span>
+            <div><h3 data-r="Rapor Akun" data-f="Laporan Bulanan">Rapor Akun</h3><p>@dapursambal.<wbr>contoh, <span data-r="semester" data-f="periode">semester</span> September 2026</p></div>
+          </div>
+          <div class="gulir">
+          <table class="tabel-rapor">
+            <thead><tr>
+              <th scope="col" data-r="Mata pelajaran" data-f="Platform">Mata pelajaran</th>
+              <th scope="col" class="angka" data-r="Target (KKM)" data-f="Target">Target (KKM)</th>
+              <th scope="col" class="angka" data-r="Nilai" data-f="Skor">Nilai</th>
+              <th scope="col">Tren</th>
+              <th scope="col" class="kol-predikat" data-r="Predikat" data-f="Kategori">Predikat</th>
+              <th scope="col" class="kol-ket" data-r="Keterangan" data-f="Status">Keterangan</th>
+            </tr></thead>
+            <tbody>
+              <tr class="kelompok"><th colspan="6" scope="colgroup" data-r="Kelompok A: platform utama" data-f="Platform utama">Kelompok A: platform utama</th></tr>
+              <tr><th scope="row">Instagram</th><td class="angka"><span class="num">75</span></td><td class="angka bertinta"><span class="num">68</span></td><td class="tren">naik 6</td><td class="kol-predikat redup">C</td><td class="kol-ket"><span class="belum" data-r="Belum tuntas" data-f="Di bawah target">Belum tuntas</span></td></tr>
+              <tr><th scope="row">TikTok</th><td class="angka"><span class="num">75</span></td><td class="angka"><span class="num">84</span></td><td class="tren">naik 3</td><td class="kol-predikat redup">B</td><td class="kol-ket"><span class="tuntas" data-r="Tuntas" data-f="Tercapai">Tuntas</span></td></tr>
+              <tr><th scope="row">Facebook</th><td class="angka"><span class="num">70</span></td><td class="angka"><span class="num">77</span></td><td class="tren">tetap</td><td class="kol-predikat redup">B</td><td class="kol-ket"><span class="tuntas" data-r="Tuntas" data-f="Tercapai">Tuntas</span></td></tr>
+              <tr><th scope="row">YouTube</th><td class="angka"><span class="num">70</span></td><td class="angka bertinta"><span class="num">59</span></td><td class="tren">turun 4</td><td class="kol-predikat redup">D</td><td class="kol-ket"><span class="belum" data-r="Belum tuntas" data-f="Di bawah target">Belum tuntas</span></td></tr>
+            </tbody>
+          </table>
+          </div>
+          <p class="legenda-hp">Kotak merah: nilai di bawah target. Kotak lain: tuntas.</p>
+          <div class="grid-bawah">
+            <div><b data-r="Kehadiran" data-f="Konsistensi">Kehadiran</b><br><span data-r="Hadir" data-f="Hari posting">Hadir</span> 20, <span data-r="Izin" data-f="Libur terencana">Izin</span> 4, <span class="belum"><span data-r="Alpa" data-f="Hari kosong">Alpa</span> 6</span> dari 30 hari (target 26)</div>
+            <div><b data-r="Sikap" data-f="Respons pesan">Sikap</b><br>Baik. Rata-rata balas DM 1 jam 40 menit.</div>
+            <div><b data-r="Ekstrakurikuler" data-f="Platform lain">Ekstrakurikuler</b><br>X dan Threads dicatat, tidak dinilai: 12 dan 8 posting.</div>
+            <div><b data-r="Keputusan" data-f="Status bulan ini">Keputusan</b><br><span id="kepLengkap">Ditahan sampai catatan ditinjau</span></div>
+          </div>
+          <p class="catatan-wk"><b data-r="Catatan wali kelas" data-f="Ringkasan account manager">Catatan wali kelas</b><span>Instagram naik 6 poin dari Agustus, tapi Reels masih jarang dikomentari. Bulan depan tiap Reels ditutup dengan satu pertanyaan. YouTube kosong tiga minggu, jadi kami unggah ulang empat video TikTok terbaik sebagai Shorts.</span></p>
+          <div class="ttd" style="margin-top:18px">
+            <p class="tempat">Yogyakarta, 1 Oktober 2026</p>
+            <div><span class="peran" data-r="Orang tua/wali," data-f="Diterima oleh,">Orang tua/wali,</span><span class="nama">( <span class="titik" aria-hidden="true">....................</span><span class="vh">belum diisi</span> )</span><span class="ket">terisi saat klien membuka rapor</span></div>
+            <div><span class="peran" data-r="Wali kelas," data-f="Disusun oleh,">Wali kelas,</span><span class="nama">( Dinda, Studio Contoh )</span><span class="ket">account manager</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- section 4: pengumuman kenaikan kelas -->
+<section class="bagian-story gelap" aria-labelledby="judul-story">
+  <div class="wadah umum-grid">
+    <div class="lembar-umum">
+      <div class="kop-umum">
+        <h2 id="judul-story">Naik kelas? Pamerkan di Story.</h2>
+        <p class="sub-umum">Pengumuman kenaikan kelas, September 2026, Studio Contoh</p>
+        <p class="pengantar">Tombol bagikan hanya muncul untuk akun yang nilainya B ke atas atau naik dari bulan lalu. Yang belum naik kelas tidak dipermalukan: rapornya cukup dibaca timmu dulu.</p>
+      </div>
+      <table class="tabel-rapor umum">
+        <caption class="vh">Hasil kenaikan kelas dan yang ditawarkan</caption>
+        <thead><tr><th scope="col" class="no">No</th><th scope="col">Akun</th><th scope="col">Hasil September</th><th scope="col">Yang ditawarkan</th></tr></thead>
+        <tbody>
+          <tr><td class="no">1</td><th scope="row" class="klien">@kuebasah.<wbr>contoh</th><td class="hasil"><span class="tuntas">Naik kelas</span><br>TikTok naik 9 poin</td><td><div class="aksi-baris"><button class="tbl tbl-hijau tbl-kecil" type="button">Bagikan ke Story</button></div></td></tr>
+          <tr><td class="no">2</td><th scope="row" class="klien">@batikrumah.<wbr>contoh</th><td class="hasil"><span class="tuntas">Naik kelas</span><br>Instagram naik 3 poin</td><td><div class="aksi-baris"><button class="tbl tbl-hijau tbl-kecil" type="button">Bagikan ke Story</button></div></td></tr>
+          <tr><td class="no">3</td><th scope="row" class="klien">@dapursambal.<wbr>contoh</th><td class="hasil"><span class="belum">Belum naik kelas</span><br>2 nilai di bawah target</td><td><div class="aksi-baris"><button class="tbl tbl-garis-terang tbl-kecil" type="button">Lihat 3 langkah perbaikan</button><button class="tbl tbl-garis-terang tbl-kecil" type="button">Kirim ke timmu</button></div></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="story" aria-label="Contoh gambar Story untuk akun nomor 1">
+      <strong>Naik kelas!</strong>
+      <span class="akun">@kuebasah.<wbr>contoh<br>September 2026</span>
+      <div class="mini">
+        <div><span>TikTok</span><span><b>86</b> <span class="naik">naik 9</span></span></div>
+        <div><span>Instagram</span><span><b>92</b> <span class="naik">naik 5</span></span></div>
+        <div><span>Facebook</span><span><b>80</b> <span class="naik">naik 2</span></span></div>
+      </div>
+      <span class="kaki">Cek rapor akunmu di Kelola Konten</span>
+    </div>
+  </div>
+</section>
+
+<section class="gelap penutup" id="penutup" aria-labelledby="judul-penutup">
+  <div class="wadah">
+    <div class="plakat">
+      <h2 id="judul-penutup">Bulan depan, naik kelas bareng.</h2>
+      <p>Daftar sekarang, hubungkan akunmu, dan rapor pertama terbit 1 November. Rapor tengah semester bisa dilihat kapan saja.</p>
+      <div class="aksi">
+        <a class="tbl tbl-biru" href="#cek">Cek rapor gratis</a>
+        <a class="tbl tbl-garis-gelap" href="#penutup">Daftar dan hubungkan akun</a>
+      </div>
+      <p class="label-jujur" style="margin:14px auto 0">Cek rapor gratis. Paket dan harga untuk penjadwalan dan rapor bulanan masih disusun.</p>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="kaki-situs">
+  <div class="wadah">
+    <span>Kelola Konten. Konsep desain, 3 Oktober 2026.</span>
+    <span>Semua akun, nama, dan angka di halaman ini fiktif.</span>
+  </div>
+</footer>
+
+<!-- ===================== BAGIAN 2: DOKUMEN KONSEP ===================== -->
+<div class="pemisah" role="separator" aria-label="Dokumen konsep">
+  <div class="wadah">
+    <h2>Dokumen konsep</h2>
+    <p>Bagian di bawah ini untuk juri dan tim, bukan bagian dari situs. Konsep final, arah "Buku Rapor Akun".</p>
+  </div>
+</div>
+
+<article class="doc">
+  <div class="wadah">
+
+    <section aria-labelledby="d-ide">
+      <h2 id="d-ide">Ide besar dan signature</h2>
+      <p><b>Ide besar.</b> Kelola Konten menjadwalkan konten tiap hari, dan tiap akhir bulan menyerahkan buku rapor untuk tiap akun. Akunnya murid, agensi (atau Kelola Konten) wali kelasnya, dan pemilik usaha orang tua/walinya.</p>
+      <p><b>Signature: buku rapor bersampul yang terbuka.</b> Papan sampul hijau tua terlihat di keempat sisi dengan bingkai kapur biru tipis, punggung buku berbayang dengan garis jilid, dan tumpukan tepi halaman di bawah. Sampul bergeser membuka dua halaman. Halaman kiri: identitas berformat formulir rapor (titik dua sejajar), kehadiran (Hadir + Izin + Alpa = 30 hari), dan blok tanda tangan khas rapor Indonesia: baris tempat dan tanggal "Yogyakarta, 1 Oktober 2026", lalu "Orang tua/wali," dan "Wali kelas," dengan nama di dalam kurung, atau kurung bertitik bila belum diisi (tanpa paraf). Halaman kanan: tabel nilai berbingkai garis ganda dengan kolom No dan baris "Kelompok A: platform utama", kolom Target (KKM), angka merah di sel bertinta, kotak "Catatan wali kelas" berjudul, dan kotak keputusan "Berdasarkan nilai semester ini, akun ditetapkan:" dengan coretan cetak. Tiap halaman bernomor di kaki, punggung bersampul kain gelap terlihat di tepi atas dan bawah papan. Bedanya dengan nota Neracaku: buku bersampul dan berpunggung, bukan lembar lepas.</p>
+      <p><b>Benda yang sama dipakai di seluruh halaman.</b> Hero adalah sampul depan (plakat judul berbingkai ganda) dengan buku terbuka. Section kedua adalah daftar hadir minggu depan. Section ketiga adalah buku tinjauan agensi. Penutup adalah sampul belakang. Coba di hero: "Jadwalkan 6 konten", tab "Agensi", form username (akhiri dengan <b>.pribadi</b> untuk keadaan gagal), dan "Isi angka manual". Di daftar hadir, ketuk sel A.</p>
+    </section>
+
+    <section aria-labelledby="d-palet">
+      <h2 id="d-palet">Palet</h2>
+      <p>Hijau gelap papan adalah warna pemilik Kelola Konten di portofolio. Kapur Biru satu-satunya aksen dan hanya di permukaan gelap. Isian Kapur Biru hanya untuk tombol aksi; sakelar tampilan memakai garis bawah. Merah dan hijau hanya untuk data. Tidak ada merah muda, kuning, atau gradasi.</p>
+      <div class="swatch-grid">
+        <div class="swatch"><div class="warna" style="background:#17392F;color:#F4F7F5">Aa</div><div class="info"><b>Hijau Papan</b>#17392F<br>Dasar gelap, tombol dan cincin fokus di terang.<br>Kapur Putih di atasnya 11,71:1, di putih 12,63:1, di Lipatan 11,25:1</div></div>
+        <div class="swatch"><div class="warna" style="background:#0E241D;color:#9FD4FF">Aa</div><div class="info"><b>Sampul</b>#0E241D<br>Papan sampul buku, tab buku, footer.<br>Kapur Putih 15,11:1, Kapur Biru 10,35:1, Kapur Redup 9,69:1</div></div>
+        <div class="swatch"><div class="warna" style="background:#1E4539;color:#F4F7F5">Aa</div><div class="info"><b>Panel Papan</b>#1E4539<br>Form cek di papan.<br>Kapur Putih 9,91:1, Kapur Redup 6,35:1, Kapur Biru 6,78:1</div></div>
+        <div class="swatch"><div class="warna" style="background:#9FD4FF;color:#17392F">Aa</div><div class="info"><b>Kapur Biru</b>#9FD4FF<br>Isian tombol aksi, cincin fokus dan garis tab di gelap, bingkai sampul.<br>Teks Hijau Papan 8,02:1. Dilarang di terang (1,57:1 di putih)</div></div>
+        <div class="swatch"><div class="warna" style="background:#F4F7F5;color:#17392F;border-bottom:1px solid #C9D3CE">Aa</div><div class="info"><b>Kapur Putih</b>#F4F7F5<br>Teks utama di gelap.</div></div>
+        <div class="swatch"><div class="warna" style="background:#B9CCC3;color:#17392F">Aa</div><div class="info"><b>Kapur Redup</b>#B9CCC3<br>Teks sekunder di gelap, tab tidak aktif.<br>Di Hijau Papan 7,51:1, di Sampul 9,69:1</div></div>
+        <div class="swatch"><div class="warna" style="background:#EEF3F0;color:#1A2420">Aa</div><div class="info"><b>Lipatan</b>#EEF3F0<br>Section daftar hadir, kepala tabel. Abu hijau dingin, bukan krem.</div></div>
+        <div class="swatch"><div class="warna" style="background:#1A2420;color:#FFFFFF">Aa</div><div class="info"><b>Arang Rapor</b>#1A2420<br>Teks di terang, garis ganda.<br>Di putih 15,94:1, di Lipatan 14,21:1</div></div>
+        <div class="swatch"><div class="warna" style="background:#5B6661;color:#FFFFFF">Aa</div><div class="info"><b>Abu Keterangan</b>#5B6661<br>Teks sekunder di terang.<br>Di putih 5,97:1, di Lipatan 5,32:1</div></div>
+        <div class="swatch"><div class="warna" style="background:#FFFFFF;color:#B3261E;border-bottom:1px solid #C9D3CE"><span style="border:1.5px solid #B3261E;padding:0 8px">59</span></div><div class="info"><b>Merah Nilai</b>#B3261E<br>Angka di bawah target, sel A, garis sel bertinta.<br>Di putih 6,54:1, di Lipatan 5,82:1</div></div>
+        <div class="swatch"><div class="warna" style="background:#FFFFFF;color:#1F7A4D;border-bottom:1px solid #C9D3CE">Tuntas</div><div class="info"><b>Hijau Tuntas</b>#1F7A4D<br>Tuntas, sel H, tinjauan otomatis.<br>Di putih 5,32:1, di Lipatan 4,74:1</div></div>
+        <div class="swatch"><div class="warna" style="background:#C9D3CE;color:#1A2420">Aa</div><div class="info"><b>Garis Sel</b>#C9D3CE<br>Garis dalam tabel dan tumpukan tepi halaman. Tidak pernah jadi latar teks.</div></div>
+      </div>
+    </section>
+
+    <section aria-labelledby="d-tipo">
+      <h2 id="d-tipo">Tipografi</h2>
+      <div class="spesimen"><span class="lbl">Besley 800, display. H1 54 px satu baris di 1440, 30 px di HP</span><p style="font-family:var(--serif);font-weight:800;font-size:44px;line-height:1.1">Akunmu naik kelas bulan ini?</p></div>
+      <div class="spesimen"><span class="lbl">Besley 800, angka di sel tabel, kotak kehadiran, dan daftar hadir (figur lining bawaan, rata kanan)</span><p class="nb" style="font-size:36px;line-height:1.2">75 68 84 77 59 · 22 2 6 · H I A</p></div>
+      <div class="spesimen"><span class="lbl">Gantari 400/500/700, UI, body, dan angka di dalam kalimat</span><p style="font-size:17px">Rata-rata balas DM 1 jam 40 menit. Rapor pertama terbit 1 November.</p><p style="font-size:15px;font-weight:700;margin-top:8px">Jadwalkan 6 konten · Cek rapornya · Isi angka manual</p></div>
+      <p style="margin-top:14px"><b>Aturan angka.</b> Besley hanya untuk angka di sel tabel, kotak kehadiran, dan daftar hadir. Angka di dalam kalimat, tombol, identitas, dan tanggal tanda tangan memakai Gantari. Fitur <code>tnum</code> Besley tidak dipakai: nolnya dipetakan ke glyph <code>uniFF10</code> selebar 1100 unit (digit lain 1320), jadi nol tampak menyempit (dicek dengan fontTools pada berkas Google Fonts, 3 Okt 2026). Kolom angka rata kanan dengan figur lining bawaan.</p>
+      <p>Besley (Owen Earl) dan Gantari (Lafontype) berlisensi OFL dari Google Fonts, dan keduanya hanya dipakai Kelola Konten di portofolio.</p>
+    </section>
+
+    <section aria-labelledby="d-grid">
+      <h2 id="d-grid">Grid, buku, fokus, gerak</h2>
+      <ul>
+        <li><b>Grid:</b> kontainer 1200 px, 12 kolom, gutter 24. Buku 1120 px: dua halaman, punggung 24 px.</li>
+        <li><b>Wujud buku:</b> papan sampul 14 px di sisi dan 18 px di bawah, bingkai kapur biru 1,5 px di dalam tepi papan, punggung berbayang 14% dengan garis jilid 1 px, punggung kain 28 px (#081812, tepi kapur biru 45%) terlihat di atas dan bawah papan, dan dua garis tumpukan tepi halaman. Di HP papan 10 px dan tumpukan tetap ada.</li>
+        <li><b>Radius dan tombol:</b> semua 2 px (buku, halaman, tab, tombol, input), bukan pill. Tombol memakai bahasa bingkai ganda yang sama dengan plakat dan tabel: tombol isi punya garis dalam 1 px (Hijau Papan di Kapur Biru, Kapur Redup di Hijau Papan), tombol garis memakai <code>4px double</code>.</li>
+        <li><b>Fokus:</b> 3 px Kapur Biru hanya di permukaan gelap (papan, form cek, story). Di halaman buku, daftar hadir, dan section terang: 3 px Hijau Papan (12,63:1 di putih, 11,25:1 di Lipatan). Offset 2 px.</li>
+        <li><b>Sakelar tampilan:</b> tab buku (latar Sampul, garis bawah 3 px Kapur Biru) di gelap, tab garis bawah Hijau Papan di terang. Isian penuh hanya untuk tombol aksi.</li>
+        <li><b>Gerak:</b> sampul bergeser datar 280 ms lalu memudar 160 ms; baris nilai ditulis lewat <code>clip-path</code> 160 ms per baris, jeda 70 ms; garis coret 200 ms; ganti halaman 240 ms. Tidak ada count-up dan fade-up. Reduced motion dan tanpa JS: buku langsung terbuka.</li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="d-struktur">
+      <h2 id="d-struktur">Struktur homepage</h2>
+      <ul>
+        <li><b>Header</b> di papan: logo garis ganda "KK", menu, Masuk, "Daftar". Di HP: logo, "Daftar", tombol menu ikon. Kata "gratis" hanya dipakai untuk alat cek rapor, yang memang gratis.</li>
+        <li><b>Hero = sampul depan:</b> plakat judul berbingkai ganda (H1 + subjudul yang menyebut produk dan untuk siapa), tab buku "Lihat sebagai: Pemilik usaha / Agensi", buku terbuka, form cek menempel di bawah buku. Di HP form pindah ke antara plakat dan buku (dua elemen form, satu tampil per ukuran, jadi urutan DOM sama dengan urutan tampilan).</li>
+        <li><b>Daftar hadir:</b> satu lembar dengan kop (judul + identitas akun), tabel platform x hari berisi H, I, A, slip draf yang terbuka saat sel A diketuk, dan keterangan posting otomatis per platform.</li>
+        <li><b>Buku tinjauan agensi:</b> buku kedua. Halaman kiri: judul, tab mode rapor/formal, lembar tinjauan bergaris ganda dengan kolom "Sudah", baris "Ditinjau oleh", tombol kirim. Halaman kanan: rapor lengkap untuk klien.</li>
+        <li><b>Pengumuman kenaikan kelas:</b> lembar pengumuman di atas papan (judul di kop lembar, tabel No / Akun / Hasil September / Yang ditawarkan). Akun yang naik kelas mendapat "Bagikan ke Story"; yang belum mendapat "Lihat 3 langkah perbaikan" dan "Kirim ke timmu". Di sampingnya Story untuk akun nomor 1.</li>
+        <li><b>Penutup = sampul belakang:</b> plakat berbingkai ganda, "Cek rapor gratis" dan "Daftar dan hubungkan akun", dengan label "Paket dan harga untuk penjadwalan dan rapor bulanan masih disusun".</li>
+        <li><b>Produksi menambah:</b> Kotak Pesan (inbox terpadu, mengisi nilai Sikap), Harga dalam Rupiah, testimoni berfoto asli berizin, FAQ sebagai konten biasa.</li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="d-komponen">
+      <h2 id="d-komponen">Komponen kunci</h2>
+      <h3>Alat Cek Rapor: empat keadaan + jalur manual</h3>
+      <div class="keadaan">
+        <div><h4>Memuat</h4><p>"Wali kelas sedang menulis rapor @akun..." Baris tabel ditulis satu per satu. Diumumkan lewat aria-live.</p></div>
+        <div><h4>Berhasil</h4><p>Rapor terisi + "Dari 12 posting publik terakhir, diambil 3 Okt 2026, 14.20 WIB". Cache 24 jam. CTA "Daftar untuk menyimpan rapor ini dan memantaunya tiap bulan" dengan label "(paket dan harga masih disusun)". Di HP halaman digulir ke buku.</p></div>
+        <div><h4>Gagal</h4><p>"Data @akun tidak bisa dibaca otomatis. Instagram hanya membuka data akun Bisnis atau Kreator yang publik." Field manual langsung terbuka.</p></div>
+        <div><h4>Antrean</h4><p>"Banyak yang sedang cek rapor. Rapormu siap sekitar 2 menit lagi dan kami kirim lewat email, atau isi angka manual sekarang."</p></div>
+      </div>
+      <p style="margin-top:14px" id="cara-nilai"><b>Cara nilai dihitung.</b> Manual: ER = (rata-rata suka + rata-rata komentar) / pengikut x 100, lalu nilai = ER / target x 75, maksimal 100. Kalau performa pas di target, nilainya 75. Di aplikasi, nilai platform = 40% interaksi dibanding target, 30% konsistensi posting dibanding rencana, 30% pertumbuhan dibanding bulan lalu, dengan bobot yang bisa diubah agensi. Halaman alat dirender server dengan rapor contoh supaya bisa diindeks. Di halaman konsep ini, hasil username adalah simulasi.</p>
+
+      <h3>Daftar hadir</h3>
+      <p>Baris = platform, kolom = hari. H (hadir, terjadwal atau tayang) hijau, I (izin, libur terencana) abu, A (alpa, slot target kosong) merah di sel bertinta dan berupa tombol. Mengetuk A membuka slip draf: platform, hari, format, jam WIB, dan status persetujuan klien. Di HP nama platform disingkat (IG, TT, FB, YT) dengan <code>abbr</code> dan kolom jumlah disembunyikan, sehingga tabel 8 kolom muat di 360 px tanpa geser.</p>
+
+      <h3>Lembar tinjauan agensi</h3>
+      <p>Tabel bergaris ganda "Yang ditinjau / Sudah". Tiga baris otomatis, satu baris wajib dicentang (catatan untuk nilai di bawah target). Setelah dicentang: baris "Ditinjau oleh: Dinda, 3 Okt 2026" terisi, keputusan di rapor berubah dari "Ditahan sampai catatan ditinjau" menjadi "Belum naik kelas, catatan sudah ditinjau", dan tombol "Kirim ke klien lewat WhatsApp" aktif.</p>
+
+      <h3>Mode formal</h3>
+      <div class="gulir"><table class="tabel-doc">
+        <thead><tr><th>Mode rapor</th><th>Mode formal</th></tr></thead>
+        <tbody>
+          <tr><td>Rapor Akun, semester</td><td>Laporan Bulanan, periode</td></tr>
+          <tr><td>Mata pelajaran, Target (KKM), Nilai, Predikat</td><td>Platform, Target, Skor, Kategori</td></tr>
+          <tr><td>Tuntas / Belum tuntas</td><td>Tercapai / Di bawah target</td></tr>
+          <tr><td>Kehadiran: Hadir, Izin, Alpa</td><td>Konsistensi: Hari posting, Libur terencana, Hari kosong</td></tr>
+          <tr><td>Sikap, Ekstrakurikuler</td><td>Respons pesan, Platform lain</td></tr>
+          <tr><td>Catatan wali kelas</td><td>Ringkasan account manager</td></tr>
+          <tr><td>Naik kelas / Belum naik kelas</td><td>Target bulan ini tercapai / belum tercapai</td></tr>
+          <tr><td>Wali kelas, Orang tua/wali</td><td>Disusun oleh, Diterima oleh</td></tr>
+        </tbody>
+      </table></div>
+
+      <h3>Templat Story 1080x1920</h3>
+      <div class="story-spek">
+        <div class="story-kecil" aria-label="Diagram zona aman Story">
+          <div class="zona z-atas">Zona aman atas 250 px</div>
+          <div class="isi-s"><strong>Naik kelas!</strong><span style="font-size:11px">nama akun 56 px</span><div class="m"></div><small>Kelola Konten 40 px, di atas zona bawah</small></div>
+          <div class="zona z-bawah">Zona aman bawah 340 px, ruang stiker tautan</div>
+        </div>
+        <ul style="flex:1;min-width:240px;margin:0">
+          <li>Hanya ditawarkan untuk predikat B ke atas atau nilai naik dari bulan lalu.</li>
+          <li>Latar Hijau Papan, buku rapor mini di tengah, "Naik kelas!" Besley 96 px.</li>
+          <li>Ukuran huruf minimum 40 px pada lebar 1080. Nama akun 56 px.</li>
+          <li>Zona aman 250 px atas dan 340 px bawah bebas teks (angka umum panduan Story, perlu dicek ulang ke panduan Meta).</li>
+          <li>Hasil buruk: "Kirim ke timmu" atau "Lihat 3 langkah perbaikan", tanpa tombol bagikan.</li>
+        </ul>
+      </div>
+
+      <h3>Posting otomatis per platform</h3>
+      <div class="gulir"><table class="tabel-doc">
+        <thead><tr><th>Platform</th><th>Setelah izin lolos</th><th>Sebelum izin lolos</th><th>Sumber</th></tr></thead>
+        <tbody>
+          <tr><td>Instagram (Bisnis/Kreator)</td><td>Langsung tayang lewat API</td><td>Pengingat + bagikan satu ketuk</td><td>Perlu persetujuan aplikasi Meta</td></tr>
+          <tr><td>Facebook Page</td><td>Langsung tayang lewat API</td><td>Pengingat + bagikan satu ketuk</td><td>Perlu persetujuan aplikasi Meta</td></tr>
+          <tr><td>YouTube</td><td>Langsung tayang setelah lolos audit</td><td>Unggahan API dikunci privat, jadi pengingat</td><td>developers.google.com, videos.insert (dicek 3 Okt 2026)</td></tr>
+          <tr><td>TikTok</td><td>Langsung tayang setelah lolos audit</td><td>Unggahan klien belum diaudit hanya privat, jadi pengingat</td><td>Dokumen Content Posting API</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <section aria-labelledby="d-mobile">
+      <h2 id="d-mobile">Versi mobile (360 sampai 390 px)</h2>
+      <ul>
+        <li>Header: logo, "Daftar" (tombol aksi), tombol menu ikon 40 px.</li>
+        <li>Layar pertama 390x844: plakat judul (produk dan untuk siapa), lalu form cek rapor: field selebar penuh, "Cek rapornya" selebar penuh (tombol isi, paling menonjol), lalu "Akun pribadi atau TikTok? Isi manual" sebagai tombol garis. Di 360x640 field dan tombol utama tetap di layar pertama.</li>
+        <li>Tab "Lihat sebagai" menempel di atas buku. Buku menjadi satu lembar: identitas, nilai, kehadiran + "Jadwalkan 6 konten", jadwal, tanda tangan. Papan sampul 10 px dan tumpukan halaman tetap ada.</li>
+        <li>Nama akun hanya patah di titik (<code>&lt;wbr&gt;</code>), tidak pernah di tengah kata. Tombol "?" 24 px dengan area sentuh 44 px.</li>
+        <li>Daftar hadir memakai singkatan platform, buku tinjauan bertumpuk (lembar tinjauan dulu, lalu rapor), Story di atas aturan.</li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="d-pengaruh">
+      <h2 id="d-pengaruh">Peta pengaruh referensi</h2>
+      <div class="gulir"><table class="tabel-doc">
+        <thead><tr><th>Referensi</th><th>Diambil</th><th>Diubah</th></tr></thead>
+        <tbody>
+          <tr><td>buffer.com</td><td>Semua platform terlihat di hero</td><td>Platform jadi baris mata pelajaran dengan target dan nilai. X dan Threads dicatat sebagai ekstrakurikuler</td></tr>
+          <tr><td>typefully.com</td><td>UI aplikasi asli sebagai hero</td><td>Buku di hero adalah keluaran alat gratis dan bisa diisi username pengunjung</td></tr>
+          <tr><td>planable.io</td><td>Tampilan minggu untuk tim dan agensi</td><td>Bukan kalender kartu, tapi daftar hadir platform x hari dengan H, I, A. Sel A membuka draf</td></tr>
+          <tr><td>later.com</td><td>Judul besar yang berani</td><td>Besley 800 di dalam plakat sampul berbingkai ganda, bukan sans tebal di kolom kiri dengan foto model</td></tr>
+          <tr><td>postiz.com</td><td>Tema gelap + toggle mode</td><td>Hijau papan yang hangat. Toggle menjadi tab buku "Lihat sebagai", bukan tombol berisi</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <section aria-labelledby="d-risiko">
+      <h2 id="d-risiko">Risiko dan mitigasi</h2>
+      <ul>
+        <li><b>Rapor merah merugikan agensi.</b> Lembar tinjauan wajib dicentang, tren + KPI kontrak sebagai default, Buku Nilai internal, mode formal per klien.</li>
+        <li><b>Kembar dengan nota Neracaku.</b> Wujud buku ditegaskan (sampul, punggung, tumpukan halaman), dan section lanjutan memakai daftar hadir dan buku kedua, bukan lembar lepas.</li>
+        <li><b>Alat gratis menjanjikan data yang tidak ada.</b> Batas Meta tertulis di bawah form (business discovery hanya akun profesional publik, akun dibatasi usia tidak terbaca; dicek ke dokumentasi Meta 3 Okt 2026). Jalur manual setara, cache 24 jam, antrean. TikTok selalu manual.</li>
+        <li><b>Klaim posting otomatis.</b> Ditulis per platform: Meta setelah aplikasi disetujui; YouTube dan TikTok mengunci unggahan aplikasi yang belum diaudit, jadi pengingat sampai audit lolos.</li>
+        <li><b>Istilah KKM.</b> Di Kurikulum Merdeka KKM diganti KKTP (hipotesis kuat). Label "Target (KKM)" dengan tooltip. Uji ke 5-8 pemilik UMKM dan 3 agensi, cadangannya "Target".</li>
+        <li><b>Story jarang dibagikan kalau jelek.</b> Tombol bagikan hanya untuk hasil baik atau naik.</li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="d-skor">
+      <h2 id="d-skor">Skor juri</h2>
+      <div class="skor"><!--SKOR--><style>.tabel-skor-wrap{max-width:100%;overflow-x:auto}.tabel-skor{border-collapse:collapse;font-size:15px;margin:8px 0 12px;font-variant-numeric:tabular-nums}.tabel-skor th,.tabel-skor td{border:1px solid currentColor;padding:4px 10px;text-align:left}.tabel-skor td+td,.tabel-skor th+th{text-align:right}</style><div class="tabel-skor-wrap"><table class="tabel-skor"><thead><tr><th>Juri</th><th>R1</th><th>R2</th><th>R3</th><th>R4</th></tr></thead><tbody><tr><td>Juri A, keunikan</td><td>72</td><td>84</td><td>92</td><td>94</td></tr><tr><td>Juri B, craft</td><td>86</td><td>90</td><td>95</td><td>96</td></tr><tr><td>Juri C, pasar</td><td>83</td><td>83</td><td>89</td><td>93</td></tr></tbody></table></div><p><b>Rata-rata ronde 4: 94,3.</b> Target 95 per juri. Craft lolos; keunikan 94 karena gagasan rapor untuk akun sudah pernah dipakai pesaing; pasar 93 karena di laptop 1366x768 form cek rapor ada di bawah layar pertama.</p><p>Diuji di Chromium dengan emulasi ukuran layar 360 sampai 1440 px, belum di HP sungguhan.</p></div>
+    </section>
+
+  </div>
+</article>
+
+<script>
+(function(){
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var buku = document.getElementById('buku');
+  function tulisUlang(){
+    buku.classList.add('reset'); buku.classList.remove('ditulis');
+    void buku.offsetWidth; buku.classList.remove('reset');
+    requestAnimationFrame(function(){ buku.classList.add('ditulis'); });
+  }
+  function buka(){
+    if(reduce){ buku.classList.add('buka','terbuka','ditulis'); return; }
+    buku.classList.add('buka');
+    setTimeout(function(){ buku.classList.add('terbuka'); }, 290);
+    setTimeout(function(){ buku.classList.add('ditulis'); }, 470);
+  }
+  var mulai=function(){ setTimeout(buka, 350); };
+  if(document.fonts && document.fonts.ready){
+    var sudah=false; var t=setTimeout(function(){ if(!sudah){sudah=true;mulai();} }, 900);
+    document.fonts.ready.then(function(){ if(!sudah){sudah=true; clearTimeout(t); mulai();} });
+  } else { mulai(); }
+
+  /* menu HP */
+  var tm=document.getElementById('tblMenu'), menu=document.getElementById('menu');
+  tm.addEventListener('click',function(){ var b=menu.classList.toggle('buka'); tm.setAttribute('aria-expanded', b?'true':'false'); tm.setAttribute('aria-label', b?'Tutup menu':'Buka menu'); });
+
+  /* tab buku: pemilik usaha / agensi */
+  var tabs=document.querySelectorAll('.tab-buku [role=tab]');
+  function pilihTab(tab){
+    tabs.forEach(function(t){ t.setAttribute('aria-selected', t===tab?'true':'false'); });
+    var umkm=tab.dataset.mode==='umkm';
+    var a=document.getElementById('isiUmkm'), g=document.getElementById('isiAgensi');
+    a.hidden=!umkm; g.hidden=umkm;
+    var tampil=umkm? a : g;
+    tampil.classList.remove('masuk'); void tampil.offsetWidth; if(!reduce) tampil.classList.add('masuk');
+    document.getElementById('slipStatus').textContent = umkm ? 'Status: draf. Tulis caption, lalu jadwalkan.' : 'Status: draf, perlu persetujuan klien sebelum terjadwal.';
+  }
+  document.querySelectorAll('a[href="#cek"]').forEach(function(a){ a.addEventListener('click',function(e){
+    var f=[].filter.call(document.querySelectorAll('form.cek'),function(x){ return x.offsetParent!==null; })[0];
+    if(!f) return; e.preventDefault();
+    var inp=f.querySelector('.f-user'); f.scrollIntoView({behavior: reduce?'auto':'smooth', block:'center'}); setTimeout(function(){ inp.focus({preventScroll:true}); }, reduce?0:400);
+  }); });
+  tabs.forEach(function(tab){ tab.addEventListener('click',function(){ pilihTab(tab); }); });
+
+  /* jadwalkan konten */
+  var tj=document.getElementById('tblJadwal'), tk=document.getElementById('tblKembali');
+  tj.addEventListener('click',function(){ buku.classList.add('jadwal-aktif'); tj.setAttribute('aria-expanded','true'); setTimeout(function(){ tk.focus({preventScroll:true}); }, reduce?0:250); });
+  tk.addEventListener('click',function(){ buku.classList.remove('jadwal-aktif'); tj.setAttribute('aria-expanded','false'); tj.focus({preventScroll:true}); });
+
+  /* utilitas rapor */
+  function rp(n){ return n.toLocaleString('id-ID'); }
+  function koma(x){ return x.toFixed(2).replace('.',','); }
+  function esc(s){ return s.replace(/[&<>"]/g,function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+  function namaHtml(u){ return '@'+esc(u).replace(/([._])/g,'$1<wbr>'); }
+  function hash(s){ var x=7; for(var i=0;i<s.length;i++){ x=(x*31+s.charCodeAt(i))>>>0; } return x; }
+  function sel(row, target, nilai){
+    var tds=row.querySelectorAll('td:not(.no)');
+    tds[0].innerHTML='<span class="num">'+target+'</span>';
+    if(nilai===null){
+      tds[1].className='angka redup'; tds[1].innerHTML='<span style="font-size:13px">belum</span>';
+      tds[2].innerHTML='<span class="redup">Hubungkan akun</span>';
+    } else {
+      var kurang=nilai<target;
+      tds[1].className='angka'+(kurang?' bertinta':''); tds[1].innerHTML='<span class="num">'+nilai+'</span>';
+      tds[2].innerHTML= kurang? '<span class="belum">Belum tuntas</span>' : '<span class="tuntas">Tuntas</span>';
+    }
+  }
+  function keputusan(naik){
+    var pn=document.getElementById('pNaik'), pb=document.getElementById('pBelum');
+    pn.className='pilihan'+(naik?'':' dicoret'); pb.className='pilihan'+(naik?' dicoret':'');
+    pn.innerHTML=(naik?'':'<span class="vh">dicoret: </span>')+'Naik kelas';
+    pb.innerHTML=(naik?'<span class="vh">dicoret: </span>':'')+'Belum naik kelas';
+  }
+  function kelas(f){ return f<10000? 'di bawah 10.000 pengikut' : (f<=50000? '10.000 sampai 50.000 pengikut' : 'di atas 50.000 pengikut'); }
+  function isiRapor(nama, kelasTeks, nilaiIg, hadir, catatan){
+    if(document.getElementById('tabAgensi').getAttribute('aria-selected')==='true'){ pilihTab(document.getElementById('tabUmkm')); }
+    document.getElementById('rNama').innerHTML=namaHtml(nama);
+    document.getElementById('rKelas').textContent=kelasTeks;
+    sel(document.getElementById('rowIg'),75,nilaiIg);
+    sel(document.getElementById('rowTt'),75,null);
+    sel(document.getElementById('rowFb'),70,null);
+    sel(document.getElementById('rowYt'),70,null);
+    var tj2=document.getElementById('tblJadwal'), kh=document.getElementById('rKetHadir');
+    if(hadir!==null){
+      /* September 30 hari: 4 Minggu libur (Izin), target 26 hari posting = Hadir + Alpa */
+      var alpa=Math.max(0,26-hadir);
+      document.getElementById('rJudulHadir').textContent='Kehadiran September: target 26 hari posting, libur tiap Minggu';
+      document.getElementById('rHadir').textContent=hadir;
+      document.getElementById('rIzin').textContent=4;
+      document.getElementById('rAlpa').textContent=alpa;
+      document.getElementById('rAlpa2').textContent=alpa;
+      tj2.hidden=(alpa===0); kh.hidden=true;
+    } else {
+      document.getElementById('rJudulHadir').textContent='Kehadiran September';
+      ['rHadir','rIzin','rAlpa'].forEach(function(id){ document.getElementById(id).textContent='-'; });
+      tj2.hidden=true; kh.hidden=false;
+    }
+    document.getElementById('rCatatan').textContent=catatan;
+    document.getElementById('rOrtu').innerHTML='( <span class="titik" aria-hidden="true">....................</span><span class="vh">belum diisi</span> )';
+    document.getElementById('rDibaca').textContent='pemilik '+'@'+nama+', belum dibaca';
+    keputusan(nilaiIg>=75);
+    buku.classList.remove('jadwal-aktif');
+    tulisUlang();
+  }
+
+  /* dua form (HP dan desktop), satu perilaku */
+  document.querySelectorAll('form.cek').forEach(function(form){
+    var status=form.querySelector('.f-status'), manual=form.querySelector('.f-manual'), tmn=form.querySelector('.f-tbl-manual'), inp=form.querySelector('.f-user');
+    var diHp=form.classList.contains('cek-hp');
+    function bukaManual(fokus){ manual.hidden=false; tmn.setAttribute('aria-expanded','true'); if(fokus) form.querySelector('.m-pengikut').focus(); }
+    function keBuku(){ if(diHp){ buku.scrollIntoView({behavior: reduce?'auto':'smooth', block:'start'}); } }
+    tmn.addEventListener('click',function(){ if(manual.hidden){ bukaManual(true); } else { manual.hidden=true; tmn.setAttribute('aria-expanded','false'); } });
+    form.addEventListener('submit',function(e){
+      e.preventDefault();
+      var u=inp.value.trim().replace(/^@/,'').toLowerCase();
+      if(!/^[a-z0-9._]{1,30}$/.test(u)){
+        status.innerHTML='<span class="salah">Tulis username Instagram dulu, misalnya @dapursambal.contoh (huruf, angka, titik, garis bawah).</span>';
+        inp.focus(); return;
+      }
+      status.textContent='Wali kelas sedang menulis rapor @'+u+'...';
+      buku.classList.add('reset'); buku.classList.remove('ditulis');
+      setTimeout(function(){
+        buku.classList.remove('reset');
+        if(u.indexOf('pribadi')>-1){
+          status.innerHTML='<span class="salah">Data @'+esc(u)+' tidak bisa dibaca otomatis. Instagram hanya membuka data akun Bisnis atau Kreator yang publik.</span> Isi angkanya manual di bawah ini, hasilnya sama.';
+          buku.classList.add('ditulis'); bukaManual(true); return;
+        }
+        var h=hash(u), f=8000+(h%42000), er=(120+((h>>>3)%380))/100, nilai=Math.min(100,Math.round(er/3*75)), hadir=12+((h>>>5)%15);
+        var alpa=Math.max(0,26-hadir);
+        var isi = alpa>0 ? ', lalu isi '+alpa+' hari yang kosong.' : '. Kehadiranmu penuh bulan ini.';
+        var cat = nilai<75 ? 'Interaksi masih di bawah target. Tutup tiap posting dengan satu pertanyaan'+isi : 'Interaksi di atas target. Pertahankan'+isi;
+        isiRapor(u, kelas(f), nilai, hadir, cat);
+        status.innerHTML='Rapor @'+esc(u)+' selesai: engagement rate '+koma(er)+'% dari '+rp(f)+' pengikut. Ini simulasi halaman konsep; versi asli membaca 12 posting publik terakhir lewat API resmi Instagram dan menyimpannya 24 jam. <a href="#penutup">Daftar untuk menyimpan rapor ini dan memantaunya tiap bulan</a> <span class="label-jujur">(paket dan harga masih disusun)</span>';
+        keBuku();
+      }, reduce?50:900);
+    });
+    form.querySelector('.f-hitung').addEventListener('click',function(){
+      var F=+form.querySelector('.m-pengikut').value, S=+form.querySelector('.m-suka').value, K=+form.querySelector('.m-komen').value, T=+form.querySelector('.m-target').value;
+      if(!(F>0) || S<0 || K<0 || !(T>0)){ status.innerHTML='<span class="salah">Isi jumlah pengikut dan target lebih dari nol.</span>'; return; }
+      var er=(S+K)/F*100, nilai=Math.min(100,Math.round(er/T*75));
+      var u=(inp.value.trim().replace(/^@/,'').toLowerCase().replace(/[^a-z0-9._]/g,'')) || 'akunmu';
+      var tStr=String(T).replace('.',',');
+      var cat = nilai<75 ? 'Engagement rate '+koma(er)+'% masih di bawah target '+tStr+'%. Ajak pengikut berkomentar di tiap posting.' : 'Engagement rate '+koma(er)+'% sudah melewati target '+tStr+'%. Jaga jadwal postingnya.';
+      isiRapor(u, kelas(F), nilai, null, cat);
+      status.innerHTML='Dihitung dari angka manual: ER = ('+rp(S)+' + '+rp(K)+') / '+rp(F)+' x 100 = '+koma(er)+'%. Nilai = '+koma(er)+' / '+tStr+' x 75 = '+nilai+'. <a href="#penutup">Daftar untuk memantaunya tiap bulan</a> <span class="label-jujur">(paket dan harga masih disusun)</span>';
+      keBuku();
+    });
+  });
+
+  /* daftar hadir: sel A membuka slip draf */
+  var selA=document.querySelectorAll('.sel-a');
+  selA.forEach(function(b){ b.addEventListener('click',function(){
+    selA.forEach(function(x){ x.setAttribute('aria-pressed', x===b?'true':'false'); });
+    document.getElementById('slipPf').textContent=b.dataset.pf;
+    document.getElementById('slipHari').textContent=b.dataset.hari;
+    document.getElementById('slipJdl').textContent=b.dataset.jdl;
+    document.getElementById('slipFm').textContent=b.dataset.fm;
+  }); });
+
+  /* buku tinjauan: mode rapor/formal + centang tinjau */
+  var formal=false;
+  var ct=document.getElementById('cekTinjau'), kirim=document.getElementById('tblKirim'), pita=document.getElementById('pita'), oleh=document.getElementById('ditinjauOleh');
+  function kep(){ var c=ct.checked; document.getElementById('kepLengkap').textContent = c ? (formal?'Target bulan ini belum tercapai':'Belum naik kelas, catatan sudah ditinjau') : (formal?'Ditahan sampai ringkasan ditinjau':'Ditahan sampai catatan ditinjau'); }
+  var gaya=document.querySelectorAll('.tab-terang [role=tab]');
+  gaya.forEach(function(b){ b.addEventListener('click',function(){
+    gaya.forEach(function(x){ x.setAttribute('aria-selected', x===b?'true':'false'); });
+    formal=(b.dataset.gaya==='f');
+    document.querySelectorAll('#lembar [data-r]').forEach(function(el){ el.textContent= el.getAttribute(formal?'data-f':'data-r'); });
+    kep();
+    var l=document.getElementById('lembar'); l.classList.remove('masuk'); void l.offsetWidth; if(!reduce) l.classList.add('masuk');
+  }); });
+  ct.addEventListener('change',function(){
+    kep();
+    kirim.disabled=!ct.checked;
+    oleh.textContent = ct.checked? 'Ditinjau oleh: Dinda, 3 Okt 2026, 10.15' : 'Ditinjau oleh: belum ada';
+    pita.className='pita-status'+(ct.checked?' siap':'');
+    pita.textContent= ct.checked? 'Siap dikirim. Catatan sudah ditinjau Dinda.' : 'Belum terkirim. 2 nilai di bawah target menunggu tinjauanmu.';
+  });
+})();
+</script>
+</body>
+</html>

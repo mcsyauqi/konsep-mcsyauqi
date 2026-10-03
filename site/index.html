@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
-<title>Konsep Desain 5 SaaS</title>
-<meta name="description" content="Lima konsep desain website untuk Neracaku, Dokurapi, Kelola Konten, Soluslide, dan Ruang Visual. Halaman sementara, tidak diindeks.">
+<title>Desain 5 SaaS</title>
+<meta name="description" content="Halaman Neracaku, Dokurapi, Kelola Konten, Soluslide, dan Ruang Visual yang mengikuti tata letak situs referensi terbaik di kategorinya. Halaman sementara, tidak diindeks.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;600;750&display=swap" rel="stylesheet">
@@ -17,45 +17,45 @@
 body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.6 "Inter Tight",system-ui,sans-serif}
 .wrap{max-width:1180px;margin:0 auto;padding:40px 16px 64px}
 h1{font-size:clamp(30px,5vw,48px);line-height:1.1;font-weight:750;margin:0 0 12px;letter-spacing:-.01em}
-.lead{color:var(--sub);max-width:760px;margin:0 0 28px}
+.lead{color:var(--sub);max-width:780px;margin:0 0 28px}
 .meta{display:flex;flex-wrap:wrap;gap:8px 20px;color:var(--sub);font-size:14px;margin-bottom:36px;padding-bottom:20px;border-bottom:1px solid var(--line)}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:20px}
 @media (max-width:400px){.grid{grid-template-columns:1fr}}
-a.card{display:block;text-decoration:none;color:inherit;background:var(--card);border:1px solid var(--line);border-radius:10px;overflow:hidden;transition:transform .15s ease,border-color .15s ease}
-a.card:hover{transform:translateY(-2px);border-color:var(--sub)}
-a.card:focus-visible{outline:3px solid var(--acc);outline-offset:3px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.card>a{display:block;text-decoration:none;color:inherit}
+.card>a:focus-visible,.links a:focus-visible{outline:3px solid var(--acc);outline-offset:3px}
 .card img{display:block;width:100%;height:auto;aspect-ratio:16/10;object-fit:cover;border-bottom:1px solid var(--line)}
 .body{padding:16px 18px 18px}
 .name{font-size:21px;font-weight:750;margin:0}
-.arah{font-size:14px;color:var(--sub);margin:2px 0 10px}
-.sig{font-size:15px;margin:0 0 14px}
-.scores{display:flex;gap:6px;flex-wrap:wrap;font-size:13px}
-.scores span{border:1px solid var(--line);border-radius:6px;padding:3px 8px;background:var(--bg)}
-.scores b{font-weight:600}
+.ref{font-size:14px;color:var(--sub);margin:2px 0 10px}
+.desc{font-size:15px;margin:0 0 12px}
+.links{display:flex;flex-wrap:wrap;gap:8px;font-size:14px}
+.links a{color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:4px 10px;background:var(--bg);text-decoration:none}
+.links a:hover{border-color:var(--sub)}
 .note{margin-top:40px;color:var(--sub);font-size:14px;border-top:1px solid var(--line);padding-top:18px}
-.note h2{font-size:17px;color:var(--ink);margin:0 0 6px}
+.note h2{font-size:17px;color:var(--ink);margin:16px 0 6px}
 .note ul{margin:6px 0 0;padding-left:18px}
-@media (prefers-reduced-motion:reduce){a.card{transition:none}}
 </style>
 </head>
 <body>
 <div class="wrap">
-  <h1>Konsep desain 5 SaaS</h1>
-  <p class="lead">Satu konsep website per merek. Tiap halaman berisi mockup landing page yang bisa dicoba, lalu dokumen konsepnya di bawah (palet, tipografi, struktur, komponen, risiko). Konsep menggabungkan 5 referensi per kategori, dinilai panel 3 juri (keunikan, kualitas craft, pasar) selama 4 ronde.</p>
-  <div class="meta"><span>Disusun 3 Oktober 2026</span><span>Halaman sementara, tidak diindeks mesin pencari</span><span>Semua usaha, akun, dan angka di mockup fiktif</span></div>
+  <h1>Desain 5 SaaS</h1>
+  <p class="lead">Tiap merek mengikuti tata letak satu situs terbaik di kategorinya: urutan section, susunan, jarak, ukuran huruf, dan gaya komponen dibuat sama, dibedakan lewat warna. Teks, logo, gambar, dan kode ditulis ulang sendiri untuk produk kita.</p>
+  <div class="meta"><span>Diperbarui 4 Oktober 2026</span><span>Halaman sementara, tidak diindeks mesin pencari</span><span>Semua usaha, akun, testimoni, dan angka di halaman fiktif</span></div>
   <div class="grid">
-    <a class="card" href="/neracaku/"><img src="/assets/thumb-neracaku.webp" width="960" height="600" alt="Mockup hero Neracaku: nota rangkap di tengah dengan tiga tujuan di bawahnya"><div class="body"><p class="name">Neracaku</p><p class="arah">Nota Rangkap</p><p class="sig">Tulis nota sekali, lembar asli ke WhatsApp pelanggan, tembusan merah muda ke buku kas, tembusan kuning ke paku pengingat.</p><div class="scores"><span>Keunikan <b>95</b></span><span>Craft <b>98</b></span><span>Pasar <b>95</b></span><span>Rata-rata <b>96,0</b></span></div></div></a>
-    <a class="card" href="/dokurapi/"><img src="/assets/thumb-dokurapi.webp" width="960" height="600" alt="Mockup hero Dokurapi: berkas di jalur aspal menuju portal palang dengan pelat maksimal 200 KB"><div class="body"><p class="name">Dokurapi</p><p class="arah">Palang Portal</p><p class="sig">Berkas digambar setinggi ukurannya dan dikompres sampai lewat di bawah palang batas portal pendaftaran.</p><div class="scores"><span>Keunikan <b>95</b></span><span>Craft <b>97</b></span><span>Pasar <b>95</b></span><span>Rata-rata <b>95,7</b></span></div></div></a>
-    <a class="card" href="/kelola-konten/"><img src="/assets/thumb-kelola-konten.webp" width="960" height="600" alt="Mockup hero Kelola Konten: buku rapor akun terbuka di atas latar hijau papan"><div class="body"><p class="name">Kelola Konten</p><p class="arah">Rapor Akun</p><p class="sig">Jadwalkan posting, lalu terima rapor bulanan per akun: platform jadi mata pelajaran, nilai di bawah target dicetak merah.</p><div class="scores"><span>Keunikan <b>94</b></span><span>Craft <b>96</b></span><span>Pasar <b>93</b></span><span>Rata-rata <b>94,3</b></span></div></div></a>
-    <a class="card" href="/soluslide/"><img src="/assets/thumb-soluslide.webp" width="960" height="600" alt="Mockup hero Soluslide: slide diproyeksikan ke papan di ruangan gelap dengan meja operator"><div class="body"><p class="name">Soluslide</p><p class="arah">Ruang Sorot</p><p class="sig">Slide diuji di ruangan sungguhan: geser lampu ruangan dan lihat slide pastel tenggelam sementara slide Soluslide tetap terbaca.</p><div class="scores"><span>Keunikan <b>90</b></span><span>Craft <b>95</b></span><span>Pasar <b>93</b></span><span>Rata-rata <b>92,7</b></span></div></div></a>
-    <a class="card" href="/ruang-visual/"><img src="/assets/thumb-ruang-visual.webp" width="960" height="600" alt="Mockup hero Ruang Visual: rak gulungan kertas latar warna bumbu dan produk fiktif di latar merah"><div class="body"><p class="name">Ruang Visual</p><p class="arah">Gulung Latar</p><p class="sig">Tarik gulungan latar bernama bumbu, produkmu langsung dipotret ulang sebagai foto katalog dan video iklan 9:16.</p><div class="scores"><span>Keunikan <b>93</b></span><span>Craft <b>96</b></span><span>Pasar <b>89</b></span><span>Rata-rata <b>92,7</b></span></div></div></a>
+    <div class="card"><a href="/neracaku/"><img src="/assets/thumb-neracaku.webp" width="960" height="600" alt="Halaman Neracaku: hero invoice dan buku kas dengan dashboard di bawahnya"><div class="body"><p class="name">Neracaku</p><p class="ref">Tata letak mengikuti midday.ai, aksen hijau daun</p><p class="desc">Invoice lewat WhatsApp, buku kas, pengingat jatuh tempo, dan PPh 21 untuk UMKM.</p></div></a><div class="body links" style="padding-top:0"><a href="/neracaku/">Buka halaman</a><a href="https://midday.ai" rel="nofollow noopener" target="_blank">Referensi</a><a href="/konsep-awal/neracaku/">Konsep awal</a></div></div>
+    <div class="card"><a href="/dokurapi/"><img src="/assets/thumb-dokurapi.webp" width="960" height="600" alt="Halaman Dokurapi: hero berkas pas ukuran dengan ilustrasi jendela kompres"><div class="body"><p class="name">Dokurapi</p><p class="ref">Tata letak mengikuti smallpdf.com, aksen oranye bata</p><p class="desc">Kompres PDF dan foto sampai pas batas upload CPNS, beasiswa, dan lamaran kerja.</p></div></a><div class="body links" style="padding-top:0"><a href="/dokurapi/">Buka halaman</a><a href="https://smallpdf.com" rel="nofollow noopener" target="_blank">Referensi</a><a href="/konsep-awal/dokurapi/">Konsep awal</a></div></div>
+    <div class="card"><a href="/kelola-konten/"><img src="/assets/thumb-kelola-konten.webp" width="960" height="600" alt="Halaman Kelola Konten: hero ruang kerja media sosial dengan ikon platform di sekelilingnya"><div class="body"><p class="name">Kelola Konten</p><p class="ref">Tata letak mengikuti buffer.com, aksen biru laut</p><p class="desc">Jadwalkan konten Instagram, TikTok, Facebook, dan YouTube dari satu kalender, plus laporan bulanan.</p></div></a><div class="body links" style="padding-top:0"><a href="/kelola-konten/">Buka halaman</a><a href="https://buffer.com" rel="nofollow noopener" target="_blank">Referensi</a><a href="/konsep-awal/kelola-konten/">Konsep awal</a></div></div>
+    <div class="card"><a href="/soluslide/"><img src="/assets/thumb-soluslide.webp" width="960" height="600" alt="Halaman Soluslide: hero presentasi AI dengan contoh slide bergambar di kanan"><div class="body"><p class="name">Soluslide</p><p class="ref">Tata letak mengikuti gamma.app, aksen teal</p><p class="desc">AI pembuat PPT berbahasa Indonesia untuk sidang, kantor, pitch UMKM, dan materi ajar.</p></div></a><div class="body links" style="padding-top:0"><a href="/soluslide/">Buka halaman</a><a href="https://gamma.app" rel="nofollow noopener" target="_blank">Referensi</a><a href="/konsep-awal/soluslide/">Konsep awal</a></div></div>
+    <div class="card"><a href="/ruang-visual/"><img src="/assets/thumb-ruang-visual.webp" width="960" height="600" alt="Halaman Ruang Visual: beranda gelap dengan carousel dan kartu hasil gambar AI"><div class="body"><p class="name">Ruang Visual</p><p class="ref">Tata letak mengikuti higgsfield.ai, aksen jingga</p><p class="desc">Generator gambar dan video AI untuk seller, affiliate, dan kreator, kredit dalam Rupiah.</p></div></a><div class="body links" style="padding-top:0"><a href="/ruang-visual/">Buka halaman</a><a href="https://higgsfield.ai" rel="nofollow noopener" target="_blank">Referensi</a><a href="/konsep-awal/ruang-visual/">Konsep awal</a></div></div>
   </div>
   <div class="note">
-    <h2>Cara membaca skor</h2>
-    <p>Tiap juri memberi 0 sampai 100. Juri A menilai keunikan (terhadap referensi, pesaing, dan empat merek lain), Juri B kualitas craft (sistem visual, kontras, mobile, bisa dibangun, diuji langsung di browser), Juri C kecocokan pasar dan konversi (pengguna Indonesia, copy, jalur daftar, SEO). Target 95.</p>
+    <h2>Cara kemiripan diukur</h2>
+    <p>Tiap section dibandingkan berdampingan dengan referensi di layar 1440 px dan 390 px. Tinggi dan posisi section dibuat sama (selisih 0 sampai 6 px). Skor SSIM grayscale per section dipakai sebagai pengecek tambahan; skornya tidak bisa mendekati 1 karena teks dan gambar memang wajib berbeda.</p>
+    <h2>Yang sengaja tidak disalin</h2>
     <ul>
-      <li>Klaim yang belum terverifikasi (harga, syarat portal, kebijakan platform) diberi label di halaman masing-masing.</li>
-      <li>Semua pengujian di Chromium dengan emulasi ukuran layar, belum di HP sungguhan.</li>
+      <li>Teks, logo, foto, video, screenshot produk, logo klien, dan kode situs referensi. Semuanya milik mereka.</li>
+      <li>Gambar contoh di halaman dibuat AI dan fiktif; testimoni ditandai sebagai contoh.</li>
     </ul>
   </div>
 </div>
