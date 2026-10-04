@@ -32,7 +32,8 @@
   --hls:.012em;
 }
 *,*::before,*::after{box-sizing:border-box}
-html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-behavior:smooth}
+main [id],footer [id]{scroll-margin-top:89px}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:var(--fs-base);line-height:1.4;letter-spacing:.12px;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 h1,h2,h3,h4,p,ul,ol,dl,dd,figure{margin:0;padding:0}
 ul{list-style:none}
@@ -63,7 +64,7 @@ img,svg{display:block}
 .logo-word{font-family:var(--f-body);font-weight:700;font-size:22px;letter-spacing:-.02em;line-height:1;white-space:nowrap}
 .nav-links{display:flex;gap:9px}
 .nav-links>*{display:flex;align-items:center;gap:6px;white-space:nowrap;height:34px;padding:4.5px 9px 4.5px 13.5px;border-radius:6px;border:0;background:none;cursor:pointer;line-height:1.4}
-.nav-links>a{padding-right:13.5px}
+.nav-links>a.plain{padding-right:13.5px}
 .nav-links>*:hover{background:#EEF1F6}
 .nav-links .ic{width:16px;height:16px}
 .nav-cta{display:flex;gap:9px}
@@ -74,15 +75,15 @@ img,svg{display:block}
 .m-menu{display:none}
 
 /* ===== Hero ===== */
-.hero{position:relative;overflow:hidden;text-align:center;padding:80px var(--gut) 0;height:660px}
-.hero-grid{position:absolute;top:18px;height:624px;width:50%;pointer-events:none}
-.hero-grid.l{left:0;background:linear-gradient(to top,var(--bg) 0,transparent 20%,transparent 80%,var(--bg) 100%),linear-gradient(to right,var(--bg) 0,transparent 20%),linear-gradient(to left,#F1F3F8 1px,transparent 1px),linear-gradient(#F1F3F8 1px,transparent 1px);background-size:100% 100%,100% 100%,54px 54px,54px 54px;background-position:0 0,0 0,100% 0,100% 0}
-.hero-grid.r{right:0;background:linear-gradient(to top,var(--bg) 0,transparent 20%,transparent 80%,var(--bg) 100%),linear-gradient(to left,var(--bg) 0,transparent 20%),linear-gradient(to right,#F1F3F8 1px,transparent 1px),linear-gradient(#F1F3F8 1px,transparent 1px);background-size:100% 100%,100% 100%,54px 54px,54px 54px;background-position:0 0}
-.tile{position:absolute;width:54px;height:54px;border-radius:4px;background:var(--bg);box-shadow:var(--sh);display:grid;place-items:center;transition:transform .3s}
+.hero{position:relative;overflow:hidden;text-align:center;padding:72px var(--gut) 0;height:var(--hero-h);--hero-h:587px;--cell:48px;--tile:48px;--tic:26px}
+.hero-grid{position:absolute;top:17px;bottom:17px;width:50%;pointer-events:none}
+.hero-grid.l{left:0;background:linear-gradient(to top,var(--bg) 0,transparent 20%,transparent 80%,var(--bg) 100%),linear-gradient(to right,var(--bg) 0,transparent 20%),linear-gradient(to left,#F1F3F8 1px,transparent 1px),linear-gradient(#F1F3F8 1px,transparent 1px);background-size:100% 100%,100% 100%,var(--cell) var(--cell),var(--cell) var(--cell);background-position:0 0,0 0,100% 0,100% 0}
+.hero-grid.r{right:0;background:linear-gradient(to top,var(--bg) 0,transparent 20%,transparent 80%,var(--bg) 100%),linear-gradient(to left,var(--bg) 0,transparent 20%),linear-gradient(to right,#F1F3F8 1px,transparent 1px),linear-gradient(#F1F3F8 1px,transparent 1px);background-size:100% 100%,100% 100%,var(--cell) var(--cell),var(--cell) var(--cell);background-position:0 0}
+.tile{position:absolute;display:none;width:var(--tile);height:var(--tile);border-radius:4px;background:var(--bg);box-shadow:var(--sh);place-items:center;transition:transform .3s}
 .tile:hover{transform:translateY(-3px)}
-.tile svg{width:30px;height:30px}
-.tile.tm{display:none}
-.hero h2{position:relative;max-width:11.5em;margin:0 auto;font-size:var(--fs-3xl);letter-spacing:-.02em}
+.tile svg{width:var(--tic);height:var(--tic)}
+.t-l{display:grid}
+.hero h2{position:relative;max-width:11.5em;margin:0 auto;font-size:clamp(61.94px,calc(61.94px + (100vw - 768px)*.02926),75.8px);letter-spacing:-.02em}
 .hero-sub{position:relative;max-width:18.6em;margin:18px auto 0;padding:14px 0;font-size:var(--fs-md);line-height:1.4}
 .hero-form{position:relative;display:flex;max-width:634px;margin:18px auto 0;padding:4px;border:1px solid var(--muted);border-radius:999px;background:var(--bg);box-shadow:var(--sh)}
 .hero-form input{flex:1;min-width:0;height:61px;padding:18px 27px;border:0;border-radius:999px;background:#fff;outline:none}
@@ -97,17 +98,17 @@ img,svg{display:block}
 .marquee{margin-top:1.5em;overflow:hidden;height:32px}
 .track{display:flex;width:max-content;animation:slide 70s linear infinite}
 .track ul{display:flex;align-items:center;gap:var(--sec);padding:0 calc(var(--sec)/2);height:32px}
-.track li{white-space:nowrap;color:#7C8492;line-height:1}
+.track li{white-space:nowrap;color:#848B98;line-height:1}
 @keyframes slide{to{transform:translateX(-50%)}}
-.lg1{font:italic 400 27px/1 Georgia,"Times New Roman",serif;letter-spacing:-.01em}
-.lg2{font:800 24px/1 var(--f-body);letter-spacing:.32em}
-.lg3{font:600 26px/1 var(--f-body);letter-spacing:-.04em}
-.lg4{font:300 25px/1 var(--f-body);letter-spacing:.18em;text-transform:uppercase}
-.lg5{font:900 30px/1 var(--f-body);letter-spacing:-.05em}
-.lg6{font:400 28px/1 Georgia,serif;letter-spacing:.02em}
-.lg7{font:700 22px/1 var(--f-body);letter-spacing:.08em;text-transform:uppercase;border:2px solid currentColor;padding:3px 7px}
+.lg1{font:italic 600 27px/1 Georgia,"Times New Roman",serif;letter-spacing:-.01em}
+.lg2{font:700 23px/1 var(--f-body);letter-spacing:.24em}
+.lg3{font:700 26px/1 var(--f-body);letter-spacing:-.03em}
+.lg4{font:600 24px/1 var(--f-body);letter-spacing:.14em;text-transform:uppercase}
+.lg5{font:800 27px/1 var(--f-body);letter-spacing:-.03em}
+.lg6{font:600 28px/1 Georgia,serif;letter-spacing:.01em}
+.lg7{font:700 23px/1 var(--f-body);letter-spacing:.06em;text-transform:uppercase}
 .lg8{font:italic 700 26px/1 Georgia,serif;letter-spacing:-.02em}
-.lg9{font:500 25px/1 var(--f-head);letter-spacing:.04em}
+.lg9{font:600 25px/1 var(--f-head);letter-spacing:.03em}
 
 /* ===== Core features ===== */
 .core{padding-top:var(--sec)}
@@ -116,11 +117,14 @@ img,svg{display:block}
 .fcard:hover{box-shadow:0 10px 24px -6px rgba(15,23,42,.14),0 0 1px 1px rgba(15,23,42,.05)}
 .panel{position:relative;border-radius:10px;overflow:hidden;aspect-ratio:657/468}
 .panel>svg{position:absolute;inset:0;width:100%;height:100%}
-.fbody{padding:1em 1em 1em}
+.panel>img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:50% 50%}
+.panel>img.r{object-position:100% 50%}
+.mcard .panel>img{object-fit:cover}
+.fbody{flex:1;display:flex;flex-direction:column;padding:1em 1em 1em}
 .fbody .eyebrow{color:var(--accent)}
 .ftitle{margin-top:calc(var(--fs-base)*.97);font-size:var(--fs-md);min-height:2.2em}
-.fdesc{margin-top:.5em}
-.fbody .more-link{margin-top:calc(var(--fs-base)*1.5)}
+.fdesc{margin-top:.5em;margin-bottom:calc(var(--fs-base)*1.5)}
+.fbody .more-link{margin-top:auto}
 .p-blue{background:#C9DAFF}.p-peach{background:#FFD8BC}.p-lav{background:#DCD0FF}.p-mint{background:#BFE8DA}
 .p-pink{background:#FFCFDF}.p-sky{background:#C6E4F7}.p-butter{background:#FBE3A6}.p-peri{background:#D3D8FF}
 .p-aqua{background:#BDE7EF}.p-coral{background:#FFCDBF}
@@ -129,21 +133,22 @@ img,svg{display:block}
 .more{padding-top:var(--sec)}
 .more h2{text-align:center;font-size:var(--fs-xl)}
 .more-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1em;margin-top:2em}
-.mcard{background:var(--bg);border-radius:20px;box-shadow:var(--sh);padding:.5em}
+.mcard{background:var(--bg);border-radius:20px;box-shadow:var(--sh);padding:.5em;display:flex;flex-direction:column}
 .mcard .panel{aspect-ratio:311/249}
-.mbody{padding:1em .5em .5em}
+.mbody{flex:1;display:flex;flex-direction:column;padding:1em .5em .5em}
 .mbody h3{font-size:var(--fs-base);line-height:1.1}
-.mbody p{margin-top:1em}
-.mbody .more-link{margin-top:var(--fs-base)}
+.mbody p{margin-top:1em;margin-bottom:var(--fs-base)}
+.mbody .more-link{margin-top:auto}
 
 /* ===== Channels ===== */
 .channels{padding-top:var(--sec)}
 .cbar{min-height:123px;overflow:clip;display:flex;align-items:center;justify-content:space-between;gap:24px;background:var(--bar);border-radius:20px;padding:30px}
-.cbar h2{flex:0 1 352px;font-size:var(--fs-md);line-height:1.2}
+.cbar h2{flex:0 1 352px;font-size:var(--fs-md);line-height:1.2;text-wrap:balance}
 .clist{display:flex;gap:21.45px}
 .clist a{position:relative;display:block}
 .ctile{display:grid;place-items:center;width:54px;height:54px;border-radius:10px;box-shadow:var(--sh-tile);color:#fff;transition:transform .2s}
 .ctile svg{width:29px;height:29px}
+.ctile.gen{background:var(--accent)}
 .clist a:hover .ctile{transform:translateY(-3px)}
 .ctip{position:absolute;top:calc(100% + 8px);left:50%;transform:translateX(-50%);white-space:nowrap;font-size:var(--fs-sm);opacity:0;pointer-events:none;transition:opacity .2s}
 .clist a:hover .ctip,.clist a:focus-visible .ctip{opacity:1}
@@ -169,6 +174,7 @@ img,svg{display:block}
 .rbtns .ic{width:20px;height:20px}
 .rart{flex:0 0 540px;width:540px;height:540px;margin:52px 0}
 .rart svg{width:100%;height:100%}
+.rart .rart-m{display:none}
 
 /* ===== Support ===== */
 .support{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:var(--sec);align-items:center;padding-top:var(--sec);padding-bottom:var(--sec)}
@@ -183,8 +189,24 @@ img,svg{display:block}
 .slink{display:inline-flex;align-items:center;gap:6px;margin-top:18px;color:var(--ink-2)}
 .slink span{text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px}
 .slink .ic{width:20px;height:20px}
-.sart{border-radius:20px;overflow:hidden;aspect-ratio:648/432}
-.sart svg{width:100%;height:100%}
+.sart{position:relative;border-radius:20px;overflow:hidden;aspect-ratio:648/432;background:linear-gradient(135deg,#BFD2F8,#E4ECFB);container-type:inline-size;display:grid;place-items:center}
+.sart::before{content:"";position:absolute;width:56%;aspect-ratio:1;right:-14%;top:-30%;border-radius:50%;background:rgba(255,255,255,.25)}
+.chat{position:relative;width:74%;background:#fff;border-radius:14px;box-shadow:0 12px 32px -10px rgba(11,23,48,.28),0 0 0 1px rgba(11,23,48,.06);font-size:clamp(12.5px,2.2cqi,14.5px);line-height:1.35;overflow:hidden;text-align:left}
+.chat-head{display:flex;align-items:center;gap:.7em;padding:.85em 1.1em;border-bottom:1px solid #EEF0F4}
+.chat-av{flex:none;width:2.3em;height:2.3em;border-radius:50%;background:var(--accent);color:#fff;display:grid;place-items:center}
+.chat-av .ic{width:1.15em;height:1.15em}
+.chat-head b{display:block;font-weight:600}
+.chat-head small{display:flex;align-items:center;gap:.4em;margin-top:.1em;font-size:.82em;color:var(--muted)}
+.chat-head small i{width:.55em;height:.55em;border-radius:50%;background:#2F9E44;flex:none}
+.chat-body{display:flex;flex-direction:column;gap:.6em;padding:1em 1.1em}
+.msg{max-width:80%;padding:.55em .85em;border-radius:12px}
+.msg.me{align-self:flex-end;background:#DCE6FB;border-bottom-right-radius:4px}
+.msg.them{align-self:flex-start;background:#F1F3F7;border-bottom-left-radius:4px}
+.chat-input{display:flex;align-items:center;margin:0 1.1em 1em;padding:.45em .5em .45em 1em;border:1px solid #E3E6EC;border-radius:999px;color:var(--muted)}
+.chat-input .send{margin-left:auto;width:1.9em;height:1.9em;border-radius:50%;background:var(--accent);color:#fff;display:grid;place-items:center}
+.chat-input .ic{width:1em;height:1em}
+@container (max-width:470px){.chat{width:88%}.chat-head small{display:none}.chat-input{display:none}.chat-body{gap:.5em;padding:.8em 1em}}
+@container (max-width:400px){.msg.m3{display:none}}
 
 /* ===== Resources ===== */
 .res{padding-top:var(--sec);padding-bottom:calc(var(--sec) + 1em)}
@@ -198,17 +220,18 @@ img,svg{display:block}
 .rpanel h3 span{flex:1 1 auto;min-width:0}
 .rpanel h3{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;font-size:var(--fs-md);position:relative;z-index:1}
 .rpanel h3 .ic{width:24px;height:24px;margin-top:1px}
-.rpanel p{position:relative;z-index:1;margin-top:9px;color:var(--desc);max-width:24em}
+.rpanel p{position:relative;z-index:1;margin-top:9px;color:var(--desc);max-width:24em;text-wrap:pretty}
 .rimg{position:absolute}
-.rimg svg{width:100%;height:100%}
+.rimg svg,.rimg img{width:100%;height:100%}
+.rimg img{object-fit:cover;object-position:50% 0}
 .rc-a{grid-column:1;grid-row:1/3}
 .rc-b{grid-column:2/4;grid-row:1}
 .rc-c{grid-column:1;grid-row:3}
 .rc-d{grid-column:2;grid-row:2/4}
 .rc-e{grid-column:3;grid-row:2/4}
 .rc-a .rimg{left:0;bottom:0;width:90.1%;aspect-ratio:384/269}
-.rc-b .rpanel p,.rc-b .rpanel h3{max-width:399px}
-.rc-b .rimg{right:11.5%;top:0;width:37.5%;height:100%}
+.rc-b .rpanel p,.rc-b .rpanel h3{max-width:45%}
+.rc-b .rimg{right:11.5%;top:0;width:37.5%;height:auto;aspect-ratio:333/212}
 .rc-c .rimg{left:0;bottom:0;width:90.1%;aspect-ratio:384/207}
 .rc-d .rpanel{justify-content:flex-end}
 .rc-d .rimg{left:0;top:0;width:100%;aspect-ratio:311/354}
@@ -257,8 +280,8 @@ footer{background:var(--footer);color:#fff;border-radius:20px 20px 0 0;padding:4
 .facc p{margin-top:5px;font-size:var(--fs-xs)}
 .fbottom{display:flex;align-items:flex-end;justify-content:space-between;margin-top:4em}
 .fbig{display:flex;align-items:center;gap:20px;color:var(--accent-on-dark)}
-.fbig svg{width:88px;height:88px}
-.fbig span{font-weight:700;font-size:44px;line-height:.98;letter-spacing:-.03em}
+.fbig svg{width:88px;height:88px;flex:none}
+.fbig span{font-weight:700;font-size:54px;line-height:1;letter-spacing:-.03em;white-space:nowrap}
 .fright{display:flex;flex-direction:column;align-items:flex-end}
 .flang{display:flex;align-items:center;gap:6px;color:var(--accent-on-dark)}
 .flang .ic{width:24px;height:24px}
@@ -268,54 +291,97 @@ footer{background:var(--footer);color:#fff;border-radius:20px 20px 0 0;padding:4
 .fcopy{display:flex;align-items:center;gap:6px;margin-top:25px;font-size:var(--fs-sm)}
 .fcopy a{font-size:var(--fs-xs)}
 
-/* ===== Tablet ===== */
-@media (max-width:1180px){
-  .nav-links>*{padding-left:9px}
-  .clist{gap:10px}
-  .ctile{width:46px;height:46px}
-  .ctile svg{width:25px;height:25px}
-  .cbar h2{flex:1 1 220px}
-  .rart{flex-basis:44%;width:44%;height:auto;aspect-ratio:1}
+/* ===== Hero per lebar ===== */
+@media (min-width:1440px){
+  .hero{--hero-h:660px;--cell:54px;--tile:54px;--tic:30px;padding-top:80px}
+  .hero-grid{top:18px;bottom:18px}
+  .t-l{display:none}.t-xl{display:grid}
 }
-@media (max-width:1100px){
-  .nav-links{display:none}
-  .menu-btn{display:block}
+@media (min-width:1024px) and (max-width:1439px){
+  .hero{--hero-h:clamp(566px,calc(482px + 8.2vw),587px)}
 }
 @media (max-width:1023px){
-  .nav-links,.nav-cta .btn-outline{display:none}
-  .cbar h2{flex:none}
-  .rc-b .rpanel p,.rc-b .rpanel h3{max-width:52%}
-  .menu-btn{display:block}
-  .more-grid{grid-template-columns:1fr 1fr}
-  .cbar{flex-direction:column;align-items:flex-start}
-  .clist{flex-wrap:wrap}
-  .rbox{flex-direction:column;align-items:stretch}
-  .rart{width:100%;max-width:540px;margin:24px auto 0;flex-basis:auto}
-  .res-grid{grid-template-columns:1fr 1fr;grid-template-rows:none;grid-auto-rows:auto}
-  .rc-a,.rc-b,.rc-c,.rc-d,.rc-e{grid-column:auto;grid-row:auto;min-height:400px}
-  .rc-d{min-height:560px}
-  .rc-a,.rc-e{min-height:470px}
-  .rtext{flex:none}
-  .rc-b{grid-column:1/3;min-height:240px}
-  .fcols{grid-template-columns:repeat(3,1fr);row-gap:2em}
+  .hero{--hero-h:542px}
+  .t-l{display:none}.t-m{display:grid}
+}
+@media (max-width:767px){
+  .hero{--hero-h:556px}
+  .hero-grid{top:16px;bottom:16px}
+  .t-m{display:none}.t-s{display:grid}
+  .hero h2{font-size:var(--fs-3xl)}
 }
 
-/* ===== Mobile ===== */
+/* ===== Judul seimbang di rentang tablet dan laptop ===== */
+@media (min-width:768px) and (max-width:1439px){
+  .ftitle,.cbar h2,.rtext h2,.about .head,.res-head .head,.rpanel h3 span,.support .head,.cta h2,.mbody h3{text-wrap:balance}
+}
+
+/* ===== <= 1439: kanal lebih ringkas ===== */
+@media (max-width:1439px){
+  .clist{gap:14px}
+  .ctile{width:48px;height:48px}
+  .ctile svg{width:26px;height:26px}
+}
+
+/* ===== <= 1180 ===== */
+@media (max-width:1180px){
+  .nav-links{display:none}
+  .menu-btn{display:block}
+  .cbar{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px}
+  .cbar h2{max-width:300px}
+  .clist{display:grid;grid-template-columns:repeat(6,48px);gap:14px}
+  .ctile{width:48px;height:48px}
+  .ctile svg{width:26px;height:26px}
+  .rart{flex-basis:44%;width:44%;height:auto;aspect-ratio:1}
+}
+
+/* ===== Tablet <= 1023 ===== */
+@media (max-width:1023px){
+  .cbar{display:block;text-align:center;padding:24px 24px 40px}
+  .cbar h2{max-width:none}
+  .clist{justify-content:center;margin-top:20px}
+  .rbox{flex-direction:column;align-items:stretch;gap:0}
+  .rtext{flex:none}
+  .rart{width:100%;max-width:540px;height:auto;aspect-ratio:1;margin:40px auto 8px;flex-basis:auto}
+  .support{grid-template-columns:minmax(0,1fr);gap:40px}
+  .res-head{grid-template-columns:1fr;gap:8px}
+  .res-head>p{margin-top:8px}
+  .res-grid{display:flex;overflow-x:auto;gap:17px;margin:32px calc(var(--gut)*-1) 0;padding:0 var(--gut) 4px;scroll-snap-type:x mandatory;scroll-padding-left:var(--gut);scrollbar-width:none}
+  .res-grid::-webkit-scrollbar{display:none}
+  .rcard{flex:0 0 340px;height:452px;scroll-snap-align:start}
+  .rpanel{padding:1.55em 1em}
+  .rpanel p{margin-top:8px}
+  .rc-b .rpanel p,.rc-b .rpanel h3{max-width:none}
+  .rc-a .rimg,.rc-b .rimg,.rc-c .rimg,.rc-e .rimg{left:0;right:auto;top:auto;bottom:0;width:100%;height:auto}
+  .rc-a .rimg{aspect-ratio:256/167}.rc-b .rimg{aspect-ratio:256/150}.rc-c .rimg{aspect-ratio:256/150}.rc-e .rimg{aspect-ratio:256/185}
+  .rc-d .rimg{left:0;top:0;width:100%;height:62%;aspect-ratio:auto}
+  .about-top{display:block;text-align:center}
+  .about-text{max-width:640px;margin:0 auto}
+  .about-btn.dt{display:none}
+  .about-btn.mb{display:inline-flex;height:42px;padding:8.08px 16.15px 8.08px 20.19px;margin-top:32px}
+  .stats{grid-template-columns:1fr 1fr;margin-top:40px}
+  .stat dd{text-align:right;padding-top:calc(var(--fs-base)*1.2)}
+  .about-foot{text-align:center}
+  .about{padding-bottom:var(--sec)}
+  .fcols{display:block;columns:2;column-gap:26px}
+  .fcol{break-inside:avoid}
+  .fcol+.fcol{margin-top:2em}
+  .fcol.brk{break-before:column;margin-top:0}
+  .fbig svg{width:64px;height:64px}
+  .fbig span{font-size:38px}
+}
+
+/* ===== Mobile <= 767 ===== */
 @media (max-width:767px){
+  main [id],footer [id]{scroll-margin-top:85px}
   .nav{height:69px;padding:0 9px 0 17px}
+  .nav-cta .btn-outline{display:none}
   .logo{gap:5px;height:24px}
   .logo-mark{width:22px;height:22px}
   .logo-word{font-size:15.5px}
   .dk{display:none}.mo{display:inline}
   .nav-cta .btn-primary{height:41px;padding:8.08px 20.19px}
-  .menu-btn{margin-left:0}
   .nav-cta{align-items:center}
-  .hero{height:556px;padding-top:72px}
-  .hero-grid{top:16px;height:524px;background-size:100% 100%,100% 100%,48px 48px,48px 48px}
-  .tile{width:48px;height:48px}
-  .tile svg{width:26px;height:26px}
-  .tile.td{display:none}
-  .tile.tm{display:grid}
   .hero-sub{margin-top:16px;padding:12.14px 0}
   .hero-form{flex-direction:column;align-items:stretch;max-width:256px;margin-top:16px;padding:0;border:0;box-shadow:none;background:none;gap:8px}
   .hero-form input{height:57px;padding:16.15px 24.23px;border:1px solid var(--muted);box-shadow:var(--sh)}
@@ -325,28 +391,26 @@ footer{background:var(--footer);color:#fff;border-radius:20px 20px 0 0;padding:4
   .proof-h span{max-width:282px}
   .marquee{margin-top:23px;height:24px}
   .track ul{height:24px}
-  .lg1{font-size:23px}.lg2{font-size:20px}.lg3{font-size:22px}.lg4{font-size:21px}.lg5{font-size:25px}.lg6{font-size:24px}.lg7{font-size:18px;padding:2px 5px}.lg8{font-size:22px}.lg9{font-size:21px}
+  .lg1{font-size:23px}.lg2{font-size:19px}.lg3{font-size:22px}.lg4{font-size:20px}.lg5{font-size:23px}.lg6{font-size:24px}.lg7{font-size:19px}.lg8{font-size:22px}.lg9{font-size:21px}
   .feat-grid{grid-template-columns:1fr}
   .panel{aspect-ratio:339/259}
   .more-grid{grid-template-columns:1fr;margin-top:18px}
   .mcard .panel{aspect-ratio:339/272}
-  .cbar{display:block;padding:20px 13.5px 43.36px;text-align:center}
-  .cbar{min-height:0}
-  .cbar h2{max-width:none}
-  .clist{display:grid;grid-template-columns:repeat(6,45px);justify-content:space-between;row-gap:14px;column-gap:0;padding:0 10px;margin-top:19px}
+  .cbar{padding:20px 13.5px 43.36px}
+  .clist{grid-template-columns:repeat(6,45px);justify-content:space-between;row-gap:14px;column-gap:0;padding:0 10px;margin-top:19px}
   .ctile{width:45px;height:45px}
   .ctile svg{width:24px;height:24px}
-  .rbox{padding:24.82px 26.05px;gap:0}
+  .rbox{padding:24.82px 26.05px}
   .rtext h2{margin-top:8px}
-  .rtext{flex:none}
   .rtext>p{margin-top:16px}
   .rtext>p.eyebrow{margin-top:0}
   .rlist{margin-top:16px;padding-top:12px}
   .rlist li+li{margin-top:12px}
   .rbtns{flex-direction:column;align-items:flex-start;gap:16px;margin-top:32px}
   .rbtns a{height:50px;padding:12.9px 25px}
-  .rart{width:100%;max-width:none;aspect-ratio:1;margin:33px 0 0}
-  .support{grid-template-columns:1fr;gap:35px;padding-top:35px;padding-bottom:34px}
+  .rart{max-width:none;margin:33px 0 0}
+  .rart .rart-d{display:none}.rart .rart-m{display:block}
+  .support{gap:35px;padding-top:35px;padding-bottom:34px}
   .support .head{margin-top:16px}
   .stext>p{margin-top:16px}
   .sbtns{margin-top:16px;gap:8px}
@@ -354,47 +418,33 @@ footer{background:var(--footer);color:#fff;border-radius:20px 20px 0 0;padding:4
   .stext>p.s2{margin-top:32px}
   .slink{margin-top:16px}
   .sart{aspect-ratio:355/237}
-  .res-head{grid-template-columns:1fr;gap:8px}
-  .res-grid{display:flex;overflow-x:auto;gap:17px;margin:32px calc(var(--gut)*-1) 0;padding:0 var(--gut);scroll-snap-type:x mandatory;scroll-padding-left:var(--gut);scrollbar-width:none}
-  .res-grid::-webkit-scrollbar{display:none}
-  .rcard{flex:0 0 272px;height:409px;min-height:0;scroll-snap-align:start}
-  .rpanel{padding:1.55em 1em}
-  .rpanel p{margin-top:8px}
-  .rc-b .rpanel p,.rc-b .rpanel h3{max-width:none}
-  .rc-a .rimg,.rc-c .rimg{width:100%}
-  .rc-a .rimg{aspect-ratio:256/167}.rc-c .rimg{aspect-ratio:256/179}
-  .rc-b .rimg{right:0;left:0;top:auto;bottom:0;width:100%;height:auto;aspect-ratio:256/163}
-  .rc-e .rimg{aspect-ratio:256/190}
-  .about{padding-bottom:var(--sec)}
-  .about-top{display:block;text-align:center}
+  .res-grid{padding:0 var(--gut)}
+  .rcard{flex:0 0 272px;height:409px}
   .about .head{margin-top:17px}
   .about-text>p{margin-top:15px}
-  .about-btn.dt{display:none}
-  .about-btn.mb{display:inline-flex;height:42px;padding:8.08px 16.15px 8.08px 20.19px;margin-top:32px}
-  .stats{grid-template-columns:1fr 1fr;margin-top:35px}
-  .stat dd{text-align:right;padding-top:calc(var(--fs-base)*1.2)}
-  .about-foot{text-align:center}
+  .stats{margin-top:35px}
   .cta-panel{padding:var(--sec) var(--gut)}
   .cta-btn{height:49px;padding:12.11px 24.23px 12.11px 28.27px}
-  footer{padding:4em var(--gut)}
-  .fcols{display:block;columns:2;column-gap:26px}
-  .fcol{break-inside:avoid}
-  .fcol+.fcol{margin-top:2em}
-  .fcol.brk{break-before:column;margin-top:0}
   .facc{margin-top:2.2em}
   .fbottom{display:block;margin-top:2.6em}
-  .fbig svg{width:60px;height:60px}
-  .fbig span{font-size:30px}
+  .fbig{gap:12px}
+  .fbig svg{width:46px;height:46px}
+  .fbig span{font-size:31px}
   .fright{align-items:center;margin-top:36px}
   .fsoc{gap:24px;margin-top:18px}
   .fsoc svg{width:28px;height:28px}
   .fcopy{justify-content:center;margin-top:18px;flex-wrap:wrap}
 }
 @media (max-width:380px){
+  .clist{grid-template-columns:repeat(6,40px)}
+  .ctile{width:40px;height:40px}
+  .ctile svg{width:22px;height:22px}
   .nav-cta .btn-primary{padding:8px 14px}
   .logo-word{font-size:14.5px}
+  .fbig span{font-size:28px}
 }
 @media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
   .track{animation:none}
   *{transition:none!important}
 }
@@ -412,7 +462,7 @@ footer{background:var(--footer);color:#fff;border-radius:20px 20px 0 0;padding:4
 </head>
 <body>
 <!-- Ikon: Lucide (ISC License, lucide.dev) dan Simple Icons (CC0, simpleicons.org). Font: Figtree dan Be Vietnam Pro (SIL Open Font License, Google Fonts). Semua mockup UI dibuat dengan HTML/SVG. -->
-<!--SPRITE--><svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs><filter id="sh" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#0B1730" flood-opacity=".10"/><feDropShadow dx="0" dy="0" stdDeviation=".6" flood-color="#0B1730" flood-opacity=".08"/></filter><filter id="sh2" x="-30%" y="-20%" width="160%" height="150%"><feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#0B1730" flood-opacity=".16"/><feDropShadow dx="0" dy="0" stdDeviation=".6" flood-color="#0B1730" flood-opacity=".08"/></filter><filter id="sh3" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#0B1730" flood-opacity=".06"/></filter><filter id="sh4" x="-20%" y="-20%" width="160%" height="160%"><feDropShadow dx="13" dy="40" stdDeviation="30" flood-color="#000" flood-opacity=".18"/></filter></defs><symbol id="l-arrow-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14" /> <path d="m12 5 7 7-7 7" /></symbol><symbol id="l-arrow-up" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 7-7 7 7" /> <path d="M12 19V5" /></symbol><symbol id="l-at-sign" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4" /> <path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-4 8" /></symbol><symbol id="l-bell" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.268 21a2 2 0 0 0 3.464 0" /> <path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326" /></symbol><symbol id="l-bookmark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2 2 0 0 1 2 2v15a1 1 0 0 1-1.496.868l-4.512-2.578a2 2 0 0 0-1.984 0l-4.512 2.578A1 1 0 0 1 5 20V5a2 2 0 0 1 2-2z" /></symbol><symbol id="l-calendar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v3" /> <path d="M16 2v3" /> <rect x="3" y="3" width="18" height="18" rx="2" /> <path d="M3 9h18" /></symbol><symbol id="l-calendar-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 14v2.2l1.6 1" /> <path d="M16 2v3" /> <path d="M21 7.338V5a2 2 0 00-2-2H5a2 2 0 00-2 2v14a2 2 0 002 2h2.338" /> <path d="M3 9h5.859" /> <path d="M8 2v3" /> <circle cx="16" cy="16" r="6" /></symbol><symbol id="l-calendar-days" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v3" /> <path d="M16 2v3" /> <rect x="3" y="3" width="18" height="18" rx="2" /> <path d="M3 9h18" /> <path d="M8 13h.01" /> <path d="M12 13h.01" /> <path d="M16 13h.01" /> <path d="M8 17h.01" /> <path d="M12 17h.01" /> <path d="M16 17h.01" /></symbol><symbol id="l-chart-column" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v16a2 2 0 0 0 2 2h16" /> <path d="M18 17V9" /> <path d="M13 17V5" /> <path d="M8 17v-3" /></symbol><symbol id="l-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5" /></symbol><symbol id="l-chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6" /></symbol><symbol id="l-chevron-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6" /></symbol><symbol id="l-chevron-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6" /></symbol><symbol id="l-circle-dashed" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.1 2.182a10 10 0 0 1 3.8 0" /> <path d="M13.9 21.818a10 10 0 0 1-3.8 0" /> <path d="M17.609 3.721a10 10 0 0 1 2.69 2.7" /> <path d="M2.182 13.9a10 10 0 0 1 0-3.8" /> <path d="M20.279 17.609a10 10 0 0 1-2.7 2.69" /> <path d="M21.818 10.1a10 10 0 0 1 0 3.8" /> <path d="M3.721 6.391a10 10 0 0 1 2.7-2.69" /> <path d="M6.391 20.279a10 10 0 0 1-2.69-2.7" /></symbol><symbol id="l-clapperboard" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12.296 3.464 3.02 3.956" /> <path d="M20.2 6 3 11l-.9-2.4c-.3-1.1.3-2.2 1.3-2.5l13.5-4c1.1-.3 2.2.3 2.5 1.3z" /> <path d="M3 11h18v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /> <path d="m6.18 5.276 3.1 3.899" /></symbol><symbol id="l-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /> <path d="M12 6v6l4 2" /></symbol><symbol id="l-ellipsis-vertical" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1" /> <circle cx="12" cy="5" r="1" /> <circle cx="12" cy="19" r="1" /></symbol><symbol id="l-file-chart-column" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z" /> <path d="M14 2v5a1 1 0 0 0 1 1h5" /> <path d="M8 18v-1" /> <path d="M12 18v-6" /> <path d="M16 18v-3" /></symbol><symbol id="l-filter" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 20a1 1 0 0 0 .553.895l2 1A1 1 0 0 0 14 21v-7a2 2 0 0 1 .517-1.341L21.74 4.67A1 1 0 0 0 21 3H3a1 1 0 0 0-.742 1.67l7.225 7.989A2 2 0 0 1 10 14z" /></symbol><symbol id="l-folder" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z" /></symbol><symbol id="l-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /> <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" /> <path d="M2 12h20" /></symbol><symbol id="l-hash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="9" y2="9" /> <line x1="4" x2="20" y1="15" y2="15" /> <line x1="10" x2="8" y1="3" y2="21" /> <line x1="16" x2="14" y1="3" y2="21" /></symbol><symbol id="l-image" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2" ry="2" /> <circle cx="9" cy="9" r="2" /> <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21" /></symbol><symbol id="l-images" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 11-1.296-1.296a2.4 2.4 0 0 0-3.408 0L11 16" /> <path d="M4 8a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2" /> <circle cx="13" cy="7" r="1" fill="currentColor" /> <rect x="8" y="2" width="14" height="14" rx="2" /></symbol><symbol id="l-inbox" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12" /> <path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z" /></symbol><symbol id="l-layers" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z" /> <path d="M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12" /> <path d="M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17" /></symbol><symbol id="l-layout-grid" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="7" x="3" y="3" rx="1" /> <rect width="7" height="7" x="14" y="3" rx="1" /> <rect width="7" height="7" x="14" y="14" rx="1" /> <rect width="7" height="7" x="3" y="14" rx="1" /></symbol><symbol id="l-list" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5h.01" /> <path d="M3 12h.01" /> <path d="M3 19h.01" /> <path d="M8 5h13" /> <path d="M8 12h13" /> <path d="M8 19h13" /></symbol><symbol id="l-megaphone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 6a13 13 0 0 0 8.4-2.8A1 1 0 0 1 21 4v12a1 1 0 0 1-1.6.8A13 13 0 0 0 11 14H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2z" /> <path d="M6 14a12 12 0 0 0 2.4 7.2 2 2 0 0 0 3.2-2.4A8 8 0 0 1 10 14" /> <path d="M8 6v8" /></symbol><symbol id="l-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16" /> <path d="M4 12h16" /> <path d="M4 19h16" /></symbol><symbol id="l-message-circle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.992 16.342a2 2 0 0 1 .094 1.167l-1.065 3.29a1 1 0 0 0 1.236 1.168l3.413-.998a2 2 0 0 1 1.099.092 10 10 0 1 0-4.777-4.719" /></symbol><symbol id="l-message-square" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 17a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 21.286V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2z" /></symbol><symbol id="l-paperclip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 6-8.414 8.586a2 2 0 0 0 2.829 2.829l8.414-8.586a4 4 0 1 0-5.657-5.657l-8.379 8.551a6 6 0 1 0 8.485 8.485l8.379-8.551" /></symbol><symbol id="l-pencil" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z" /> <path d="m15 5 4 4" /></symbol><symbol id="l-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14" /> <path d="M12 5v14" /></symbol><symbol id="l-repeat-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m2 9 3-3 3 3" /> <path d="M13 18H7a2 2 0 0 1-2-2V6" /> <path d="m22 15-3 3-3-3" /> <path d="M11 6h6a2 2 0 0 1 2 2v10" /></symbol><symbol id="l-send" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z" /> <path d="m21.854 2.147-10.94 10.939" /></symbol><symbol id="l-smartphone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="20" x="5" y="2" rx="2" ry="2" /> <path d="M12 18h.01" /></symbol><symbol id="l-smile" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 10V9" /> <path d="M16.472 15a6 6 0 01-8.943 0" /> <path d="M9 10V9" /> <circle cx="12" cy="12" r="10" /></symbol><symbol id="l-square-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2" /> <path d="m16 9-5.5 5.5L8 12" /></symbol><symbol id="l-tag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z" /> <circle cx="7.5" cy="7.5" r=".5" fill="currentColor" /></symbol><symbol id="l-type" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v16" /> <path d="M4 7V5a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v2" /> <path d="M9 20h6" /></symbol><symbol id="l-users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /> <path d="M16 3.128a4 4 0 0 1 0 7.744" /> <path d="M22 21v-2a4 4 0 0 0-3-3.87" /> <circle cx="9" cy="7" r="4" /></symbol><symbol id="l-video" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 13 5.223 3.482a.5.5 0 0 0 .777-.416V7.87a.5.5 0 0 0-.752-.432L16 10.5" /> <rect x="2" y="6" width="14" height="12" rx="2" /></symbol><symbol id="l-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18" /> <path d="m6 6 12 12" /></symbol><symbol id="s-facebook" viewBox="0 0 24 24" fill="currentColor"><path d="M9.101 23.691v-7.98H6.627v-3.667h2.474v-1.58c0-4.085 1.848-5.978 5.858-5.978.401 0 .955.042 1.468.103a8.68 8.68 0 0 1 1.141.195v3.325a8.623 8.623 0 0 0-.653-.036 26.805 26.805 0 0 0-.733-.009c-.707 0-1.259.096-1.675.309a1.686 1.686 0 0 0-.679.622c-.258.42-.374.995-.374 1.752v1.297h3.919l-.386 2.103-.287 1.564h-3.246v8.245C19.396 23.238 24 18.179 24 12.044c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.628 3.874 10.35 9.101 11.647Z"/></symbol><symbol id="s-instagram" viewBox="0 0 24 24" fill="currentColor"><path d="M7.0301.084c-1.2768.0602-2.1487.264-2.911.5634-.7888.3075-1.4575.72-2.1228 1.3877-.6652.6677-1.075 1.3368-1.3802 2.127-.2954.7638-.4956 1.6365-.552 2.914-.0564 1.2775-.0689 1.6882-.0626 4.947.0062 3.2586.0206 3.6671.0825 4.9473.061 1.2765.264 2.1482.5635 2.9107.308.7889.72 1.4573 1.388 2.1228.6679.6655 1.3365 1.0743 2.1285 1.38.7632.295 1.6361.4961 2.9134.552 1.2773.056 1.6884.069 4.9462.0627 3.2578-.0062 3.668-.0207 4.9478-.0814 1.28-.0607 2.147-.2652 2.9098-.5633.7889-.3086 1.4578-.72 2.1228-1.3881.665-.6682 1.0745-1.3378 1.3795-2.1284.2957-.7632.4966-1.636.552-2.9124.056-1.2809.0692-1.6898.063-4.948-.0063-3.2583-.021-3.6668-.0817-4.9465-.0607-1.2797-.264-2.1487-.5633-2.9117-.3084-.7889-.72-1.4568-1.3876-2.1228C21.2982 1.33 20.628.9208 19.8378.6165 19.074.321 18.2017.1197 16.9244.0645 15.6471.0093 15.236-.005 11.977.0014 8.718.0076 8.31.0215 7.0301.0839m.1402 21.6932c-1.17-.0509-1.8053-.2453-2.2287-.408-.5606-.216-.96-.4771-1.3819-.895-.422-.4178-.6811-.8186-.9-1.378-.1644-.4234-.3624-1.058-.4171-2.228-.0595-1.2645-.072-1.6442-.079-4.848-.007-3.2037.0053-3.583.0607-4.848.05-1.169.2456-1.805.408-2.2282.216-.5613.4762-.96.895-1.3816.4188-.4217.8184-.6814 1.3783-.9003.423-.1651 1.0575-.3614 2.227-.4171 1.2655-.06 1.6447-.072 4.848-.079 3.2033-.007 3.5835.005 4.8495.0608 1.169.0508 1.8053.2445 2.228.408.5608.216.96.4754 1.3816.895.4217.4194.6816.8176.9005 1.3787.1653.4217.3617 1.056.4169 2.2263.0602 1.2655.0739 1.645.0796 4.848.0058 3.203-.0055 3.5834-.061 4.848-.051 1.17-.245 1.8055-.408 2.2294-.216.5604-.4763.96-.8954 1.3814-.419.4215-.8181.6811-1.3783.9-.4224.1649-1.0577.3617-2.2262.4174-1.2656.0595-1.6448.072-4.8493.079-3.2045.007-3.5825-.006-4.848-.0608M16.953 5.5864A1.44 1.44 0 1 0 18.39 4.144a1.44 1.44 0 0 0-1.437 1.4424M5.8385 12.012c.0067 3.4032 2.7706 6.1557 6.173 6.1493 3.4026-.0065 6.157-2.7701 6.1506-6.1733-.0065-3.4032-2.771-6.1565-6.174-6.1498-3.403.0067-6.156 2.771-6.1496 6.1738M8 12.0077a4 4 0 1 1 4.008 3.9921A3.9996 3.9996 0 0 1 8 12.0077"/></symbol><symbol id="s-linkedin" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></symbol><symbol id="s-threads" viewBox="0 0 24 24" fill="currentColor"><path d="M18.263 11.097c-.03-3.486-1.92-5.586-5.111-5.586-2.13 0-3.922.963-4.863 2.499l2.062 1.438c.535-.843 1.272-1.543 2.628-1.543 1.528 0 2.318.85 2.544 2.431a15 15 0 0 0-2.236-.173c-4.125 0-6.068 1.867-6.068 4.336s1.943 3.99 4.804 3.99c3.139 0 5.013-2.115 5.781-4.735.798.361 1.348 1.204 1.348 2.47 0 3.387-3.907 5.232-7.22 5.232-4.885 0-8.077-3.207-8.077-8.424 0-6.392 4.223-10.487 9.9-10.487 3.808 0 5.69 1.671 6.97 3.914l2.108-1.475C21.44 2.078 18.331 0 13.663 0 6.227 0 1.168 5.277 1.168 12.934c0 7 4.953 11.066 10.856 11.066 4.878 0 9.809-2.846 9.809-7.716 0-2.545-1.46-4.231-3.569-5.187m-6.33 4.855c-1.077 0-2.026-.512-2.026-1.453 0-1.483 1.822-1.934 3.606-1.934.678 0 1.34.045 1.927.173-.422 1.927-1.671 3.215-3.508 3.214Z"/></symbol><symbol id="s-tiktok" viewBox="0 0 24 24" fill="currentColor"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></symbol><symbol id="s-youtube" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></symbol></svg><!--/SPRITE-->
+<!--SPRITE--><svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs><filter id="sh" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#0B1730" flood-opacity=".10"/><feDropShadow dx="0" dy="0" stdDeviation=".6" flood-color="#0B1730" flood-opacity=".08"/></filter><filter id="sh2" x="-30%" y="-20%" width="160%" height="150%"><feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#0B1730" flood-opacity=".16"/><feDropShadow dx="0" dy="0" stdDeviation=".6" flood-color="#0B1730" flood-opacity=".08"/></filter><filter id="sh3" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#0B1730" flood-opacity=".06"/></filter><filter id="sh4" x="-20%" y="-20%" width="160%" height="160%"><feDropShadow dx="13" dy="40" stdDeviation="30" flood-color="#000" flood-opacity=".18"/></filter></defs><symbol id="l-arrow-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14" /> <path d="m12 5 7 7-7 7" /></symbol><symbol id="l-arrow-up" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 7-7 7 7" /> <path d="M12 19V5" /></symbol><symbol id="l-bell" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.268 21a2 2 0 0 0 3.464 0" /> <path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326" /></symbol><symbol id="l-calendar-days" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v3" /> <path d="M16 2v3" /> <rect x="3" y="3" width="18" height="18" rx="2" /> <path d="M3 9h18" /> <path d="M8 13h.01" /> <path d="M12 13h.01" /> <path d="M16 13h.01" /> <path d="M8 17h.01" /> <path d="M12 17h.01" /> <path d="M16 17h.01" /></symbol><symbol id="l-chart-column" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v16a2 2 0 0 0 2 2h16" /> <path d="M18 17V9" /> <path d="M13 17V5" /> <path d="M8 17v-3" /></symbol><symbol id="l-chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6" /></symbol><symbol id="l-clapperboard" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12.296 3.464 3.02 3.956" /> <path d="M20.2 6 3 11l-.9-2.4c-.3-1.1.3-2.2 1.3-2.5l13.5-4c1.1-.3 2.2.3 2.5 1.3z" /> <path d="M3 11h18v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /> <path d="m6.18 5.276 3.1 3.899" /></symbol><symbol id="l-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /> <path d="M12 6v6l4 2" /></symbol><symbol id="l-file-chart-column" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z" /> <path d="M14 2v5a1 1 0 0 0 1 1h5" /> <path d="M8 18v-1" /> <path d="M12 18v-6" /> <path d="M16 18v-3" /></symbol><symbol id="l-gallery-horizontal-end" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7v10" /> <path d="M6 5v14" /> <rect width="12" height="18" x="10" y="3" rx="2" /></symbol><symbol id="l-gallery-vertical-end" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 2h10" /> <path d="M5 6h14" /> <rect width="18" height="12" x="3" y="10" rx="2" /></symbol><symbol id="l-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /> <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" /> <path d="M2 12h20" /></symbol><symbol id="l-hash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="9" y2="9" /> <line x1="4" x2="20" y1="15" y2="15" /> <line x1="10" x2="8" y1="3" y2="21" /> <line x1="16" x2="14" y1="3" y2="21" /></symbol><symbol id="l-image" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2" ry="2" /> <circle cx="9" cy="9" r="2" /> <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21" /></symbol><symbol id="l-images" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 11-1.296-1.296a2.4 2.4 0 0 0-3.408 0L11 16" /> <path d="M4 8a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2" /> <circle cx="13" cy="7" r="1" fill="currentColor" /> <rect x="8" y="2" width="14" height="14" rx="2" /></symbol><symbol id="l-inbox" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12" /> <path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z" /></symbol><symbol id="l-layout-grid" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="7" x="3" y="3" rx="1" /> <rect width="7" height="7" x="14" y="3" rx="1" /> <rect width="7" height="7" x="14" y="14" rx="1" /> <rect width="7" height="7" x="3" y="14" rx="1" /></symbol><symbol id="l-link" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" /> <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" /></symbol><symbol id="l-megaphone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 6a13 13 0 0 0 8.4-2.8A1 1 0 0 1 21 4v12a1 1 0 0 1-1.6.8A13 13 0 0 0 11 14H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2z" /> <path d="M6 14a12 12 0 0 0 2.4 7.2 2 2 0 0 0 3.2-2.4A8 8 0 0 1 10 14" /> <path d="M8 6v8" /></symbol><symbol id="l-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16" /> <path d="M4 12h16" /> <path d="M4 19h16" /></symbol><symbol id="l-message-circle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.992 16.342a2 2 0 0 1 .094 1.167l-1.065 3.29a1 1 0 0 0 1.236 1.168l3.413-.998a2 2 0 0 1 1.099.092 10 10 0 1 0-4.777-4.719" /></symbol><symbol id="l-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14" /> <path d="M12 5v14" /></symbol><symbol id="l-send" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z" /> <path d="m21.854 2.147-10.94 10.939" /></symbol><symbol id="l-smartphone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="20" x="5" y="2" rx="2" ry="2" /> <path d="M12 18h.01" /></symbol><symbol id="l-type" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v16" /> <path d="M4 7V5a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v2" /> <path d="M9 20h6" /></symbol><symbol id="l-users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /> <path d="M16 3.128a4 4 0 0 1 0 7.744" /> <path d="M22 21v-2a4 4 0 0 0-3-3.87" /> <circle cx="9" cy="7" r="4" /></symbol><symbol id="l-video" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 13 5.223 3.482a.5.5 0 0 0 .777-.416V7.87a.5.5 0 0 0-.752-.432L16 10.5" /> <rect x="2" y="6" width="14" height="12" rx="2" /></symbol><symbol id="s-facebook" viewBox="0 0 24 24" fill="currentColor"><path d="M9.101 23.691v-7.98H6.627v-3.667h2.474v-1.58c0-4.085 1.848-5.978 5.858-5.978.401 0 .955.042 1.468.103a8.68 8.68 0 0 1 1.141.195v3.325a8.623 8.623 0 0 0-.653-.036 26.805 26.805 0 0 0-.733-.009c-.707 0-1.259.096-1.675.309a1.686 1.686 0 0 0-.679.622c-.258.42-.374.995-.374 1.752v1.297h3.919l-.386 2.103-.287 1.564h-3.246v8.245C19.396 23.238 24 18.179 24 12.044c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.628 3.874 10.35 9.101 11.647Z"/></symbol><symbol id="s-instagram" viewBox="0 0 24 24" fill="currentColor"><path d="M7.0301.084c-1.2768.0602-2.1487.264-2.911.5634-.7888.3075-1.4575.72-2.1228 1.3877-.6652.6677-1.075 1.3368-1.3802 2.127-.2954.7638-.4956 1.6365-.552 2.914-.0564 1.2775-.0689 1.6882-.0626 4.947.0062 3.2586.0206 3.6671.0825 4.9473.061 1.2765.264 2.1482.5635 2.9107.308.7889.72 1.4573 1.388 2.1228.6679.6655 1.3365 1.0743 2.1285 1.38.7632.295 1.6361.4961 2.9134.552 1.2773.056 1.6884.069 4.9462.0627 3.2578-.0062 3.668-.0207 4.9478-.0814 1.28-.0607 2.147-.2652 2.9098-.5633.7889-.3086 1.4578-.72 2.1228-1.3881.665-.6682 1.0745-1.3378 1.3795-2.1284.2957-.7632.4966-1.636.552-2.9124.056-1.2809.0692-1.6898.063-4.948-.0063-3.2583-.021-3.6668-.0817-4.9465-.0607-1.2797-.264-2.1487-.5633-2.9117-.3084-.7889-.72-1.4568-1.3876-2.1228C21.2982 1.33 20.628.9208 19.8378.6165 19.074.321 18.2017.1197 16.9244.0645 15.6471.0093 15.236-.005 11.977.0014 8.718.0076 8.31.0215 7.0301.0839m.1402 21.6932c-1.17-.0509-1.8053-.2453-2.2287-.408-.5606-.216-.96-.4771-1.3819-.895-.422-.4178-.6811-.8186-.9-1.378-.1644-.4234-.3624-1.058-.4171-2.228-.0595-1.2645-.072-1.6442-.079-4.848-.007-3.2037.0053-3.583.0607-4.848.05-1.169.2456-1.805.408-2.2282.216-.5613.4762-.96.895-1.3816.4188-.4217.8184-.6814 1.3783-.9003.423-.1651 1.0575-.3614 2.227-.4171 1.2655-.06 1.6447-.072 4.848-.079 3.2033-.007 3.5835.005 4.8495.0608 1.169.0508 1.8053.2445 2.228.408.5608.216.96.4754 1.3816.895.4217.4194.6816.8176.9005 1.3787.1653.4217.3617 1.056.4169 2.2263.0602 1.2655.0739 1.645.0796 4.848.0058 3.203-.0055 3.5834-.061 4.848-.051 1.17-.245 1.8055-.408 2.2294-.216.5604-.4763.96-.8954 1.3814-.419.4215-.8181.6811-1.3783.9-.4224.1649-1.0577.3617-2.2262.4174-1.2656.0595-1.6448.072-4.8493.079-3.2045.007-3.5825-.006-4.848-.0608M16.953 5.5864A1.44 1.44 0 1 0 18.39 4.144a1.44 1.44 0 0 0-1.437 1.4424M5.8385 12.012c.0067 3.4032 2.7706 6.1557 6.173 6.1493 3.4026-.0065 6.157-2.7701 6.1506-6.1733-.0065-3.4032-2.771-6.1565-6.174-6.1498-3.403.0067-6.156 2.771-6.1496 6.1738M8 12.0077a4 4 0 1 1 4.008 3.9921A3.9996 3.9996 0 0 1 8 12.0077"/></symbol><symbol id="s-linkedin" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></symbol><symbol id="s-threads" viewBox="0 0 24 24" fill="currentColor"><path d="M18.263 11.097c-.03-3.486-1.92-5.586-5.111-5.586-2.13 0-3.922.963-4.863 2.499l2.062 1.438c.535-.843 1.272-1.543 2.628-1.543 1.528 0 2.318.85 2.544 2.431a15 15 0 0 0-2.236-.173c-4.125 0-6.068 1.867-6.068 4.336s1.943 3.99 4.804 3.99c3.139 0 5.013-2.115 5.781-4.735.798.361 1.348 1.204 1.348 2.47 0 3.387-3.907 5.232-7.22 5.232-4.885 0-8.077-3.207-8.077-8.424 0-6.392 4.223-10.487 9.9-10.487 3.808 0 5.69 1.671 6.97 3.914l2.108-1.475C21.44 2.078 18.331 0 13.663 0 6.227 0 1.168 5.277 1.168 12.934c0 7 4.953 11.066 10.856 11.066 4.878 0 9.809-2.846 9.809-7.716 0-2.545-1.46-4.231-3.569-5.187m-6.33 4.855c-1.077 0-2.026-.512-2.026-1.453 0-1.483 1.822-1.934 3.606-1.934.678 0 1.34.045 1.927.173-.422 1.927-1.671 3.215-3.508 3.214Z"/></symbol><symbol id="s-tiktok" viewBox="0 0 24 24" fill="currentColor"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></symbol><symbol id="s-youtube" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></symbol></svg><!--/SPRITE-->
 
 <header class="nav" id="top">
   <a class="logo" href="#top" aria-label="Kelola Konten, beranda">
@@ -420,18 +470,18 @@ footer{background:var(--footer);color:#fff;border-radius:20px 20px 0 0;padding:4
     <span class="logo-word">Kelola Konten</span>
   </a>
   <nav class="nav-links" aria-label="Navigasi utama">
-    <button type="button">Fitur <svg class="ic"><use href="#l-chevron-down"/></svg></button>
-    <button type="button">Platform <svg class="ic"><use href="#l-chevron-down"/></svg></button>
-    <button type="button">Untuk siapa <svg class="ic"><use href="#l-chevron-down"/></svg></button>
-    <button type="button">Sumber <svg class="ic"><use href="#l-chevron-down"/></svg></button>
-    <a href="#harga">Harga</a>
+    <a href="#fitur">Fitur <svg class="ic"><use href="#l-chevron-down"/></svg></a>
+    <a href="#platform">Platform <svg class="ic"><use href="#l-chevron-down"/></svg></a>
+    <a href="#untuk-siapa">Untuk siapa <svg class="ic"><use href="#l-chevron-down"/></svg></a>
+    <a href="#sumber">Sumber <svg class="ic"><use href="#l-chevron-down"/></svg></a>
+    <a class="plain" href="#laporan">Laporan</a>
   </nav>
   <div class="nav-cta">
-    <a class="btn btn-outline" href="#masuk">Masuk</a>
+    <a class="btn btn-outline" href="#daftar">Masuk</a>
     <a class="btn btn-primary" href="#daftar"><span class="dk">Gabung daftar tunggu</span><span class="mo">Daftar tunggu</span></a>
-    <button class="menu-btn" type="button" aria-label="Buka menu" aria-expanded="false"><svg class="ic"><use href="#l-menu"/></svg></button>
+    <button class="menu-btn" type="button" aria-label="Buka menu" aria-expanded="false" aria-controls="m-menu"><svg class="ic"><use href="#l-menu"/></svg></button>
   </div>
-  <div class="m-menu"><a href="#fitur">Fitur</a><a href="#platform">Platform</a><a href="#sumber">Sumber</a><a href="#harga">Harga</a><a href="#masuk">Masuk</a></div>
+  <div class="m-menu" id="m-menu"><a href="#fitur">Fitur</a><a href="#platform">Platform</a><a href="#untuk-siapa">Untuk siapa</a><a href="#sumber">Sumber</a><a href="#laporan">Laporan</a><a href="#daftar">Masuk</a></div>
 </header>
 
 <main>
@@ -440,30 +490,54 @@ footer{background:var(--footer);color:#fff;border-radius:20px 20px 0 0;padding:4
 <section class="hero" data-sec="hero" id="daftar">
   <div class="hero-grid l" aria-hidden="true"></div>
   <div class="hero-grid r" aria-hidden="true"></div>
-  <div aria-hidden="true">
-    <span class="tile td" style="left:calc(50% - 648px);top:18px"><svg style="color:#1E5BD8"><use href="#l-calendar-days"/></svg></span>
-    <span class="tile td" style="left:calc(50% - 378px);top:18px"><svg style="color:#111"><use href="#s-tiktok"/></svg></span>
-    <span class="tile td" style="left:calc(50% + 378px);top:18px"><svg style="color:#E4405F"><use href="#s-instagram"/></svg></span>
-    <span class="tile td" style="left:calc(50% - 648px);top:126px"><svg style="color:#FF0000"><use href="#s-youtube"/></svg></span>
-    <span class="tile td" style="left:calc(50% + 432px);top:126px"><svg style="color:#0E9F8E"><use href="#l-chart-column"/></svg></span>
-    <span class="tile td" style="left:calc(50% + 594px);top:126px"><svg style="color:#7048E8"><use href="#l-message-circle"/></svg></span>
-    <span class="tile td" style="left:calc(50% - 432px);top:234px"><svg style="color:#F08C00"><use href="#l-hash"/></svg></span>
-    <span class="tile td" style="left:calc(50% - 594px);top:288px"><svg style="color:#0866FF"><use href="#s-facebook"/></svg></span>
-    <span class="tile td" style="left:calc(50% + 432px);top:288px"><svg style="color:#14213B"><use href="#l-file-chart-column"/></svg></span>
-    <span class="tile td" style="left:calc(50% + 648px);top:288px"><svg style="color:#2B8A3E"><use href="#l-users"/></svg></span>
-    <span class="tile td" style="left:calc(50% - 486px);top:342px"><svg style="color:#1C7ED6"><use href="#l-clock"/></svg></span>
-    <span class="tile td" style="left:calc(50% + 540px);top:396px"><svg style="color:#4C6EF5"><use href="#l-inbox"/></svg></span>
-    <span class="tile td" style="left:calc(50% - 702px);top:504px"><svg style="color:#E8590C"><use href="#l-images"/></svg></span>
-    <span class="tile td" style="left:calc(50% - 432px);top:504px"><svg style="color:#D6336C"><use href="#l-send"/></svg></span>
-    <span class="tile td" style="left:calc(50% - 162px);top:558px"><svg style="color:#F59F00"><use href="#l-bell"/></svg></span>
-    <span class="tile td" style="left:calc(50% + 54px);top:558px"><svg style="color:#1E5BD8"><use href="#l-layout-grid"/></svg></span>
-    <span class="tile td" style="left:calc(50% + 594px);top:558px"><svg style="color:#F76707"><use href="#l-megaphone"/></svg></span>
-    <span class="tile tm" style="left:calc(50% - 192px);top:16px"><svg style="color:#1E5BD8"><use href="#l-calendar-days"/></svg></span>
-    <span class="tile tm" style="left:calc(50% - 96px);top:16px"><svg style="color:#111"><use href="#s-tiktok"/></svg></span>
-    <span class="tile tm" style="left:calc(50% + 48px);top:16px"><svg style="color:#E4405F"><use href="#s-instagram"/></svg></span>
-    <span class="tile tm" style="left:calc(50% - 144px);top:448px"><svg style="color:#FF0000"><use href="#s-youtube"/></svg></span>
-    <span class="tile tm" style="left:calc(50% - 48px);top:496px"><svg style="color:#0E9F8E"><use href="#l-chart-column"/></svg></span>
-    <span class="tile tm" style="left:calc(50% + 96px);top:496px"><svg style="color:#0866FF"><use href="#s-facebook"/></svg></span>
+  <div class="tiles" aria-hidden="true">
+    <span class="tile t-xl" style="left:calc(50% - 648px);top:18px"><svg style="color:#1E5BD8"><use href="#l-calendar-days"/></svg></span>
+    <span class="tile t-xl" style="left:calc(50% - 378px);top:18px"><svg style="color:#111"><use href="#s-tiktok"/></svg></span>
+    <span class="tile t-xl" style="left:calc(50% + 378px);top:18px"><svg style="color:#E4405F"><use href="#s-instagram"/></svg></span>
+    <span class="tile t-xl" style="left:calc(50% - 648px);top:126px"><svg style="color:#FF0000"><use href="#s-youtube"/></svg></span>
+    <span class="tile t-xl" style="left:calc(50% + 432px);top:126px"><svg style="color:#1E5BD8"><use href="#l-chart-column"/></svg></span>
+    <span class="tile t-xl" style="left:calc(50% + 594px);top:126px"><svg style="color:#1E5BD8"><use href="#l-message-circle"/></svg></span>
+    <span class="tile t-xl" style="left:calc(50% - 432px);top:234px"><svg style="color:#1E5BD8"><use href="#l-hash"/></svg></span>
+    <span class="tile t-xl" style="left:calc(50% - 594px);top:288px"><svg style="color:#0866FF"><use href="#s-facebook"/></svg></span>
+    <span class="tile t-xl" style="left:calc(50% + 432px);top:288px"><svg style="color:#1E5BD8"><use href="#l-file-chart-column"/></svg></span>
+    <span class="tile t-xl" style="left:calc(50% + 648px);top:288px"><svg style="color:#1E5BD8"><use href="#l-users"/></svg></span>
+    <span class="tile t-xl" style="left:calc(50% - 486px);top:342px"><svg style="color:#1E5BD8"><use href="#l-clock"/></svg></span>
+    <span class="tile t-xl" style="left:calc(50% + 540px);top:396px"><svg style="color:#1E5BD8"><use href="#l-inbox"/></svg></span>
+    <span class="tile t-xl" style="left:calc(50% - 702px);top:504px"><svg style="color:#1E5BD8"><use href="#l-images"/></svg></span>
+    <span class="tile t-xl" style="left:calc(50% - 432px);top:504px"><svg style="color:#1E5BD8"><use href="#l-send"/></svg></span>
+    <span class="tile t-xl" style="left:calc(50% - 162px);top:558px"><svg style="color:#1E5BD8"><use href="#l-bell"/></svg></span>
+    <span class="tile t-xl" style="left:calc(50% + 54px);top:558px"><svg style="color:#1E5BD8"><use href="#l-layout-grid"/></svg></span>
+    <span class="tile t-xl" style="left:calc(50% + 594px);top:558px"><svg style="color:#1E5BD8"><use href="#l-megaphone"/></svg></span>
+    <span class="tile t-l" style="left:max(4px, min(calc(50% - 432px), calc(100% - 52px)));top:18px"><svg style="color:#1E5BD8"><use href="#l-calendar-days"/></svg></span>
+    <span class="tile t-l" style="left:max(4px, min(calc(50% - 384px), calc(100% - 52px)));top:210px"><svg style="color:#1E5BD8"><use href="#l-hash"/></svg></span>
+    <span class="tile t-l" style="left:max(4px, min(calc(50% - 384px), calc(100% - 52px)));top:354px"><svg style="color:#1E5BD8"><use href="#l-clock"/></svg></span>
+    <span class="tile t-l" style="left:max(4px, min(calc(50% - 480px), calc(100% - 52px)));top:450px"><svg style="color:#1E5BD8"><use href="#l-images"/></svg></span>
+    <span class="tile t-l" style="left:max(4px, min(calc(50% + 96px), calc(100% - 52px)));top:498px"><svg style="color:#1E5BD8"><use href="#l-layout-grid"/></svg></span>
+    <span class="tile t-l" style="left:max(4px, min(calc(50% + 336px), calc(100% - 52px)));top:114px"><svg style="color:#1E5BD8"><use href="#l-chart-column"/></svg></span>
+    <span class="tile t-l" style="left:max(4px, min(calc(50% + 480px), calc(100% - 52px)));top:258px"><svg style="color:#1E5BD8"><use href="#l-message-circle"/></svg></span>
+    <span class="tile t-l" style="left:max(4px, min(calc(50% + 336px), calc(100% - 52px)));top:354px"><svg style="color:#1E5BD8"><use href="#l-inbox"/></svg></span>
+    <span class="tile t-l" style="left:max(4px, min(calc(50% - 336px), calc(100% - 52px)));top:18px"><svg style="color:#111"><use href="#s-tiktok"/></svg></span>
+    <span class="tile t-l" style="left:max(4px, min(calc(50% - 432px), calc(100% - 52px)));top:258px"><svg style="color:#0866FF"><use href="#s-facebook"/></svg></span>
+    <span class="tile t-l" style="left:max(4px, min(calc(50% - 288px), calc(100% - 52px)));top:450px"><svg style="color:#1E5BD8"><use href="#l-send"/></svg></span>
+    <span class="tile t-l" style="left:max(4px, min(calc(50% - 144px), calc(100% - 52px)));top:498px"><svg style="color:#1E5BD8"><use href="#l-bell"/></svg></span>
+    <span class="tile t-l" style="left:max(4px, min(calc(50% - 480px), calc(100% - 52px)));top:114px"><svg style="color:#FF0000"><use href="#s-youtube"/></svg></span>
+    <span class="tile t-l" style="left:max(4px, min(calc(50% + 336px), calc(100% - 52px)));top:18px"><svg style="color:#E4405F"><use href="#s-instagram"/></svg></span>
+    <span class="tile t-l" style="left:max(4px, min(calc(50% + 432px), calc(100% - 52px)));top:114px"><svg style="color:#1E5BD8"><use href="#l-file-chart-column"/></svg></span>
+    <span class="tile t-l" style="left:max(4px, min(calc(50% + 384px), calc(100% - 52px)));top:258px"><svg style="color:#1E5BD8"><use href="#l-users"/></svg></span>
+    <span class="tile t-l" style="left:max(4px, min(calc(50% + 480px), calc(100% - 52px)));top:354px"><svg style="color:#1E5BD8"><use href="#l-megaphone"/></svg></span>
+    <span class="tile t-m" style="left:max(4px, min(calc(50% - 240px), calc(100% - 52px)));top:17px"><svg style="color:#1E5BD8"><use href="#l-calendar-days"/></svg></span>
+    <span class="tile t-m" style="left:max(4px, min(calc(50% - 96px), calc(100% - 52px)));top:17px"><svg style="color:#111"><use href="#s-tiktok"/></svg></span>
+    <span class="tile t-m" style="left:max(4px, min(calc(50% + 48px), calc(100% - 52px)));top:17px"><svg style="color:#1E5BD8"><use href="#l-message-circle"/></svg></span>
+    <span class="tile t-m" style="left:max(4px, min(calc(50% + 240px), calc(100% - 52px)));top:17px"><svg style="color:#1E5BD8"><use href="#l-chart-column"/></svg></span>
+    <span class="tile t-m" style="left:max(4px, min(calc(50% + 240px), calc(100% - 52px)));top:401px"><svg style="color:#0866FF"><use href="#s-facebook"/></svg></span>
+    <span class="tile t-m" style="left:max(4px, min(calc(50% - 192px), calc(100% - 52px)));top:449px"><svg style="color:#E4405F"><use href="#s-instagram"/></svg></span>
+    <span class="tile t-m" style="left:max(4px, min(calc(50% - 96px), calc(100% - 52px)));top:497px"><svg style="color:#FF0000"><use href="#s-youtube"/></svg></span>
+    <span class="tile t-s" style="left:max(4px, min(calc(50% - 192px), calc(100% - 52px)));top:16px"><svg style="color:#1E5BD8"><use href="#l-calendar-days"/></svg></span>
+    <span class="tile t-s" style="left:max(4px, min(calc(50% - 96px), calc(100% - 52px)));top:16px"><svg style="color:#111"><use href="#s-tiktok"/></svg></span>
+    <span class="tile t-s" style="left:max(4px, min(calc(50% + 48px), calc(100% - 52px)));top:16px"><svg style="color:#E4405F"><use href="#s-instagram"/></svg></span>
+    <span class="tile t-s" style="left:max(4px, min(calc(50% - 144px), calc(100% - 52px)));top:448px"><svg style="color:#FF0000"><use href="#s-youtube"/></svg></span>
+    <span class="tile t-s" style="left:max(4px, min(calc(50% - 48px), calc(100% - 52px)));top:496px"><svg style="color:#1E5BD8"><use href="#l-chart-column"/></svg></span>
+    <span class="tile t-s" style="left:max(4px, min(calc(50% + 96px), calc(100% - 52px)));top:496px"><svg style="color:#0866FF"><use href="#s-facebook"/></svg></span>
   </div>
   <h2 class="head">Ruang kerja media sosialmu</h2>
   <p class="hero-sub">Atur Instagram, TikTok, Facebook, dan YouTube dari satu kalender</p>
@@ -475,7 +549,7 @@ footer{background:var(--footer);color:#fff;border-radius:20px 20px 0 0;padding:4
   <p class="hero-fine">Dengan mengisi email, kamu setuju menerima kabar dari kami.</p>
 </section>
 
-<section class="proof" data-sec="proof" aria-label="Untuk siapa">
+<section class="proof" data-sec="proof" id="untuk-siapa" aria-label="Untuk siapa">
   <h2 class="proof-h"><span>Dirancang untuk UMKM, kreator, dan agensi di Indonesia</span></h2>
   <div class="marquee" aria-hidden="true">
     <div class="track">
@@ -489,271 +563,54 @@ footer{background:var(--footer);color:#fff;border-radius:20px 20px 0 0;padding:4
   <h2 class="sr">Fitur utama</h2>
   <div class="feat-grid">
     <!-- 1 Jadwalkan -->
-    <article class="fcard">
+    <article class="fcard" id="jadwalkan">
       <div class="panel p-blue">
-        <svg class="mk" viewBox="0 0 612 468" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Contoh layar membuat postingan dan memilih jadwal">
-          <clipPath id="c-pub"><rect x="42" y="57" width="520" height="358" rx="8"/></clipPath>
-          <rect x="42" y="57" width="520" height="358" rx="8" fill="#fff" filter="url(#sh)"/>
-          <g clip-path="url(#c-pub)">
-            <text x="58" y="80" font-size="10.5" class="b">Buat Postingan</text>
-            <rect x="130" y="70" width="40" height="14" rx="7" fill="#F1F3F7"/><use href="#l-tag" x="135" y="73" width="8" height="8" color="#5B6375"/><text x="146" y="80" font-size="7" class="g">Label</text>
-            <line x1="42" y1="93" x2="562" y2="93" stroke="#EEF0F4"/>
-            <g>
-              <rect x="80" y="100" width="34" height="34" rx="7" fill="#FFD8BC" stroke="#E4405F" stroke-width="2"/><text x="97" y="121" font-size="9" text-anchor="middle" class="b">KS</text><rect x="104" y="124" width="13" height="13" rx="3" fill="#E4405F"/><use href="#s-instagram" x="106.5" y="126.5" width="8" height="8" color="#fff"/>
-              <rect x="128" y="100" width="34" height="34" rx="7" fill="#C9DAFF" stroke="#111" stroke-width="2"/><text x="145" y="121" font-size="9" text-anchor="middle" class="b">KS</text><rect x="152" y="124" width="13" height="13" rx="3" fill="#111"/><use href="#s-tiktok" x="154.5" y="126.5" width="8" height="8" color="#fff"/>
-              <rect x="176" y="100" width="34" height="34" rx="7" fill="#DCD0FF" stroke="#0866FF" stroke-width="2"/><text x="193" y="121" font-size="9" text-anchor="middle" class="b">KS</text><rect x="200" y="124" width="13" height="13" rx="3" fill="#0866FF"/><use href="#s-facebook" x="202.5" y="126.5" width="8" height="8" color="#fff"/>
-              <rect x="224" y="100" width="34" height="34" rx="7" fill="#BFE8DA" stroke="#111" stroke-width="2"/><text x="241" y="121" font-size="9" text-anchor="middle" class="b">KS</text><rect x="248" y="124" width="13" height="13" rx="3" fill="#FF0000"/><use href="#s-youtube" x="250.5" y="126.5" width="8" height="8" color="#fff"/>
-              <rect x="272" y="100" width="34" height="34" rx="7" fill="#E3E6EC"/><text x="289" y="121" font-size="9" text-anchor="middle" class="g b">BK</text><rect x="296" y="124" width="13" height="13" rx="3" fill="#B7BDC8"/><use href="#s-instagram" x="298.5" y="126.5" width="8" height="8" color="#fff"/>
-            </g>
-            <rect x="76" y="149" width="13" height="13" rx="3" fill="#E4405F"/><use href="#s-instagram" x="78.5" y="151.5" width="8" height="8" color="#fff"/>
-            <rect x="100" y="148" width="252" height="118" rx="5" fill="#fff" stroke="#E6E9EF"/>
-            <text x="115" y="170" font-size="9.5" class="g">Promo akhir pekan mulai Sabtu!</text>
-            <use href="#l-image" x="113" y="243" width="9" height="9" color="#7A8291"/><use href="#l-chevron-down" x="124" y="244" width="7" height="7" color="#7A8291"/><use href="#l-smile" x="146" y="243" width="9" height="9" color="#7A8291"/><use href="#l-hash" x="164" y="243" width="9" height="9" color="#7A8291"/><use href="#l-at-sign" x="182" y="243" width="9" height="9" color="#7A8291"/>
-            <rect x="268" y="241" width="20" height="12" rx="2" fill="#F1F3F7"/><text x="278" y="250" font-size="5.5" text-anchor="middle" class="g">2200</text>
-            <use href="#l-plus" x="294" y="243" width="8" height="8" color="#1E5BD8"/><text x="304" y="250" font-size="7" class="a">Komentar pertama</text>
-            <line x1="100" y1="266" x2="352" y2="266" stroke="#EEF0F4"/>
-            <text x="106" y="287" font-size="7" class="b">Topik</text><rect x="160" y="277" width="184" height="16" rx="3" fill="#fff" stroke="#E6E9EF"/><text x="167" y="288" font-size="6.5" class="g">Tulis topik</text>
-            <rect x="163" y="297" width="52" height="15" rx="7.5" fill="#fff" stroke="#E3E6EC"/><text x="189" y="307.5" font-size="6.5" text-anchor="middle">Diskon</text>
-            <rect x="221" y="297" width="60" height="15" rx="7.5" fill="#fff" stroke="#E3E6EC"/><text x="251" y="307.5" font-size="6.5" text-anchor="middle">Menu baru</text>
-            <rect x="287" y="297" width="57" height="15" rx="7.5" fill="#fff" stroke="#E3E6EC"/><text x="315.5" y="307.5" font-size="6.5" text-anchor="middle">Akhir pekan</text>
-            <text x="106" y="334" font-size="7" class="b">Lokasi</text><rect x="160" y="323" width="184" height="16" rx="3" fill="#fff" stroke="#E6E9EF"/><text x="167" y="334" font-size="6.5" class="g">Pilih lokasi</text>
-            <rect x="100" y="349" width="252" height="25" rx="4" fill="#F4F6FA" stroke="#EAEDF2"/><circle cx="113" cy="361.5" r="5" fill="#1E5BD8"/><text x="123" y="364" font-size="6.5" class="g">Promo akhir pekan mulai Sabtu!</text>
-            <rect x="42" y="380" width="520" height="35" fill="#F6F7FA"/><line x1="42" y1="380" x2="562" y2="380" stroke="#EEF0F4"/>
-            <rect x="55" y="393" width="9" height="9" rx="2" fill="#fff" stroke="#B7BDC8"/><text x="69" y="400.5" font-size="7.5">Buat lagi</text><text x="133" y="400.5" font-size="7.5" class="b">Simpan Draf</text>
-            <rect x="383" y="388" width="87" height="19" rx="4" fill="#E6E9EF"/><use href="#l-calendar" x="390" y="393" width="9" height="9" color="#5B6375"/><text x="403" y="400.5" font-size="7.5">14 Okt, 16.00</text>
-            <rect x="476" y="388" width="72" height="19" rx="4" fill="#B3CCFF"/><text x="512" y="400.5" font-size="7.5" text-anchor="middle" class="b">Jadwalkan</text>
-          </g>
-          <rect x="362" y="37" width="208" height="340" rx="8" fill="#fff" filter="url(#sh2)"/>
-          <text x="376" y="66" font-size="9.5" class="b">Oktober 2026</text>
-          <use href="#l-chevron-left" x="519" y="58" width="10" height="10" color="#5B6375"/><use href="#l-chevron-right" x="541" y="58" width="10" height="10" color="#5B6375"/>
-          <g font-size="8" text-anchor="middle" class="b"><text x="389" y="91" class="g">S</text><text x="415" y="91" class="g">S</text><text x="441" y="91" class="g">R</text><text x="466" y="91" class="g">K</text><text x="492" y="91" class="g">J</text><text x="518" y="91" class="g">S</text><text x="544" y="91" class="g">M</text></g>
-          <rect x="430" y="167" width="22" height="18" rx="3" fill="#B3CCFF"/>
-          <g font-size="8" text-anchor="middle">
-            <text x="389" y="113" class="g">28</text><text x="415" y="113" class="g">29</text><text x="441" y="113" class="g">30</text><text x="466" y="113" class="g">1</text><text x="492" y="113" class="g">2</text><text x="518" y="113" class="g">3</text><text x="544" y="113" class="g">4</text>
-            <text x="389" y="135" class="g">5</text><text x="415" y="135" class="g">6</text><text x="441" y="135" class="g">7</text><text x="466" y="135" class="g">8</text><text x="492" y="135" class="g">9</text><text x="518" y="135" class="g">10</text><text x="544" y="135" class="g">11</text>
-            <text x="389" y="157" class="g">12</text><text x="415" y="157" class="g">13</text><text x="441" y="157" class="g">14</text><text x="466" y="157" class="g">15</text><text x="492" y="157" class="g">16</text><text x="518" y="157" class="g">17</text><text x="544" y="157" class="g">18</text>
-            <text x="389" y="179" class="g">19</text><text x="415" y="179" class="g">20</text><text x="441" y="179" class="b">21</text><text x="466" y="179" class="b">22</text><text x="492" y="179" class="b">23</text><text x="518" y="179" class="b">24</text><text x="544" y="179" class="b">25</text>
-            <text x="389" y="201" class="b">26</text><text x="415" y="201" class="b">27</text><text x="441" y="201" class="b">28</text><text x="466" y="201" class="b">29</text><text x="492" y="201" class="b">30</text><text x="518" y="201" class="b">31</text><text x="544" y="201" class="g">1</text>
-            <text x="389" y="223" class="g">2</text><text x="415" y="223" class="g">3</text><text x="441" y="223" class="g">4</text><text x="466" y="223" class="g">5</text><text x="492" y="223" class="g">6</text><text x="518" y="223" class="g">7</text><text x="544" y="223" class="g">8</text>
-          </g>
-          <line x1="376" y1="236" x2="556" y2="236" stroke="#EEF0F4"/>
-          <text x="376" y="252" font-size="7.5" class="b">Slot posting</text>
-          <rect x="377" y="259" width="58" height="20" rx="4" fill="#fff" stroke="#E3E6EC"/><use href="#l-clock" x="384" y="264.5" width="9" height="9" color="#5B6375"/><text x="397" y="272.5" font-size="8.5">18.00</text>
-          <text x="376" y="294" font-size="7.5" class="b">Pilih jam</text>
-          <rect x="375" y="300" width="183" height="21" rx="4" fill="#E3ECFE" stroke="#1E5BD8" stroke-width=".8"/><use href="#l-clock" x="382" y="305.5" width="10" height="10" color="#1E5BD8"/><text x="400" y="314" font-size="9">15 : 00</text><text x="550" y="314" font-size="7.5" text-anchor="end" class="a">WIB</text>
-          <line x1="362" y1="333" x2="570" y2="333" stroke="#EEF0F4"/>
-          <use href="#l-chevron-left" x="375" y="345" width="9" height="9" color="#253047"/><text x="387" y="353" font-size="8.5">Aksi lainnya</text>
-          <use href="#l-check" x="518" y="345" width="9" height="9" color="#253047"/><text x="530" y="353" font-size="8.5" class="b">Selesai</text>
-        </svg>
+        <img class="mi" src="assets/img/mk-core-jadwalkan.webp" alt="Contoh layar Buat Postingan: caption promo, akun Instagram, TikTok, Facebook, YouTube, dan kalender Oktober untuk memilih jam tayang" loading="lazy" decoding="async">
       </div>
       <div class="fbody">
         <h3 class="eyebrow">Jadwalkan</h3>
-        <p class="ftitle head"><a href="#jadwalkan">Satu kalender untuk semua akun dan semua platform</a></p>
+        <p class="ftitle head"><a href="#platform">Satu kalender untuk semua akun dan semua platform</a></p>
         <p class="fdesc">Jadwalkan dan terbitkan konten ke Instagram, Facebook, TikTok, dan YouTube lewat API resmi tiap platform. Untuk TikTok dan YouTube, konten tayang otomatis setelah aplikasi lolos audit platform.</p>
-        <a class="more-link" href="#jadwalkan"><span>Selengkapnya</span><svg class="ic"><use href="#l-arrow-right"/></svg></a>
+        <a class="more-link" href="#platform"><span>Selengkapnya</span><svg class="ic"><use href="#l-arrow-right"/></svg></a>
       </div>
     </article>
 
     <!-- 2 Rencanakan -->
-    <article class="fcard">
+    <article class="fcard" id="rencanakan">
       <div class="panel p-peach">
-        <svg class="mk" viewBox="0 0 612 468" preserveAspectRatio="xMaxYMid meet" role="img" aria-label="Contoh papan rencana konten">
-          <clipPath id="c-cre"><rect x="95" y="33" width="540" height="410" rx="8"/></clipPath>
-          <rect x="95" y="33" width="540" height="410" rx="8" fill="#fff" filter="url(#sh)"/>
-          <g clip-path="url(#c-cre)">
-            <rect x="95" y="33" width="36" height="410" fill="#F8F9FB"/><line x1="131" y1="33" x2="131" y2="443" stroke="#EEF0F4"/>
-            <use href="#l-layers" x="106" y="43" width="14" height="14" color="#172338"/>
-            <rect x="102" y="66" width="22" height="22" rx="5" fill="#B3CCFF"/><use href="#l-plus" x="107" y="71" width="12" height="12" color="#172338"/>
-            <rect x="104" y="96" width="18" height="18" rx="4" fill="#EEF0F4"/>
-            <use href="#l-folder" x="106" y="392" width="13" height="13" color="#7A8291"/>
-            <circle cx="113" cy="425" r="8" fill="#F2B98F"/>
-            <text x="140" y="63" font-size="11.5" class="b">Rencana</text>
-            <text x="140" y="83" font-size="7.5" class="b">Ide</text><text x="162" y="83" font-size="7.5" class="g">Template</text><text x="202" y="83" font-size="7.5" class="g">Feed</text>
-            <rect x="140" y="89" width="13" height="2" fill="#1E5BD8"/>
-            <line x1="131" y1="95" x2="635" y2="95" stroke="#EEF0F4"/>
-            <use href="#l-tag" x="533" y="105" width="9" height="9" color="#5B6375"/><text x="545" y="112.5" font-size="7.5">Label</text>
-            <rect x="591" y="102" width="40" height="15" rx="3" fill="#DCE6FB"/><text x="599" y="112.5" font-size="7.5" class="a b">Papan</text>
-            <!-- col1 -->
-            <rect x="140" y="128" width="145" height="315" rx="5" fill="#F6F7FA"/>
-            <use href="#l-plus" x="268" y="141" width="9" height="9" color="#7A8291"/>
-            <rect x="148" y="160" width="129" height="74" rx="4" fill="#E9B98F"/>
-            <rect x="148" y="234" width="129" height="62" rx="0" fill="#fff"/><text x="246" y="252" font-size="6.5" class="g">dari dapur</text><text x="246" y="263" font-size="6.5" class="g">kami</text>
-            <rect x="148" y="306" width="129" height="74" rx="4" fill="#D9D3C9"/>
-            <rect x="148" y="380" width="129" height="56" fill="#fff"/><text x="155" y="397" font-size="7" class="b">Cuplikan proyek</text><text x="155" y="408" font-size="6.5" class="g">Tur menu terbaru</text>
-            <rect x="155" y="415" width="34" height="8" rx="4" fill="#E0D7FF"/><rect x="193" y="415" width="22" height="8" rx="4" fill="#CDEBDD"/><rect x="219" y="415" width="28" height="8" rx="4" fill="#FFE2C7"/>
-            <!-- col2 -->
-            <rect x="296" y="128" width="155" height="315" rx="5" fill="#F6F7FA"/>
-            <text x="305" y="149" font-size="7.5" class="b">Draf</text><rect x="324" y="141" width="11" height="11" rx="3" fill="#E6E9EF"/><text x="329.5" y="149.5" font-size="6.5" text-anchor="middle">4</text>
-            <use href="#l-plus" x="408" y="141" width="9" height="9" color="#7A8291"/><use href="#l-ellipsis-vertical" x="430" y="141" width="9" height="9" color="#7A8291"/>
-            <rect x="303" y="160" width="141" height="50" rx="4" fill="#fff" stroke="#EAEDF2"/>
-            <text x="311" y="175" font-size="7" class="b">Ide video</text><text x="314" y="187" font-size="6.5" class="g">• Sehari di dapur kami</text><text x="314" y="198" font-size="6.5" class="g">• Cara memilih biji kopi</text>
-            <rect x="303" y="217" width="141" height="73" rx="4" fill="#F1B07E"/><circle cx="373" cy="252" r="22" fill="#F7CBA2"/><circle cx="360" cy="246" r="9" fill="#E07B4A"/><circle cx="385" cy="258" r="8" fill="#D9603B"/>
-            <rect x="303" y="290" width="141" height="66" fill="#fff"/>
-            <text x="311" y="305" font-size="7" class="b">Seni menata meja untuk foto</text><text x="311" y="317" font-size="6.5" class="g">Cerita proses kami menemukan</text><text x="311" y="327" font-size="6.5" class="g">komposisi yang pas...</text>
-            <rect x="311" y="338" width="20" height="8" rx="4" fill="#FFD3E2"/><rect x="335" y="338" width="26" height="8" rx="4" fill="#CDEBDD"/><rect x="365" y="338" width="34" height="8" rx="4" fill="#FFE2C7"/>
-            <rect x="303" y="363" width="141" height="80" rx="4" fill="#D8CBB8"/><ellipse cx="373" cy="410" rx="30" ry="14" fill="#EFE6D8"/><circle cx="364" cy="398" r="9" fill="#E8913A"/><circle cx="382" cy="400" r="8" fill="#F2C14E"/>
-            <!-- col3 -->
-            <rect x="461" y="128" width="174" height="315" rx="5" fill="#F6F7FA"/>
-            <text x="470" y="149" font-size="7.5" class="b">Tinjau</text><rect x="495" y="141" width="11" height="11" rx="3" fill="#E6E9EF"/><text x="500.5" y="149.5" font-size="6.5" text-anchor="middle">1</text>
-            <rect x="578" y="141" width="9" height="9" rx="2" fill="none" stroke="#9AA1AD"/><rect x="595" y="141" width="9" height="9" rx="2" fill="none" stroke="#9AA1AD"/>
-            <rect x="468" y="160" width="72" height="73" rx="4" fill="#B9A58C"/><rect x="540" y="160" width="72" height="73" fill="#E2A15B"/><rect x="560" y="178" width="16" height="40" rx="3" fill="#F6D7A8"/><rect x="487" y="175" width="20" height="45" rx="9" fill="#EADFCF"/>
-            <rect x="468" y="233" width="160" height="64" fill="#fff"/>
-            <text x="476" y="248" font-size="7" class="b">Seni menata meja untuk foto</text><text x="476" y="260" font-size="6.5" class="g">Cerita proses kami menemukan</text><text x="476" y="270" font-size="6.5" class="g">komposisi yang pas</text>
-            <rect x="476" y="283" width="34" height="8" rx="4" fill="#E0D7FF"/><rect x="514" y="283" width="22" height="8" rx="4" fill="#CDEBDD"/><rect x="540" y="283" width="28" height="8" rx="4" fill="#FFE2C7"/>
-            <rect x="468" y="305" width="160" height="80" rx="4" fill="#fff" stroke="#EAEDF2"/>
-            <text x="476" y="320" font-size="7" class="b">Tips foto dalam 30 detik</text><text x="476" y="332" font-size="6.5" class="g">[Ide] Tips singkat dan praktis,</text><text x="476" y="342" font-size="6.5" class="g">misalnya cara memadukan pola</text><text x="476" y="352" font-size="6.5" class="g">atau menata properti.</text>
-            <rect x="476" y="367" width="18" height="8" rx="4" fill="#FFD3E2"/><rect x="498" y="367" width="22" height="8" rx="4" fill="#C9DAFF"/><rect x="524" y="367" width="30" height="8" rx="4" fill="#FFE2C7"/>
-            <use href="#l-plus" x="518" y="394" width="8" height="8" color="#253047"/><text x="529" y="401" font-size="7" class="b">Ide baru</text>
-          </g>
-          <rect x="23" y="104" width="229" height="240" rx="8" fill="#fff" filter="url(#sh2)"/>
-          <rect x="34" y="118" width="84" height="17" rx="3" fill="#DCE6FB"/><use href="#l-pencil" x="39" y="122" width="9" height="9" color="#1E5BD8"/><text x="51" y="129.5" font-size="7" class="a">Bantu susun ide</text>
-          <text x="35" y="164" font-size="10.5">Mulai dari beberapa pertanyaan</text>
-          <text x="35" y="191" font-size="8.5" class="b">Usahamu bergerak di bidang apa?</text>
-          <rect x="34" y="200" width="206" height="31" rx="4" fill="#fff" stroke="#DFE3EA"/><text x="42" y="219" font-size="8.5">Kedai kopi dan roti rumahan</text>
-          <text x="35" y="254" font-size="8.5" class="b">Siapa target audiensmu?</text>
-          <rect x="34" y="262" width="206" height="31" rx="4" fill="#fff" stroke="#DFE3EA"/><text x="42" y="281" font-size="8.5">Pekerja muda di sekitar kampus</text>
-          <line x1="23" y1="304" x2="252" y2="304" stroke="#EEF0F4"/>
-          <rect x="28" y="312" width="218" height="25" rx="5" fill="#B3CCFF"/><text x="137" y="328" font-size="9.5" text-anchor="middle">Susun ide konten</text>
-        </svg>
+        <img class="mi r" src="assets/img/mk-core-rencana.webp" alt="Contoh papan Rencana Konten berisi kolom Draf dan Tinjau, dengan dialog Bantu susun ide" loading="lazy" decoding="async">
       </div>
       <div class="fbody">
         <h3 class="eyebrow">Rencanakan</h3>
-        <p class="ftitle head"><a href="#rencanakan">Ubah ide jadi rencana konten yang rapi</a></p>
+        <p class="ftitle head"><a href="#template-kalender">Ubah ide jadi rencana konten yang rapi</a></p>
         <p class="fdesc">Kumpulkan ide, susun draf, dan atur tema mingguan di papan konten. Pas untuk pemilik usaha yang mengerjakan semuanya sendiri maupun tim SMM yang menangani banyak klien sekaligus.</p>
-        <a class="more-link" href="#rencanakan"><span>Selengkapnya</span><svg class="ic"><use href="#l-arrow-right"/></svg></a>
+        <a class="more-link" href="#template-kalender"><span>Selengkapnya</span><svg class="ic"><use href="#l-arrow-right"/></svg></a>
       </div>
     </article>
 
     <!-- 3 Inbox -->
-    <article class="fcard">
+    <article class="fcard" id="inbox">
       <div class="panel p-lav">
-        <svg class="mk" viewBox="0 0 612 468" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Contoh inbox komentar terpadu">
-          <clipPath id="c-com"><rect x="29" y="57" width="556" height="373" rx="10"/></clipPath>
-          <rect x="29" y="57" width="556" height="373" rx="10" fill="#fff" filter="url(#sh)"/>
-          <g clip-path="url(#c-com)">
-            <use href="#l-layout-grid" x="44" y="71" width="15" height="15" color="#253047"/>
-            <text x="68" y="82" font-size="11" class="b">Semua akun</text>
-            <circle cx="141" cy="78" r="8" fill="#DCE6FB" stroke="#1E5BD8" stroke-width=".6"/><text x="141" y="80.5" font-size="6.5" text-anchor="middle" class="a b">12</text>
-            <use href="#l-message-square" x="332" y="72" width="11" height="11" color="#5B6375"/>
-            <rect x="352" y="69" width="95" height="17" rx="3" fill="#fff" stroke="#E3E6EC"/><use href="#l-inbox" x="358" y="73" width="9" height="9" color="#5B6375"/><text x="371" y="80.5" font-size="7">Belum dibalas</text><use href="#l-chevron-down" x="430" y="73.5" width="8" height="8" color="#5B6375"/>
-            <use href="#l-filter" x="456" y="72" width="10" height="10" color="#5B6375"/><use href="#l-ellipsis-vertical" x="474" y="72" width="10" height="10" color="#5B6375"/>
-            <circle cx="499" cy="77.5" r="7" fill="#DCE6FB"/><use href="#l-repeat-2" x="494.5" y="73" width="9" height="9" color="#1E5BD8"/>
-            <rect x="512" y="69" width="44" height="17" rx="3" fill="#DCE6FB"/><text x="534" y="80.5" font-size="6.5" text-anchor="middle" class="a b">Per posting</text>
-            <use href="#l-list" x="561" y="73" width="8" height="8" color="#5B6375"/><text x="571" y="80.5" font-size="6.5">Daftar</text>
-            <line x1="29" y1="96" x2="585" y2="96" stroke="#EEF0F4"/>
-            <line x1="180" y1="96" x2="180" y2="430" stroke="#EEF0F4"/>
-            <text x="44" y="112" font-size="7" class="b">Posting</text><rect x="161" y="105" width="8" height="8" rx="1.5" fill="none" stroke="#9AA1AD"/>
-            <rect x="44" y="121" width="126" height="55" rx="3" fill="#fff" stroke="#1E5BD8"/>
-            <circle cx="52" cy="130" r="3.5" fill="#E4405F"/><text x="59" y="132.5" font-size="6" class="b">dapur.contoh</text>
-            <text x="50" y="145" font-size="7">Menu baru minggu ini,</text><text x="50" y="155" font-size="7">cobain yuk ke kedai...</text>
-            <rect x="139" y="128" width="25" height="25" rx="3" fill="#E9A66B"/>
-            <rect x="50" y="162" width="96" height="2" rx="1" fill="#DCE6FB"/><rect x="50" y="162" width="70" height="2" rx="1" fill="#1E5BD8"/>
-            <text x="50" y="172" font-size="5.5" class="g">97%   30/32</text><circle cx="161" cy="168" r="4.5" fill="#DCE6FB"/><text x="161" y="170" font-size="5" text-anchor="middle" class="a">2</text>
-            <g font-size="7">
-              <circle cx="52" cy="190" r="3.5" fill="#111"/><text x="59" y="192.5" font-size="6" class="b">dapur.contoh</text><text x="50" y="205" >Rotinya lembut, isiannya</text><text x="50" y="215">pas. Wajib coba!</text>
-              <rect x="148" y="221" width="20" height="8" rx="4" fill="#DCE6FB"/><text x="158" y="227.5" font-size="5" text-anchor="middle" class="a">99+</text>
-              <line x1="44" y1="235" x2="170" y2="235" stroke="#EEF0F4"/>
-              <circle cx="52" cy="246" r="3.5" fill="#E4405F"/><text x="59" y="248.5" font-size="6" class="b">dapur.contoh</text><text x="50" y="261">Sore cerah, kopi dingin</text><text x="50" y="271">dan roti hangat...</text>
-              <rect x="139" y="242" width="25" height="25" rx="3" fill="#8DB580"/>
-              <rect x="50" y="279" width="96" height="2" rx="1" fill="#F1D1D8"/><rect x="50" y="279" width="14" height="2" rx="1" fill="#E4405F"/>
-              <circle cx="161" cy="281" r="4.5" fill="#DCE6FB"/><text x="161" y="283" font-size="5" text-anchor="middle" class="a">3</text>
-              <line x1="44" y1="291" x2="170" y2="291" stroke="#EEF0F4"/>
-              <circle cx="52" cy="302" r="3.5" fill="#111"/><text x="59" y="304.5" font-size="6" class="b">dapur.contoh</text><text x="50" y="317">Antrean pagi ini panjang,</text><text x="50" y="327">terima kasih semua!</text>
-              <rect x="148" y="333" width="20" height="8" rx="4" fill="#DCE6FB"/><text x="158" y="339.5" font-size="5" text-anchor="middle" class="a">99+</text>
-              <line x1="44" y1="347" x2="170" y2="347" stroke="#EEF0F4"/>
-              <circle cx="52" cy="358" r="3.5" fill="#111"/><text x="59" y="360.5" font-size="6" class="b">dapur.contoh</text><text x="50" y="373">Ada 3 menu musiman</text><text x="50" y="383">bulan ini</text>
-              <rect x="148" y="389" width="20" height="8" rx="4" fill="#DCE6FB"/><text x="158" y="395.5" font-size="5" text-anchor="middle" class="a">99+</text>
-              <line x1="44" y1="403" x2="170" y2="403" stroke="#EEF0F4"/>
-              <circle cx="52" cy="414" r="3.5" fill="#E4405F"/><text x="59" y="416.5" font-size="6" class="b">dapur.contoh</text><text x="50" y="429">Cahaya sore paling pas.</text>
-              <rect x="139" y="410" width="25" height="25" rx="3" fill="#C48A5A"/>
-            </g>
-            <circle cx="209" cy="111" r="3.5" fill="#E4405F"/><text x="216" y="113.5" font-size="6.5" class="b">dapur.contoh</text><text x="262" y="113.5" font-size="6" class="g">3 Okt, 19.15</text><rect x="303" y="106" width="20" height="10" rx="2" fill="#EEF0F4"/><text x="313" y="113" font-size="5.5" text-anchor="middle">Reels</text>
-            <text x="209" y="131" font-size="7.5">Kenalan dengan kopi gula aren kami. Habis dalam 2 jam!</text>
-            <rect x="530" y="107" width="32" height="32" rx="3" fill="#D99A5B"/><circle cx="546" cy="123" r="9" fill="#F2D3A5"/>
-            <rect x="205" y="150" width="340" height="207" rx="4" fill="#fff" stroke="#E6E9EF" filter="url(#sh3)"/>
-            <text x="220" y="171" font-size="6.5" class="g b">Lihat balasan lain</text>
-            <circle cx="227" cy="192" r="7" fill="#DCE6FB"/><text x="227" y="194.5" font-size="7" text-anchor="middle" class="a b">A</text>
-            <text x="240" y="195" font-size="7.5" class="b">@ayu.pratiwi</text><text x="290" y="195" font-size="6.5" class="g">13 menit lalu</text>
-            <text x="240" y="210" font-size="7.5">Wah, menunya kelihatan enak banget! Akhir pekan buka jam</text>
-            <text x="240" y="222" font-size="7.5">berapa ya? Bisa pesan antar juga, atau harus datang langsung</text>
-            <text x="240" y="234" font-size="7.5">ke kedai?</text>
-            <circle cx="243" cy="276" r="7" fill="#F2B98F"/>
-            <rect x="259" y="243" width="273" height="97" rx="4" fill="#fff" stroke="#E3E6EC"/>
-            <rect x="259" y="243" width="273" height="17" rx="4" fill="#F6F8FB"/>
-            <text x="266" y="254.5" font-size="6" class="g">Membalas @ayu.pratiwi</text><line x1="339" y1="246" x2="339" y2="257" stroke="#E3E6EC"/><text x="346" y="254.5" font-size="6">Jam buka</text><line x1="380" y1="246" x2="380" y2="257" stroke="#E3E6EC"/><text x="387" y="254.5" font-size="6">Info harga</text><line x1="424" y1="246" x2="424" y2="257" stroke="#E3E6EC"/><text x="431" y="254.5" font-size="6">Lokasi</text>
-            <text x="268" y="281" font-size="7.5">Halo Kak Ayu! Akhir pekan kami buka jam 08.00</text><rect x="439" y="273" width=".8" height="10" fill="#253047"/>
-            <use href="#l-smile" x="268" y="327" width="9" height="9" color="#7A8291"/><use href="#l-paperclip" x="285" y="327" width="9" height="9" color="#7A8291"/><use href="#l-pencil" x="302" y="327" width="9" height="9" color="#7A8291"/>
-            <text x="505" y="335" font-size="6" class="g" text-anchor="end">0/2200</text>
-            <rect x="512" y="326" width="13" height="13" rx="2.5" fill="#B3CCFF"/><use href="#l-send" x="514.5" y="328.5" width="8" height="8" color="#172338"/>
-            <circle cx="566" cy="191" r="7" fill="none" stroke="#9AA1AD"/><use href="#l-check" x="562" y="187" width="8" height="8" color="#7A8291"/>
-            <rect x="205" y="366" width="340" height="58" rx="4" fill="#fff" stroke="#E6E9EF"/>
-            <circle cx="220" cy="382" r="7" fill="#FFE3D3"/><text x="220" y="384.5" font-size="7" text-anchor="middle" class="b">P</text>
-            <text x="233" y="385" font-size="7.5" class="b">Akun Pribadi</text><text x="284" y="385" font-size="6.5" class="g">14 menit lalu</text>
-            <text x="233" y="400" font-size="7.5">Fotonya cantik dan rapi sekali! Ada tips supaya foto produk</text>
-            <text x="233" y="411" font-size="7.5">di rumah tetap terang dan tidak terlihat datar?</text>
-          </g>
-        </svg>
+        <img class="mi" src="assets/img/mk-core-inbox.webp" alt="Contoh inbox: daftar posting di kiri dan balasan untuk komentar @ayu.pratiwi di kanan" loading="lazy" decoding="async">
       </div>
       <div class="fbody">
         <h3 class="eyebrow">Inbox</h3>
-        <p class="ftitle head"><a href="#inbox">Balas komentar secepat kilat</a></p>
+        <p class="ftitle head"><a href="#dukungan">Balas komentar secepat kilat</a></p>
         <p class="fdesc">Tanggapi audiens di semua akunmu tanpa bolak-balik aplikasi. Kelola Konten membantu memilah lalu membalas komentar dan DM dari satu dasbor.</p>
-        <a class="more-link" href="#inbox"><span>Selengkapnya</span><svg class="ic"><use href="#l-arrow-right"/></svg></a>
+        <a class="more-link" href="#dukungan"><span>Selengkapnya</span><svg class="ic"><use href="#l-arrow-right"/></svg></a>
       </div>
     </article>
 
     <!-- 4 Analitik -->
-    <article class="fcard">
+    <article class="fcard" id="analitik">
       <div class="panel p-mint">
-        <svg class="mk" viewBox="0 0 612 468" preserveAspectRatio="xMaxYMid meet" role="img" aria-label="Contoh dasbor analitik">
-          <rect x="117" y="46" width="530" height="440" rx="10" fill="#fff" filter="url(#sh)"/>
-          <rect x="143" y="67" width="33" height="33" rx="7" fill="#fff" stroke="#E3E6EC"/><use href="#l-layout-grid" x="150" y="74" width="19" height="19" color="#253047"/>
-          <text x="187" y="91" font-size="15.5">Semua Akun</text><use href="#l-bookmark" x="282" y="80" width="10" height="11" color="#5B6375"/>
-          <text x="149" y="300" font-size="11.5" class="b">Posting per bulan</text>
-          <text x="149" y="316" font-size="6.5" class="g">1 sampai 30 Sep 2026, dibanding bulan lalu</text>
-          <g stroke="#EEF0F4"><line x1="276" y1="335" x2="276" y2="468"/><line x1="349" y1="335" x2="349" y2="468"/><line x1="422" y1="335" x2="422" y2="468"/><line x1="495" y1="335" x2="495" y2="468"/><line x1="568" y1="335" x2="568" y2="468"/></g>
-          <g font-size="6.5" text-anchor="end" class="b"><text x="252" y="360">Instagram</text><text x="252" y="384">TikTok</text><text x="252" y="408">Facebook</text><text x="252" y="432">YouTube</text><text x="252" y="456">Shorts</text></g>
-          <use href="#s-instagram" x="256" y="354" width="7" height="7" color="#5B6375"/><use href="#s-tiktok" x="256" y="378" width="7" height="7" color="#5B6375"/><use href="#s-facebook" x="256" y="402" width="7" height="7" color="#5B6375"/><use href="#s-youtube" x="256" y="426" width="7" height="7" color="#5B6375"/><use href="#s-youtube" x="256" y="450" width="7" height="7" color="#5B6375"/>
-          <rect x="276" y="349" width="340" height="16" rx="3" fill="#F2A7C6"/>
-          <rect x="276" y="373" width="340" height="16" rx="3" fill="#86AEF7"/>
-          <rect x="276" y="397" width="268" height="16" rx="3" fill="#8ED3C4"/>
-          <rect x="276" y="421" width="175" height="16" rx="3" fill="#F5BE73"/>
-          <rect x="276" y="445" width="94" height="16" rx="3" fill="#A797F0"/>
-          <rect x="288" y="363" width="167" height="56" rx="7" fill="#fff" filter="url(#sh)"/>
-          <rect x="300" y="377" width="9" height="9" rx="2" fill="#8ED3C4"/><text x="314" y="385.5" font-size="10" class="b">+1,2rb</text><use href="#s-facebook" x="350" y="377" width="9" height="9" color="#253047"/><text x="362" y="385.5" font-size="10">Facebook</text>
-          <text x="300" y="405" font-size="9.5" class="g">18.400 ke 19.600 (+6,5%)</text>
-          <rect x="45" y="112" width="600" height="164" rx="8" fill="#FAFBFD" filter="url(#sh)"/>
-          <text x="60" y="141" font-size="14">5 Posting Teratas</text>
-          <text x="60" y="158" font-size="7" class="g">1 sampai 30 Sep 2026</text>
-          <g font-size="7">
-            <rect x="57" y="174" width="139" height="92" rx="5" fill="#fff" stroke="#E8EBF0"/><rect x="57.5" y="174.5" width="138" height="21" rx="5" fill="#F1F3F6"/>
-            <text x="65" y="188" class="b">#1</text><text x="188" y="188" text-anchor="end" class="g">38rb suka</text>
-            <use href="#s-tiktok" x="65" y="203" width="8" height="8" color="#253047"/><text x="76" y="210">19.15</text>
-            <text x="65" y="226" font-size="8">Gula aren datang,</text><text x="65" y="238" font-size="8">kamu siap?</text>
-            <rect x="157" y="203" width="30" height="30" rx="3" fill="#C9875A"/><rect x="65" y="253" width="8" height="3.5" rx="1.75" fill="#F2A7C6"/><rect x="75" y="253" width="8" height="3.5" rx="1.75" fill="#A797F0"/>
-            <rect x="205" y="174" width="139" height="92" rx="5" fill="#fff" stroke="#E8EBF0"/><rect x="205.5" y="174.5" width="138" height="21" rx="5" fill="#F1F3F6"/>
-            <text x="213" y="188" class="b">#2</text><text x="336" y="188" text-anchor="end" class="g">32rb suka</text>
-            <use href="#s-instagram" x="213" y="203" width="8" height="8" color="#253047"/><text x="224" y="210">13.00</text>
-            <text x="213" y="226" font-size="8">Promo 10.10 mulai besok</text><text x="213" y="238" font-size="8">pagi, siapkan keranjang</text>
-            <rect x="213" y="253" width="8" height="3.5" rx="1.75" fill="#86AEF7"/><rect x="223" y="253" width="8" height="3.5" rx="1.75" fill="#8ED3C4"/>
-            <rect x="354" y="174" width="139" height="92" rx="5" fill="#fff" stroke="#E8EBF0"/><rect x="354.5" y="174.5" width="138" height="21" rx="5" fill="#F1F3F6"/>
-            <text x="362" y="188" class="b">#3</text><text x="485" y="188" text-anchor="end" class="g">28rb suka</text>
-            <use href="#s-tiktok" x="362" y="203" width="8" height="8" color="#253047"/><text x="373" y="210">15.15</text>
-            <text x="362" y="226" font-size="8">Di balik layar sesi</text><text x="362" y="238" font-size="8">foto menu baru</text>
-            <rect x="454" y="203" width="30" height="30" rx="3" fill="#5B3A2E"/><rect x="362" y="253" width="8" height="3.5" rx="1.75" fill="#F2A7C6"/><rect x="372" y="253" width="8" height="3.5" rx="1.75" fill="#F5BE73"/>
-            <rect x="503" y="174" width="139" height="92" rx="5" fill="#fff" stroke="#E8EBF0"/><rect x="503.5" y="174.5" width="138" height="21" rx="5" fill="#F1F3F6"/>
-            <text x="511" y="188" class="b">#4</text><text x="634" y="188" text-anchor="end" class="g">27rb suka</text>
-            <use href="#s-youtube" x="511" y="203" width="8" height="8" color="#253047"/><text x="522" y="210">13.15</text>
-            <text x="511" y="226" font-size="8">Kenalan dengan barista</text><text x="511" y="238" font-size="8">baru di kedai kami</text>
-            <rect x="511" y="253" width="8" height="3.5" rx="1.75" fill="#F5BE73"/><rect x="521" y="253" width="8" height="3.5" rx="1.75" fill="#A797F0"/>
-          </g>
-        </svg>
+        <img class="mi r" src="assets/img/mk-core-analitik.webp" alt="Contoh dasbor analitik: 5 posting teratas dan jumlah posting per platform" loading="lazy" decoding="async">
       </div>
       <div class="fbody">
         <h3 class="eyebrow">Analitik</h3>
-        <p class="ftitle head"><a href="#analitik">Angka yang mudah dibaca</a></p>
+        <p class="ftitle head"><a href="#laporan">Angka yang mudah dibaca</a></p>
         <p class="fdesc">Lihat posting mana yang berhasil, kapan audiens paling aktif, dan bagaimana akunmu dibanding kompetitor.</p>
-        <a class="more-link" href="#analitik"><span>Selengkapnya</span><svg class="ic"><use href="#l-arrow-right"/></svg></a>
+        <a class="more-link" href="#laporan"><span>Selengkapnya</span><svg class="ic"><use href="#l-arrow-right"/></svg></a>
       </div>
     </article>
   </div>
@@ -762,112 +619,44 @@ footer{background:var(--footer);color:#fff;border-radius:20px 20px 0 0;padding:4
 <section class="more wrap" data-sec="more">
   <h2 class="head">…dan banyak lagi!</h2>
   <div class="more-grid">
-    <article class="mcard">
+    <article class="mcard" id="kolaborasi">
       <div class="panel p-pink">
-        <svg class="mk" viewBox="0 0 311 249" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Contoh persetujuan konten">
-          <rect x="-10" y="57" width="209" height="153" rx="6" fill="#fff" filter="url(#sh)"/>
-          <rect x="33" y="70" width="34" height="12" rx="2" fill="#F1F3F6"/><use href="#l-clapperboard" x="36" y="72" width="7" height="7" color="#253047"/><text x="46" y="78.5" font-size="5.5" class="b">Reels</text>
-          <text x="2" y="97" font-size="6.5">Konten Oktober</text><text x="2" y="108" font-size="6.5">untuk promo</text><text x="2" y="119" font-size="6.5">akhir pekan...</text>
-          <rect x="0" y="131" width="66" height="13" rx="6.5" fill="#DCE6FB"/><text x="6" y="140" font-size="6" class="a b">Promo 10.10</text>
-          <rect x="86" y="65" width="104" height="104" rx="3" fill="#7FA6C9"/><rect x="86" y="125" width="104" height="44" fill="#5C8A6E"/><circle cx="148" cy="100" r="18" fill="#F4D58D"/><rect x="104" y="80" width="10" height="70" rx="5" fill="#E9EEF2" opacity=".8"/>
-          <rect x="11" y="186" width="75" height="16" rx="3" fill="#B3CCFF"/><use href="#l-square-check" x="17" y="190" width="8" height="8" color="#172338"/><text x="29" y="196.5" font-size="6.5" class="b">Setujui</text>
-          <rect x="92" y="186" width="51" height="16" rx="3" fill="#FFD3CB"/><use href="#l-x" x="98" y="190" width="8" height="8" color="#7A2E1F"/><text x="109" y="196.5" font-size="6.5">Tolak</text>
-          <rect x="149" y="186" width="15" height="16" rx="3" fill="#fff" stroke="#E3E6EC"/><use href="#l-pencil" x="152.5" y="190" width="8" height="8" color="#253047"/>
-          <rect x="170" y="186" width="14" height="16" rx="3" fill="#fff" stroke="#E3E6EC"/><use href="#l-ellipsis-vertical" x="173" y="190" width="8" height="8" color="#253047"/>
-          <rect x="145" y="78" width="154" height="94" rx="6" fill="#fff" filter="url(#sh)"/>
-          <circle cx="158" cy="96" r="7" fill="#F2B98F"/>
-          <text x="171" y="93" font-size="5.5" class="g">rina@contoh.id</text>
-          <text x="171" y="105" font-size="7">Tambahkan "DM untuk pesan"</text><text x="171" y="117" font-size="7">di bio, ya.</text>
-          <line x1="151" y1="135" x2="293" y2="135" stroke="#EEF0F4"/>
-          <text x="153" y="155" font-size="7" class="g">Siap, sudah!</text><use href="#l-square-check" x="196" y="148" width="9" height="9" color="#1E5BD8"/>
-          <rect x="256" y="144" width="34" height="16" rx="8" fill="#B3CCFF"/><text x="273" y="154.5" font-size="6" text-anchor="middle" class="b">Tambah</text>
-          <circle cx="212" cy="65" r="9" fill="#fff" stroke="#E3E6EC"/><use href="#l-bell" x="207.5" y="60.5" width="9" height="9" color="#253047"/><circle cx="218" cy="58" r="3" fill="#E8590C"/>
-        </svg>
+        <img class="mi" src="assets/img/mk-more-kolaborasi.webp" alt="Contoh persetujuan konten dengan tombol Setujui dan komentar klien" loading="lazy" decoding="async">
       </div>
       <div class="mbody">
-        <h3 class="head"><a href="#kolaborasi">Kolaborasi</a></h3>
+        <h3 class="head"><a href="#laporan">Kolaborasi</a></h3>
         <p>Tulis, sunting, dan setujui konten bersama tim dan klien.</p>
-        <a class="more-link" href="#kolaborasi"><span>Selengkapnya</span><svg class="ic"><use href="#l-arrow-right"/></svg></a>
+        <a class="more-link" href="#laporan"><span>Selengkapnya</span><svg class="ic"><use href="#l-arrow-right"/></svg></a>
       </div>
     </article>
-    <article class="mcard">
+    <article class="mcard" id="ruang-klien">
       <div class="panel p-sky">
-        <svg class="mk" viewBox="0 0 311 249" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Contoh antrean posting per klien">
-          <rect x="57" y="31" width="198" height="240" rx="8" fill="#fff" filter="url(#sh)"/>
-          <text x="156" y="59" font-size="10.5" text-anchor="middle" class="b">Antrean Klien A</text>
-          <line x1="57" y1="72" x2="255" y2="72" stroke="#EEF0F4"/>
-          <rect x="65" y="80" width="182" height="95" rx="4" fill="#F8F9FB" stroke="#EEF0F4"/>
-          <rect x="73" y="141" width="62" height="6" rx="3" fill="#E6E9EF"/><rect x="73" y="153" width="50" height="6" rx="3" fill="#E6E9EF"/><rect x="73" y="165" width="40" height="6" rx="3" fill="#E6E9EF"/>
-          <rect x="151" y="89" width="90" height="86" rx="3" fill="#9CC3E6"/><rect x="176" y="112" width="40" height="63" rx="6" fill="#F3EEE6"/><rect x="183" y="100" width="26" height="14" rx="3" fill="#7A5236"/><circle cx="196" cy="140" r="10" fill="#C98B5B"/>
-          <rect x="37" y="90" width="146" height="33" rx="16.5" fill="#fff" filter="url(#sh)"/>
-          <use href="#l-clock" x="47" y="98" width="17" height="17" color="#253047"/><text x="70" y="111" font-size="9.5">Besok   11.45</text>
-          <rect x="65" y="183" width="182" height="80" rx="4" fill="#F8F9FB" stroke="#EEF0F4"/>
-          <circle cx="82" cy="202" r="9" fill="#F2B98F"/><circle cx="88" cy="208" r="3.5" fill="#1E5BD8" stroke="#fff"/>
-          <use href="#l-clock" x="95" y="200" width="6" height="6" color="#7A8291"/><text x="103" y="205.5" font-size="5.5" class="g">11.50</text>
-          <rect x="73" y="222" width="50" height="5" rx="2.5" fill="#E6E9EF"/><rect x="73" y="233" width="40" height="5" rx="2.5" fill="#E6E9EF"/>
-          <rect x="151" y="192" width="90" height="71" rx="3" fill="#F2C766"/><circle cx="196" cy="230" r="18" fill="#E7A93A"/>
-          <circle cx="89" cy="18" r="17" fill="#fff" filter="url(#sh)"/><circle cx="89" cy="18" r="10.5" fill="#E4405F"/><use href="#s-instagram" x="83" y="12" width="12" height="12" color="#fff"/>
-          <circle cx="261" cy="135" r="23" fill="#fff" fill-opacity=".9" filter="url(#sh)"/><circle cx="261" cy="135" r="13" fill="#111"/><use href="#s-tiktok" x="255" y="129" width="12" height="12" color="#fff"/>
-          <circle cx="51" cy="192" r="12" fill="#fff" filter="url(#sh)"/><use href="#s-youtube" x="45" y="186" width="12" height="12" color="#FF0000"/>
-        </svg>
+        <img class="mi" src="assets/img/mk-more-klien.webp" alt="Contoh antrean posting untuk satu klien" loading="lazy" decoding="async">
       </div>
       <div class="mbody">
-        <h3 class="head"><a href="#ruang-klien">Ruang kerja klien</a></h3>
+        <h3 class="head"><a href="#laporan">Ruang klien</a></h3>
         <p>Pisahkan akun dan antrean tiap klien di ruangnya sendiri.</p>
-        <a class="more-link" href="#ruang-klien"><span>Selengkapnya</span><svg class="ic"><use href="#l-arrow-right"/></svg></a>
+        <a class="more-link" href="#laporan"><span>Selengkapnya</span><svg class="ic"><use href="#l-arrow-right"/></svg></a>
       </div>
     </article>
-    <article class="mcard">
+    <article class="mcard" id="kompetitor">
       <div class="panel p-butter">
-        <svg class="mk" viewBox="0 0 311 249" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Contoh perbandingan akun dengan kompetitor">
-          <rect x="101" y="10" width="96" height="207" rx="4" fill="#fff" stroke="#E3E6EC" filter="url(#sh)"/>
-          <rect x="106" y="15" width="86" height="107" rx="3" fill="#2E3D5C"/><circle cx="149" cy="55" r="22" fill="#4B5F86"/><rect x="118" y="78" width="62" height="44" rx="20" fill="#41557C"/>
-          <text x="149" y="84" font-size="8" text-anchor="middle" class="w hd">Akunmu</text><text x="149" y="92" font-size="4" text-anchor="middle" class="w">vs 3 pesaing</text>
-          <g fill="#E3E6EC"><rect x="109" y="130" width="78" height="3" rx="1.5"/><rect x="109" y="137" width="70" height="3" rx="1.5"/><rect x="109" y="144" width="74" height="3" rx="1.5"/><rect x="109" y="151" width="60" height="3" rx="1.5"/><rect x="109" y="158" width="72" height="3" rx="1.5"/><rect x="109" y="165" width="50" height="3" rx="1.5"/></g>
-          <rect x="106" y="186" width="80" height="12" rx="2" fill="#14213B"/><text x="146" y="194" font-size="5" text-anchor="middle" class="w">Bandingkan</text>
-          <rect x="106" y="204" width="20" height="9" rx="1" fill="#F2B98F"/><rect x="128" y="204" width="20" height="9" rx="1" fill="#86AEF7"/><rect x="150" y="204" width="20" height="9" rx="1" fill="#2E3D5C"/>
-          <rect x="33" y="72" width="82" height="98" rx="3" fill="#fff" filter="url(#sh)"/>
-          <rect x="36" y="75" width="76" height="27" rx="2" fill="#DCE6FB"/><text x="40" y="86" font-size="6" class="b">Akunmu</text><text x="40" y="95" font-size="4" class="g">ER 4,1% · naik 0,6</text>
-          <text x="40" y="115" font-size="6">Pesaing A</text><text x="40" y="123" font-size="4" class="g">ER 3,2%</text>
-          <text x="40" y="143" font-size="6" class="hd">Pesaing B</text><text x="40" y="151" font-size="4" class="g">ER 2,7%</text>
-          <rect x="198" y="30" width="65" height="80" rx="3" fill="#fff" filter="url(#sh)"/>
-          <rect x="202" y="34" width="27" height="34" rx="2" fill="#F4D9C6"/><rect x="232" y="34" width="27" height="34" rx="2" fill="#F2D25A"/><rect x="202" y="72" width="27" height="34" rx="2" fill="#3E4A5E"/><rect x="232" y="72" width="27" height="34" rx="2" fill="#E2643B"/>
-          <rect x="183" y="152" width="93" height="81" rx="3" fill="#fff" filter="url(#sh)"/>
-          <rect x="190" y="160" width="22" height="30" rx="2" fill="#fff" stroke="#E3E6EC"/><rect x="190" y="160" width="22" height="7" rx="2" fill="#86AEF7"/>
-          <rect x="218" y="160" width="22" height="30" rx="2" fill="#fff" stroke="#E3E6EC"/><rect x="218" y="160" width="22" height="7" rx="2" fill="#F5BE73"/>
-          <rect x="246" y="160" width="22" height="30" rx="2" fill="#2E3D5C"/><rect x="250" y="168" width="14" height="14" rx="2" fill="#fff"/>
-          <rect x="190" y="196" width="22" height="30" rx="2" fill="#fff" stroke="#E3E6EC"/><rect x="190" y="196" width="22" height="7" rx="2" fill="#D9CCFF"/>
-          <rect x="218" y="196" width="22" height="30" rx="2" fill="#fff" stroke="#E3E6EC"/><rect x="218" y="196" width="22" height="7" rx="2" fill="#8ED3C4"/>
-          <rect x="246" y="196" width="22" height="30" rx="2" fill="#fff" stroke="#E3E6EC"/><rect x="246" y="196" width="22" height="7" rx="2" fill="#B3CCFF"/>
-        </svg>
+        <img class="mi" src="assets/img/mk-more-kompetitor.webp" alt="Contoh perbandingan engagement rate akunmu dengan pesaing" loading="lazy" decoding="async">
       </div>
       <div class="mbody">
-        <h3 class="head"><a href="#kompetitor">Pantau kompetitor</a></h3>
+        <h3 class="head"><a href="#kalkulator-er">Kompetitor</a></h3>
         <p>Bandingkan pertumbuhan dan engagement dengan pesaing.</p>
-        <a class="more-link" href="#kompetitor"><span>Selengkapnya</span><svg class="ic"><use href="#l-arrow-right"/></svg></a>
+        <a class="more-link" href="#kalkulator-er"><span>Selengkapnya</span><svg class="ic"><use href="#l-arrow-right"/></svg></a>
       </div>
     </article>
-    <article class="mcard">
+    <article class="mcard" id="template">
       <div class="panel p-peri">
-        <svg class="mk" viewBox="0 0 311 249" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Contoh memilih template kalender konten">
-          <rect x="0" y="31" width="217" height="179" rx="6" fill="#fff" filter="url(#sh)"/>
-          <text x="10" y="58" font-size="9.5">Template Kalender</text>
-          <text x="10" y="82" font-size="8.5">Mau pakai tema apa bulan ini?</text>
-          <rect x="10" y="95" width="183" height="58" rx="4" fill="#fff" stroke="#EEF0F4"/>
-          <rect x="16" y="108" width="170" height="6" rx="3" fill="#E9ECF1"/><rect x="16" y="120" width="170" height="6" rx="3" fill="#E9ECF1"/><rect x="16" y="132" width="110" height="6" rx="3" fill="#E9ECF1"/>
-          <use href="#l-pencil" x="17" y="179" width="7" height="7" color="#7A8291"/><rect x="28" y="182" width="22" height="2" rx="1" fill="#E3E6EC"/><line x1="58" y1="176" x2="58" y2="190" stroke="#EEF0F4"/>
-          <text x="66" y="185.5" font-size="7" class="g">-</text><rect x="74" y="182" width="22" height="2" rx="1" fill="#E3E6EC"/><line x1="104" y1="176" x2="104" y2="190" stroke="#EEF0F4"/>
-          <use href="#l-plus" x="110" y="179" width="7" height="7" color="#7A8291"/><rect x="121" y="182" width="22" height="2" rx="1" fill="#E3E6EC"/>
-          <rect x="163" y="155" width="124" height="65" rx="6" fill="#fff" filter="url(#sh)"/>
-          <rect x="175" y="168" width="100" height="39" rx="5" fill="#1E5BD8"/>
-          <use href="#l-calendar-days" x="184" y="182" width="10" height="10" color="#fff"/><text x="198" y="190.5" font-size="8.5" class="w b">Pakai template</text>
-          <path d="M218 202 l0 24 l6 -6 l5 11 l5 -2 l-5 -11 l8 0 z" fill="#111" stroke="#fff" stroke-width="1.2" stroke-linejoin="round"/>
-        </svg>
+        <img class="mi" src="assets/img/mk-more-template.webp" alt="Contoh memilih tema template kalender konten" loading="lazy" decoding="async">
       </div>
       <div class="mbody">
-        <h3 class="head"><a href="#template">Template kalender</a></h3>
+        <h3 class="head"><a href="#template-kalender">Template</a></h3>
         <p>Mulai dari template kalender konten yang siap pakai.</p>
-        <a class="more-link" href="#template"><span>Selengkapnya</span><svg class="ic"><use href="#l-arrow-right"/></svg></a>
+        <a class="more-link" href="#template-kalender"><span>Selengkapnya</span><svg class="ic"><use href="#l-arrow-right"/></svg></a>
       </div>
     </article>
   </div>
@@ -875,20 +664,20 @@ footer{background:var(--footer);color:#fff;border-radius:20px 20px 0 0;padding:4
 
 <section class="channels wrap" data-sec="channels" id="platform">
   <div class="cbar">
-    <h2 class="head">Hubungkan akun bisnis yang kamu kelola</h2>
+    <h2 class="head">Empat platform, semua format kontennya</h2>
     <ul class="clist">
-      <li><a href="#instagram"><span class="ctile" style="background:#E4405F"><svg><use href="#s-instagram"/></svg></span><span class="ctip">Kelola Konten + Instagram</span></a></li>
-      <li><a href="#tiktok"><span class="ctile" style="background:#111"><svg><use href="#s-tiktok"/></svg></span><span class="ctip">Kelola Konten + TikTok</span></a></li>
-      <li><a href="#facebook"><span class="ctile" style="background:#0866FF"><svg><use href="#s-facebook"/></svg></span><span class="ctip">Kelola Konten + Facebook</span></a></li>
-      <li><a href="#youtube"><span class="ctile" style="background:#FF0000"><svg><use href="#s-youtube"/></svg></span><span class="ctip">Kelola Konten + YouTube</span></a></li>
-      <li><a href="#reels"><span class="ctile" style="background:#1E5BD8"><svg><use href="#l-clapperboard"/></svg></span><span class="ctip">Format Reels</span></a></li>
-      <li><a href="#story"><span class="ctile" style="background:#7048E8"><svg><use href="#l-circle-dashed"/></svg></span><span class="ctip">Format Story</span></a></li>
-      <li><a href="#carousel"><span class="ctile" style="background:#E8590C"><svg><use href="#l-images"/></svg></span><span class="ctip">Format Carousel</span></a></li>
-      <li><a href="#foto"><span class="ctile" style="background:#0C8599"><svg><use href="#l-image"/></svg></span><span class="ctip">Format Foto</span></a></li>
-      <li><a href="#video"><span class="ctile" style="background:#C2255C"><svg><use href="#l-video"/></svg></span><span class="ctip">Format Video</span></a></li>
-      <li><a href="#shorts"><span class="ctile" style="background:#5C7CFA"><svg><use href="#l-smartphone"/></svg></span><span class="ctip">Format Shorts</span></a></li>
-      <li><a href="#teks"><span class="ctile" style="background:#14213B"><svg><use href="#l-type"/></svg></span><span class="ctip">Format Teks</span></a></li>
-      <li><a href="#jadwal"><span class="ctile" style="background:#F08C00"><svg><use href="#l-calendar-clock"/></svg></span><span class="ctip">Jadwal berulang</span></a></li>
+      <li><a href="#jadwalkan" aria-label="Kelola Konten + Instagram"><span class="ctile" style="background:#E4405F"><svg><use href="#s-instagram"/></svg></span><span class="ctip">Kelola Konten + Instagram</span></a></li>
+      <li><a href="#jadwalkan" aria-label="Kelola Konten + TikTok"><span class="ctile" style="background:#111"><svg><use href="#s-tiktok"/></svg></span><span class="ctip">Kelola Konten + TikTok</span></a></li>
+      <li><a href="#jadwalkan" aria-label="Kelola Konten + Facebook"><span class="ctile" style="background:#0866FF"><svg><use href="#s-facebook"/></svg></span><span class="ctip">Kelola Konten + Facebook</span></a></li>
+      <li><a href="#jadwalkan" aria-label="Kelola Konten + YouTube"><span class="ctile" style="background:#FF0000"><svg><use href="#s-youtube"/></svg></span><span class="ctip">Kelola Konten + YouTube</span></a></li>
+      <li><a href="#jadwalkan" aria-label="Format Reels"><span class="ctile gen"><svg><use href="#l-clapperboard"/></svg></span><span class="ctip">Format Reels</span></a></li>
+      <li><a href="#jadwalkan" aria-label="Format Story"><span class="ctile gen"><svg><use href="#l-gallery-vertical-end"/></svg></span><span class="ctip">Format Story</span></a></li>
+      <li><a href="#jadwalkan" aria-label="Format Carousel"><span class="ctile gen"><svg><use href="#l-gallery-horizontal-end"/></svg></span><span class="ctip">Format Carousel</span></a></li>
+      <li><a href="#jadwalkan" aria-label="Format Shorts"><span class="ctile gen"><svg><use href="#l-smartphone"/></svg></span><span class="ctip">Format Shorts</span></a></li>
+      <li><a href="#jadwalkan" aria-label="Format Foto"><span class="ctile gen"><svg><use href="#l-image"/></svg></span><span class="ctip">Format Foto</span></a></li>
+      <li><a href="#jadwalkan" aria-label="Format Video"><span class="ctile gen"><svg><use href="#l-video"/></svg></span><span class="ctip">Format Video</span></a></li>
+      <li><a href="#jadwalkan" aria-label="Format Teks"><span class="ctile gen"><svg><use href="#l-type"/></svg></span><span class="ctip">Format Teks</span></a></li>
+      <li><a href="#jadwalkan" aria-label="Format Tautan"><span class="ctile gen"><svg><use href="#l-link"/></svg></span><span class="ctip">Format Tautan</span></a></li>
     </ul>
   </div>
 </section>
@@ -906,56 +695,63 @@ footer{background:var(--footer);color:#fff;border-radius:20px 20px 0 0;padding:4
       </ul>
       <div class="rbtns">
         <a class="b1" href="#contoh-laporan">Lihat contoh <svg class="ic"><use href="#l-arrow-right"/></svg></a>
-        <a class="b2" href="#panduan-laporan">Baca panduan laporan <svg class="ic"><use href="#l-arrow-right"/></svg></a>
+        <a class="b2" href="#sumber">Baca panduan laporan <svg class="ic"><use href="#l-arrow-right"/></svg></a>
       </div>
     </div>
-    <div class="rart">
-      <svg class="mk" viewBox="0 0 540 540" role="img" aria-label="Contoh kotak kirim laporan bulanan">
+    <div class="rart" id="contoh-laporan">
+      <svg class="mk rart-d" viewBox="0 0 540 540" role="img" aria-label="Contoh kotak kirim laporan bulanan">
         <defs><pattern id="gridp" width="60" height="60" patternUnits="userSpaceOnUse"><path d="M0 0H60M0 0V60" fill="none" stroke="#3B4558" stroke-width="2"/></pattern></defs>
         <rect x="0" y="0" width="540" height="540" fill="url(#gridp)"/>
         <rect x=".5" y=".5" width="539" height="539" fill="none" stroke="#3B4558"/>
         <rect x="29" y="80" width="482" height="379" rx="17.4" fill="#0D1321" stroke="#FFFFFF" stroke-opacity=".12" filter="url(#sh4)"/>
         <use href="#l-file-chart-column" x="163" y="178" width="36" height="36" color="#A9C4FF"/>
         <text x="206" y="207" font-size="32.5" style="font-family:Georgia,'Times New Roman',serif;letter-spacing:-.3px" fill="#F1F2F5">Laporan siap</text>
-        <rect x="54" y="250" width="432" height="127" rx="21" fill="#1A2232" stroke="#323C50"/>
-        <text x="78" y="285" font-size="16.6" font-style="italic" fill="#8F96A3">Kirim laporan Oktober ke semua klien?</text>
-        <use href="#l-plus" x="78" y="325" width="15" height="15" color="#C7CCD6"/>
-        <rect x="107" y="328" width="101" height="24" rx="6" fill="#252E40"/>
-        <rect x="108" y="329" width="40" height="21" rx="5" fill="#3A4558"/>
-        <text x="128" y="343.5" font-size="12" text-anchor="middle" class="w b">PDF</text><text x="178" y="343.5" font-size="12" text-anchor="middle" fill="#8F96A3" class="b">Tautan</text>
-        <rect x="418" y="317" width="44" height="44" rx="7.5" fill="#1E5BD8"/><use href="#l-arrow-up" x="429" y="328" width="22" height="22" color="#fff"/>
+        <rect x="54" y="244" width="432" height="140" rx="21" fill="#1A2232" stroke="#323C50"/>
+        <text x="78" y="278" font-size="16.6" fill="#F1F2F5">Kirim laporan Oktober ke 12 klien</text><rect x="352" y="263" width="1.6" height="20" fill="#A9C4FF"/>
+        <rect x="78" y="292" width="222" height="30" rx="8" fill="#252E40" stroke="#3A4558"/><use href="#l-file-chart-column" x="88" y="299" width="16" height="16" color="#A9C4FF"/><text x="110" y="312" font-size="12.5" fill="#E3E7EE">Laporan-Oktober.pdf</text><text x="288" y="312" font-size="11" fill="#9AA3B2" text-anchor="end">12 hlm</text>
+        <use href="#l-plus" x="78" y="342" width="16" height="16" color="#C7CCD6"/>
+        <rect x="106" y="336" width="128" height="28" rx="7" fill="#252E40"/>
+        <rect x="108" y="338" width="52" height="24" rx="6" fill="#3E4A60"/>
+        <text x="134" y="354.5" font-size="12.5" text-anchor="middle" fill="#FFFFFF" font-weight="600">PDF</text><text x="196" y="354.5" font-size="12.5" text-anchor="middle" fill="#C3CAD6" font-weight="600">Tautan</text>
+        <rect x="418" y="326" width="44" height="44" rx="7.5" fill="#1E5BD8"/><use href="#l-arrow-up" x="429" y="337" width="22" height="22" color="#fff"/>
+      </svg>
+      <svg class="mk rart-m" viewBox="0 0 320 320" role="img" aria-label="Contoh kotak kirim laporan bulanan">
+        <defs><pattern id="gridm" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M0 0H40M0 0V40" fill="none" stroke="#3B4558" stroke-width="2"/></pattern></defs>
+        <rect width="320" height="320" fill="url(#gridm)"/><rect x=".5" y=".5" width="319" height="319" fill="none" stroke="#3B4558"/>
+        <rect x="12" y="44" width="296" height="232" rx="12" fill="#0D1321" stroke="#FFFFFF" stroke-opacity=".12"/>
+        <use href="#l-file-chart-column" x="86" y="70" width="24" height="24" color="#A9C4FF"/>
+        <text x="116" y="90" font-size="22" style="font-family:Georgia,'Times New Roman',serif" fill="#F1F2F5">Laporan siap</text>
+        <rect x="24" y="112" width="272" height="150" rx="14" fill="#1A2232" stroke="#323C50"/>
+        <text x="38" y="140" font-size="13" fill="#F1F2F5">Kirim laporan Oktober ke 12 klien</text><rect x="263" y="128" width="1.4" height="16" fill="#A9C4FF"/>
+        <rect x="38" y="154" width="190" height="28" rx="7" fill="#252E40" stroke="#3A4558"/><use href="#l-file-chart-column" x="47" y="160" width="15" height="15" color="#A9C4FF"/><text x="68" y="172.5" font-size="11.5" fill="#E3E7EE">Laporan-Oktober.pdf</text><text x="220" y="172.5" font-size="10.5" fill="#9AA3B2" text-anchor="end">12 hlm</text>
+        <use href="#l-plus" x="38" y="220" width="15" height="15" color="#C7CCD6"/>
+        <rect x="62" y="214" width="112" height="28" rx="7" fill="#252E40"/><rect x="64" y="216" width="46" height="24" rx="6" fill="#3E4A60"/>
+        <text x="87" y="232.5" font-size="12" text-anchor="middle" fill="#FFFFFF" font-weight="600">PDF</text><text x="142" y="232.5" font-size="12" text-anchor="middle" fill="#C3CAD6" font-weight="600">Tautan</text>
+        <rect x="248" y="208" width="36" height="36" rx="7" fill="#1E5BD8"/><use href="#l-arrow-up" x="257" y="217" width="18" height="18" color="#fff"/>
       </svg>
     </div>
   </div>
 </section>
 
-<section class="support wrap" data-sec="support">
+<section class="support wrap" data-sec="support" id="dukungan">
   <div class="stext">
     <h2 class="eyebrow">Dukungan pelanggan</h2>
     <p class="head">Dibantu manusia, bukan bot</p>
     <p>Tim dukungan siap membantu lewat chat dan email pada jam kerja WIB. Mulai dari cara menghubungkan akun sampai menyusun laporan pertama, kamu dibantu orang yang paham media sosial, bukan jawaban template yang berputar-putar.</p>
-    <div class="sbtns"><a class="btn s1" href="#bantuan">Buka Pusat Bantuan</a><a class="btn btn-outline" href="#whatsapp">Chat WhatsApp</a></div>
+    <div class="sbtns"><a class="btn s1" href="#sumber">Buka Pusat Bantuan</a><a class="btn btn-outline" href="#daftar">Chat WhatsApp</a></div>
     <p class="s2">Kelola Konten dibangun oleh tim SMM Creativism untuk kerja harian mereka, jadi pertanyaanmu dijawab oleh orang yang mengerjakan hal yang sama.</p>
-    <a class="slink" href="#tim"><span>Kenali tim Creativism di baliknya</span><svg class="ic"><use href="#l-arrow-right"/></svg></a>
+    <a class="slink" href="#tentang"><span>Kenali tim Creativism di baliknya</span><svg class="ic"><use href="#l-arrow-right"/></svg></a>
   </div>
-  <div class="sart">
-    <svg class="mk" viewBox="0 0 648 432" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Contoh percakapan dengan tim dukungan">
-      <defs><linearGradient id="sg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#BFD2F8"/><stop offset="1" stop-color="#E4ECFB"/></linearGradient></defs>
-      <rect width="648" height="432" fill="url(#sg)"/>
-      <circle cx="560" cy="70" r="90" fill="#fff" opacity=".25"/><circle cx="70" cy="380" r="120" fill="#fff" opacity=".2"/>
-      <rect x="84" y="40" width="480" height="352" rx="14" fill="#fff" filter="url(#sh)"/>
-      <circle cx="120" cy="80" r="17" fill="#1E5BD8"/><use href="#l-message-circle" x="111" y="71" width="18" height="18" color="#fff"/>
-      <text x="146" y="77" font-size="14" class="b">Tim Dukungan Kelola Konten</text>
-      <circle cx="150" cy="93" r="3.5" fill="#2F9E44"/><text x="158" y="97" font-size="11" class="g">Online, Senin sampai Jumat 09.00 sampai 17.00 WIB</text>
-      <line x1="84" y1="116" x2="564" y2="116" stroke="#EEF0F4"/>
-      <rect x="292" y="134" width="248" height="56" rx="12" fill="#DCE6FB"/>
-      <text x="308" y="157" font-size="12">Halo, akun TikTok saya belum bisa</text><text x="308" y="176" font-size="12">tersambung. Kenapa ya?</text>
-      <rect x="108" y="204" width="306" height="76" rx="12" fill="#F1F3F7"/>
-      <text x="124" y="227" font-size="12">Halo Kak! Coba sambungkan ulang lewat menu</text><text x="124" y="246" font-size="12">Akun, lalu izinkan semua akses yang diminta.</text><text x="124" y="265" font-size="12">Langkahnya saya kirim di sini, ya.</text>
-      <rect x="352" y="294" width="188" height="36" rx="12" fill="#DCE6FB"/><text x="368" y="317" font-size="12">Sudah bisa, terima kasih!</text>
-      <rect x="104" y="344" width="440" height="34" rx="17" fill="#fff" stroke="#E3E6EC"/><text x="122" y="365" font-size="11.5" class="g">Tulis pesan...</text>
-      <circle cx="526" cy="361" r="12" fill="#1E5BD8"/><use href="#l-send" x="520" y="355" width="12" height="12" color="#fff"/>
-    </svg>
+  <div class="sart" role="img" aria-label="Contoh percakapan dengan tim dukungan">
+    <div class="chat">
+      <div class="chat-head"><span class="chat-av"><svg class="ic"><use href="#l-message-circle"/></svg></span><div><b>Tim Dukungan Kelola Konten</b><small><i></i>Online, Senin sampai Jumat 09.00 sampai 17.00 WIB</small></div></div>
+      <div class="chat-body">
+        <p class="msg me">Halo, akun TikTok saya belum bisa tersambung. Kenapa ya?</p>
+        <p class="msg them">Halo Kak! Coba sambungkan ulang lewat menu Akun, lalu izinkan semua akses yang diminta.</p>
+        <p class="msg me m3">Sudah bisa, terima kasih!</p>
+      </div>
+      <div class="chat-input"><span>Tulis pesan...</span><span class="send"><svg class="ic"><use href="#l-send"/></svg></span></div>
+    </div>
   </div>
 </section>
 
@@ -965,180 +761,73 @@ footer{background:var(--footer);color:#fff;border-radius:20px 20px 0 0;padding:4
     <p>Semua yang kamu perlukan untuk menyusun strategi, dalam satu tempat.</p>
   </div>
   <div class="res-grid">
-    <a class="rcard rc-a" href="#kalkulator-er">
+    <a class="rcard rc-a" id="kalkulator-er" href="#daftar">
       <div class="rpanel p-lav">
         <h3 class="head"><span>Kalkulator Engagement Rate</span><svg class="ic"><use href="#l-arrow-right"/></svg></h3>
         <p>Hitung engagement rate Instagram dan TikTok secara gratis, tanpa perlu membuat akun dulu</p>
         <div class="rimg">
-          <svg class="mk" viewBox="0 0 384 269" preserveAspectRatio="xMidYMin slice" aria-hidden="true">
-            <rect x="18" y="2" width="348" height="290" rx="4" fill="#fff" filter="url(#sh)"/>
-            <text x="27" y="15" font-size="5" class="b">Kelola Konten</text>
-            <g fill="#E3E6EC"><rect x="150" y="11" width="18" height="3" rx="1.5"/><rect x="174" y="11" width="18" height="3" rx="1.5"/><rect x="198" y="11" width="18" height="3" rx="1.5"/><rect x="222" y="11" width="18" height="3" rx="1.5"/></g>
-            <rect x="315" y="9" width="16" height="7" rx="3.5" fill="none" stroke="#C9CED8" stroke-width=".6"/><rect x="334" y="9" width="26" height="7" rx="3.5" fill="#B3CCFF"/>
-            <rect x="25" y="24" width="334" height="172" rx="3" fill="#14213B"/>
-            <text x="192" y="40" font-size="3.6" text-anchor="middle" fill="#A9C4FF">ALAT GRATIS DARI KELOLA KONTEN</text>
-            <text x="192" y="58" font-size="10.5" text-anchor="middle" class="w">Hitung engagement rate</text>
-            <text x="192" y="72" font-size="10.5" text-anchor="middle" class="w">akunmu dalam 10 detik</text>
-            <line x1="113" y1="88" x2="271" y2="88" stroke="#3B4A6B" stroke-width=".8"/>
-            <circle cx="113" cy="88" r="2.6" fill="#B3CCFF"/><circle cx="192" cy="88" r="2.6" fill="#B3CCFF"/><circle cx="271" cy="88" r="2.6" fill="#B3CCFF"/>
-            <text x="113" y="97" font-size="3.4" text-anchor="middle" fill="#C9D3E6">Isi data</text><text x="192" y="97" font-size="3.4" text-anchor="middle" fill="#C9D3E6">Hitung</text><text x="271" y="97" font-size="3.4" text-anchor="middle" fill="#C9D3E6">Bandingkan</text>
-            <text x="192" y="122" font-size="4" text-anchor="middle" class="w">Masukkan username atau angka akunmu</text>
-            <rect x="100" y="128" width="184" height="41" rx="2" fill="#fff" stroke="#86AEF7" stroke-width="1.5"/>
-            <rect x="252" y="159" width="28" height="7" rx="1.5" fill="#1E5BD8"/>
-            <text x="192" y="180" font-size="3.2" text-anchor="middle" fill="#9AA6BD">Tips: hitung dari 12 posting terakhir supaya hasilnya stabil</text>
-            <rect x="25" y="196" width="334" height="90" fill="#ECE6FF"/>
-            <text x="32" y="214" font-size="4.5" class="b">Butuh contoh?</text><text x="32" y="221" font-size="3" class="g">Coba dari akun publik</text>
-            <g fill="#fff" stroke="#D9D2F5" stroke-width=".6"><rect x="88" y="205" width="58" height="52" rx="2"/><rect x="153" y="205" width="58" height="52" rx="2"/><rect x="218" y="205" width="58" height="52" rx="2"/><rect x="283" y="205" width="58" height="52" rx="2"/></g>
-            <g fill="#DDD6F3"><rect x="93" y="212" width="40" height="2.5" rx="1"/><rect x="93" y="218" width="46" height="2.5" rx="1"/><rect x="93" y="224" width="30" height="2.5" rx="1"/><rect x="158" y="212" width="44" height="2.5" rx="1"/><rect x="158" y="218" width="36" height="2.5" rx="1"/><rect x="158" y="224" width="46" height="2.5" rx="1"/><rect x="223" y="212" width="40" height="2.5" rx="1"/><rect x="223" y="218" width="44" height="2.5" rx="1"/><rect x="288" y="212" width="38" height="2.5" rx="1"/><rect x="288" y="218" width="44" height="2.5" rx="1"/><rect x="288" y="224" width="26" height="2.5" rx="1"/></g>
-          </svg>
+          <img src="assets/img/mk-res-kalkulator.webp" alt="Contoh halaman kalkulator engagement rate" loading="lazy" decoding="async">
         </div>
       </div>
     </a>
-    <a class="rcard rc-b" href="#kamus">
+    <a class="rcard rc-b" id="kamus" href="#daftar">
       <div class="rpanel p-aqua">
         <h3 class="head"><span>Kamus Istilah Media Sosial</span><svg class="ic"><use href="#l-arrow-right"/></svg></h3>
         <p>Arti istilah yang sering muncul, dari reach sampai engagement rate, dalam bahasa sederhana</p>
         <div class="rimg">
-          <svg class="mk" viewBox="0 0 333 212" preserveAspectRatio="xMidYMin slice" aria-hidden="true">
-            <g transform="rotate(6 178 110)">
-              <rect x="45" y="-12" width="265" height="250" rx="3" fill="#fff" filter="url(#sh)"/>
-              <text x="55" y="2" font-size="4" class="b">Kelola Konten</text><rect x="262" y="-3" width="12" height="5" rx="2.5" fill="none" stroke="#C9CED8" stroke-width=".5"/><rect x="278" y="-3" width="22" height="5" rx="2.5" fill="#B3CCFF"/>
-              <rect x="55" y="10" width="245" height="64" rx="2" fill="#F5F6F9"/>
-              <text x="178" y="32" font-size="8.5" text-anchor="middle" class="b">Kamus Istilah Media Sosial:</text>
-              <text x="178" y="43" font-size="8.5" text-anchor="middle" class="b">Panduan Lengkap Kelola Konten</text>
-              <rect x="120" y="50" width="116" height="2.5" rx="1" fill="#D3D8E1"/><rect x="132" y="55" width="92" height="2.5" rx="1" fill="#D3D8E1"/>
-              <rect x="160" y="62" width="36" height="7" rx="3.5" fill="#14213B"/>
-              <text x="178" y="92" font-size="5" text-anchor="middle" class="b" letter-spacing="3.2">ABCDEFGHIJKLMNOPQRSTUVWXYZ</text>
-              <text x="60" y="114" font-size="7" class="b">A</text>
-              <text x="60" y="132" font-size="4.5" class="b">Algoritma</text><text x="135" y="132" font-size="4.5" class="b">Audiens</text><text x="215" y="132" font-size="4.5" class="b">Akun bisnis</text>
-              <g fill="#D3D8E1"><rect x="60" y="137" width="58" height="2.2" rx="1"/><rect x="60" y="142" width="52" height="2.2" rx="1"/><rect x="60" y="147" width="56" height="2.2" rx="1"/><rect x="60" y="152" width="40" height="2.2" rx="1"/><rect x="135" y="137" width="58" height="2.2" rx="1"/><rect x="135" y="142" width="50" height="2.2" rx="1"/><rect x="135" y="147" width="54" height="2.2" rx="1"/><rect x="215" y="137" width="60" height="2.2" rx="1"/><rect x="215" y="142" width="56" height="2.2" rx="1"/><rect x="215" y="147" width="44" height="2.2" rx="1"/><rect x="215" y="152" width="50" height="2.2" rx="1"/></g>
-              <text x="60" y="172" font-size="4.5" class="b">Arsip story</text><text x="135" y="172" font-size="4.5" class="b">A/B test</text><text x="215" y="172" font-size="4.5" class="b">Analitik</text>
-              <g fill="#D3D8E1"><rect x="60" y="177" width="54" height="2.2" rx="1"/><rect x="60" y="182" width="48" height="2.2" rx="1"/><rect x="135" y="177" width="56" height="2.2" rx="1"/><rect x="135" y="182" width="40" height="2.2" rx="1"/><rect x="215" y="177" width="58" height="2.2" rx="1"/><rect x="215" y="182" width="46" height="2.2" rx="1"/></g>
-            </g>
-          </svg>
+          <img src="assets/img/mk-res-kamus.webp" alt="Contoh halaman kamus istilah media sosial" loading="lazy" decoding="async">
         </div>
       </div>
     </a>
-    <a class="rcard rc-c" href="#panduan-umkm">
+    <a class="rcard rc-c" id="panduan-umkm" href="#daftar">
       <div class="rpanel p-coral">
         <h3 class="head"><span>Panduan Media Sosial UMKM</span><svg class="ic"><use href="#l-arrow-right"/></svg></h3>
         <p>Panduan dasar mengelola akun bisnis, dari nol sampai rutin posting</p>
         <div class="rimg">
-          <svg class="mk" viewBox="0 0 384 207" preserveAspectRatio="xMidYMin slice" aria-hidden="true">
-            <g transform="rotate(8 200 120)">
-              <rect x="60" y="8" width="310" height="250" rx="3" fill="#fff" filter="url(#sh)"/>
-              <text x="70" y="21" font-size="4.5" class="b">Kelola Konten</text>
-              <g fill="#E3E6EC"><rect x="140" y="18" width="16" height="2.5" rx="1"/><rect x="160" y="18" width="16" height="2.5" rx="1"/><rect x="180" y="18" width="16" height="2.5" rx="1"/></g>
-              <rect x="318" y="15" width="12" height="6" rx="3" fill="none" stroke="#C9CED8" stroke-width=".5"/><rect x="334" y="15" width="28" height="6" rx="3" fill="#B3CCFF"/>
-              <rect x="112" y="34" width="132" height="84" rx="3" fill="#DCD0FF"/>
-              <rect x="130" y="42" width="34" height="62" rx="5" fill="#fff"/><rect x="170" y="48" width="34" height="62" rx="5" fill="#fff"/><rect x="210" y="56" width="26" height="48" rx="5" fill="#fff" opacity=".8"/>
-              <rect x="135" y="50" width="24" height="18" rx="2" fill="#86AEF7"/><rect x="175" y="56" width="24" height="18" rx="2" fill="#F2A7C6"/>
-              <text x="112" y="134" font-size="7.5" class="b">Panduan Lengkap Media Sosial</text>
-              <text x="112" y="144" font-size="7.5" class="b">untuk UMKM: Dari Nol</text>
-              <text x="112" y="154" font-size="7.5" class="b">Sampai Rutin Posting</text>
-              <g fill="#D3D8E1"><rect x="112" y="161" width="120" height="2.2" rx="1"/><rect x="112" y="166" width="104" height="2.2" rx="1"/><rect x="112" y="171" width="112" height="2.2" rx="1"/></g>
-            </g>
-          </svg>
+          <img src="assets/img/mk-res-panduan.webp" alt="Contoh halaman panduan media sosial untuk UMKM" loading="lazy" decoding="async">
         </div>
       </div>
     </a>
-    <a class="rcard rc-d" href="#jam-posting">
+    <a class="rcard rc-d" id="jam-posting" href="#daftar">
       <div class="rpanel p-pink">
         <div class="rimg">
-          <svg class="mk" viewBox="0 0 311 354" preserveAspectRatio="xMidYMin slice" aria-hidden="true">
-            <g transform="rotate(-6 160 170)">
-              <rect x="212" y="12" width="140" height="215" rx="3" fill="#fff" filter="url(#sh)"/>
-              <text x="222" y="32" font-size="7.5" class="b">Cek polamu</text><text x="222" y="42" font-size="7.5" class="b">sendiri</text>
-              <rect x="230" y="60" width="96" height="150" fill="#EAD7F7"/>
-              <rect x="118" y="40" width="148" height="250" rx="3" fill="#fff" filter="url(#sh)"/>
-              <text x="128" y="60" font-size="7.5" class="b">Jam posting terbaik</text><text x="128" y="68" font-size="3.5" class="g">Contoh pola keterlibatan per jam</text>
-              <g>
-                <rect x="128" y="80" width="128" height="160" fill="#F6F0FA"/>
-                <g fill="#C9A6EC"><rect x="132" y="84" width="16" height="10"/><rect x="150" y="84" width="16" height="10"/><rect x="168" y="84" width="16" height="10" fill="#B07FE3"/><rect x="186" y="84" width="16" height="10"/><rect x="204" y="84" width="16" height="10" fill="#E5D2F6"/><rect x="222" y="84" width="16" height="10"/><rect x="240" y="84" width="14" height="10" fill="#E5D2F6"/></g>
-                <g fill="#9D5BD9"><rect x="132" y="96" width="16" height="10"/><rect x="150" y="96" width="16" height="10" fill="#B07FE3"/><rect x="168" y="96" width="16" height="10" fill="#7F2FC9"/><rect x="186" y="96" width="16" height="10"/><rect x="204" y="96" width="16" height="10" fill="#C9A6EC"/><rect x="222" y="96" width="16" height="10" fill="#7F2FC9"/><rect x="240" y="96" width="14" height="10" fill="#B07FE3"/></g>
-                <g fill="#7F2FC9"><rect x="132" y="108" width="16" height="10" fill="#B07FE3"/><rect x="150" y="108" width="16" height="10"/><rect x="168" y="108" width="16" height="10" fill="#6A16B8"/><rect x="186" y="108" width="16" height="10" fill="#9D5BD9"/><rect x="204" y="108" width="16" height="10"/><rect x="222" y="108" width="16" height="10" fill="#6A16B8"/><rect x="240" y="108" width="14" height="10" fill="#9D5BD9"/></g>
-                <g fill="#B07FE3"><rect x="132" y="120" width="16" height="10" fill="#E5D2F6"/><rect x="150" y="120" width="16" height="10"/><rect x="168" y="120" width="16" height="10" fill="#9D5BD9"/><rect x="186" y="120" width="16" height="10" fill="#C9A6EC"/><rect x="204" y="120" width="16" height="10" fill="#7F2FC9"/><rect x="222" y="120" width="16" height="10"/><rect x="240" y="120" width="14" height="10" fill="#C9A6EC"/></g>
-                <g fill="#C9A6EC"><rect x="132" y="132" width="16" height="10"/><rect x="150" y="132" width="16" height="10" fill="#E5D2F6"/><rect x="168" y="132" width="16" height="10" fill="#B07FE3"/><rect x="186" y="132" width="16" height="10" fill="#E5D2F6"/><rect x="204" y="132" width="16" height="10" fill="#9D5BD9"/><rect x="222" y="132" width="16" height="10" fill="#B07FE3"/><rect x="240" y="132" width="14" height="10" fill="#E5D2F6"/></g>
-                <g fill="#E5D2F6"><rect x="132" y="144" width="16" height="10"/><rect x="150" y="144" width="16" height="10" fill="#C9A6EC"/><rect x="168" y="144" width="16" height="10"/><rect x="186" y="144" width="16" height="10" fill="#C9A6EC"/><rect x="204" y="144" width="16" height="10"/><rect x="222" y="144" width="16" height="10" fill="#C9A6EC"/><rect x="240" y="144" width="14" height="10"/></g>
-                <rect x="132" y="156" width="122" height="80" fill="#F1E6FA"/>
-              </g>
-              <text x="175" y="275" font-size="6.5" font-style="italic" style="font-family:Georgia,serif" class="g">tiap akun punya pola sendiri</text>
-              <rect x="14" y="78" width="140" height="232" rx="3" fill="#fff" filter="url(#sh)"/>
-              <text x="24" y="98" font-size="7.5" class="b">Hari posting terbaik</text><text x="24" y="106" font-size="3.5" class="g">Contoh pola keterlibatan per hari</text>
-              <rect x="22" y="116" width="124" height="150" fill="#FAF6FC" stroke="#EADCF5" stroke-width=".6"/>
-              <g fill="#E6C9F7"><rect x="30" y="140" width="13" height="120"/><rect x="47" y="128" width="13" height="132"/><rect x="64" y="150" width="13" height="110"/><rect x="81" y="132" width="13" height="128"/><rect x="98" y="122" width="13" height="138"/><rect x="115" y="160" width="13" height="100"/><rect x="132" y="170" width="10" height="90"/></g>
-              <text x="40" y="290" font-size="6" font-style="italic" style="font-family:Georgia,serif" class="g">Jumat</text>
-            </g>
-          </svg>
+          <img src="assets/img/mk-res-jam.webp" alt="Contoh grafik jam dan hari posting" loading="lazy" decoding="async">
         </div>
         <h3 class="head"><span>Jam Posting Ideal</span><svg class="ic"><use href="#l-arrow-right"/></svg></h3>
         <p>Cara menemukan jam posting yang paling cocok untuk audiens akunmu sendiri</p>
       </div>
     </a>
-    <a class="rcard rc-e" href="#template-kalender">
+    <a class="rcard rc-e" id="template-kalender" href="#daftar">
       <div class="rpanel p-butter">
         <h3 class="head"><span>Template Kalender Konten</span><svg class="ic"><use href="#l-arrow-right"/></svg></h3>
         <p>Template kalender konten bulanan yang bisa langsung diunduh, lengkap dengan tema harian, ide format, dan kolom catatan untuk tim</p>
         <div class="rimg">
-          <svg class="mk" viewBox="0 0 542 399" preserveAspectRatio="xMidYMin slice" aria-hidden="true">
-            <g transform="rotate(-5 270 230)">
-              <rect x="22" y="40" width="490" height="400" rx="4" fill="#fff" filter="url(#sh)"/>
-              <text x="40" y="64" font-size="7" class="b">Kelola Konten</text>
-              <g fill="#D3D8E1"><rect x="190" y="59" width="22" height="3" rx="1.5"/><rect x="220" y="59" width="22" height="3" rx="1.5"/><rect x="250" y="59" width="22" height="3" rx="1.5"/><rect x="280" y="59" width="18" height="3" rx="1.5"/></g>
-              <rect x="410" y="55" width="22" height="10" rx="5" fill="none" stroke="#C9CED8" stroke-width=".6"/><rect x="438" y="55" width="54" height="10" rx="5" fill="#B3CCFF"/>
-              <line x1="22" y1="76" x2="512" y2="76" stroke="#EEF0F4"/>
-              <text x="40" y="100" font-size="9.5" class="b">Template Kalender Konten</text>
-              <text x="40" y="111" font-size="5.5" class="g">Oktober 2026, siap diunduh dan diubah</text>
-              <rect x="420" y="92" width="72" height="14" rx="7" fill="#14213B"/><text x="456" y="101.5" font-size="5.5" text-anchor="middle" class="w">Unduh template</text>
-              <g font-size="5" class="b g" text-anchor="middle"><text x="68" y="132">Sen</text><text x="132" y="132">Sel</text><text x="196" y="132">Rab</text><text x="260" y="132">Kam</text><text x="324" y="132">Jum</text><text x="388" y="132">Sab</text><text x="452" y="132">Min</text></g>
-              <g fill="#fff" stroke="#E8EBF0" stroke-width=".8">
-                <rect x="36" y="138" width="64" height="52"/><rect x="100" y="138" width="64" height="52"/><rect x="164" y="138" width="64" height="52"/><rect x="228" y="138" width="64" height="52"/><rect x="292" y="138" width="64" height="52"/><rect x="356" y="138" width="64" height="52"/><rect x="420" y="138" width="64" height="52"/>
-                <rect x="36" y="190" width="64" height="52"/><rect x="100" y="190" width="64" height="52"/><rect x="164" y="190" width="64" height="52"/><rect x="228" y="190" width="64" height="52"/><rect x="292" y="190" width="64" height="52"/><rect x="356" y="190" width="64" height="52"/><rect x="420" y="190" width="64" height="52"/>
-                <rect x="36" y="242" width="64" height="52"/><rect x="100" y="242" width="64" height="52"/><rect x="164" y="242" width="64" height="52"/><rect x="228" y="242" width="64" height="52"/><rect x="292" y="242" width="64" height="52"/><rect x="356" y="242" width="64" height="52"/><rect x="420" y="242" width="64" height="52"/>
-                <rect x="36" y="294" width="64" height="52"/><rect x="100" y="294" width="64" height="52"/><rect x="164" y="294" width="64" height="52"/><rect x="228" y="294" width="64" height="52"/><rect x="292" y="294" width="64" height="52"/><rect x="356" y="294" width="64" height="52"/><rect x="420" y="294" width="64" height="52"/>
-                <rect x="36" y="346" width="64" height="52"/><rect x="100" y="346" width="64" height="52"/><rect x="164" y="346" width="64" height="52"/><rect x="228" y="346" width="64" height="52"/><rect x="292" y="346" width="64" height="52"/><rect x="356" y="346" width="64" height="52"/><rect x="420" y="346" width="64" height="52"/>
-              </g>
-              <g font-size="5.5" class="g"><text x="232" y="147">1</text><text x="296" y="147">2</text><text x="360" y="147">3</text><text x="424" y="147">4</text><text x="40" y="199">5</text><text x="104" y="199">6</text><text x="168" y="199">7</text><text x="232" y="199">8</text><text x="296" y="199">9</text><text x="360" y="199">10</text><text x="424" y="199">11</text><text x="40" y="251">12</text><text x="104" y="251">13</text><text x="168" y="251">14</text><text x="232" y="251">15</text><text x="296" y="251">16</text><text x="360" y="251">17</text><text x="424" y="251">18</text><text x="40" y="303">19</text><text x="104" y="303">20</text><text x="168" y="303">21</text><text x="232" y="303">22</text><text x="296" y="303">23</text><text x="360" y="303">24</text><text x="424" y="303">25</text><text x="40" y="355">26</text><text x="104" y="355">27</text><text x="168" y="355">28</text><text x="232" y="355">29</text><text x="296" y="355">30</text><text x="360" y="355">31</text></g>
-              <g font-size="5" class="b">
-                <rect x="232" y="153" width="50" height="10" rx="2" fill="#F2A7C6"/><text x="236" y="160">Reels</text>
-                <rect x="360" y="153" width="50" height="10" rx="2" fill="#86AEF7"/><text x="364" y="160">Carousel</text>
-                <rect x="104" y="205" width="50" height="10" rx="2" fill="#F5BE73"/><text x="108" y="212">Tips</text>
-                <rect x="296" y="205" width="50" height="10" rx="2" fill="#F2A7C6"/><text x="300" y="212">Reels</text>
-                <rect x="296" y="218" width="50" height="10" rx="2" fill="#8ED3C4"/><text x="300" y="225">Promo 10.10</text>
-                <rect x="40" y="257" width="50" height="10" rx="2" fill="#A797F0"/><text x="44" y="264">Live</text>
-                <rect x="232" y="257" width="50" height="10" rx="2" fill="#86AEF7"/><text x="236" y="264">Carousel</text>
-                <rect x="168" y="309" width="50" height="10" rx="2" fill="#F5BE73"/><text x="172" y="316">Tips</text>
-                <rect x="360" y="309" width="50" height="10" rx="2" fill="#F2A7C6"/><text x="364" y="316">Reels</text>
-                <rect x="104" y="361" width="50" height="10" rx="2" fill="#8ED3C4"/><text x="108" y="368">Testimoni</text>
-                <rect x="296" y="361" width="50" height="10" rx="2" fill="#A797F0"/><text x="300" y="368">Rekap bulan</text>
-              </g>
-            </g>
-          </svg>
+          <img src="assets/img/mk-res-template.webp" alt="Contoh template kalender konten Oktober" loading="lazy" decoding="async">
         </div>
       </div>
     </a>
   </div>
 </section>
 
-<section class="about wrap" data-sec="about">
+<section class="about wrap" data-sec="about" id="tentang">
   <div class="about-top">
     <div class="about-text">
       <h2 class="eyebrow">Tentang kami</h2>
       <p class="head">Dibangun dari meja tim SMM</p>
       <p>Kelola Konten lahir sebagai alat internal tim SMM Creativism di Yogyakarta. Kami memakainya sendiri dulu untuk akun klien, lalu membukanya untuk publik setelah terbukti di lapangan. Inilah yang sedang kami siapkan untuk kamu.</p>
     </div>
-    <a class="btn btn-outline about-btn dt" href="#peta-jalan">Lihat peta jalan <svg class="ic"><use href="#l-arrow-right"/></svg></a>
+    <a class="btn btn-outline about-btn dt" href="#tentang">Lihat peta jalan <svg class="ic"><use href="#l-arrow-right"/></svg></a>
   </div>
   <dl class="stats">
-    <div class="stat"><dt>Platform<span class="sub">Instagram, TikTok, Facebook, YouTube</span></dt><dd>4</dd></div>
-    <div class="stat"><dt>Kalender<span class="sub">Untuk semua akun</span></dt><dd>1</dd></div>
-    <div class="stat"><dt>Laporan<span class="sub">PDF berlogo agensi</span></dt><dd>Bulanan</dd></div>
-    <div class="stat"><dt>Inbox<span class="sub">Komentar dan DM terpadu</span></dt><dd>1</dd></div>
+    <div class="stat"><dt>Platform<span class="sub">Instagram sampai YouTube</span></dt><dd>4</dd></div>
+    <div class="stat"><dt>Format<span class="sub">Reels, Story, dan lainnya</span></dt><dd>8</dd></div>
+    <div class="stat"><dt>Kalender<span class="sub">Tampilan harian sampai bulanan</span></dt><dd>3</dd></div>
+    <div class="stat"><dt>Laporan<span class="sub">PDF berlogo tiap bulan</span></dt><dd>12/thn</dd></div>
   </dl>
-  <div class="about-foot"><a class="btn btn-outline about-btn mb" href="#peta-jalan">Lihat peta jalan <svg class="ic"><use href="#l-arrow-right"/></svg></a></div>
+  <div class="about-foot"><a class="btn btn-outline about-btn mb" href="#tentang">Lihat peta jalan <svg class="ic"><use href="#l-arrow-right"/></svg></a></div>
 </section>
 
-<section class="cta" data-sec="cta">
+<section class="cta" data-sec="cta" id="mulai">
   <div class="cta-card">
     <div class="cta-panel">
       <h2 class="head">Kelola semua akun dengan lebih tenang</h2>
@@ -1155,24 +844,24 @@ footer{background:var(--footer);color:#fff;border-radius:20px 20px 0 0;padding:4
     <h2 class="sr">Kelola Konten</h2>
     <div class="fcols">
       <div class="fcol">
-        <div class="fgrp"><h3>Fitur</h3><ul><li><a href="#">Kalender Konten</a></li><li><a href="#">Penjadwalan</a></li><li><a href="#">Analitik Akun</a></li><li><a href="#">Analitik Kompetitor</a></li><li><a href="#">Laporan Klien</a></li><li><a href="#">Inbox Terpadu</a></li><li><a href="#">Kolaborasi</a></li><li><a href="#">Persetujuan Klien</a></li></ul></div>
-        <div class="fgrp"><h3>Alat gratis</h3><ul><li><a href="#">Kalkulator Engagement</a></li><li><a href="#">Cek Engagement Rate</a></li><li><a href="#">Template Kalender Konten</a></li><li><a href="#">Jam Posting Terbaik</a></li><li><a href="#">Kamus Istilah</a></li><li><a href="#">Ide Konten Harian</a></li><li><a href="#">Ukuran Gambar</a></li><li><a href="#">Batas Karakter</a></li></ul></div>
+        <div class="fgrp"><h3>Fitur</h3><ul><li><a href="#fitur">Kalender Konten</a></li><li><a href="#fitur">Penjadwalan</a></li><li><a href="#fitur">Analitik Akun</a></li><li><a href="#fitur">Analitik Kompetitor</a></li><li><a href="#fitur">Laporan Klien</a></li><li><a href="#fitur">Inbox Terpadu</a></li><li><a href="#fitur">Kolaborasi</a></li><li><a href="#fitur">Persetujuan Klien</a></li></ul></div>
+        <div class="fgrp"><h3>Alat gratis</h3><ul><li><a href="#sumber">Kalkulator Engagement</a></li><li><a href="#sumber">Cek Engagement Rate</a></li><li><a href="#sumber">Template Kalender Konten</a></li><li><a href="#sumber">Jam Posting Terbaik</a></li><li><a href="#sumber">Kamus Istilah</a></li><li><a href="#sumber">Ide Konten Harian</a></li><li><a href="#sumber">Ukuran Gambar</a></li><li><a href="#sumber">Batas Karakter</a></li></ul></div>
       </div>
       <div class="fcol">
-        <div class="fgrp"><h3>Platform</h3><ul><li><a href="#">Instagram</a></li><li><a href="#">Facebook</a></li><li><a href="#">TikTok</a><span class="badge">Segera</span></li><li><a href="#">YouTube</a><span class="badge">Segera</span></li><li><a href="#">Reels</a></li><li><a href="#">Story</a></li><li><a href="#">Carousel</a></li><li><a href="#">Shorts</a></li><li><a href="#">Foto</a></li><li><a href="#">Video</a></li><li><a href="#">Teks</a></li><li><a href="#">Jadwal Berulang</a></li></ul></div>
+        <div class="fgrp"><h3>Platform</h3><ul><li><a href="#platform">Instagram</a></li><li><a href="#platform">Facebook</a></li><li><a href="#platform">TikTok</a><span class="badge">Segera</span></li><li><a href="#platform">YouTube</a><span class="badge">Segera</span></li><li><a href="#platform">Reels</a></li><li><a href="#platform">Story</a></li><li><a href="#platform">Carousel</a></li><li><a href="#platform">Shorts</a></li><li><a href="#platform">Foto</a></li><li><a href="#platform">Video</a></li><li><a href="#platform">Teks</a></li><li><a href="#platform">Jadwal Berulang</a></li></ul></div>
       </div>
       <div class="fcol">
-        <div class="fgrp"><h3>Untuk siapa</h3><ul><li><a href="#">UMKM</a></li><li><a href="#">Agensi</a></li><li><a href="#">Kreator</a></li><li><a href="#">Toko Online</a></li><li><a href="#">Kafe dan Kuliner</a></li><li><a href="#">Klinik dan Kecantikan</a></li><li><a href="#">Pendidikan</a></li></ul></div>
+        <div class="fgrp"><h3>Untuk siapa</h3><ul><li><a href="#untuk-siapa">UMKM</a></li><li><a href="#untuk-siapa">Agensi</a></li><li><a href="#untuk-siapa">Kreator</a></li><li><a href="#untuk-siapa">Toko Online</a></li><li><a href="#untuk-siapa">Kafe dan Kuliner</a></li><li><a href="#untuk-siapa">Klinik dan Kecantikan</a></li><li><a href="#untuk-siapa">Pendidikan</a></li></ul></div>
       </div>
       <div class="fcol brk">
-        <div class="fgrp"><h3>Sumber</h3><ul><li><a href="#">Blog</a></li><li><a href="#">Komunitas</a></li><li><a href="#">Pusat Belajar</a></li><li><a href="#">Kamus Istilah Media Sosial</a></li></ul></div>
+        <div class="fgrp"><h3>Sumber</h3><ul><li><a href="#sumber">Blog</a></li><li><a href="#sumber">Komunitas</a></li><li><a href="#sumber">Pusat Belajar</a></li><li><a href="#sumber">Kamus Istilah Media Sosial</a></li></ul></div>
       </div>
       <div class="fcol">
-        <div class="fgrp"><h3>Bantuan</h3><ul><li><a href="#">Catatan Rilis</a></li><li><a href="#">Dokumentasi</a></li><li><a href="#">Pusat Bantuan</a></li><li><a href="#">Usulkan Fitur</a></li><li><a href="#">Status Layanan</a></li></ul></div>
-        <div class="fgrp"><h3>Keterbukaan</h3><ul><li><a href="#">Peta Jalan</a></li><li><a href="#">Harga</a></li><li><a href="#">Kebijakan Data</a></li><li><a href="#">Izin API Platform</a></li><li><a href="#">Keamanan</a></li></ul></div>
+        <div class="fgrp"><h3>Bantuan</h3><ul><li><a href="#dukungan">Catatan Rilis</a></li><li><a href="#dukungan">Dokumentasi</a></li><li><a href="#dukungan">Pusat Bantuan</a></li><li><a href="#dukungan">Usulkan Fitur</a></li><li><a href="#dukungan">Status Layanan</a></li></ul></div>
+        <div class="fgrp"><h3>Keterbukaan</h3><ul><li><a href="#tentang">Peta Jalan</a></li><li><a href="#tentang">Harga</a></li><li><a href="#tentang">Kebijakan Data</a></li><li><a href="#tentang">Izin API Platform</a></li><li><a href="#tentang">Keamanan</a></li></ul></div>
       </div>
       <div class="fcol">
-        <div class="fgrp"><h3>Perusahaan</h3><ul><li><a href="#">Tentang</a></li><li><a href="#">Karier</a></li><li><a href="#">Legal</a></li><li><a href="#">Program Mitra</a></li><li><a href="#">Media</a></li><li><a href="#">Peta Situs</a></li></ul></div>
+        <div class="fgrp"><h3>Perusahaan</h3><ul><li><a href="#tentang">Tentang</a></li><li><a href="#tentang">Karier</a></li><li><a href="#tentang">Legal</a></li><li><a href="#tentang">Program Mitra</a></li><li><a href="#tentang">Media</a></li><li><a href="#tentang">Peta Situs</a></li></ul></div>
       </div>
     </div>
     <div class="facc">
@@ -1182,19 +871,19 @@ footer{background:var(--footer);color:#fff;border-radius:20px 20px 0 0;padding:4
     <div class="fbottom">
       <div class="fbig" aria-hidden="true">
         <svg viewBox="0 0 28 28"><rect x="1" y="3" width="26" height="24" rx="6" fill="#A9C4FF"/><rect x="5" y="13" width="8" height="5" rx="1.5" fill="#14213B"/><rect x="15" y="13" width="8" height="5" rx="1.5" fill="#14213B" opacity=".55"/><rect x="5" y="20" width="8" height="4" rx="1.5" fill="#14213B" opacity=".55"/><rect x="15" y="20" width="8" height="4" rx="1.5" fill="#14213B"/><rect x="7" y="0" width="3" height="6" rx="1.5" fill="#A9C4FF"/><rect x="18" y="0" width="3" height="6" rx="1.5" fill="#A9C4FF"/></svg>
-        <span>Kelola<br>Konten</span>
+        <span>Kelola Konten</span>
       </div>
       <div class="fright">
         <div class="flang"><svg class="ic"><use href="#l-globe"/></svg>Bahasa Indonesia<svg class="ic s"><use href="#l-chevron-down"/></svg></div>
         <div class="fsoc">
-          <a href="#" aria-label="Instagram"><svg><use href="#s-instagram"/></svg></a>
-          <a href="#" aria-label="Facebook"><svg><use href="#s-facebook"/></svg></a>
-          <a href="#" aria-label="TikTok"><svg><use href="#s-tiktok"/></svg></a>
-          <a href="#" aria-label="YouTube"><svg><use href="#s-youtube"/></svg></a>
-          <a href="#" aria-label="LinkedIn"><svg><use href="#s-linkedin"/></svg></a>
-          <a href="#" aria-label="Threads"><svg><use href="#s-threads"/></svg></a>
+          <a href="#top" aria-label="Instagram"><svg><use href="#s-instagram"/></svg></a>
+          <a href="#top" aria-label="Facebook"><svg><use href="#s-facebook"/></svg></a>
+          <a href="#top" aria-label="TikTok"><svg><use href="#s-tiktok"/></svg></a>
+          <a href="#top" aria-label="YouTube"><svg><use href="#s-youtube"/></svg></a>
+          <a href="#top" aria-label="LinkedIn"><svg><use href="#s-linkedin"/></svg></a>
+          <a href="#top" aria-label="Threads"><svg><use href="#s-threads"/></svg></a>
         </div>
-        <p class="fcopy"><span>©2026 Kelola Konten</span>|<a href="#">Privasi</a>|<a href="#">Ketentuan</a>|<a href="#">Keamanan</a></p>
+        <p class="fcopy"><span>©2026 Kelola Konten</span>|<a href="#tentang">Privasi</a>|<a href="#tentang">Ketentuan</a>|<a href="#tentang">Keamanan</a></p>
       </div>
     </div>
   </div>

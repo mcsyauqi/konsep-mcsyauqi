@@ -31,6 +31,10 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
 h1,h2,h3,h4,p,ul,figure{margin:0;padding:0}
 ul{list-style:none}
 img{display:block;max-width:100%}
+p{text-wrap:pretty}
+[id]{scroll-margin-top:120px}
+.nb{white-space:nowrap}
+.rng{display:inline-block;width:.5em;height:.075em;min-height:1px;margin:0 .08em;vertical-align:.3em;background:currentColor}
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .i{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;flex:none}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
@@ -50,12 +54,18 @@ img{display:block;max-width:100%}
 .nav-links>a.gap{margin-right:12px}
 .navbtn{display:flex;align-items:center;gap:4px;padding:8px 12px}
 .navbtn .i{transition:transform .2s}
-.dd{position:relative}
+.dd{position:static}
 .dd:hover .navbtn .i,.dd:focus-within .navbtn .i{transform:rotate(180deg)}
-.dd-panel{position:absolute;top:calc(100% + 6px);left:0;min-width:236px;background:var(--bg);border:1px solid var(--border);padding:6px;opacity:0;visibility:hidden;transform:translateY(4px);transition:opacity .15s,transform .15s,visibility .15s;box-shadow:0 12px 32px rgba(17,26,21,.08)}
-.dd-panel::before{content:"";position:absolute;left:0;right:0;top:-8px;height:8px}
+.dd-panel{position:absolute;top:100%;left:0;right:0;background:var(--bg);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:20px 16px 24px;opacity:0;visibility:hidden;transform:translateY(-4px);transition:opacity .18s,transform .18s,visibility .18s}
+.dd-panel::before{content:"";position:absolute;left:0;right:0;top:-14px;height:14px}
+.dd-in{max-width:1248px;margin:0 auto;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.dim{position:fixed;left:0;right:0;top:92px;bottom:0;z-index:45;background:rgba(9,16,12,.32);opacity:0;visibility:hidden;transition:opacity .18s,visibility .18s;pointer-events:none}
+.nav:has(.dd:hover)~.dim,.nav:has(.dd:focus-within)~.dim{opacity:1;visibility:visible}
 .dd:hover .dd-panel,.dd:focus-within .dd-panel{opacity:1;visibility:visible;transform:none}
-.dd-panel a{display:flex;flex-direction:column;padding:8px 10px;font-size:14px;line-height:20px;color:var(--fg)}
+.dd-panel a{display:flex;gap:12px;align-items:flex-start;padding:12px;font-size:14px;line-height:20px;color:var(--fg);transition:background-color .15s}
+.dd-panel a>span{display:flex;flex-direction:column}
+.dd-panel .dt{width:36px;height:36px;flex:none;display:grid;place-items:center;background:var(--secondary);border:1px solid var(--border);color:var(--fg)}
+.dd-panel .dt .i{width:16px;height:16px}
 .dd-panel a small{font-size:12px;line-height:16px;color:var(--muted)}
 .dd-panel a:hover{background:var(--secondary)}
 .nav-sep{border-left:1px solid var(--border);padding-left:16px;height:24px;display:flex;align-items:center}
@@ -72,10 +82,10 @@ body.menu-open .msheet{display:flex}
 .msheet .btn{margin-top:24px;border:0;justify-content:center}
 
 /* ---------- layout ---------- */
-.page{max-width:1592px;margin:0 auto;padding:0 16px}
+.page{max-width:1280px;margin:0 auto;padding:0 16px}
 .rule{height:1px;background:var(--border)}
 .sec{padding:48px 0}
-.h2{font-family:var(--serif);font-weight:400;font-size:24px;line-height:32px;text-align:center;color:var(--fg)}
+.h2{font-family:var(--serif);font-weight:400;font-size:24px;line-height:32px;text-align:center;color:var(--fg);text-wrap:balance}
 .sub{display:none;margin:16px auto 0;max-width:672px;padding:0 16px;font-size:16px;line-height:24px;color:var(--muted);text-align:center}
 .uline{font-size:14px;line-height:20px;color:var(--muted);text-decoration:underline;text-underline-offset:4px;text-decoration-thickness:1px;transition:color .2s}
 .uline:hover{color:var(--accent)}
@@ -95,20 +105,15 @@ body.menu-open .msheet{display:flex}
 .btn:hover{background:var(--accent-hover)}
 .btn:active{transform:translateY(1px)}
 .fine{margin-top:12px;font-size:12px;line-height:16px;color:var(--muted)}
-.hero-icons{margin-top:28px;display:flex;gap:10px;color:var(--muted)}
-.hero-icons .i{width:18px;height:18px;stroke-width:1.6}
-.visual{position:relative;margin-top:32px;width:100%;height:420px;overflow:hidden;
-  background:
-    radial-gradient(42% 30% at 86% 102%,rgba(205,219,210,.75),rgba(205,219,210,0) 70%),
-    radial-gradient(38% 32% at 100% 0%,rgba(152,170,159,.7),rgba(152,170,159,0) 75%),
-    linear-gradient(102deg,#0a110d 0%,#0b130e 32%,#22322a 46%,#4f6055 60%,#73857a 77%,#82938a 100%)}
-.visual::after{content:"";position:absolute;inset:0;background:radial-gradient(60% 50% at 20% 30%,rgba(0,0,0,.35),rgba(0,0,0,0) 70%);pointer-events:none}
-.dash-fit{position:absolute;z-index:1;left:50%;top:50%;width:min(1034px,95%);aspect-ratio:1034/672;transform:translate(-50%,-50%)}
+.hero-icons{margin-top:28px;display:flex;gap:10px;color:color-mix(in srgb,var(--muted) 46%,var(--bg))}
+.hero-icons svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.25;stroke-linejoin:round}
+.visual{position:relative;isolation:isolate;margin-top:32px;width:100%;height:420px;overflow:hidden;background:#060b08}
+.visual::before{content:"";position:absolute;inset:-3%;z-index:-1;background:#060b08 url(assets/hero-bg.webp) 72% 50%/cover no-repeat;animation:drift 34s ease-in-out infinite alternate;will-change:transform}
+@keyframes drift{from{transform:scale(1) translate3d(0,0,0)}to{transform:scale(1.07) translate3d(-1.6%,1.1%,0)}}
+.dash-fit{position:absolute;z-index:1;left:50%;top:50%;width:95%;aspect-ratio:1034/672;transform:translate(-50%,-50%)}
 .hero-in>*{animation:rise .7s cubic-bezier(.2,.7,.2,1) both}
 .hero-in>*:nth-child(2){animation-delay:.05s}.hero-in>*:nth-child(3){animation-delay:.1s}.hero-in>*:nth-child(4){animation-delay:.15s}.hero-in>*:nth-child(5){animation-delay:.2s}.hero-in>*:nth-child(6){animation-delay:.25s}
-.visual{animation:fade 1s .2s both}
 @keyframes rise{from{opacity:0;transform:translateY(10px);filter:blur(4px)}to{opacity:1;transform:none;filter:none}}
-@keyframes fade{from{opacity:0}to{opacity:1}}
 
 /* dashboard mock (hero) */
 .dash{position:absolute;left:0;top:0;width:1034px;height:672px;transform-origin:0 0;background:#fff;color:#141c17;display:grid;grid-template-columns:52px 1fr;text-align:left;font-family:var(--sans);box-shadow:0 30px 70px rgba(0,0,0,.38);outline:1px solid rgba(255,255,255,.22)}
@@ -140,7 +145,7 @@ body.menu-open .msheet{display:flex}
 .d-card{position:relative;height:144px;border:1px solid #e3e7e4;background:#fff;padding:11px 11px 9px;display:flex;flex-direction:column}
 .d-card .h{display:flex;align-items:center;gap:5px;font-size:8.5px;line-height:12px;color:#5b6660}
 .d-card .h .i{width:10px;height:10px}
-.d-card .b{margin-top:9px;font-size:10px;line-height:13.5px;color:#141c17}
+.d-card .b{margin-top:9px;font-size:10px;line-height:13.5px;color:#141c17;text-wrap:balance}
 .d-card .b em{font-style:normal;color:#6b756f}
 .d-card .f{margin-top:auto;font-size:8px;line-height:11px;color:#9aa29d;display:flex;justify-content:space-between}
 .d-card .n{margin-top:auto;margin-bottom:10px;font-size:16px;line-height:20px;color:#141c17}
@@ -176,86 +181,65 @@ body.menu-open .msheet{display:flex}
 .hiw-left h2{padding-left:32px;font-family:var(--serif);font-weight:400;font-size:24px;line-height:32px}
 .steps{position:relative;margin-top:56px;padding-left:32px}
 .steps::before{content:"";position:absolute;left:3.5px;top:15px;height:161px;width:1px;background:var(--border)}
-.ind{position:absolute;left:0;width:8px;height:8px;background:var(--border);transition:background-color .2s,transform .2s}
+.ind{position:absolute;left:0;width:8px;height:8px;background:var(--border)}
 .ind.on{background:var(--accent);transform:scale(1.25)}
 .step{display:block;width:100%;padding-bottom:24px;text-align:left}
-.step-t{display:block;font-size:20px;line-height:28px;color:var(--muted);transition:color .2s}
+.step-t{display:block;font-size:20px;line-height:28px;color:var(--muted)}
 .step:hover .step-t,.step.on .step-t{color:var(--fg)}
 .step-d{display:block;margin-top:4px;height:16px;max-width:448px;overflow:hidden;opacity:0;font-size:14px;line-height:22.75px;color:var(--fg2)}
-.step.on .step-d{height:auto;opacity:1;animation:fib .35s ease-out}
-@keyframes fib{from{opacity:0;filter:blur(4px)}to{opacity:1;filter:none}}
+.step.on .step-d{height:auto;opacity:1;animation:fib .25s ease-out}
+@keyframes fib{from{opacity:0}to{opacity:1}}
 .panel{position:relative;height:740px;border:1px solid var(--border);background:#fff;overflow:hidden}
-.panel .mk-slot{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;transition:opacity .4s,visibility .4s}
-.panel .mk-slot.on{opacity:1;visibility:visible}
-.panel .mock{transform:scale(var(--mk-s,.95))}
-.panel .mk-slot.on .mock{animation:fis .4s ease-out}
-@keyframes fis{from{opacity:.4;filter:blur(3px)}to{opacity:1;filter:none}}
+.panel .mk-slot{position:absolute;inset:0;padding:0 32px;display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden}
+.panel .mk-slot.on{opacity:1;visibility:visible;transition:opacity .2s}
+.panel .mk-slot.on :is(.m-tr,.m-it,.stat){animation:rowin .32s ease-out both}
+.panel .mk-slot.on :is(.m-tr,.m-it,.stat):nth-child(1){animation-delay:0ms}.panel .mk-slot.on :is(.m-tr,.m-it,.stat):nth-child(2){animation-delay:35ms}.panel .mk-slot.on :is(.m-tr,.m-it,.stat):nth-child(3){animation-delay:70ms}.panel .mk-slot.on :is(.m-tr,.m-it,.stat):nth-child(4){animation-delay:105ms}.panel .mk-slot.on :is(.m-tr,.m-it,.stat):nth-child(5){animation-delay:140ms}.panel .mk-slot.on :is(.m-tr,.m-it,.stat):nth-child(6){animation-delay:175ms}.panel .mk-slot.on :is(.m-tr,.m-it,.stat):nth-child(7){animation-delay:210ms}.panel .mk-slot.on :is(.m-tr,.m-it,.stat):nth-child(8){animation-delay:245ms}.panel .mk-slot.on :is(.m-tr,.m-it,.stat):nth-child(9){animation-delay:280ms}.panel .mk-slot.on :is(.m-tr,.m-it,.stat):nth-child(10){animation-delay:315ms}.panel .mk-slot.on :is(.m-tr,.m-it,.stat):nth-child(11){animation-delay:350ms}.panel .mk-slot.on :is(.m-tr,.m-it,.stat):nth-child(12){animation-delay:385ms}.panel .mk-slot.on :is(.m-tr,.m-it,.stat):nth-child(13){animation-delay:420ms}.panel .mk-slot.on :is(.m-tr,.m-it,.stat):nth-child(14){animation-delay:455ms}
+@keyframes rowin{from{opacity:0;transform:translateY(3px)}to{opacity:1;transform:none}}
 .hiw-item+.hiw-item{margin-top:48px}
-.hiw-item p{margin:8px auto 0;max-width:320px;font-size:16px;line-height:24px;color:var(--muted);text-align:center}
+.hiw-item .h2{max-width:448px;margin:0 auto}
+.hiw-item p{margin:8px auto 0;max-width:320px;font-size:16px;line-height:24px;color:var(--muted);text-align:center;text-wrap:balance}
 .mpanel{margin-top:24px;height:530px;border:1px solid var(--border);padding:4px;overflow:hidden;display:flex;align-items:center;justify-content:center;background:#fff}
 
 /* mocks inside how-it-works */
-.mock{--m-fg:#141c17;--m-mu:#5b6660;--m-bd:#dde3df;--m-sec:#e5ebe7;width:526px;height:700px;flex:none;transform:scale(.95);background:#fff;color:var(--m-fg);display:flex;flex-direction:column;text-align:left;font-size:11px;line-height:16.5px}
-.mock.sm{width:348px;height:520px;transform:scale(.85);font-size:10px;line-height:15px}
+.mock{--m-fg:#141c17;--m-mu:#5b6660;--m-bd:#dde3df;--m-sec:#e5ebe7;width:min(526px,100%);height:700px;flex:none;transform:scale(.95);background:#fff;color:var(--m-fg);display:flex;flex-direction:column;text-align:left;font-size:11px;line-height:16.5px}
 .m-head{flex:none;display:flex;align-items:center;justify-content:space-between;padding:12px 12px 8px;border-bottom:1px solid var(--m-bd);font-size:14px;line-height:21px}
-.mock.sm .m-head{padding:8px 8px 6px;font-size:13px;line-height:19.5px}
 .m-head .i{width:14px;height:14px;color:var(--m-mu)}
 .m-acc{flex:none;height:200px;display:flex;justify-content:center;gap:54px}
-.mock.sm .m-acc{height:140px;gap:36px}
 .acc{width:36px;display:flex;flex-direction:column;align-items:center;padding-top:46px}
 .acc small{white-space:nowrap}
-.mock.sm .acc{width:26px}
-.mock.sm .acc{padding-top:14px}
 .acc small{font-size:8.5px;line-height:11px;color:var(--m-mu)}
 .acc span{margin-top:4px;width:36px;height:36px;background:var(--m-sec);border:1px solid var(--m-bd);display:grid;place-items:center;color:var(--m-mu)}
-.mock.sm .acc span{width:26px;height:26px}
-.mock.sm .acc small{visibility:hidden}
-.mock.sm .m-it{font-size:11px;line-height:16.5px}
 .m-ibx{padding:0 10px 10px}
-.mock.sm.m-ibx{padding:0 8px 8px}
 .m-ibx .m-head{border-bottom:0;padding:14px 0 8px}
-.mock.sm.m-ibx .m-head{padding:12px 0 6px}
-.mock.sm.m-inv .m-head{padding-top:11px}
-.mock.sm.m-inv .m-inv-stats{margin:22px 0 14px}
-.mock.sm .badge-s{font-size:9px;height:17px;padding:0 7px}
 
 .acc span .i{width:15px;height:15px}
 .acc em{flex:1;width:0;border-left:1px dashed #c9d1cc;margin-top:4px}
 .m-table{flex:1;min-height:0;overflow:hidden;border:1px solid var(--m-bd)}
-.m-tr{display:grid;grid-template-columns:82px minmax(0,1fr) 117px 140px;height:32px;border-bottom:1px solid var(--m-bd)}
-.mock.sm .m-tr{grid-template-columns:46px minmax(0,1fr) 73px 103px;height:27.8px}
+.m-tr{display:grid;grid-template-columns:15.5% minmax(0,1fr) 22% 26.5%;height:32px;border-bottom:1px solid var(--m-bd)}
 .m-tr>*{display:flex;align-items:center;gap:6px;padding:0 8px;border-right:1px solid var(--m-bd);white-space:nowrap;overflow:hidden;min-width:0}
-.mock.sm .m-tr>*{padding:0 6px}
 .m-tr>*:last-child{border-right:0}
 .m-th{background:var(--m-sec);color:var(--m-mu)}
-.mock:not(.sm) .m-th{height:34px}
+.mock .m-th{height:34px}
 .m-tr .d{color:var(--m-mu)}
 .m-tr.in .ds,.m-tr.in .am{color:#237a4c}
 .cat{width:8px;height:8px;flex:none;background:var(--c)}
 .m-inv-stats{flex:none;margin:22px 0 14px;display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.mock.sm .m-inv-stats{margin:22px 0 10px;gap:12px}
 .stat{border:1px solid var(--m-bd);padding:16px;height:100px;position:relative}
-.mock.sm .stat{padding:12px;height:87px}
 .stat b{display:block;font-family:var(--serif);font-weight:400;font-size:17px;line-height:22px}
-.mock.sm .stat b{font-size:15px;line-height:20px}
 .stat small{display:block;margin-top:6px;font-size:9.5px;line-height:13px}
 .stat small+small{margin-top:2px;color:var(--m-mu);font-size:8.5px}
 .stat .score{position:absolute;right:12px;top:14px;display:flex;gap:3px;height:18px}
 .stat .score i{display:block;width:2px;height:100%;background:var(--m-fg)}
 .stat .score i:nth-last-child(-n+2){background:#c5ccc8}
 .badge-s{display:inline-flex;align-items:center;height:16px;padding:0 6px;border-radius:9999px;font-size:9px;line-height:13px;border:1px solid}
-.mock.sm .badge-s{font-size:8px;height:14px;padding:0 5px}
 .b-ok{color:#1e7444;background:#e6f5ec;border-color:#bfe3cd}
 .b-sch{color:#2559b8;background:#e8f0fd;border-color:#c3d6f8}
 .b-late{color:#85600a;background:#fdf6e1;border-color:#f1dfa4}
 .b-rec{color:#9c4a0c;background:#fdeee2;border-color:#f5cfae}
 .m-search{flex:none;margin:12px 0 8px;height:30px;border:1px solid var(--m-bd);display:flex;align-items:center;justify-content:space-between;padding:0 10px;color:var(--m-mu)}
-.mock.sm .m-search{margin:10px 0 6px;height:26px}
 .m-search .i{width:12px;height:12px}
 .m-list{flex:none;display:flex;flex-direction:column;gap:8px}
-.mock.sm .m-list{gap:7px}
 .m-it{display:flex;align-items:center;gap:10px;height:50px;border:1px solid var(--m-bd);padding:0 10px}
-.mock.sm .m-it{height:49px;gap:8px;padding:0 8px}
 .m-it .ic{width:18px;height:18px;flex:none;background:var(--m-sec);display:grid;place-items:center;color:var(--m-mu)}
 .m-it .ic .i{width:11px;height:11px}
 .m-it .t{flex:1;min-width:0;display:flex;flex-direction:column}
@@ -268,12 +252,38 @@ body.menu-open .msheet{display:flex}
 .m-match .t small{font-size:9px;line-height:13px;color:var(--m-mu)}
 .m-match button{border:1px solid var(--m-bd);background:#fff;padding:3px 9px;font-size:10px;line-height:15px}
 
+@media (max-width:639px){
+  .mock.sm{width:100%;height:520px;transform:scale(.85);font-size:10px;line-height:15px}
+  .mock.sm .m-head{padding:8px 8px 6px;font-size:13px;line-height:19.5px}
+  .mock.sm .m-acc{height:140px;gap:36px}
+  .mock.sm .acc{width:26px}
+  .mock.sm .acc{padding-top:14px}
+  .mock.sm .acc span{width:26px;height:26px}
+  .mock.sm .acc small{visibility:hidden}
+  .mock.sm .m-it{font-size:11px;line-height:16.5px}
+  .mock.sm.m-ibx{padding:0 8px 8px}
+  .mock.sm.m-ibx .m-head{padding:12px 0 6px}
+  .mock.sm.m-inv .m-head{padding-top:11px}
+  .mock.sm.m-inv .m-inv-stats{margin:22px 0 14px}
+  .mock.sm .badge-s{font-size:9px;height:17px;padding:0 7px}
+  .mock.sm .m-tr{grid-template-columns:13.2% minmax(0,1fr) 21% 29.6%;height:27.8px}
+  .mock.sm .m-tr>*{padding:0 6px}
+  .mock.sm .m-inv-stats{margin:22px 0 10px;gap:12px}
+  .mock.sm .stat{padding:12px;height:87px}
+  .mock.sm .stat b{font-size:15px;line-height:20px}
+  .mock.sm .m-search{margin:10px 0 6px;height:26px}
+  .mock.sm .m-list{gap:7px}
+  .mock.sm .m-it{height:49px;gap:8px;padding:0 8px}
+  .mock.sm .m-th{height:27.8px}
+}
+@media (min-width:640px){.mock.sm{width:100%;height:620px;transform:scale(.9)}}
+
 /* ---------- features ---------- */
 .feat-grid{margin-top:40px;display:grid;grid-template-columns:1fr 1fr;gap:24px}
 .feat{display:flex;flex-direction:column;align-items:center;text-align:center;font-size:16px;line-height:24px}
 .tile{width:60px;height:60px;background:var(--secondary);border:1px solid var(--border);display:grid;place-items:center;color:var(--fg);transition:background-color .2s,border-color .2s,transform .2s}
 .tile .i{width:20px;height:20px;stroke-width:1.5}
-.feat:hover .tile{border-color:var(--accent);color:var(--accent);transform:translateY(-2px)}
+a.feat:hover .tile{border-color:var(--accent);color:var(--accent);transform:translateY(-2px)}
 .feat h3{margin-top:16px;font-size:14px;line-height:21px;font-weight:400}
 .feat p{font-size:14px;line-height:21px;color:var(--muted)}
 
@@ -298,19 +308,19 @@ a.ac:hover{border-color:var(--accent)}
 .more{margin-top:36px;font-size:14px;line-height:20px}
 
 /* ---------- stories ---------- */
-.t-icons{margin-top:16px;display:flex;justify-content:center;gap:4px;color:var(--muted)}
-.t-row{margin:32px -16px 0 0;padding:6px 16px 2px 0;display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none}
+.t-icons{margin-top:16px;font-size:12px;line-height:16px;letter-spacing:.2px;color:var(--muted)}
+.t-row{margin:32px calc((100% - 100vw) / 2) 0 0;padding:6px 16px 2px 0;display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none}
 .t-row::-webkit-scrollbar{display:none}
 .tc{position:relative;flex:none;width:272px;border:1px solid var(--border);background:var(--bg);padding:24px 32px 24px 32px;text-align:left;scroll-snap-align:start;transition:transform .35s cubic-bezier(.2,.7,.2,1),border-color .2s}
 .tc:hover{border-color:var(--accent)}
 .tc.r1{transform:rotate(-1deg);order:3}.tc.r2{transform:rotate(1deg);order:4}.tc.r3{transform:rotate(2deg);order:1}.tc.r4{transform:rotate(-2deg);order:2}
-.tc:hover{transform:rotate(0) translateY(-4px)}
+.t-row .tc:hover{transform:rotate(0) translateY(-4px)}
 .tc .ctry{font-size:10px;line-height:15px;letter-spacing:.5px;text-transform:uppercase;color:var(--muted)}
 .tc .who{margin-top:13px;display:flex;align-items:center;gap:8px;font-size:14px;line-height:20px;color:var(--fg)}
-.av{width:16px;height:16px;flex:none;border-radius:50%;background:#cfd9d3;color:#22362b;font-size:7px;line-height:16px;text-align:center}
+.av{width:16px;height:16px;flex:none;border-radius:50%;background:var(--c,#2d4b3b);color:#eef4f0;display:grid;place-items:center;overflow:hidden}
+.av svg{width:12px;height:12px;margin-top:5px;fill:currentColor}
 .tc .co{margin-top:14px;font-size:14px;line-height:24px;color:var(--muted)}
 .tc .qt{margin-top:4px;font-size:14px;line-height:22.75px;color:var(--muted)}
-.tc .chat{position:absolute;top:13px;right:24px;width:28px;height:28px;background:var(--secondary);display:grid;place-items:center;color:var(--fg)}
 .t-more{margin-top:37px;font-size:14px;line-height:20px}
 
 /* ---------- integrations ---------- */
@@ -326,9 +336,25 @@ a.ac:hover{border-color:var(--accent)}
 @keyframes ml{from{transform:translateX(-4%)}to{transform:translateX(-54%)}}
 @keyframes mr{from{transform:translateX(-50%)}to{transform:translateX(0)}}
 .chip{display:inline-flex;align-items:center;gap:8px;margin-right:8px;padding:6px 12px;border:1px solid var(--border);border-radius:9999px;background:var(--bg);font-size:14px;line-height:20px;white-space:nowrap;transition:border-color .2s}
-.chip:hover{border-color:var(--accent)}
-.chip .i{width:16px;height:16px;color:var(--c,var(--accent))}
+.chip .i{width:16px;height:16px;color:var(--accent)}
 .m-more{margin-top:35px;font-size:14px;line-height:20px}
+
+/* ---------- plan dialog ---------- */
+.plan{width:min(560px,calc(100% - 32px));max-height:min(84vh,760px);margin:auto;padding:0;border:1px solid var(--border);background:var(--bg);color:var(--fg);overflow:auto;box-shadow:0 24px 64px rgba(9,16,12,.25)}
+.plan::backdrop{background:rgba(9,16,12,.45)}
+.plan-in{position:relative;padding:32px;outline:0}
+.plan-x{position:absolute;top:14px;right:14px;width:36px;height:36px;display:grid;place-items:center;color:var(--muted);transition:color .2s}
+.plan-x:hover{color:var(--fg)}
+.plan-x .i{width:18px;height:18px}
+.plan-k{font-size:12px;line-height:16px;letter-spacing:.3px;color:var(--muted)}
+.plan h2{margin-top:6px;padding-right:32px;font-family:var(--serif);font-weight:400;font-size:24px;line-height:32px}
+.plan-lead{margin-top:8px;font-size:14px;line-height:22px;color:var(--muted)}
+.plan-sec{margin-top:16px;padding-top:16px;border-top:1px solid var(--border);scroll-margin-top:16px;transition:border-color .2s}
+.plan-sec h3{font-size:16px;line-height:24px;font-weight:400;transition:color .2s}
+.plan-sec p{margin-top:2px;font-size:14px;line-height:20px;color:var(--muted)}
+.plan-sec.hl{border-top-color:var(--accent)}
+.plan-sec.hl h3{color:var(--accent)}
+.plan-cta{margin-top:24px}
 
 /* ---------- footer ---------- */
 .foot{position:relative;overflow:hidden;border-top:1px solid var(--border);background:var(--bg)}
@@ -356,73 +382,95 @@ a.ac:hover{border-color:var(--accent)}
 .dot{position:relative;width:8px;height:8px;border-radius:50%;background:#2a9d5c}
 .dot::after{content:"";position:absolute;inset:0;border-radius:50%;background:#2a9d5c;animation:glow 2s cubic-bezier(.4,0,.6,1) infinite}
 @keyframes glow{0%{transform:scale(1);opacity:.6}70%,100%{transform:scale(2.4);opacity:0}}
-.bigword{position:absolute;bottom:0;left:0;transform:translateY(25%);background:var(--bg);overflow:hidden;pointer-events:none;user-select:none}
-.bigword span{display:block;font-family:var(--sans);font-size:200px;line-height:1;color:var(--secondary);-webkit-text-stroke:1px var(--muted);white-space:nowrap}
+.foot{--bw:23.5vw}
+.foot .foot-in{padding-bottom:calc(var(--bw) * .75 + 32px)}
+.bigword{position:absolute;bottom:0;left:50%;transform:translate(-50%,25%);overflow:hidden;pointer-events:none;user-select:none}
+.bigword span{display:block;font-family:var(--sans);font-size:var(--bw);line-height:1;color:var(--secondary);-webkit-text-stroke:1px var(--muted);white-space:nowrap}
 
 /* ---------- breakpoints ---------- */
-@media (max-width:1023px){
+@media (max-width:639px){
   .feat:nth-child(5),.feat:nth-child(6){margin-top:8px}
+}
+@media (max-width:639px){.ac.b,.ac.c{margin-top:-4px}}
+@media (max-width:1023px){
   .tc{padding:32px;width:280px}
   .tc.r3{transform:none}
   .tc.r4{transform:rotate(1deg)}
 }
-@media (max-width:767px){.ac.b,.ac.c{margin-top:-4px}}
 @media (min-width:640px){
   .topbar{font-size:14px;line-height:20px}
-  .page{padding:0 32px}
   .sec{padding:64px 0}
   .sub{display:block}
-  .hero h1{font-size:48px;line-height:50px}
+  .hero{padding-bottom:160px}
+  .feat-grid{margin-top:48px;grid-template-columns:repeat(4,minmax(0,1fr));column-gap:16px;row-gap:40px}
+  .hero h1{font-size:36px;line-height:40px}
   .visual{height:520px}
+  .hiw{padding:8px 0 80px}
+  .hiw-item+.hiw-item{margin-top:64px}
+  .mpanel{margin-top:32px;height:646px;padding:12px}
   .marq::before,.marq::after{width:128px}
-  .foot-in{padding:64px 32px 320px}
+  .foot-in{padding:64px 32px}
+  .foot{--bw:24vw}
+  .foot .foot-in{padding-bottom:calc(var(--bw) * .74 + 32px)}
+  .bigword{transform:translate(-50%,26%)}
   .foot-cols{grid-template-columns:repeat(3,minmax(0,1fr));row-gap:48px}
   .status{display:flex}
-  .bigword{left:50%;transform:translate(-50%,40%)}
-  .bigword span{font-size:508px}
   .ck .lg{display:inline}.ck .sh{display:none}
+  .admin-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .ac{padding:20px}
+  .ac .lbl{display:block}
+  .ac h3{font-size:18px;line-height:28px}
+  .ac.big{grid-column:1/-1;padding:24px;flex-direction:row;justify-content:space-between;align-items:center;gap:24px}
+  .ac.big .num{margin-top:0;flex:none;font-size:40px;line-height:44px}
+}
+@media (min-width:768px) and (max-width:1023px){
+  .page{max-width:768px}
 }
 @media (min-width:768px){
-  .hero h1{font-size:60px;line-height:62px}
-  .visual{height:600px}
+  .hero{padding-top:160px}
+  .visual{margin-top:48px;height:600px}
+  .dash-fit{width:85%}
+  .feat-grid{column-gap:80px}
   .foot-cols{grid-template-columns:repeat(5,minmax(0,1fr))}
-  .admin-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .ac.big{grid-column:1/-1}
+  .tagline{font-size:20px;line-height:28px}
 }
 @media (min-width:1024px){
+  .sec{padding:96px 0}
+  .hero{padding:192px 0 144px}
+  .hero-in{padding:0}
+  .hero h1{margin-top:24px;font-size:60px;line-height:60px}
+  .lead{margin-top:24px;font-size:18px;line-height:28px}
+  .cta{margin-top:40px}
+  .visual{height:800px}
+  .dash-fit{width:min(1034px,calc(100% - 176px))}
+  .hiw{padding:24px 0 96px}
+  .hiw-desk{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:64px}
+  .hiw-mob{display:none}
+  .feat-grid{grid-template-columns:repeat(4,150px);justify-content:center}
+  .ac.big .num{font-size:48px;line-height:48px}
+  .t-row{margin:40px 0 0;padding:0;overflow:visible;justify-content:center;gap:16px}
+  .tc{width:min(256px,calc((100% - 48px) / 4));padding:24px}
+  .tc.r1,.tc.r2,.tc.r3,.tc.r4{order:0}
+  .tc.r1{transform:rotate(-1deg)}.tc.r2{transform:rotate(1deg)}.tc.r3{transform:rotate(1deg)}.tc.r4{transform:rotate(-1deg)}
+}
+@media (min-width:1280px){
   .nav{height:56px;padding:0 24px}
   .nav-links{display:flex}
   .burger,.logo .wm{display:none}
   .msheet{display:none!important}
-  .page{padding:0 96px}
-  .sec{padding:96px 0}
-  .hero{padding:192px 0 144px}
-  .hero-in{padding:0}
-  .hero h1{margin-top:24px;font-size:72px;line-height:72px}
-  .lead{margin-top:24px;font-size:18px;line-height:28px}
-  .cta{margin-top:40px}
-  .visual{margin-top:48px;height:800px}
-  .hiw{padding:24px 0 96px}
-  .hiw-desk{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:64px}
-  .hiw-mob{display:none}
-  .feat-grid{margin-top:48px;grid-template-columns:repeat(4,150px);column-gap:80px;row-gap:40px;justify-content:center}
-  .admin-grid{grid-template-columns:363fr 26fr 405fr 405fr;grid-template-areas:"a a b c" "d e e e"}
-  .ac{padding:20px}
-  .ac .lbl{display:block}
-  .ac h3{font-size:18px;line-height:28px}
-  .ac.a{grid-area:a}.ac.b{grid-area:b}.ac.c{grid-area:c}.ac.d{grid-area:d}
-  .ac.big{grid-area:e;padding:24px;flex-direction:row;justify-content:space-between;align-items:flex-start}
-  .ac.big .num{margin-top:12px;font-size:48px;line-height:48px}
-  .t-row{margin:40px 0 0;padding:0;overflow:visible;justify-content:center;gap:12px}
-  .tc{width:min(256px,calc((100% - 36px) / 4));padding:24px}
-  .tc.r1,.tc.r2,.tc.r3,.tc.r4{order:0}
-  .foot-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
-  .foot-right{align-items:flex-end;gap:40px}
-  .tagline{font-size:20px;line-height:28px}
-}
-@media (min-width:1280px){
+  [id]{scroll-margin-top:108px}
+  .hero h1{font-size:72px;line-height:72px}
   .hiw{padding:32px 0 96px}
   .visual{height:900px}
+  .admin-grid{grid-template-columns:363fr 26fr 405fr 405fr;grid-template-areas:"a a b c" "d e e e"}
+  .ac.a{grid-area:a}.ac.b{grid-area:b}.ac.c{grid-area:c}.ac.d{grid-area:d}
+  .ac.big{grid-area:e;align-items:flex-start}
+  .ac.big .num{margin-top:12px}
+  .t-row{gap:12px}
+  .tc{width:256px}
+  .tc.r3{transform:rotate(2deg)}.tc.r4{transform:rotate(-2deg)}
+  .foot-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+  .foot-right{align-items:flex-end;gap:40px}
 }
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
@@ -501,61 +549,63 @@ a.ac:hover{border-color:var(--accent)}
 </div>
 
 <header class="nav" id="nav">
-  <a class="logo" href="#" aria-label="Neracaku, ke beranda">
+  <a class="logo" href="#beranda" aria-label="Neracaku, ke beranda">
     <svg class="mk" aria-hidden="true"><use href="#logo"/></svg><span class="wm">neracaku</span>
   </a>
   <nav class="nav-links" aria-label="Menu utama">
     <div class="dd">
       <button class="navbtn" type="button" aria-haspopup="true">Fitur<svg class="i" aria-hidden="true"><use href="#i-caret"/></svg></button>
-      <div class="dd-panel">
-        <a href="#fitur">Invoice<small>Buat dan kirim lewat WhatsApp</small></a>
-        <a href="#cara-kerja">Buku kas<small>Uang masuk dan keluar</small></a>
-        <a href="#fitur">Pengingat jatuh tempo<small>Tagih tanpa sungkan</small></a>
-        <a href="#fitur">PPh 21<small>Hitung pajak gaji karyawan</small></a>
-      </div>
+      <div class="dd-panel"><div class="dd-in">
+        <a href="#cara-kerja" data-go="1"><span class="dt"><svg class="i" aria-hidden="true"><use href="#i-file"/></svg></span><span>Invoice<small>Buat dan kirim lewat WhatsApp</small></span></a>
+        <a href="#cara-kerja" data-go="0"><span class="dt"><svg class="i" aria-hidden="true"><use href="#i-book"/></svg></span><span>Buku kas<small>Uang masuk dan keluar</small></span></a>
+        <a href="#cara-kerja" data-go="2"><span class="dt"><svg class="i" aria-hidden="true"><use href="#i-inbox"/></svg></span><span>Kotak bukti<small>Cocokkan nota otomatis</small></span></a>
+        <a href="#cerita"><span class="dt"><svg class="i" aria-hidden="true"><use href="#i-bell"/></svg></span><span>Pengingat jatuh tempo<small>Tagih tanpa sungkan</small></span></a>
+      </div></div>
     </div>
-    <a class="gap" href="#harga">Harga</a>
-    <a href="#unduh">Unduh</a>
+    <a class="gap" href="#r-harga">Harga</a>
+    <a href="#r-unduh">Unduh</a>
     <div class="dd">
       <button class="navbtn" type="button" aria-haspopup="true">Alat gratis<svg class="i" aria-hidden="true"><use href="#i-caret"/></svg></button>
-      <div class="dd-panel">
-        <a href="#alat">Kalkulator PPh 21<small>Skema TER terbaru</small></a>
-        <a href="#alat">Kalkulator pajak<small>PPh final UMKM 0,5%</small></a>
-        <a href="#alat">Contoh invoice<small>Template siap pakai</small></a>
-      </div>
+      <div class="dd-panel"><div class="dd-in">
+        <a href="#r-alat"><span class="dt"><svg class="i" aria-hidden="true"><use href="#i-percent"/></svg></span><span>Kalkulator PPh&nbsp;21<small>Skema TER, segera hadir</small></span></a>
+        <a href="#r-alat"><span class="dt"><svg class="i" aria-hidden="true"><use href="#i-calc"/></svg></span><span>Kalkulator pajak UMKM<small>PPh final 0,5%, segera hadir</small></span></a>
+        <a href="#r-alat"><span class="dt"><svg class="i" aria-hidden="true"><use href="#i-file"/></svg></span><span>Contoh invoice<small>Template, segera hadir</small></span></a>
+        <a href="#r-alat"><span class="dt"><svg class="i" aria-hidden="true"><use href="#i-receipt"/></svg></span><span>Template nota<small>Segera hadir</small></span></a>
+      </div></div>
     </div>
-    <div class="nav-sep"><a href="#masuk">Masuk</a></div>
+    <div class="nav-sep"><a href="#r-masuk">Masuk</a></div>
   </nav>
   <button class="burger" type="button" aria-label="Buka menu" aria-expanded="false" aria-controls="msheet">
     <svg class="i m" aria-hidden="true"><use href="#i-menu"/></svg><svg class="i x" aria-hidden="true"><use href="#i-x"/></svg>
   </button>
 </header>
+<div class="dim" aria-hidden="true"></div>
 <div class="msheet" id="msheet">
-  <a href="#fitur">Fitur</a><a href="#harga">Harga</a><a href="#unduh">Unduh</a><a href="#alat">Alat gratis</a><a href="#masuk">Masuk</a>
-  <a class="btn" href="#daftar">Mulai coba gratis</a>
+  <a href="#fitur">Fitur</a><a href="#r-harga">Harga</a><a href="#r-unduh">Unduh</a><a href="#r-alat">Alat gratis</a><a href="#r-masuk">Masuk</a>
+  <a class="btn" href="#r-daftar">Mulai coba gratis</a>
 </div>
 
 <main class="page">
   <!-- HERO -->
-  <section class="hero" data-sec="hero">
+  <section class="hero" id="beranda" data-sec="hero">
     <div class="hero-in">
-      <a class="pill" href="#alat"><span>Baru: kalkulator PPh 21</span><span aria-hidden="true">&rarr;</span></a>
-      <h1>Invoice dan buku kas untuk UMKM modern</h1>
-      <p class="lead">Kirim invoice lewat WhatsApp, catat kas harian, tagih yang jatuh tempo, hitung PPh 21, dan kirim laporan rapi ke akuntan.</p>
-      <div class="cta"><a class="btn" href="#daftar">Mulai coba gratis</a></div>
+      <a class="pill" href="#r-alat"><span>Segera: kalkulator PPh&nbsp;21</span><span aria-hidden="true">&rarr;</span></a>
+      <h1>Invoice dan buku&nbsp;kas untuk&nbsp;UMKM</h1>
+      <p class="lead">Kirim invoice lewat WhatsApp, catat kas harian, tagih yang jatuh tempo, hitung PPh&nbsp;21, dan kirim laporan rapi ke akuntan.</p>
+      <div class="cta"><a class="btn" href="#r-daftar">Mulai coba gratis</a></div>
       <p class="fine">Gratis 14 hari &middot; Tanpa kartu kredit</p>
-      <div class="hero-icons" aria-label="Dipakai lewat WhatsApp, QRIS, rekening bank, nota, spreadsheet, dan kalkulator pajak">
-        <svg class="i" aria-hidden="true"><use href="#i-msg"/></svg>
-        <svg class="i" aria-hidden="true"><use href="#i-qr"/></svg>
-        <svg class="i" aria-hidden="true"><use href="#i-bank"/></svg>
-        <svg class="i" aria-hidden="true"><use href="#i-receipt"/></svg>
-        <svg class="i" aria-hidden="true"><use href="#i-sheet"/></svg>
-        <svg class="i" aria-hidden="true"><use href="#i-calc"/></svg>
+      <div class="hero-icons" aria-hidden="true">
+        <svg viewBox="0 0 18 18"><path d="M3 4h12v2.4H3zM3 7.8h8v2.4H3zM3 11.6h12V14H3z"/></svg>
+        <svg viewBox="0 0 18 18"><path fill-rule="evenodd" d="M9 1.5 16.5 9 9 16.5 1.5 9zM9 5.6 5.6 9 9 12.4 12.4 9z"/></svg>
+        <svg viewBox="0 0 18 18"><path d="M2 10a7 7 0 0 1 14 0z"/><circle cx="9" cy="13.6" r="2"/></svg>
+        <svg viewBox="0 0 18 18"><path d="M9 1.5c1.6 2.6 1.6 4.9 0 7.5-1.6-2.6-1.6-4.9 0-7.5zM9 16.5c-1.6-2.6-1.6-4.9 0-7.5 1.6 2.6 1.6 4.9 0 7.5zM1.5 9c2.6-1.6 4.9-1.6 7.5 0-2.6 1.6-4.9 1.6-7.5 0zM16.5 9c-2.6 1.6-4.9 1.6-7.5 0 2.6-1.6 4.9-1.6 7.5 0z"/></svg>
+        <svg viewBox="0 0 18 18"><path fill-rule="evenodd" d="M9 1.8l6.3 3.6v7.2L9 16.2l-6.3-3.6V5.4zM9 6.2 6.3 7.8v3.1L9 12.6l2.7-1.7V7.8z"/></svg>
+        <svg viewBox="0 0 18 18"><circle cx="6.5" cy="9" r="4.8"/><circle cx="11.5" cy="9" r="4.8" fill-opacity=".5"/></svg>
       </div>
     </div>
     <div class="visual">
       <div class="dash-fit" data-fit="1034">
-        <div class="dash" role="img" aria-label="Contoh dasbor Neracaku: ringkasan laba, kas, invoice belum dibayar, dan PPh 21">
+        <div class="dash" role="img" aria-label="Contoh dasbor Neracaku: ringkasan laba, kas, invoice belum dibayar, dan PPh&nbsp;21">
           <aside class="d-side">
             <svg class="mk" aria-hidden="true"><use href="#logo"/></svg>
             <div class="d-nav">
@@ -583,18 +633,18 @@ a.ac:hover{border-color:var(--accent)}
             <div class="d-cards">
               <div class="d-card sum">
                 <div class="h">Ringkasan mingguan</div>
-                <div class="b">Omzet Rp42,6 jt, biaya Rp18,1 jt, laba Rp24,5 jt. 3 pelanggan baru tercatat. <em>Minggu yang bagus!</em></div>
+                <div class="b">Omzet Rp42,6&nbsp;jt, biaya Rp18,1&nbsp;jt, laba Rp24,5&nbsp;jt. 3 pelanggan baru tercatat. <em>Minggu yang bagus!</em></div>
                 <div class="f"><span><svg class="i"><use href="#i-volume"/></svg>Dengarkan ringkasan</span><span>Tutup</span></div>
               </div>
               <div class="d-card">
                 <div class="h"><svg class="i"><use href="#i-trend"/></svg>Laba</div>
-                <div class="b"><em>Rata-rata laba</em> 6 bulan terakhir <em>adalah</em> Rp14,5 jt</div>
+                <div class="b"><em>Rata-rata laba</em> 6 bulan terakhir <em>adalah</em> Rp14,5&nbsp;jt</div>
                 <div class="bars" aria-hidden="true"><i style="height:45%"></i><i style="height:55%"></i><i style="height:95%"></i><i style="height:80%"></i><i style="height:40%"></i><i style="height:90%"></i><i style="height:60%"></i><i style="height:30%"></i><i style="height:42%"></i><i style="height:85%"></i><i style="height:38%"></i><i style="height:40%"></i></div>
                 <div class="f">Lihat grafik lengkap</div>
               </div>
               <div class="d-card">
                 <div class="h"><svg class="i"><use href="#i-hour"/></svg>Kas dan daya tahan</div>
-                <div class="b"><em>Biaya bulananmu</em> Rp23,4 jt <em>dan kas cukup untuk</em></div>
+                <div class="b"><em>Biaya bulananmu</em> Rp23,4&nbsp;jt <em>dan kas cukup untuk</em></div>
                 <div class="n">9 bulan</div>
                 <div class="f">Lihat arus kas</div>
               </div>
@@ -611,17 +661,17 @@ a.ac:hover{border-color:var(--accent)}
               </div>
               <div class="d-card">
                 <div class="h"><svg class="i"><use href="#i-file"/></svg>Invoice</div>
-                <div class="b"><em>Ada</em> 4 invoice belum dibayar <em>senilai</em> Rp12,5 jt <em>yang menunggu pelunasan</em></div>
+                <div class="b"><em>Ada</em> 4 invoice belum dibayar <em>senilai</em> Rp12,5&nbsp;jt <em>yang menunggu pelunasan</em></div>
                 <div class="f">Lihat invoice belum dibayar</div>
               </div>
               <div class="d-card">
                 <div class="h"><svg class="i"><use href="#i-bank"/></svg>Saldo</div>
-                <div class="b"><em>Total saldo</em> Rp24,3 jt <em>di dua rekening dan kas tunai</em></div>
+                <div class="b"><em>Total saldo</em> Rp24,3&nbsp;jt <em>di dua rekening dan kas tunai</em></div>
                 <div class="f">Lihat semua saldo</div>
               </div>
               <div class="d-card">
-                <div class="h"><svg class="i"><use href="#i-percent"/></svg>PPh 21<svg class="i"><use href="#i-chev"/></svg></div>
-                <div class="b"><em>Setoran</em> PPh 21 <em>bulan ini naik</em> 10% <em>dari bulan lalu</em></div>
+                <div class="h"><svg class="i"><use href="#i-percent"/></svg>PPh&nbsp;21<svg class="i"><use href="#i-chev"/></svg></div>
+                <div class="b"><em>Setoran</em> PPh&nbsp;21 <em>bulan ini naik</em> 10% <em>dari bulan lalu</em></div>
                 <svg class="spark" viewBox="0 0 200 34" preserveAspectRatio="none" aria-hidden="true"><polyline points="0,28 22,24 46,20 58,26 80,25 98,12 114,19 130,14 150,8 172,20 200,16" fill="none" stroke="#141c17" stroke-width="1.2"/></svg>
                 <div class="f">Lihat rincian per karyawan</div>
               </div>
@@ -773,7 +823,7 @@ a.ac:hover{border-color:var(--accent)}
             <div class="m-head">Invoice</div>
             <div class="m-inv-stats">
               <div class="stat"><b>Rp36,5 jt</b><small>Belum dibayar</small><small>6 invoice</small></div>
-              <div class="stat"><b>Rp12,5 jt</b><small>Lewat tempo</small><small>14 invoice</small></div>
+              <div class="stat"><b>Rp12,5&nbsp;jt</b><small>Lewat tempo</small><small>14 invoice</small></div>
               <div class="stat"><b>Rp152,8 jt</b><small>Lunas</small><small>21 invoice</small></div>
               <div class="stat"><b>Baik</b><small>Skor bayar</small><small>Tepat waktu</small><span class="score" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></div>
             </div>
@@ -822,14 +872,14 @@ a.ac:hover{border-color:var(--accent)}
     <h2 class="h2">Semua yang kamu butuhkan untuk mengelola usaha</h2>
     <p class="sub">Invoice, buku kas, pengingat tagihan, pelanggan, dan pajak, semuanya tersambung dalam satu sistem.</p>
     <div class="feat-grid">
-      <a class="feat" href="#fitur"><span class="tile"><svg class="i" aria-hidden="true"><use href="#i-file"/></svg></span><h3>Invoice</h3><p>Nota dan tagihan</p></a>
-      <a class="feat" href="#cara-kerja"><span class="tile"><svg class="i" aria-hidden="true"><use href="#i-book"/></svg></span><h3>Buku kas</h3><p>Uang masuk keluar</p></a>
-      <a class="feat" href="#cara-kerja"><span class="tile"><svg class="i" aria-hidden="true"><use href="#i-inbox"/></svg></span><h3>Kotak bukti</h3><p>Cocokkan nota</p></a>
-      <a class="feat" href="#fitur"><span class="tile"><svg class="i" aria-hidden="true"><use href="#i-bell"/></svg></span><h3>Jatuh tempo</h3><p>Pengingat tagihan</p></a>
-      <a class="feat" href="#fitur"><span class="tile"><svg class="i" aria-hidden="true"><use href="#i-users"/></svg></span><h3>Pelanggan</h3><p>Riwayat pembayaran</p></a>
-      <a class="feat" href="#fitur"><span class="tile"><svg class="i" aria-hidden="true"><use href="#i-folder"/></svg></span><h3>Berkas</h3><p>Simpan dokumen</p></a>
-      <a class="feat" href="#fitur"><span class="tile"><svg class="i" aria-hidden="true"><use href="#i-upright"/></svg></span><h3>Laporan</h3><p>Laba rugi dan kas</p></a>
-      <a class="feat" href="#alat"><span class="tile"><svg class="i" aria-hidden="true"><use href="#i-percent"/></svg></span><h3>PPh 21</h3><p>Hitung pajak gaji</p></a>
+      <a class="feat" href="#cara-kerja" data-go="1"><span class="tile"><svg class="i" aria-hidden="true"><use href="#i-file"/></svg></span><h3>Invoice</h3><p>Nota dan tagihan</p></a>
+      <a class="feat" href="#cara-kerja" data-go="0"><span class="tile"><svg class="i" aria-hidden="true"><use href="#i-book"/></svg></span><h3>Buku kas</h3><p>Uang masuk keluar</p></a>
+      <a class="feat" href="#cara-kerja" data-go="2"><span class="tile"><svg class="i" aria-hidden="true"><use href="#i-inbox"/></svg></span><h3>Kotak bukti</h3><p>Cocokkan nota</p></a>
+      <a class="feat" href="#cerita"><span class="tile"><svg class="i" aria-hidden="true"><use href="#i-bell"/></svg></span><h3>Jatuh tempo</h3><p>Pengingat tagihan</p></a>
+      <div class="feat"><span class="tile"><svg class="i" aria-hidden="true"><use href="#i-users"/></svg></span><h3>Pelanggan</h3><p>Riwayat bayar</p></div>
+      <a class="feat" href="#akuntansi"><span class="tile"><svg class="i" aria-hidden="true"><use href="#i-folder"/></svg></span><h3>Berkas</h3><p>Simpan dokumen</p></a>
+      <a class="feat" href="#akuntansi"><span class="tile"><svg class="i" aria-hidden="true"><use href="#i-upright"/></svg></span><h3>Laporan</h3><p>Laba rugi dan kas</p></a>
+      <a class="feat" href="#akuntansi"><span class="tile"><svg class="i" aria-hidden="true"><use href="#i-percent"/></svg></span><h3>PPh&nbsp;21</h3><p>Hitung pajak gaji</p></a>
     </div>
   </section>
 
@@ -841,25 +891,25 @@ a.ac:hover{border-color:var(--accent)}
     <p class="sub">Neracaku memangkas kerja manual supaya waktumu kembali ke hal yang penting.</p>
     <div class="admin-grid">
       <article class="ac a"><p class="lbl">Mengejar nota</p><h3>45 menit per minggu</h3><p>Nota datang telat, terselip, atau harus dicari.</p></article>
-      <article class="ac b"><p class="lbl">Merapikan catatan kas</p><h3>1 jam per minggu</h3><p>Memberi kategori, membuang catatan dobel, dan mencocokkan angka.</p></article>
-      <a class="ac d" href="#fitur"><p class="lbl">Menghitung pajak</p><h3>1 jam per minggu</h3><p>Menghitung PPh 21 karyawan dan menyiapkan setoran bulanan.</p></a>
-      <article class="ac c"><p class="lbl">Membuat invoice</p><h3>1-2 jam per minggu</h3><p>Mengetik invoice, cek transfer masuk, dan menjawab pertanyaan pelanggan.</p></article>
-      <a class="ac big" href="#cara-kerja"><span><p class="lbl">Kalau dijumlahkan</p><h3>Waktu yang hilang tiap minggu</h3><p>Kerja manual akibat catatan yang terpencar.</p></span><span class="num">4-6 jam</span></a>
+      <article class="ac b"><p class="lbl">Merapikan catatan kas</p><h3>1 jam per minggu</h3><p>Memberi kategori, membuang dobel, dan mencocokkan angka.</p></article>
+      <a class="ac d" href="#akuntansi"><p class="lbl">Menghitung pajak</p><h3>1 jam per minggu</h3><p>Menghitung PPh&nbsp;21 karyawan dan menyiapkan setorannya.</p></a>
+      <article class="ac c"><p class="lbl">Membuat invoice</p><h3>1<span class="rng" aria-hidden="true"></span><span class="sr"> sampai </span>2 jam per minggu</h3><p>Mengetik invoice, cek transfer masuk, dan menjawab pertanyaan.</p></article>
+      <a class="ac big" href="#cara-kerja"><span><p class="lbl">Kalau dijumlahkan</p><h3>Waktu yang hilang tiap minggu</h3><p>Kerja manual akibat catatan yang terpencar.</p></span><span class="num">4<span class="rng" aria-hidden="true"></span><span class="sr"> sampai </span>6&nbsp;jam</span></a>
     </div>
   </section>
 
   <div class="rule"></div>
 
   <!-- ACCOUNTING -->
-  <section class="sec acc-sec center" data-sec="accounting">
+  <section class="sec acc-sec center" id="akuntansi" data-sec="accounting">
     <img class="acc-img" src="assets/folder.svg" width="112" height="100" alt="Ilustrasi map berisi nota dan laporan">
     <h2 class="h2">Siap lapor pajak, tanpa kerja tambahan</h2>
     <p class="sub">Nota, invoice, dan transaksi tersusun otomatis, jadi pembukuanmu selalu siap saat dibutuhkan, termasuk untuk SPT.</p>
-    <a class="checklist" href="#fitur" style="text-align:left">
+    <a class="checklist" href="#cara-kerja" data-go="2" style="text-align:left">
       <span class="ck"><span class="bx"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg></span><span><span class="lg">Transaksi dari kasir, transfer, dan QRIS diberi kategori lalu dicocokkan otomatis</span><span class="sh">Transaksi kasir, transfer, dan QRIS</span></span></span>
       <span class="ck"><span class="bx"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg></span><span><span class="lg">Foto nota dan bukti transfer dari WhatsApp ditarik lalu dicocokkan ke transaksi</span><span class="sh">Nota dari WhatsApp dan unggahan</span></span></span>
       <span class="ck"><span class="bx"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg></span><span>Catatan rapi untuk kas tunai, rekening, dan dompet digital</span></span>
-      <span class="ck"><span class="bx"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg></span><span><span class="lg">PPh 21 dan PPN dicatat per transaksi</span><span class="sh">PPh 21 dan PPN tercatat per transaksi</span></span></span>
+      <span class="ck"><span class="bx"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg></span><span><span class="lg">PPh&nbsp;21 dan PPN dicatat per transaksi</span><span class="sh">PPh&nbsp;21 dan PPN tercatat per transaksi</span></span></span>
       <span class="ck"><span class="bx"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg></span><span><span class="lg">Siap diekspor ke spreadsheet atau dikirim ke konsultan pajak</span><span class="sh">Siap diekspor untuk konsultan pajak</span></span></span>
     </a>
     <p class="more"><a class="uline" href="#cara-kerja">Pelajari cara kerja pembukuan otomatis</a></p>
@@ -868,38 +918,36 @@ a.ac:hover{border-color:var(--accent)}
   <div class="rule"></div>
 
   <!-- STORIES -->
-  <section class="sec center" data-sec="testimonials">
+  <section class="sec center" id="cerita" data-sec="testimonials">
     <h2 class="h2">Dibuat bersama pemilik usaha</h2>
     <p class="sub">Contoh cerita pengguna. Nama dan usaha di bawah ini fiktif.</p>
-    <div class="t-icons" aria-label="Untuk warung, kafe, konveksi, salon, dan jasa antar">
-      <svg class="i" aria-hidden="true"><use href="#i-store"/></svg><svg class="i" aria-hidden="true"><use href="#i-coffee"/></svg><svg class="i" aria-hidden="true"><use href="#i-shirt"/></svg><svg class="i" aria-hidden="true"><use href="#i-scissors"/></svg><svg class="i" aria-hidden="true"><use href="#i-truck"/></svg>
-    </div>
+    <p class="t-icons">Katering &middot; Bengkel &middot; Konveksi &middot; Toko bangunan</p>
     <div class="t-row">
-      <article class="tc r1"><p class="ctry">Contoh &middot; Yogyakarta</p><p class="who"><span class="av" aria-hidden="true">RH</span>Rina Hapsari</p><p class="co">Katering Dapur Rina</p><p class="qt">&ldquo;Dulu nota katering saya tercecer di grup WhatsApp. Sekarang semua invoice terkirim dari satu tempat, dan setiap pagi saya tahu pelanggan mana yang belum bayar.&rdquo;</p></article>
-      <article class="tc r2"><p class="ctry">Contoh &middot; Surabaya</p><p class="who"><span class="av" aria-hidden="true">DP</span>Dimas Pratama</p><p class="co">Bengkel Las Maju</p><p class="qt">&ldquo;Pengingat jatuh tempo paling terasa manfaatnya. Pelanggan langsung transfer setelah dapat pesan otomatis, jadi saya tidak perlu lagi menagih mereka berkali-kali lewat telepon.&rdquo;</p></article>
-      <article class="tc r3"><p class="ctry">Contoh &middot; Bandung</p><p class="who"><span class="av" aria-hidden="true">SW</span>Sari Wulandari</p><p class="co">Konveksi Sari</p><p class="qt">&ldquo;Buku kas yang dulu ditulis tangan sekarang rapi per kategori. Setiap akhir bulan saya tinggal mengunduh laporan laba rugi, lalu mengirimnya ke konsultan pajak langganan.&rdquo;</p></article>
-      <article class="tc r4"><p class="ctry">Contoh &middot; Makassar</p><p class="who"><span class="av" aria-hidden="true">AS</span>Andi Saputra</p><p class="co">Toko Bangunan Andi</p><p class="qt">&ldquo;Menghitung PPh 21 untuk empat karyawan dulu makan setengah hari. Sekarang angkanya keluar sendiri dari data gaji, lengkap dengan rinciannya.&rdquo;</p><span class="chat" aria-hidden="true"><svg class="i"><use href="#i-msg"/></svg></span></article>
+      <article class="tc r1"><p class="ctry">Contoh &middot; Yogyakarta</p><p class="who"><span class="av" style="--c:#2d4b3b" aria-hidden="true"><svg viewBox="0 0 12 12"><circle cx="6" cy="3.4" r="2.4"/><path d="M1 12a5 4.4 0 0 1 10 0z"/></svg></span>Rina Hapsari</p><p class="co">Katering Dapur Rina</p><p class="qt">&ldquo;Dulu nota katering saya tercecer di grup WhatsApp. Sekarang semua invoice terkirim dari satu tempat, dan setiap pagi saya tahu pelanggan mana yang belum bayar.&rdquo;</p></article>
+      <article class="tc r2"><p class="ctry">Contoh &middot; Surabaya</p><p class="who"><span class="av" style="--c:#5a4a33" aria-hidden="true"><svg viewBox="0 0 12 12"><circle cx="6" cy="3.4" r="2.4"/><path d="M1 12a5 4.4 0 0 1 10 0z"/></svg></span>Dimas Pratama</p><p class="co">Bengkel Las Maju</p><p class="qt">&ldquo;Pengingat jatuh tempo paling terasa manfaatnya. Pelanggan langsung transfer setelah dapat pesan otomatis, jadi saya tidak perlu lagi menagih mereka berkali-kali lewat telepon.&rdquo;</p></article>
+      <article class="tc r3"><p class="ctry">Contoh &middot; Bandung</p><p class="who"><span class="av" style="--c:#3a4f63" aria-hidden="true"><svg viewBox="0 0 12 12"><circle cx="6" cy="3.4" r="2.4"/><path d="M1 12a5 4.4 0 0 1 10 0z"/></svg></span>Sari Wulandari</p><p class="co">Konveksi Sari</p><p class="qt">&ldquo;Buku kas yang dulu ditulis tangan sekarang rapi per kategori. Setiap akhir bulan saya tinggal mengunduh laporan laba rugi, lalu mengirimnya ke konsultan pajak langganan.&rdquo;</p></article>
+      <article class="tc r4"><p class="ctry">Contoh &middot; Makassar</p><p class="who"><span class="av" style="--c:#57404f" aria-hidden="true"><svg viewBox="0 0 12 12"><circle cx="6" cy="3.4" r="2.4"/><path d="M1 12a5 4.4 0 0 1 10 0z"/></svg></span>Andi Saputra</p><p class="co">Toko Bangunan Andi</p><p class="qt">&ldquo;Menghitung PPh&nbsp;21 untuk empat karyawan dulu makan setengah hari. Sekarang angkanya keluar sendiri dari data gaji, lengkap dengan rinciannya.&rdquo;</p></article>
     </div>
-    <p class="t-more"><a class="uline" href="#cerita">Lihat semua contoh cerita</a></p>
+    <p class="t-more"><a class="uline" href="#r-cerita">Tentang contoh cerita ini</a></p>
   </section>
 
   <div class="rule"></div>
 
   <!-- INTEGRATIONS -->
-  <section class="sec center" data-sec="integrations">
+  <section class="sec center" id="sambungan" data-sec="integrations">
     <h2 class="h2">Nyambung dengan alat yang sudah kamu pakai</h2>
     <p class="sub">Sambungkan kasir, rekening, WhatsApp, dan spreadsheet dalam hitungan menit.</p>
     <div class="marq">
       <div class="mrow">
-        <a class="chip" href="#" style="--c:#1f6f4a"><svg class="i"><use href="#i-store"/></svg>Kasirnesia</a><a class="chip" href="#" style="--c:#2f6fd6"><svg class="i"><use href="#i-users"/></svg>Absenia</a><a class="chip" href="#" style="--c:#2a9d5c"><svg class="i"><use href="#i-msg"/></svg>WhatsApp</a><a class="chip" href="#" style="--c:#c2410c"><svg class="i"><use href="#i-qr"/></svg>QRIS</a><a class="chip" href="#" style="--c:#2f6fd6"><svg class="i"><use href="#i-bank"/></svg>Transfer bank</a><a class="chip" href="#" style="--c:#7c3aed"><svg class="i"><use href="#i-wallet"/></svg>Dompet digital</a><a class="chip" href="#" style="--c:#a16207"><svg class="i"><use href="#i-cash"/></svg>Kas tunai</a><a class="chip" href="#" style="--c:#dc2626"><svg class="i"><use href="#i-mail"/></svg>Email</a><a class="chip" href="#" style="--c:#15803d"><svg class="i"><use href="#i-table"/></svg>Ekspor CSV</a><a class="chip" href="#" style="--c:#b91c1c"><svg class="i"><use href="#i-file"/></svg>Laporan PDF</a><a class="chip" href="#" style="--c:#0e7490"><svg class="i"><use href="#i-cal"/></svg>Kalender</a><a class="chip" href="#" style="--c:#ca8a04"><svg class="i"><use href="#i-bell"/></svg>Pengingat</a><a class="chip" href="#" style="--c:#475569"><svg class="i"><use href="#i-printer"/></svg>Printer struk</a><a class="chip" href="#" style="--c:#9333ea"><svg class="i"><use href="#i-camera"/></svg>Kamera nota</a>
-        <a class="chip" href="#" style="--c:#1f6f4a" aria-hidden="true" tabindex="-1"><svg class="i"><use href="#i-store"/></svg>Kasirnesia</a><a class="chip" href="#" style="--c:#2f6fd6" aria-hidden="true" tabindex="-1"><svg class="i"><use href="#i-users"/></svg>Absenia</a><a class="chip" href="#" style="--c:#2a9d5c" aria-hidden="true" tabindex="-1"><svg class="i"><use href="#i-msg"/></svg>WhatsApp</a><a class="chip" href="#" style="--c:#c2410c" aria-hidden="true" tabindex="-1"><svg class="i"><use href="#i-qr"/></svg>QRIS</a><a class="chip" href="#" style="--c:#2f6fd6" aria-hidden="true" tabindex="-1"><svg class="i"><use href="#i-bank"/></svg>Transfer bank</a><a class="chip" href="#" style="--c:#7c3aed" aria-hidden="true" tabindex="-1"><svg class="i"><use href="#i-wallet"/></svg>Dompet digital</a><a class="chip" href="#" style="--c:#a16207" aria-hidden="true" tabindex="-1"><svg class="i"><use href="#i-cash"/></svg>Kas tunai</a><a class="chip" href="#" style="--c:#dc2626" aria-hidden="true" tabindex="-1"><svg class="i"><use href="#i-mail"/></svg>Email</a><a class="chip" href="#" style="--c:#15803d" aria-hidden="true" tabindex="-1"><svg class="i"><use href="#i-table"/></svg>Ekspor CSV</a><a class="chip" href="#" style="--c:#b91c1c" aria-hidden="true" tabindex="-1"><svg class="i"><use href="#i-file"/></svg>Laporan PDF</a><a class="chip" href="#" style="--c:#0e7490" aria-hidden="true" tabindex="-1"><svg class="i"><use href="#i-cal"/></svg>Kalender</a><a class="chip" href="#" style="--c:#ca8a04" aria-hidden="true" tabindex="-1"><svg class="i"><use href="#i-bell"/></svg>Pengingat</a><a class="chip" href="#" style="--c:#475569" aria-hidden="true" tabindex="-1"><svg class="i"><use href="#i-printer"/></svg>Printer struk</a><a class="chip" href="#" style="--c:#9333ea" aria-hidden="true" tabindex="-1"><svg class="i"><use href="#i-camera"/></svg>Kamera nota</a>
+        <span class="chip"><svg class="i"><use href="#i-store"/></svg>Kasirnesia</span><span class="chip"><svg class="i"><use href="#i-users"/></svg>Absenia</span><span class="chip"><svg class="i"><use href="#i-msg"/></svg>WhatsApp</span><span class="chip"><svg class="i"><use href="#i-qr"/></svg>QRIS</span><span class="chip"><svg class="i"><use href="#i-bank"/></svg>Transfer bank</span><span class="chip"><svg class="i"><use href="#i-wallet"/></svg>Dompet digital</span><span class="chip"><svg class="i"><use href="#i-cash"/></svg>Kas tunai</span><span class="chip"><svg class="i"><use href="#i-mail"/></svg>Email</span><span class="chip"><svg class="i"><use href="#i-table"/></svg>Ekspor CSV</span><span class="chip"><svg class="i"><use href="#i-file"/></svg>Laporan PDF</span><span class="chip"><svg class="i"><use href="#i-cal"/></svg>Kalender</span><span class="chip"><svg class="i"><use href="#i-bell"/></svg>Pengingat</span><span class="chip"><svg class="i"><use href="#i-printer"/></svg>Printer struk</span><span class="chip"><svg class="i"><use href="#i-camera"/></svg>Kamera nota</span>
+        <span class="chip" aria-hidden="true"><svg class="i"><use href="#i-store"/></svg>Kasirnesia</span><span class="chip" aria-hidden="true"><svg class="i"><use href="#i-users"/></svg>Absenia</span><span class="chip" aria-hidden="true"><svg class="i"><use href="#i-msg"/></svg>WhatsApp</span><span class="chip" aria-hidden="true"><svg class="i"><use href="#i-qr"/></svg>QRIS</span><span class="chip" aria-hidden="true"><svg class="i"><use href="#i-bank"/></svg>Transfer bank</span><span class="chip" aria-hidden="true"><svg class="i"><use href="#i-wallet"/></svg>Dompet digital</span><span class="chip" aria-hidden="true"><svg class="i"><use href="#i-cash"/></svg>Kas tunai</span><span class="chip" aria-hidden="true"><svg class="i"><use href="#i-mail"/></svg>Email</span><span class="chip" aria-hidden="true"><svg class="i"><use href="#i-table"/></svg>Ekspor CSV</span><span class="chip" aria-hidden="true"><svg class="i"><use href="#i-file"/></svg>Laporan PDF</span><span class="chip" aria-hidden="true"><svg class="i"><use href="#i-cal"/></svg>Kalender</span><span class="chip" aria-hidden="true"><svg class="i"><use href="#i-bell"/></svg>Pengingat</span><span class="chip" aria-hidden="true"><svg class="i"><use href="#i-printer"/></svg>Printer struk</span><span class="chip" aria-hidden="true"><svg class="i"><use href="#i-camera"/></svg>Kamera nota</span>
       </div>
       <div class="mrow rv">
-        <a class="chip" href="#" style="--c:#ea580c"><svg class="i"><use href="#i-box"/></svg>Stok barang</a><a class="chip" href="#" style="--c:#1f6f4a"><svg class="i"><use href="#i-store"/></svg>Toko daring</a><a class="chip" href="#" style="--c:#db2777"><svg class="i"><use href="#i-phone"/></svg>Marketplace</a><a class="chip" href="#" style="--c:#2563eb"><svg class="i"><use href="#i-calc"/></svg>Kasir toko</a><a class="chip" href="#" style="--c:#0f766e"><svg class="i"><use href="#i-coins"/></svg>Gaji karyawan</a><a class="chip" href="#" style="--c:#b45309"><svg class="i"><use href="#i-percent"/></svg>PPh 21</a><a class="chip" href="#" style="--c:#4f46e5"><svg class="i"><use href="#i-percent"/></svg>PPN</a><a class="chip" href="#" style="--c:#65a30d"><svg class="i"><use href="#i-truck"/></svg>Pemasok</a><a class="chip" href="#" style="--c:#0284c7"><svg class="i"><use href="#i-users"/></svg>Pelanggan</a><a class="chip" href="#" style="--c:#9f1239"><svg class="i"><use href="#i-store"/></svg>Cabang toko</a><a class="chip" href="#" style="--c:#475569"><svg class="i"><use href="#i-brief"/></svg>Konsultan pajak</a><a class="chip" href="#" style="--c:#15803d"><svg class="i"><use href="#i-sheet"/></svg>Spreadsheet</a><a class="chip" href="#" style="--c:#7c2d12"><svg class="i"><use href="#i-repeat"/></svg>Tagihan berulang</a>
-        <a class="chip" href="#" style="--c:#ea580c" aria-hidden="true" tabindex="-1"><svg class="i"><use href="#i-box"/></svg>Stok barang</a><a class="chip" href="#" style="--c:#1f6f4a" aria-hidden="true" tabindex="-1"><svg class="i"><use href="#i-store"/></svg>Toko daring</a><a class="chip" href="#" style="--c:#db2777" aria-hidden="true" tabindex="-1"><svg class="i"><use href="#i-phone"/></svg>Marketplace</a><a class="chip" href="#" style="--c:#2563eb" aria-hidden="true" tabindex="-1"><svg class="i"><use href="#i-calc"/></svg>Kasir toko</a><a class="chip" href="#" style="--c:#0f766e" aria-hidden="true" tabindex="-1"><svg class="i"><use href="#i-coins"/></svg>Gaji karyawan</a><a class="chip" href="#" style="--c:#b45309" aria-hidden="true" tabindex="-1"><svg class="i"><use href="#i-percent"/></svg>PPh 21</a><a class="chip" href="#" style="--c:#4f46e5" aria-hidden="true" tabindex="-1"><svg class="i"><use href="#i-percent"/></svg>PPN</a><a class="chip" href="#" style="--c:#65a30d" aria-hidden="true" tabindex="-1"><svg class="i"><use href="#i-truck"/></svg>Pemasok</a><a class="chip" href="#" style="--c:#0284c7" aria-hidden="true" tabindex="-1"><svg class="i"><use href="#i-users"/></svg>Pelanggan</a><a class="chip" href="#" style="--c:#9f1239" aria-hidden="true" tabindex="-1"><svg class="i"><use href="#i-store"/></svg>Cabang toko</a><a class="chip" href="#" style="--c:#475569" aria-hidden="true" tabindex="-1"><svg class="i"><use href="#i-brief"/></svg>Konsultan pajak</a><a class="chip" href="#" style="--c:#15803d" aria-hidden="true" tabindex="-1"><svg class="i"><use href="#i-sheet"/></svg>Spreadsheet</a><a class="chip" href="#" style="--c:#7c2d12" aria-hidden="true" tabindex="-1"><svg class="i"><use href="#i-repeat"/></svg>Tagihan berulang</a>
+        <span class="chip"><svg class="i"><use href="#i-box"/></svg>Stok barang</span><span class="chip"><svg class="i"><use href="#i-store"/></svg>Toko daring</span><span class="chip"><svg class="i"><use href="#i-phone"/></svg>Marketplace</span><span class="chip"><svg class="i"><use href="#i-calc"/></svg>Kasir toko</span><span class="chip"><svg class="i"><use href="#i-coins"/></svg>Gaji karyawan</span><span class="chip"><svg class="i"><use href="#i-percent"/></svg>PPh&nbsp;21</span><span class="chip"><svg class="i"><use href="#i-percent"/></svg>PPN</span><span class="chip"><svg class="i"><use href="#i-truck"/></svg>Pemasok</span><span class="chip"><svg class="i"><use href="#i-users"/></svg>Pelanggan</span><span class="chip"><svg class="i"><use href="#i-store"/></svg>Cabang toko</span><span class="chip"><svg class="i"><use href="#i-brief"/></svg>Konsultan pajak</span><span class="chip"><svg class="i"><use href="#i-sheet"/></svg>Spreadsheet</span><span class="chip"><svg class="i"><use href="#i-repeat"/></svg>Tagihan berulang</span>
+        <span class="chip" aria-hidden="true"><svg class="i"><use href="#i-box"/></svg>Stok barang</span><span class="chip" aria-hidden="true"><svg class="i"><use href="#i-store"/></svg>Toko daring</span><span class="chip" aria-hidden="true"><svg class="i"><use href="#i-phone"/></svg>Marketplace</span><span class="chip" aria-hidden="true"><svg class="i"><use href="#i-calc"/></svg>Kasir toko</span><span class="chip" aria-hidden="true"><svg class="i"><use href="#i-coins"/></svg>Gaji karyawan</span><span class="chip" aria-hidden="true"><svg class="i"><use href="#i-percent"/></svg>PPh&nbsp;21</span><span class="chip" aria-hidden="true"><svg class="i"><use href="#i-percent"/></svg>PPN</span><span class="chip" aria-hidden="true"><svg class="i"><use href="#i-truck"/></svg>Pemasok</span><span class="chip" aria-hidden="true"><svg class="i"><use href="#i-users"/></svg>Pelanggan</span><span class="chip" aria-hidden="true"><svg class="i"><use href="#i-store"/></svg>Cabang toko</span><span class="chip" aria-hidden="true"><svg class="i"><use href="#i-brief"/></svg>Konsultan pajak</span><span class="chip" aria-hidden="true"><svg class="i"><use href="#i-sheet"/></svg>Spreadsheet</span><span class="chip" aria-hidden="true"><svg class="i"><use href="#i-repeat"/></svg>Tagihan berulang</span>
       </div>
     </div>
-    <p class="m-more"><a class="uline" href="#sambungan">Lihat semua sambungan</a></p>
+    <p class="m-more"><a class="uline" href="#r-sambungan">Lihat rencana sambungan</a></p>
   </section>
 </main>
 
@@ -907,10 +955,10 @@ a.ac:hover{border-color:var(--accent)}
   <div class="foot-in">
     <div class="foot-grid">
       <div class="foot-cols">
-        <div><h3>Fitur</h3><ul><li><a href="#fitur">Invoice</a></li><li><a href="#cara-kerja">Buku kas</a></li><li><a href="#cara-kerja">Kotak bukti</a></li><li><a href="#fitur">Jatuh tempo</a></li><li><a href="#fitur">Pelanggan</a></li><li><a href="#fitur">Berkas</a></li><li><a href="#fitur">Laporan</a></li><li><a href="#alat">PPh 21</a></li></ul></div>
-        <div><h3>Produk</h3><ul><li><a href="#unduh">Unduh</a></li><li><a href="#harga">Harga</a></li><li><a href="#sambungan">Aplikasi &amp; sambungan</a></li><li><a href="#cerita">Contoh cerita pengguna</a></li></ul></div>
-        <div><h3>Perusahaan</h3><ul><li><a href="#tentang">Tentang</a></li><li><a href="#rencana">Rencana</a></li><li><a href="#kabar">Instagram</a></li><li><a href="#kabar">LinkedIn</a></li></ul></div>
-        <div><h3>Sumber</h3><ul><li><a href="#bantuan">Bantuan</a></li><li><a href="#alat">PPh 21</a></li><li><a href="#alat">Pajak UMKM</a></li><li><a href="#alat">Contoh invoice</a></li><li><a href="#panduan">Panduan</a></li><li><a href="#blog">Blog</a></li><li><a href="#kontak">Kontak</a></li><li><a href="#privasi">Privasi</a></li><li><a href="#syarat">Syarat dan ketentuan</a></li></ul></div>
+        <div><h3>Fitur</h3><ul><li><a href="#cara-kerja" data-go="1">Invoice</a></li><li><a href="#cara-kerja" data-go="0">Buku kas</a></li><li><a href="#cara-kerja" data-go="2">Kotak bukti</a></li><li><a href="#cerita">Jatuh tempo</a></li><li><a href="#fitur">Pelanggan</a></li><li><a href="#akuntansi">Berkas</a></li><li><a href="#akuntansi">Laporan</a></li><li><a href="#akuntansi">PPh&nbsp;21</a></li></ul></div>
+        <div><h3>Produk</h3><ul><li><a href="#r-unduh">Unduh</a></li><li><a href="#r-harga">Harga</a></li><li><a href="#sambungan">Integrasi</a></li><li><a href="#r-masuk">Masuk</a></li></ul></div>
+        <div><h3>Tentang</h3><ul><li><a href="#rencana">Rencana rilis</a></li><li><a href="#rencana">Status produk</a></li><li><a href="#r-privasi">Privasi</a></li><li><a href="#r-privasi">Ketentuan</a></li></ul></div>
+        <div><h3>Sumber</h3><ul><li><a href="#r-alat">PPh&nbsp;21</a></li><li><a href="#r-alat">Pajak UMKM</a></li><li><a href="#r-alat">Contoh invoice</a></li><li><a href="#r-alat">Template nota</a></li><li><a href="#fitur">Fitur</a></li><li><a href="#cara-kerja">Cara kerja</a></li><li><a href="#akuntansi">Pembukuan</a></li><li><a href="#sambungan">Sambungan</a></li><li><a href="#cerita">Cerita</a></li></ul></div>
       </div>
       <div class="foot-right">
         <p class="tagline">Fokus jualan. Admin biar kami.</p>
@@ -922,13 +970,30 @@ a.ac:hover{border-color:var(--accent)}
       </div>
     </div>
     <div class="foot-bot">
-      <p class="status">Status produk: <b>Tahap konsep</b><span class="dot" aria-hidden="true"></span></p>
+      <p class="status" id="status">Status produk: <b>Tahap konsep</b><span class="dot" aria-hidden="true"></span></p>
       <p>&copy; 2026 Neracaku. Hak cipta dilindungi.</p>
     </div>
   </div>
   <div class="bigword" aria-hidden="true"><span>neracaku</span></div>
 </footer>
 
+<dialog class="plan" id="rencana" aria-labelledby="plan-t">
+  <div class="plan-in" tabindex="-1" autofocus>
+    <button class="plan-x" type="button" aria-label="Tutup"><svg class="i" aria-hidden="true"><use href="#i-x"/></svg></button>
+    <p class="plan-k">Rencana rilis</p>
+    <h2 id="plan-t">Neracaku masih tahap konsep</h2>
+    <p class="plan-lead">Halaman ini menunjukkan arah produk. Belum ada akun, pembayaran, atau data yang dikumpulkan.</p>
+    <div class="plan-sec" id="r-daftar"><h3>Uji coba gratis</h3><p>Uji coba 14 hari direncanakan dibuka bersama versi pertama. Saat ini belum ada pendaftaran.</p></div>
+    <div class="plan-sec" id="r-harga"><h3>Harga</h3><p>Belum ada harga resmi. Paket dan harga dalam Rupiah diumumkan saat rilis.</p></div>
+    <div class="plan-sec" id="r-alat"><h3>Alat gratis</h3><p>Kalkulator PPh&nbsp;21 skema TER, kalkulator pajak UMKM, contoh invoice, dan template nota sedang disiapkan dan belum bisa dipakai.</p></div>
+    <div class="plan-sec" id="r-unduh"><h3>Aplikasi</h3><p>Belum ada aplikasi yang bisa diunduh selama tahap konsep.</p></div>
+    <div class="plan-sec" id="r-masuk"><h3>Masuk</h3><p>Akun belum tersedia selama tahap konsep.</p></div>
+    <div class="plan-sec" id="r-cerita"><h3>Cerita pengguna</h3><p>Nama dan usaha di halaman ini contoh fiktif. Cerita asli dikumpulkan setelah uji coba berjalan.</p></div>
+    <div class="plan-sec" id="r-sambungan"><h3>Sambungan</h3><p>Kasirnesia untuk data penjualan dan Absenia untuk gaji dan PPh&nbsp;21 direncanakan jadi sambungan pertama.</p></div>
+    <div class="plan-sec" id="r-privasi"><h3>Privasi dan ketentuan</h3><p>Halaman konsep ini tidak memasang cookie atau pelacak analitik. Pilihan mode gelap hanya disimpan di peramban kamu.</p></div>
+    <a class="btn plan-cta" href="#cara-kerja">Lihat cara kerjanya</a>
+  </div>
+</dialog>
 <script>
 (function(){
   var root=document.documentElement;
@@ -943,7 +1008,8 @@ a.ac:hover{border-color:var(--accent)}
   burger.addEventListener('click',function(){var o=document.body.classList.toggle('menu-open');burger.setAttribute('aria-expanded',o?'true':'false');burger.setAttribute('aria-label',o?'Tutup menu':'Buka menu');});
   document.querySelectorAll('.msheet a').forEach(function(a){a.addEventListener('click',function(){document.body.classList.remove('menu-open');burger.setAttribute('aria-expanded','false');});});
 
-  function fit(){document.querySelectorAll('[data-fit]').forEach(function(w){var s=Math.min(1,w.clientWidth/parseFloat(w.getAttribute('data-fit')));w.firstElementChild.style.transform='scale('+s+')';});document.querySelectorAll('.panel').forEach(function(p){if(p.clientWidth)p.style.setProperty('--mk-s',Math.min(.95,(p.clientWidth-16)/526).toFixed(3));});}
+  function fit(){document.querySelectorAll('[data-fit]').forEach(function(w){var s=Math.min(1,w.clientWidth/parseFloat(w.getAttribute('data-fit')));w.firstElementChild.style.transform='scale('+s+')';});trimRows();}
+  function trimRows(){document.querySelectorAll('.m-table').forEach(function(t){var rows=[].slice.call(t.querySelectorAll('.m-tr'));t.style.flex='';t.style.height='';rows.forEach(function(r){r.style.display='';r.style.borderBottomWidth='';});var avail=t.clientHeight;if(!avail)return;var used=0,n=0;for(var i=0;i<rows.length;i++){var hh=rows[i].offsetHeight;if(used+hh>avail+0.5)break;used+=hh;n++;}for(var k=n;k<rows.length;k++)rows[k].style.display='none';if(n){rows[n-1].style.borderBottomWidth='0';used-=1;}t.style.flex='none';t.style.height=(used+t.offsetHeight-t.clientHeight)+'px';});}
 
   var hiw=document.querySelector('.hiw');
   var steps=[].slice.call(document.querySelectorAll('.step'));
@@ -961,7 +1027,21 @@ a.ac:hover{border-color:var(--accent)}
   function onScroll(){nav.classList.toggle('scrolled',window.scrollY>8);}
   window.addEventListener('scroll',onScroll,{passive:true});
   window.addEventListener('resize',function(){fit();restart();});
+  // in-page links: plan dialog, step shortcuts, close menus after use
+  var dlg=document.getElementById('rencana');
+  function openPlan(id){if(!dlg)return;if(!dlg.open){if(dlg.showModal)dlg.showModal();else dlg.setAttribute('open','');}var t=id?document.getElementById(id):null;[].forEach.call(dlg.querySelectorAll('.plan-sec'),function(x){x.classList.toggle('hl',x===t);});if(t)t.scrollIntoView({block:'nearest'});else dlg.scrollTop=0;}
+  document.addEventListener('click',function(e){
+    var a=e.target.closest?e.target.closest('a[href^="#"]'):null;if(!a)return;
+    var hr=a.getAttribute('href');
+    if(a.closest('.dd-panel'))a.blur();
+    if(hr==='#rencana'||hr.indexOf('#r-')===0){e.preventDefault();document.body.classList.remove('menu-open');burger.setAttribute('aria-expanded','false');openPlan(hr==='#rencana'?null:hr.slice(1));return;}
+    if(dlg&&dlg.open&&dlg.contains(a))dlg.close();
+    var go=a.getAttribute('data-go');if(go!==null&&window.innerWidth>=1024){setStep(+go);restart();}
+  });
+  if(dlg){dlg.querySelector('.plan-x').addEventListener('click',function(){dlg.close();});dlg.addEventListener('click',function(e){if(e.target===dlg)dlg.close();});}
+  if(location.hash==='#rencana'||location.hash.indexOf('#r-')===0)openPlan(location.hash==='#rencana'?null:location.hash.slice(1));
   fit();onScroll();
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fit);
 })();
 </script>
 </body>

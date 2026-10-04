@@ -32,6 +32,8 @@ body{font-family:var(--sans);font-weight:500;font-size:16px;line-height:1.5;colo
 a{color:inherit;text-decoration:none}
 button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 img{display:block;max-width:100%}
+[id]{scroll-margin-top:72px}
+h1,h2,h3,h4,h5,h6{text-wrap:balance}
 .wrap{width:min(1268px,calc(100% - 32px));margin:0 auto}
 .ic{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
@@ -54,12 +56,19 @@ img{display:block;max-width:100%}
 .nav-right{display:flex;align-items:center;gap:7px;margin-left:auto}
 .lang{position:relative}
 .lang .nl{gap:8px}
-.lang-menu{position:absolute;right:0;top:46px;min-width:170px;padding:6px;background:#fff;border-radius:12px;box-shadow:0 10px 30px rgba(4,52,56,.14),0 1px 2px rgba(0,0,0,.06);display:none}
+.lang-menu{position:absolute;right:0;top:46px;min-width:228px;padding:6px;background:#fff;border-radius:12px;box-shadow:0 10px 30px rgba(4,52,56,.14),0 1px 2px rgba(0,0,0,.06);display:none}
 .lang.open .lang-menu{display:block}
-.lang-menu a{display:flex;justify-content:space-between;padding:9px 12px;border-radius:8px;font-size:15px}
+.lang-menu a{display:flex;justify-content:space-between;gap:16px;padding:9px 12px;border-radius:8px;font-size:15px;white-space:nowrap}
 .lang-menu a:hover{background:var(--mist)}
 .lang-menu a[aria-current] {color:var(--accent);font-weight:700}
 .nav-right .btn{height:40px;min-width:164px;font-size:16px;font-weight:500;margin-left:13px}
+.nav{transition:background .25s ease,color .25s ease}
+.nav.dark{background:rgba(3,30,36,.72);color:#f2fbf9}
+.nav.dark .nl{color:#f2fbf9}
+.nav.dark .nl:hover{background:rgba(255,255,255,.1)}
+.nav.dark .logo text{fill:#f2fbf9}
+.nav.dark .nav-right .btn-cta{background:#fff;color:var(--ink)}
+.nav.dark .globe-m,.nav.dark .burger{color:#f2fbf9}
 .burger,.globe-m{display:none;width:40px;height:40px;align-items:center;justify-content:center}
 .mnav{display:none}
 
@@ -138,7 +147,8 @@ img{display:block;max-width:100%}
 .t3{height:193px}
 .t3 .cd{position:absolute;left:40px;top:38px;width:124px;height:112px;border-radius:5px;background:linear-gradient(180deg,#5fb8b2,#8fcfc0 40%,#f0b79c 100%)}
 .t3 .cd b{position:absolute;left:12px;top:46px;width:100px;color:#fff;font:700 12px/14px var(--sans);text-align:center}
-.t3 .sq{position:absolute;width:20px;height:20px;border-radius:5px}
+.t3 .sq{position:absolute;display:grid;place-items:center;width:28px;height:28px;border-radius:7px;color:#fff;box-shadow:0 2px 5px rgba(4,52,56,.15);z-index:2}
+.t3 .sq .ic{width:14px;height:14px;stroke-width:2.4}
 .t4{height:147px}
 .t4 .pc{position:absolute;top:0;border-radius:4px}
 .t4 .pc.c{left:52px;width:91px;height:147px;background:linear-gradient(180deg,#5cbab3 0%,#8fd0c2 30%,#f3b38f 75%,#f6d7b0 100%);box-shadow:0 2px 6px rgba(0,0,0,.08)}
@@ -165,17 +175,11 @@ img{display:block;max-width:100%}
 /* ---------- trust + headline ---------- */
 .trust{position:relative;height:729px;padding-top:96px;text-align:center;background:linear-gradient(0deg,#fff 0%,rgb(178,236,226) 48%,rgb(160,216,210) 71%,rgb(206,234,230) 85%,#fff 100%)}
 .trust-t{font:600 20px/30px var(--sans);color:#2b6566}
-.marks{display:flex;flex-wrap:wrap;justify-content:center;column-gap:80px;row-gap:0;max-width:1240px;margin:12px auto 0}
-.marks .brk{flex-basis:100%;height:0}
-.marks .brk.mb{display:none}
-.marks span{display:flex;align-items:center;height:60px;margin:12px 0;color:#fff;white-space:nowrap;text-shadow:0 1px 0 rgba(4,52,56,.04)}
-.m1{font:700 33px/1 var(--display);letter-spacing:-.5px}
-.m2{font:400 34px/1 var(--serif)}
-.m3{font:800 26px/1 var(--sans);letter-spacing:3px;text-transform:uppercase}
-.m4{font:500 34px/1 var(--display);letter-spacing:-1px}
-.m5{font:400 36px/1 var(--serif);letter-spacing:1px}
-.m6{font:600 32px/1 var(--display);font-style:italic}
-.big{position:relative;max-width:1020px;margin:116px auto 0;font:400 96px/105.6px var(--display);letter-spacing:-1.92px;color:var(--ink)}
+.marks{display:grid;grid-template-columns:repeat(3,auto);justify-content:center;column-gap:88px;row-gap:24px;margin:24px auto 0}
+.marks .mk{display:flex;align-items:center;justify-content:center;gap:12px;height:60px;color:#fff;font:600 30px/1 var(--display);letter-spacing:-.4px;white-space:nowrap}
+.marks .mk.b{font-weight:700}
+.marks .mk svg{width:26px;height:26px;flex:none}
+.big{position:relative;max-width:1020px;margin:128px auto 0;font:400 96px/105.6px var(--display);letter-spacing:-1.92px;color:var(--ink)}
 .spark{position:absolute;top:422px;width:74px;height:90px}
 .spark.l{left:calc(50% - 624px)}
 .spark.r{left:calc(50% + 550px)}
@@ -186,7 +190,8 @@ img{display:block;max-width:100%}
 .frow+.frow{margin-top:129px}
 .frow.rev{grid-template-columns:minmax(0,618fr) minmax(0,586fr)}
 .frow.rev .fvis{order:2}
-.fvis{position:relative;height:449px;border-radius:24px;overflow:hidden;background:var(--mist);box-shadow:0 10px 15px -3px rgba(0,0,0,.1),0 4px 6px -2px rgba(0,0,0,.05)}
+.fvis{position:relative;aspect-ratio:586/449;border-radius:24px;overflow:hidden;background:var(--mist);box-shadow:0 10px 15px -3px rgba(0,0,0,.1),0 4px 6px -2px rgba(0,0,0,.05)}
+.fcan{position:absolute;left:0;top:0;width:586px;height:449px;transform:scale(var(--k,1));transform-origin:0 0}
 .tag{display:inline-flex;align-items:center;gap:6px;height:24px;padding:4px 10px;border-radius:9999px;font:700 12px/14.4px var(--sans);letter-spacing:.5px;text-transform:uppercase}
 .tag .ic{width:12px;height:12px}
 .tag.t-teal{background:rgb(209,240,236);color:#075b5d}
@@ -208,8 +213,8 @@ img{display:block;max-width:100%}
 .opt{width:140px;height:135px;background:#fff;border-radius:6px;box-shadow:0 4px 14px rgba(4,52,56,.12);padding:6px;text-align:left}
 .opt .art{position:relative;height:68px;border-radius:4px;overflow:hidden}
 .opt b{display:block;margin:14px 0 0 6px;font:500 13px/16px var(--sans);color:var(--ink)}
-.opt small{display:block;margin:4px 0 0 6px;font:500 7px/1 var(--sans);color:var(--muted)}
-.opt .pop{display:inline-block;margin-left:6px;padding:2px 5px;border-radius:6px;background:#9fd9d3;color:#064b4d;font:700 6px/1 var(--sans);letter-spacing:.3px;vertical-align:middle}
+.opt small{display:block;margin:5px 0 0 6px;font:500 8px/1 var(--sans);color:var(--muted)}
+.opt .pop{display:inline-block;margin-left:4px;padding:2px 4px;border-radius:6px;background:#9fd9d3;color:#064b4d;font:700 7px/1 var(--sans);letter-spacing:.3px;vertical-align:middle}
 .a1{background:linear-gradient(180deg,#3d9f9b 0%,#79c3b9 55%,#f0a98c 56%,#f4c4a4 100%)}
 .a1 em{position:absolute;left:44px;top:12px;font:700 32px/1 var(--sans);font-style:normal;color:#fff}
 .a1 i{position:absolute;right:10px;top:8px;width:20px;height:20px;border-radius:50%;background:radial-gradient(#ffe39a,#f5c15a)}
@@ -223,64 +228,75 @@ img{display:block;max-width:100%}
 /* visual fitur 2 */
 .v2 .doc{position:absolute;left:51px;right:51px;background:#fff;border-radius:10px;box-shadow:0 4px 18px rgba(4,52,56,.10);overflow:hidden}
 .v2 .d0{top:-60px;height:120px}
-.v2 .d0 small{position:absolute;bottom:14px;font:500 7px/1 var(--sans);color:var(--ink)}
+.v2 .d0 small{position:absolute;bottom:13px;font:500 8px/1 var(--sans);color:var(--ink)}
 .v2 .d0 .halfc{position:absolute;left:50%;bottom:6px;width:96px;height:48px;margin-left:-48px;border-radius:0 0 48px 48px;background:linear-gradient(90deg,#1b8f8c 50%,#0b6668 50%)}
 .v2 .d1{top:84px;height:283px}
-.v2 .hd{position:relative;height:99px;background:linear-gradient(120deg,#0b6e70 0%,#1a8c88 40%,#4fb5a9 70%,#f2b394 100%);overflow:hidden}
-.v2 .hd .blob{position:absolute;border-radius:50%}
-.v2 .tools{position:absolute;left:8px;top:10px;display:flex;gap:4px}
-.v2 .tools i{display:block;height:18px;border-radius:4px;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.15)}
-.v2 .d1 h5{margin-top:18px;text-align:center;font:700 17px/20px var(--sans);letter-spacing:-.2px;color:#0b5c5e}
-.v2 .cols{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:20px 15px 0}
-.v2 .cols div{height:108px;border-radius:4px;background:#d8f0ec;padding:9px 8px}
-.v2 .cols b{display:block;font:700 8px/10px var(--sans);color:#0b4a4c}
-.v2 .cols span{display:block;margin-top:8px;font:500 6.5px/9.5px var(--sans);color:#24494a}
-.v2 .d2{top:390px;height:120px}
-.v2 .d2 h6{position:absolute;left:26px;top:30px;font:700 20px/1 var(--sans);color:#0b5c5e;letter-spacing:-.3px}
-.v2 .d2 .im{position:absolute;right:0;top:0;width:208px;height:100%;background:linear-gradient(160deg,#04363a,#0d5d61 60%,#2d8f8a)}
+.v2 .hd{position:relative;height:99px;background:url(assets/ill-cafe.webp) center 55%/cover,linear-gradient(120deg,#0b6e70,#4fb5a9 70%,#f2b394)}
+.v2 .tools{position:absolute;left:8px;top:9px;display:flex;gap:4px}
+.v2 .tb{display:flex;align-items:center;gap:2px;height:20px;padding:0 5px;border-radius:5px;background:#fff;color:#245e60;box-shadow:0 1px 3px rgba(0,0,0,.18)}
+.v2 .tb .ic{width:11px;height:11px;stroke-width:2.2}
+.v2 .tb .dn{width:8px;height:8px;margin-left:-1px}
+.v2 .d1 h5{margin-top:16px;text-align:center;font:700 17px/20px var(--sans);letter-spacing:-.2px;color:#0b5c5e}
+.v2 .cols{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:16px 15px 0}
+.v2 .cols div{position:relative;height:118px;border-radius:5px;background:#d8f0ec;padding:9px 9px 0}
+.v2 .cols .ic{width:13px;height:13px;color:#0b7d7f}
+.v2 .cols b{display:block;margin-top:5px;font:700 9px/11px var(--sans);color:#0b4a4c}
+.v2 .cols span{display:block;margin-top:4px;font:500 8px/11px var(--sans);color:#24494a}
+.v2 .cols em{position:absolute;left:9px;bottom:9px;padding:3px 6px;border-radius:4px;background:#fff;font:700 8px/1 var(--sans);font-style:normal;color:#0b6668}
+.v2 .d2{top:384px;height:120px}
+.v2 .d2 .tx{position:absolute;left:24px;top:17px;width:240px}
+.v2 .d2 h6{font:700 20px/1 var(--sans);color:#0b5c5e;letter-spacing:-.3px}
+.v2 .d2 p{display:flex;align-items:center;gap:6px;margin-top:9px;font:500 10px/14px var(--sans);color:#24494a;white-space:nowrap}
+.v2 .d2 p .ic{width:11px;height:11px;color:#0b7d7f;stroke-width:3}
+.v2 .d2 .im{position:absolute;right:0;top:0;width:208px;height:100%;background:url(assets/ill-stairs.webp) 80% 45%/cover,#7fc8c0}
 
-/* visual fitur 3 */
-.v3{background:#fff}
-.v3 .low{position:absolute;left:0;right:0;top:297px;bottom:0;background:var(--mist)}
-.v3 .sharebtn{position:absolute;left:216px;top:167px;display:flex;align-items:center;gap:14px;height:66px;padding:0 33px 0 28px;border-radius:33px;background:var(--cta);color:#fff;font:400 30px/1 var(--sans);letter-spacing:-.2px}
-.v3 .sharebtn .ic{width:31px;height:31px;stroke-width:1.6}
-.v3 .rb{position:absolute;top:167px;width:66px;height:66px;border-radius:50%;background:#eef7f6;display:grid;place-items:center;color:var(--cta)}
-.v3 .rb .ic{width:26px;height:26px}
-.v3 .rb.a{left:418px}
-.v3 .rb.b{left:500px}
-.v3 .rb.c{left:582px;background:#2c6b2f}
-.v3 .night{position:absolute;left:0;top:376px;width:433px;height:120px;border-radius:0 52px 0 0;background:#0a3c40 url(assets/stars.svg) 0 0/240px}
-.v3 .cursor{left:452px;top:395px;width:58px;height:58px}
-
-/* visual fitur 3, bingkai mobile (keadaan zoom-out) */
-.zf{display:none}
-@media (max-width:767px){
-  .v3>*:not(.zf){display:none}
-  .v3 .zf{display:block;position:absolute;inset:0;zoom:1}
-  .m3-top{position:absolute;left:0;right:0;top:0;height:61px;background:#fff}
-  .zf::before{content:"";position:absolute;left:0;right:0;top:61px;bottom:0;background:var(--mist)}
-  .m3-pill{position:absolute;left:244px;top:29px;height:17px;padding:0 7px;border-radius:9px;background:var(--cta);color:#fff;display:flex;align-items:center;gap:3px;font:500 8px/1 var(--sans)}
-  .m3-pill .ic{width:8px;height:8px}
-  .m3-c{position:absolute;top:29px;width:17px;height:17px;border-radius:50%;background:#eef7f6;color:var(--cta);display:grid;place-items:center}
-  .m3-c .ic{width:8px;height:8px}
-  .m3-c:nth-child(2){left:295px}.m3-c:nth-child(3){left:316px}
-  .m3-av{position:absolute;left:336px;top:28px;width:18px;height:18px;border-radius:50%;background:#a16207;color:#fff;font:700 7px/18px var(--sans);text-align:center}
-  .m3-card{position:absolute;left:0;top:82px;width:299px;height:220px;border-radius:0 12px 0 0;overflow:hidden;background:#0a3c40 url(assets/stars.svg) 0 0/200px}
-  .m3-sun{position:absolute;left:9px;top:39px;width:87px;height:87px;border-radius:50%;background:linear-gradient(160deg,#e98d8d,#f2b394)}
-  .m3-card small,.m3-card b{z-index:2}
-  .m3-card small{position:absolute;left:6px;top:100px;color:#fff;font:400 15px/1 var(--sans)}
-  .m3-card b{position:absolute;left:-14px;top:128px;color:#fff;font:700 34px/38px var(--display);letter-spacing:-.6px;white-space:nowrap}
-  .m3-planet{position:absolute;left:150px;top:28px;width:150px;height:150px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#2c6f72,#082a2e 70%);box-shadow:inset -14px -10px 0 rgba(0,0,0,.25)}
-  .m3-planet::after{content:"";position:absolute;left:-18px;top:60px;width:186px;height:22px;border-radius:50%;border:5px solid #f08fb0;transform:rotate(-12deg)}
-  .m3-base{position:absolute;left:185px;top:170px;width:120px;height:60px;border-radius:50% 50% 0 0;background:#9ad94a}
-  .m3-ai{position:absolute;left:333px;top:164px;width:30px;height:30px;border-radius:6px;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.1);display:grid;place-items:center;color:var(--accent)}
-  .m3-bar{position:absolute;left:333px;top:202px;width:30px;height:80px;border-radius:6px;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.1);display:flex;flex-direction:column;align-items:center;gap:10px;padding-top:12px;color:var(--accent)}
-  .m3-ai .ic,.m3-bar .ic{width:11px;height:11px}
-}
+/* visual fitur 3: slide jadi + menu ekspor (loop ringan, frame diam tetap terisi) */
+.v3{background:var(--mist)}
+.v3top{position:absolute;left:0;right:0;top:0;height:72px;background:#fff;border-bottom:1px solid #e3eceb}
+.v3doc{position:absolute;left:24px;top:27px;display:flex;align-items:center;gap:8px;font:600 14px/18px var(--sans);color:var(--ink)}
+.v3doc .ic{color:var(--accent)}
+.v3 .sharebtn{position:absolute;left:300px;top:16px;display:flex;align-items:center;gap:8px;height:40px;padding:0 18px 0 16px;border-radius:20px;background:var(--cta);color:#fff;font:600 16px/1 var(--sans)}
+.v3 .sharebtn .ic{width:18px;height:18px}
+.v3 .rb{position:absolute;top:16px;width:40px;height:40px;border-radius:50%;background:#eef7f6;display:grid;place-items:center;color:var(--cta)}
+.v3 .rb .ic{width:17px;height:17px}
+.v3 .rb1{left:420px}.v3 .rb2{left:468px}
+.v3av{position:absolute;left:520px;top:18px;width:36px;height:36px;border-radius:50%;background:#a16207;color:#fff;font:700 12px/36px var(--sans);text-align:center}
+.v3slide{position:absolute;left:24px;top:100px;width:468px;height:264px;border-radius:12px;overflow:hidden;background:#0a3c40 url(assets/stars.svg) 0 0/220px;box-shadow:0 6px 18px rgba(4,52,56,.18)}
+.v3slide .sun{position:absolute;left:24px;top:30px;width:104px;height:104px;border-radius:50%;background:linear-gradient(160deg,#e98d8d,#f2b394)}
+.v3slide .planet{position:absolute;left:272px;top:26px;width:160px;height:160px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#2c6f72,#082a2e 70%);box-shadow:inset -16px -12px 0 rgba(0,0,0,.25)}
+.v3slide .planet::after{content:"";position:absolute;left:-22px;top:64px;width:200px;height:24px;border-radius:50%;border:5px solid #f08fb0;transform:rotate(-12deg)}
+.v3slide .base{position:absolute;left:300px;top:206px;width:140px;height:70px;border-radius:50% 50% 0 0;background:#9ad94a}
+.v3slide small,.v3slide b,.v3slide i{position:absolute;z-index:2}
+.v3slide small{left:26px;top:118px;color:#fff;font:500 15px/1 var(--sans);letter-spacing:.3px}
+.v3slide b{left:26px;top:142px;color:#fff;font:700 33px/36px var(--display);letter-spacing:-.6px}
+.v3slide i{left:28px;height:5px;border-radius:3px;background:rgba(255,255,255,.4)}
+.v3slide i:nth-of-type(1){top:226px;width:150px}
+.v3slide i:nth-of-type(2){top:238px;width:104px}
+.v3ai{position:absolute;left:514px;top:130px;width:44px;height:44px;border-radius:8px;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.1);display:grid;place-items:center;color:var(--accent)}
+.v3bar{position:absolute;left:514px;top:184px;width:44px;height:150px;border-radius:8px;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.1);display:flex;flex-direction:column;align-items:center;justify-content:space-evenly;color:var(--accent)}
+.v3ai .ic,.v3bar .ic{width:17px;height:17px}
+.v3menu{position:absolute;left:282px;top:64px;width:280px;padding:6px;background:#fff;border-radius:12px;box-shadow:0 14px 34px rgba(4,52,56,.22),0 1px 2px rgba(0,0,0,.08);transform-origin:30% 0;animation:v3menu 7s ease-in-out infinite}
+.v3menu .row{display:flex;align-items:center;gap:10px;height:42px;padding:0 10px;border-radius:8px;font:600 14px/1 var(--sans);color:var(--ink);white-space:nowrap}
+.v3menu .row .ic{width:18px;height:18px;color:var(--accent)}
+.v3menu .row.on{background:var(--mist);animation:v3row 7s ease-in-out infinite}
+.v3menu em{margin-left:auto;padding:3px 7px;border-radius:9px;background:#d1f0ec;color:#075b5d;font:700 10px/1 var(--sans);font-style:normal}
+.v3 .cursor{left:470px;top:96px;width:30px;height:30px;animation:v3cur 7s ease-in-out infinite}
+.v3toast{position:absolute;left:24px;top:380px;display:flex;align-items:center;gap:12px;width:300px;height:54px;padding:0 14px;background:#fff;border-radius:12px;box-shadow:0 8px 22px rgba(4,52,56,.16);animation:v3toast 7s ease-in-out infinite}
+.v3toast .ok{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:#e1f3d4;color:#2d5c16}
+.v3toast .ok .ic{width:15px;height:15px;stroke-width:3}
+.v3toast .tt{flex:1;font:600 13px/16px var(--sans);color:var(--ink)}
+.v3toast .tt i{display:block;height:5px;margin-top:6px;border-radius:3px;background:#e3eceb;overflow:hidden}
+.v3toast .tt b{display:block;height:100%;width:100%;border-radius:3px;background:var(--leaf);transform-origin:0 50%;animation:v3bar 7s ease-in-out infinite}
+@keyframes v3menu{0%,8%{opacity:0;transform:translateY(-6px) scale(.96)}16%,72%{opacity:1;transform:none}80%,100%{opacity:0;transform:translateY(-6px) scale(.96)}}
+@keyframes v3row{0%,30%{background:transparent}38%,100%{background:var(--mist)}}
+@keyframes v3cur{0%{transform:translate(60px,230px)}14%{transform:translate(-110px,-62px)}30%,74%{transform:none}86%,100%{transform:translate(60px,230px)}}
+@keyframes v3toast{0%,40%{opacity:0;transform:translateY(10px)}46%,92%{opacity:1;transform:none}100%{opacity:0;transform:translateY(10px)}}
+@keyframes v3bar{0%,44%{transform:scaleX(0)}68%,100%{transform:scaleX(1)}}
+@media (prefers-reduced-motion:reduce){.v3menu,.v3menu .row.on,.v3 .cursor,.v3toast,.v3toast .tt b{animation:none}}
 
 /* ---------- pita wordmark ---------- */
-.band{position:relative;height:211px;margin-top:32px;padding-top:96px;overflow:hidden;background:linear-gradient(#fff 4%,rgb(178,236,226) 80%,rgb(160,216,210) 100%)}
-.band svg{display:block;width:100%;height:123px}
+.band{position:relative;margin-top:32px;padding-top:96px;overflow:hidden;background:linear-gradient(#fff 4%,rgb(178,236,226) 80%,rgb(160,216,210) 100%)}
+.band svg{display:block;width:100%;height:auto;aspect-ratio:1440/123;margin-bottom:-.556%}
 
 /* ---------- testimoni ---------- */
 .testi{padding-top:65px;padding-bottom:64px}
@@ -293,6 +309,7 @@ img{display:block;max-width:100%}
 .who{display:flex;align-items:center;gap:14px}
 .av{width:64px;height:64px;border-radius:50%;display:grid;place-items:center;font:700 20px/1 var(--display);color:#fff;flex:none}
 .who b{display:block;font:700 16px/24px var(--sans)}
+.tchip{margin-left:auto;align-self:flex-end;padding:4px 9px;border-radius:10px;background:#fff;border:1px solid #d7e3e2;font:600 11px/1.2 var(--sans);color:var(--muted);letter-spacing:.2px}
 .who small{display:block;font:500 14px/21px var(--sans);color:var(--muted)}
 .tnav{display:flex;justify-content:center;gap:8px;margin-top:24px}
 .tnav button{width:40px;height:40px;border-radius:50%;border:1px solid #d7e3e2;display:grid;place-items:center;color:var(--ink);background:#fff;transition:background .15s}
@@ -304,7 +321,7 @@ img{display:block;max-width:100%}
 .faq .wrap{display:grid;grid-template-columns:380px minmax(0,1fr);column-gap:96px;align-items:start}
 .faq h2{font:400 48px/48px var(--display);letter-spacing:-.96px;color:var(--ink)}
 .faq-sub{margin-top:16px;color:var(--muted);font-size:16px;line-height:24px}
-.faq-sub a{color:var(--accent);font-weight:600}
+.faq-sub a{color:var(--accent);font-weight:600;padding:6px 0}
 .acc{border-bottom:1px solid var(--line)}
 .acc details{border-top:1px solid var(--line)}
 .acc summary{list-style:none;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:20px 24px;cursor:pointer;font:600 18px/27px var(--sans);color:var(--ink);border-radius:6px}
@@ -316,26 +333,29 @@ img{display:block;max-width:100%}
 .faq-sub.m{display:none}
 
 /* ---------- CTA malam ---------- */
-.cta{position:relative;height:822px;padding-top:64px;text-align:center;background:url(assets/stars.svg) 0 0/480px repeat,linear-gradient(180deg,#031c22 0%,#05303a 45%,#0a4952 100%);overflow:hidden}
+.cta{position:relative;padding-top:64px;text-align:center;background:url(assets/stars.svg) 0 0/480px repeat,linear-gradient(180deg,#031c22 0%,#05303a 45%,#0a4952 100%);overflow:hidden}
 .cta h2{position:relative;z-index:2;font:500 60px/66px var(--display);letter-spacing:-1.2px;color:#fff;padding:0 16px}
 .cta .btn{position:relative;z-index:2;margin-top:40px;min-width:210px;padding:0 48px;background:#fff;color:var(--ink);border-color:var(--wbtn-border);box-shadow:0 2px 4px rgba(255,255,255,.48)}
-.dream{position:absolute;left:0;right:0;bottom:0;height:556px;overflow:hidden;background:url(assets/cta.webp) center bottom/cover no-repeat,linear-gradient(180deg,rgba(10,73,82,0) 0%,#2e7f86 30%,#8fc6c0 52%,#f2b9a6 68%,#ee9d8e 82%,#f5b6a0 100%)}
-.dream::before{content:"";position:absolute;left:0;right:0;top:0;height:150px;background:linear-gradient(#042a33,rgba(4,42,51,0))}
-.dream .fl{position:absolute;border-radius:6px;box-shadow:0 8px 24px rgba(3,28,34,.25);overflow:hidden}
-.dream .fl b{position:absolute;left:12px;top:12px;font:700 22px/1.08 var(--sans);letter-spacing:-.3px}
-.dream .fl i{position:absolute;left:12px;height:4px;border-radius:2px;background:currentColor;opacity:.35}
+.dream{position:relative;margin-top:48px;width:100%;aspect-ratio:1440/556;container-type:inline-size;overflow:hidden;background:url(assets/cta.webp) center bottom/cover no-repeat,linear-gradient(180deg,rgba(10,73,82,0) 0%,#2e7f86 30%,#8fc6c0 52%,#f2b9a6 68%,#ee9d8e 82%,#f5b6a0 100%)}
+.dream::before{content:"";position:absolute;left:0;right:0;top:0;height:27%;background:linear-gradient(#042a33,rgba(4,42,51,0))}
+.dream .fl{position:absolute;border-radius:.42cqw;box-shadow:0 .55cqw 1.7cqw rgba(3,28,34,.25);overflow:hidden;text-align:left}
+.dream .fl b{position:absolute;font-weight:700;line-height:1.08;letter-spacing:-.02em;font-family:var(--sans)}
+.dream .fl i{position:absolute;border-radius:.14cqw;background:currentColor;opacity:.35}
+.dream .fl .num{position:absolute;font-weight:700;line-height:1;font-family:var(--display)}
+.dream .fl .hill{position:absolute;border-radius:50% 50% 0 0}
 
 /* ---------- footer ---------- */
 .foot{position:relative;padding:96px 0;color:rgb(250,249,245);background:linear-gradient(rgb(3,28,34) 0%,rgb(9,62,68) 33%,rgb(14,84,90) 50%,rgb(38,124,124) 100%);overflow:hidden}
 .foot::before{content:"";position:absolute;left:0;right:0;top:0;height:450px;background:url(assets/stars.svg) 0 0/480px repeat;opacity:.8;-webkit-mask-image:linear-gradient(#000 40%,transparent);mask-image:linear-gradient(#000 40%,transparent)}
 .foot .wrap{position:relative}
-.fmark{display:block;width:100%;height:219px}
+.fmark{display:block;width:100%;height:auto;aspect-ratio:1268/219}
 .foot hr{border:0;border-top:1px solid rgba(250,249,245,.28);margin:48px 0}
 .fcols{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));column-gap:48px}
 .fcols h3{font:700 20px/22px var(--sans);letter-spacing:-.4px}
 .fcols ul{list-style:none;margin-top:24px}
 .fcols li{font-size:16px;line-height:24px}
 .fcols li+li{margin-top:8px}
+.fcols a{display:inline-block;min-width:32px;padding:4px 0;margin:-4px 0}
 .fcols a:hover{text-decoration:underline;text-underline-offset:3px}
 .pay{display:flex;flex-direction:column;gap:5px;margin-top:20px}
 .pay .pb{display:flex;align-items:center;gap:9px;width:135px;height:45px;padding:0 10px;border-radius:7px;background:#000;border:1px solid #a6a6a6;color:#fff}
@@ -348,30 +368,65 @@ img{display:block;max-width:100%}
 .rise{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s ease}
 .rise.in{opacity:1;transform:none}
 
-/* ---------- tablet ---------- */
+/* ---------- desktop sempit (1024 sampai 1180) ---------- */
 @media (max-width:1180px){
   .hero .wrap{grid-template-columns:minmax(0,440px) minmax(0,1fr);column-gap:36px}
   .hero h1{font-size:50px;line-height:52px}
   .spark{display:none}
   .big{font-size:76px;line-height:84px}
-  .pcard{gap:28px}
+  .pcard{gap:20px;padding:0 20px 0 24px}
+  .pcard .thumb{zoom:.8}
+  .pcard h3{font-size:26px;line-height:30px;letter-spacing:-.5px}
+  .ftxt h3{font-size:40px;line-height:42px;letter-spacing:-.8px}
   .clouds .cloud.r{left:auto;right:-60px}
+  .frow{min-height:0}
+  .frow+.frow{margin-top:156px}
 }
+/* ---------- tablet (768 sampai 1023), pola referensi: hero terpusat, fitur bertumpuk ---------- */
 @media (max-width:1023px) and (min-width:768px){
-  .hero{height:auto;padding:72px 0 0}
-  .hero .wrap{grid-template-columns:1fr;row-gap:40px}
-  .hero-media{height:320px;overflow:hidden;border-radius:24px}
-  .frow,.frow.rev{grid-template-columns:1fr;row-gap:40px}
-  .frow.rev .fvis{order:0}
-  .fvis{max-width:586px}
-  .faq .wrap{grid-template-columns:1fr;row-gap:32px}
-  .fcols{grid-template-columns:repeat(3,minmax(0,1fr));row-gap:40px}
-  .pcard{flex-direction:column;align-items:flex-start;padding:24px;height:auto!important}
-  .products{height:auto;padding-bottom:200px}
-  .clouds{top:auto;bottom:-110px}
+  .hero{height:auto;padding:64px 0 0}
+  .hero .wrap{display:block}
+  .hero-copy{text-align:center;max-width:640px;margin:0 auto}
+  .mark{margin:0 auto 20px}
+  .hero h1{font-size:44px;line-height:46px;letter-spacing:-.9px}
+  .hero-btns{flex-direction:column;gap:12px}
+  .hero-btns .btn{width:100%}
+  .hero-media{height:auto;margin:40px 0 64px;overflow:visible}
+  .vmarq{position:static;display:flex;justify-content:center;transform:none;animation:none}
+  .vmarq .slide{display:none}
+  .vmarq .slide:nth-child(2){display:block;flex:none;width:711px;height:400px;margin:0;zoom:.9;box-shadow:0 10px 30px rgba(4,52,56,.14)}
+  .products{height:auto;padding:72px 0 210px}
+  .pgrid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .pcol{display:contents}
+  .pcol:first-child .pcard{grid-column:1}
+  .pcol:last-child .pcard{grid-column:2}
+  .pcol .pcard:nth-child(1){grid-row:1}
+  .pcol .pcard:nth-child(2){grid-row:2}
+  .pcol .pcard:nth-child(3){grid-row:3}
+  .pcard{height:auto!important;min-height:156px;padding:20px 20px 20px 16px;gap:14px}
+  .pcard .thumb{zoom:.56}
+  .pcard h3{font-size:20px;line-height:24px;letter-spacing:-.3px}
+  .pcard p{font-size:14px;line-height:21px;margin-top:6px}
+  .clouds{top:auto;bottom:-120px}
   .trust{height:auto;padding-bottom:96px}
-
+  .feats{padding-top:24px}
+  .frow,.frow.rev{display:block;min-height:0}
+  .frow+.frow{margin-top:96px}
+  .ftxt{margin-top:48px;max-width:640px}
+  .band{margin-top:48px}
+  .testi h2{font-size:40px;line-height:44px;letter-spacing:-.8px}
   .tcard{width:520px}
+  .faq{padding-top:80px}
+  .faq .wrap{display:block}
+  .faq h2{text-align:center;font-size:36px;line-height:40px}
+  .faq-sub{display:none}
+  .faq-sub.m{display:block;text-align:center;margin-top:28px}
+  .acc{margin-top:32px}
+  .cta h2{font-size:40px;line-height:46px;letter-spacing:-.8px}
+  .foot{padding:64px 0}
+  .fcols{grid-template-columns:1fr 1fr;row-gap:48px}
+  .fcols .getapp{grid-column:1/-1}
+  .pay{flex-direction:row;gap:8px}
 }
 
 @media (max-width:1023px){
@@ -381,10 +436,19 @@ img{display:block;max-width:100%}
   .globe-m,.burger{display:inline-flex;width:28px}
   .globe-m{margin-left:auto;margin-right:12px}
   .burger{margin-right:-1px}
-  .mnav{position:fixed;left:0;right:0;top:56px;bottom:0;z-index:59;background:#fff;padding:16px;overflow:auto}
-  .mnav.open{display:block}
-  .mnav a{display:block;padding:14px 4px;border-bottom:1px solid var(--line);font-size:18px}
-  .mnav .btn{display:flex;margin-top:20px;color:#fff;border:0}
+  .mnav{position:fixed;left:0;right:0;top:56px;bottom:0;z-index:59;background:#fff;padding:8px 16px 32px;overflow-y:auto;overscroll-behavior:contain;box-shadow:inset 0 1px 0 var(--line)}
+  .mnav.open{display:block;animation:mnin .18s ease-out}
+  @keyframes mnin{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+  .mnav>a{display:flex;align-items:center;min-height:56px;padding:0 4px;border-bottom:1px solid var(--line);font:500 18px/1.2 var(--sans);color:var(--ink)}
+  .mlang{display:flex;align-items:center;gap:8px;min-height:64px;padding:0 4px;border-bottom:1px solid var(--line)}
+  .mlang span{margin-right:auto;font-size:15px;color:var(--muted)}
+  .mlang a{display:inline-flex;align-items:center;height:36px;padding:0 14px;border-radius:18px;border:1px solid var(--line);font-size:15px}
+  .mlang a[aria-current]{background:var(--mist);border-color:var(--wbtn-border);color:var(--accent);font-weight:700}
+  .mnav .btn{display:flex;width:100%;margin-top:24px;color:#fff;border:0}
+  body.menu-open{overflow:hidden}
+  body.menu-open .nav,body.menu-open .nav.dark{background:#fff;color:var(--ink)}
+  body.menu-open .nav.dark .logo text{fill:#043438}
+  body.menu-open .nav.dark .globe-m,body.menu-open .nav.dark .burger{color:var(--ink)}
 }
 /* ---------- mobile (mengikuti tata letak mobile referensi) ---------- */
 @media (max-width:767px){
@@ -411,7 +475,7 @@ img{display:block;max-width:100%}
   .vbar{right:12px;top:12px;bottom:8px;width:19px;gap:9px;padding-top:7px;border-radius:4px}
   .vbar .ic{width:8px;height:8px}
   .products{height:486px;padding-top:96px;margin-bottom:48px;background:linear-gradient(var(--sky) 13%,var(--sky) 50%,var(--mist) 90%,#fff 100%)}
-  .pgrid{display:flex;gap:8px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-left:23px;padding:16px 23px 0;scrollbar-width:none}
+  .pgrid{display:flex;gap:8px;overflow-x:auto;scroll-snap-type:x mandatory;width:100%;margin:0;padding:16px calc(50vw - 156px) 0;scroll-padding-left:calc(50vw - 156px);scrollbar-width:none}
   .pgrid::-webkit-scrollbar{display:none}
   .pcol{display:contents}
   .pcard{flex:none;width:312px;height:358px!important;flex-direction:column;justify-content:flex-start;gap:0;padding:24px 16px;text-align:center;scroll-snap-align:start}
@@ -419,20 +483,18 @@ img{display:block;max-width:100%}
   .pcard h3{font-size:20px;line-height:22px;letter-spacing:-.4px}
   .pcard p{max-width:280px;margin:8px auto 0}
   .clouds{display:none}
-  .trust{height:729px}
+  .trust{height:auto;padding-bottom:72px}
   .trust-t{font-size:20px;padding:0 0}
-  .marks{column-gap:24px;max-width:300px}
-  .marks span{height:50px}
-  .marks .brk.mb{display:block}
-  .m1{font-size:26px}.m2{font-size:27px}.m3{font-size:20px}.m4{font-size:27px}.m5{font-size:30px}.m6{font-size:26px}
-  .big{max-width:262px;margin-top:36px;font-size:48px;line-height:52.8px;letter-spacing:-.96px}
-  .spark{display:block;top:470px;width:40px;height:48px}
+  .marks{grid-template-columns:repeat(2,auto);column-gap:32px;row-gap:24px}
+  .marks .mk{height:50px;gap:9px;font-size:23px}
+  .marks .mk svg{width:19px;height:19px}
+  .big{max-width:358px;margin-top:64px;font-size:44px;line-height:48px;letter-spacing:-.9px}
+  .spark{display:block;top:auto;bottom:150px;width:34px;height:42px}
   .spark.l{left:16px}.spark.r{left:auto;right:16px}
   .feats{padding-top:24px}
   .frow,.frow.rev{display:block;min-height:0}
   .frow+.frow{margin-top:56px}
-  .fvis{height:274px;border-radius:24px}
-  .fvis>*:not(.zf){zoom:.611}
+  .fvis{border-radius:24px;--k:.611}
   .ftxt{margin-top:56px}
   .ftxt h3{margin-top:24px;font-size:36px;line-height:36px;letter-spacing:-.72px}
   .ftxt ul{margin-top:24px}
@@ -452,20 +514,16 @@ img{display:block;max-width:100%}
   .faq{padding-top:64px;padding-bottom:48px}
   .faq .wrap{display:block}
   .faq h2{text-align:center;font-size:30px;line-height:33px;letter-spacing:-.6px}
-  .faq h2 br{display:none}
   .faq-sub{display:none}
   .faq-sub.m{display:block;text-align:center;margin-top:32px}
   .acc{margin-top:32px}
   .acc summary{padding:20px 16px;font-size:16px;line-height:24px;align-items:center}
   .acc summary span{max-width:294px}
   .acc details p{padding:0 16px 20px}
-  .cta{height:398px;padding-top:48px}
+  .cta{padding-top:48px}
   .cta h2{font-size:36px;line-height:39.6px;letter-spacing:-.72px}
   .cta .btn{margin-top:24px}
-  .dream{height:150px}
-      .dream .fl{zoom:.32}
   .foot{padding:48px 0}
-  .fmark{height:62px}
   .foot hr{margin:47px 0 49px}
   .fcols ul{margin-top:20px}
   .fcols{grid-template-columns:1fr 1fr;row-gap:48px}
@@ -508,6 +566,15 @@ img{display:block;max-width:100%}
   <symbol id="i-type" viewBox="0 0 24 24"><path d="M4 7V4h16v3M9 20h6M12 4v16"/></symbol>
   <symbol id="i-film" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M7 3v18M3 7.5h4M3 12h18M3 16.5h4M17 3v18M17 7.5h4M17 16.5h4"/></symbol>
   <symbol id="i-card" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+  <symbol id="i-grip" viewBox="0 0 24 24"><circle cx="9" cy="5" r="1"/><circle cx="9" cy="12" r="1"/><circle cx="9" cy="19" r="1"/><circle cx="15" cy="5" r="1"/><circle cx="15" cy="12" r="1"/><circle cx="15" cy="19" r="1"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></symbol>
+  <symbol id="i-mega" viewBox="0 0 24 24"><path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></symbol>
+  <symbol id="i-gift" viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7M7.5 8a2.5 2.5 0 0 1 0-5C9.5 3 11 5 12 8c1-3 2.5-5 4.5-5a2.5 2.5 0 0 1 0 5"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></symbol>
+  <symbol id="i-puzzle" viewBox="0 0 24 24"><path d="M19.44 7.85c-.24.23-.6.27-.88.1A2.4 2.4 0 1 0 18.62 12c.28-.17.64-.13.88.1l1.6 1.6a2.3 2.3 0 0 1 0 3.28l-1.6 1.6a.53.53 0 0 1-.9-.38 2.4 2.4 0 1 0-3.03 2.33.53.53 0 0 1 .38.9l-1.6 1.6a2.3 2.3 0 0 1-3.28 0l-1.6-1.6a.53.53 0 0 0-.9.38 2.4 2.4 0 1 1-3.03-2.33.53.53 0 0 0 .38-.9l-1.6-1.6a2.3 2.3 0 0 1 0-3.28l1.6-1.6c.24-.23.6-.27.88-.1A2.4 2.4 0 1 0 5.38 8c-.28.17-.64.13-.88-.1L2.9 6.3a2.3 2.3 0 0 1 0-3.28L4.5 1.4"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M18 17V9M13 17V5M8 17v-3"/></symbol>
   <symbol id="i-cursor" viewBox="0 0 24 24"><path d="M4.04 4.04 10.5 20.5l2.1-6.6 6.9-2.3z" fill="#fff"/></symbol>
 </svg>
 
@@ -533,15 +600,15 @@ img{display:block;max-width:100%}
       <a class="nl" href="#">Masuk</a>
       <a class="btn btn-cta" href="#">Mulai gratis</a>
     </div>
-    <button class="globe-m" type="button" aria-label="Pilih bahasa"><svg class="ic" style="width:20px;height:20px;stroke-width:1.8"><use href="#i-globe"/></svg></button>
-    <button class="burger" type="button" aria-label="Buka menu" aria-expanded="false" id="burger"><svg class="ic" style="width:24px;height:24px;stroke-width:1.8"><use href="#i-menu"/></svg></button>
-  </div>
-  <div class="mnav" id="mnav">
-    <a href="#produk">Produk</a><a href="#fitur">Solusi</a><a href="#faq">Tentang</a><a href="#faq">Harga</a><a href="#">Masuk</a>
-    <a href="#top" aria-current="true">Bahasa Indonesia</a><a href="#top" hreflang="en" title="Versi bahasa Inggris sedang disiapkan">English</a>
-    <a class="btn btn-cta" href="#">Mulai gratis</a>
+    <button class="globe-m" type="button" aria-label="Pilih bahasa" aria-controls="mnav"><svg class="ic" style="width:20px;height:20px;stroke-width:1.8"><use href="#i-globe"/></svg></button>
+    <button class="burger" type="button" aria-label="Buka menu" aria-expanded="false" aria-controls="mnav" id="burger"><svg class="ic" style="width:24px;height:24px;stroke-width:1.8"><use href="#i-menu"/></svg></button>
   </div>
 </header>
+<nav class="mnav" id="mnav" aria-label="Menu seluler">
+  <a href="#produk">Produk</a><a href="#fitur">Solusi</a><a href="#faq">Tentang</a><a href="#faq">Harga</a><a href="#">Masuk</a>
+  <div class="mlang"><span>Bahasa</span><a href="#top" aria-current="true">Indonesia</a><a href="#top" hreflang="en" title="Versi bahasa Inggris sedang disiapkan">English</a></div>
+  <a class="btn btn-cta" href="#">Mulai gratis</a>
+</nav>
 
 <main>
 <!-- HERO -->
@@ -591,7 +658,7 @@ img{display:block;max-width:100%}
         <div class="ptxt"><h3>Sidang skripsi</h3><p>Kerangka sidang dan proposal lengkap, dari latar belakang sampai simpulan.</p></div>
       </a>
       <a class="pcard" href="#" style="height:251px">
-        <div class="thumb t3" style="--mz:.829"><span class="sq" style="left:22px;top:52px;background:#7fb9d6"></span><span class="sq" style="left:150px;top:44px;background:#0b7d7f;width:30px;height:30px"></span><span class="sq" style="left:14px;top:140px;background:#f2a77f;width:24px;height:30px"></span><span class="sq" style="left:144px;top:142px;background:#e98d8d;width:22px;height:16px"></span><div class="cd"><b>Kuis Pecahan untuk Kelas 4</b></div></div>
+        <div class="thumb t3" style="--mz:.829"><span class="sq" style="left:16px;top:44px;background:#5aa6c9"><svg class="ic"><use href="#i-star"/></svg></span><span class="sq" style="left:156px;top:40px;background:#0b7d7f"><svg class="ic"><use href="#i-check"/></svg></span><span class="sq" style="left:12px;top:132px;background:#e9895f"><svg class="ic"><use href="#i-puzzle"/></svg></span><span class="sq" style="left:160px;top:136px;background:#d9707c"><svg class="ic"><use href="#i-chart"/></svg></span><div class="cd"><b>Kuis Pecahan untuk Kelas 4</b></div></div>
         <div class="ptxt"><h3>Materi ajar</h3><p>Bahan ajar untuk guru dan dosen, lengkap dengan ringkasan, kuis, dan catatan pembicara.</p></div>
       </a>
     </div>
@@ -617,7 +684,12 @@ img{display:block;max-width:100%}
 <section class="trust" aria-label="Untuk siapa">
   <p class="trust-t rise">Untuk kelas, kantor, dan usaha kecil</p>
   <div class="marks rise" aria-hidden="true">
-    <span class="m1">Solo</span><span class="m2">Bandung</span><i class="brk mb"></i><span class="m3">Medan</span><span class="m4">makassar</span><i class="brk mb"></i><span class="m5">Kota Yogyakarta</span><i class="brk"></i><span class="m6">Denpasar</span>
+    <span class="mk"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" fill="none" stroke="#fff" stroke-width="3.2"/></svg>Solo</span>
+    <span class="mk b"><svg viewBox="0 0 24 24"><path d="M12 3 22 20H2z" fill="#fff"/></svg>Bandung</span>
+    <span class="mk"><svg viewBox="0 0 24 24"><path d="M12 2 22 12 12 22 2 12z" fill="#fff"/></svg>Medan</span>
+    <span class="mk b"><svg viewBox="0 0 24 24"><path d="M12 2l8.66 5v10L12 22l-8.66-5V7z" fill="#fff"/></svg>Makassar</span>
+    <span class="mk"><svg viewBox="0 0 24 24"><path d="M12 1c1 6.5 4.5 10 11 11-6.5 1-10 4.5-11 11-1-6.5-4.5-10-11-11 6.5-1 10-4.5 11-11z" fill="#fff"/></svg>Yogyakarta</span>
+    <span class="mk b"><svg viewBox="0 0 24 24"><path d="M3 18a9 9 0 0 1 18 0z" fill="#fff"/><path d="M2 21.5h20" stroke="#fff" stroke-width="2.4"/></svg>Denpasar</span>
   </div>
   <svg class="spark l" viewBox="0 0 74 90" aria-hidden="true"><path d="M30 18c2 14 6 18 20 20-14 2-18 6-20 20-2-14-6-18-20-20 14-2 18-6 20-20z" fill="#fff"/><path d="M56 56c1 8 3 10 11 11-8 1-10 3-11 11-1-8-3-10-11-11 8-1 10-3 11-11z" fill="#fff"/><circle cx="64" cy="20" r="3" fill="#fff"/><circle cx="6" cy="64" r="3" fill="#fff"/></svg>
   <svg class="spark r" viewBox="0 0 74 90" aria-hidden="true"><path d="M44 18c2 14 6 18 20 20-14 2-18 6-20 20-2-14-6-18-20-20 14-2 18-6 20-20z" fill="#fff"/><path d="M18 56c1 8 3 10 11 11-8 1-10 3-11 11-1-8-3-10-11-11 8-1 10-3 11-11z" fill="#fff"/><circle cx="8" cy="20" r="3" fill="#fff"/><circle cx="68" cy="64" r="3" fill="#fff"/></svg>
@@ -628,7 +700,7 @@ img{display:block;max-width:100%}
 <section class="feats" id="fitur" aria-label="Fitur">
   <div class="wrap">
     <div class="frow">
-      <div class="fvis v1" aria-hidden="true">
+      <div class="fvis v1" aria-hidden="true"><div class="fcan">
         <h4>Mulai dengan AI</h4>
         <div class="sub">Siapkan presentasi dalam hitungan menit. Pilih cara memulainya:</div>
         <div class="opts">
@@ -637,6 +709,7 @@ img{display:block;max-width:100%}
           <div class="opt"><div class="art a3"><span class="fold"><svg class="ic"><use href="#i-upload"/></svg></span></div><b>Unggah berkas</b><small>PDF, Word, atau tautan</small></div>
         </div>
         <svg class="cursor" viewBox="0 0 24 24" style="stroke:#043438;stroke-width:1.3"><use href="#i-cursor"/></svg>
+      </div>
       </div>
       <div class="ftxt">
         <span class="tag t-teal"><svg class="ic"><use href="#i-file"/></svg>Buat</span>
@@ -651,21 +724,21 @@ img{display:block;max-width:100%}
     </div>
 
     <div class="frow rev">
-      <div class="fvis v2" aria-hidden="true">
-        <div class="doc d0"><small style="left:48px">Visual bersih membuat poin utama mudah diingat.</small><span class="halfc"></span><small style="right:44px">Cocok untuk rapat dan kelas.</small></div>
+      <div class="fvis v2" aria-hidden="true"><div class="fcan">
+        <div class="doc d0"><small style="left:40px">Konten rutin membuat toko tetap diingat.</small><span class="halfc"></span><small style="right:40px">Target: 30% pelanggan baru.</small></div>
         <div class="doc d1">
-          <div class="hd"><span class="blob" style="left:120px;top:20px;width:120px;height:120px;background:radial-gradient(#ffd7b8,#f39c7b 70%)"></span><span class="blob" style="left:260px;top:-30px;width:150px;height:150px;background:radial-gradient(#bff0e6,#2aa198 70%)"></span><span class="blob" style="left:370px;top:30px;width:110px;height:110px;background:radial-gradient(#ffe8a8,#f2b53a 70%)"></span>
-            <div class="tools"><i style="width:14px"></i><i style="width:34px"></i><i style="width:34px"></i></div></div>
+          <div class="hd">
+            <div class="tools"><span class="tb"><svg class="ic"><use href="#i-grip"/></svg></span><span class="tb"><svg class="ic"><use href="#i-palette"/></svg><svg class="ic dn"><use href="#i-down"/></svg></span><span class="tb"><svg class="ic"><use href="#i-spark"/></svg><svg class="ic dn"><use href="#i-down"/></svg></span></div></div>
           <h5>Rencana Pemasaran 2027</h5>
           <div class="cols">
-            <div><b>Konten Mingguan</b><span>Jadwal unggahan tiap Senin dan Kamis, tema mengikuti kalender promo toko.</span></div>
-            <div><b>Iklan Lokal</b><span>Fokus ke radius 5 km dari toko. Anggaran dibagi rata selama tiga bulan.</span></div>
-            <div><b>Program Member</b><span>Kartu poin digital untuk pelanggan tetap, ditukar menu gratis.</span></div>
-            <div><b>Kolaborasi</b><span>Kerja sama dengan kampus dan komunitas sekitar untuk acara bulanan.</span></div>
+            <div><svg class="ic"><use href="#i-cal"/></svg><b>Konten Mingguan</b><span>Unggahan tiap Senin dan Kamis mengikuti kalender promo.</span><em>2x seminggu</em></div>
+            <div><svg class="ic"><use href="#i-mega"/></svg><b>Iklan Lokal</b><span>Fokus radius 5 km dari toko, anggaran rata tiga bulan.</span><em>Radius 5 km</em></div>
+            <div><svg class="ic"><use href="#i-gift"/></svg><b>Program Member</b><span>Kartu poin digital untuk pelanggan tetap, tukar menu gratis.</span><em>Poin digital</em></div>
+            <div><svg class="ic"><use href="#i-users"/></svg><b>Kolaborasi</b><span>Acara bulanan bersama kampus dan komunitas sekitar.</span><em>Tiap bulan</em></div>
           </div>
         </div>
-        <div class="doc d2"><h6>Langkah Berikutnya</h6><div class="im"></div></div>
-      </div>
+        <div class="doc d2"><div class="tx"><h6>Langkah Berikutnya</h6><p><svg class="ic"><use href="#i-check"/></svg>Uji menu musiman, lalu buka cabang kedua</p></div><div class="im"></div></div>
+      </div></div>
       <div class="ftxt">
         <span class="tag t-gold"><svg class="ic"><use href="#i-edit"/></svg>Susun</span>
         <h3>Edit pakai AI, cukup sekali klik.</h3>
@@ -679,26 +752,20 @@ img{display:block;max-width:100%}
     </div>
 
     <div class="frow">
-      <div class="fvis v3" aria-hidden="true">
-        <div class="low"></div>
-        <div class="sharebtn"><svg class="ic"><use href="#i-dl"/></svg>Unduh</div>
-        <div class="rb a"><svg class="ic"><use href="#i-spark"/></svg></div>
-        <div class="rb b"><svg class="ic" style="stroke-width:3"><use href="#i-dots"/></svg></div>
-        <div class="rb c"></div>
-        <div class="night"></div>
-        <svg class="cursor" viewBox="0 0 24 24" style="stroke:#043438;stroke-width:1.2"><use href="#i-cursor"/></svg>
-        <div class="zf">
-          <div class="m3-top"><span class="m3-pill"><svg class="ic"><use href="#i-dl"/></svg>Unduh</span><span class="m3-c"><svg class="ic"><use href="#i-spark"/></svg></span><span class="m3-c"><svg class="ic" style="stroke-width:3"><use href="#i-dots"/></svg></span><span class="m3-av">RT</span></div>
-          <div class="m3-card"><span class="m3-sun"></span><small>Laporan</small><b>Industri Kopi<br>Nusantara 2027</b><span class="m3-planet"></span><span class="m3-base"></span></div>
-          <div class="m3-ai"><svg class="ic"><use href="#i-spark"/></svg></div>
-          <div class="m3-bar"><svg class="ic"><use href="#i-layers"/></svg><svg class="ic"><use href="#i-layout"/></svg></div>
-        </div>
-      </div>
+      <div class="fvis v3" aria-hidden="true"><div class="fcan">
+        <div class="v3top"><span class="v3doc"><svg class="ic"><use href="#i-file"/></svg>Laporan Industri Kopi 2027</span><span class="sharebtn"><svg class="ic"><use href="#i-dl"/></svg>Unduh</span><span class="rb rb1"><svg class="ic"><use href="#i-spark"/></svg></span><span class="rb rb2"><svg class="ic" style="stroke-width:3"><use href="#i-dots"/></svg></span><span class="v3av">RT</span></div>
+        <div class="v3slide"><span class="sun"></span><span class="planet"></span><span class="base"></span><small>Laporan</small><b>Industri Kopi<br>Nusantara 2027</b><i></i><i></i></div>
+        <div class="v3ai"><svg class="ic"><use href="#i-spark"/></svg></div>
+        <div class="v3bar"><svg class="ic"><use href="#i-layers"/></svg><svg class="ic"><use href="#i-layout"/></svg><svg class="ic"><use href="#i-type"/></svg><svg class="ic"><use href="#i-image"/></svg></div>
+        <div class="v3menu"><div class="row on"><svg class="ic"><use href="#i-pres"/></svg>PowerPoint (.pptx)<em>Bisa diedit</em></div><div class="row"><svg class="ic"><use href="#i-file"/></svg>Dokumen PDF</div><div class="row"><svg class="ic"><use href="#i-image"/></svg>Gambar PNG</div></div>
+        <svg class="cursor" viewBox="0 0 24 24" style="stroke:#043438;stroke-width:1.3"><use href="#i-cursor"/></svg>
+        <div class="v3toast"><span class="ok"><svg class="ic"><use href="#i-check"/></svg></span><span class="tt">Laporan-Kopi.pptx tersimpan<i><b></b></i></span></div>
+      </div></div>
       <div class="ftxt">
         <span class="tag t-leaf"><svg class="ic"><use href="#i-share"/></svg>Bagikan</span>
         <h3>Siap tampil, di mana pun dibutuhkan.</h3>
         <ul>
-          <li><svg class="ic c-leaf"><use href="#i-file"/></svg>Unduh .pptx yang bisa diedit, PDF, PNG</li>
+          <li><svg class="ic c-leaf"><use href="#i-file"/></svg>Ekspor .pptx bisa diedit, PDF, PNG</li>
           <li><svg class="ic c-leaf"><use href="#i-dl"/></svg>Buka di PowerPoint atau Google Slides tanpa tata letak berantakan</li>
           <li><svg class="ic c-leaf"><use href="#i-wallet"/></svg>Bayar Rupiah lewat QRIS dan e-wallet</li>
         </ul>
@@ -709,7 +776,7 @@ img{display:block;max-width:100%}
 </section>
 
 <div class="band" aria-hidden="true">
-  <svg viewBox="0 0 1440 123" preserveAspectRatio="none"><defs><linearGradient id="bg1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".95"/><stop offset="1" stop-color="#fff" stop-opacity=".55"/></linearGradient></defs>
+  <svg viewBox="0 0 1440 123"><defs><linearGradient id="bg1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".95"/><stop offset="1" stop-color="#fff" stop-opacity=".55"/></linearGradient></defs>
     <text x="0" y="138" textLength="1440" lengthAdjust="spacingAndGlyphs" font-family="Outfit, sans-serif" font-weight="800" font-size="190" fill="url(#bg1)">SOLUSLIDE</text></svg>
 </div>
 
@@ -718,12 +785,12 @@ img{display:block;max-width:100%}
   <h2>Presentasi lebih rapi dari ruang kelas sampai ruang rapat</h2>
   <div class="tview">
     <div class="ttrack" id="ttrack">
-      <figure class="tcard"><q>Materi ajar satu bab selesai dalam sepuluh menit, lengkap dengan kuis. Murid juga <strong>lebih betah memperhatikan</strong> karena slidenya enak dilihat.</q><figcaption class="who"><span class="av" style="background:#e0925f">RT</span><span><b>Ratna T.</b><small>Guru SD, contoh testimoni</small></span></figcaption></figure>
-      <figure class="tcard"><q>Kerangka sidang langsung rapi, jadi saya bisa fokus ke isi. <strong>Revisi dari dosen pembimbing</strong> juga lebih cepat, latihan presentasi pun lebih tenang.</q><figcaption class="who"><span class="av" style="background:#0b7d7f">NP</span><span><b>Nadia P.</b><small>Mahasiswa tingkat akhir, contoh</small></span></figcaption></figure>
-      <figure class="tcard"><q>Soluslide jadi andalan tim kami untuk <strong>paparan rapat bulanan</strong>, tidak ada lagi lembur hanya untuk merapikan slide laporan.</q><figcaption class="who"><span class="av" style="background:#3f7d20">AS</span><span><b>Arif S.</b><small>Staf perencanaan, contoh</small></span></figcaption></figure>
-      <figure class="tcard"><q>Deck untuk pengajuan modal jadi kelihatan profesional. <strong>Bayar pakai QRIS</strong> juga praktis buat usaha kecil seperti kami.</q><figcaption class="who"><span class="av" style="background:#a16207">DK</span><span><b>Dewi K.</b><small>Pemilik kedai kopi, contoh</small></span></figcaption></figure>
-      <figure class="tcard"><q>File .pptx bisa dibuka dan diedit di PowerPoint kantor <strong>tanpa tata letak yang berantakan</strong>.</q><figcaption class="who"><span class="av" style="background:#2c6f8f">YA</span><span><b>Yoga A.</b><small>Analis data, contoh</small></span></figcaption></figure>
-      <figure class="tcard"><q>Bahasa Indonesianya rapi dan wajar, <strong>tidak terasa seperti hasil terjemahan mesin</strong>. Mahasiswa saya juga ikut memakainya.</q><figcaption class="who"><span class="av" style="background:#7a4f9a">SM</span><span><b>Sari M.</b><small>Dosen, contoh testimoni</small></span></figcaption></figure>
+      <figure class="tcard"><q>Materi ajar satu bab selesai dalam sepuluh menit, lengkap dengan kuis. Murid juga <strong>lebih betah memperhatikan</strong> karena slidenya enak dilihat.</q><figcaption class="who"><span class="av" style="background:#e0925f">RT</span><span><b>Ratna T.</b><small>Guru SD</small></span><span class="tchip">Contoh</span></figcaption></figure>
+      <figure class="tcard"><q>Kerangka sidang langsung rapi, jadi saya bisa fokus ke isi. <strong>Revisi dari dosen pembimbing</strong> juga lebih cepat, latihan presentasi pun lebih tenang.</q><figcaption class="who"><span class="av" style="background:#0b7d7f">NP</span><span><b>Nadia P.</b><small>Mahasiswa</small></span><span class="tchip">Contoh</span></figcaption></figure>
+      <figure class="tcard"><q>Soluslide jadi andalan tim kami untuk <strong>paparan rapat bulanan</strong>, tidak ada lagi lembur hanya untuk merapikan slide laporan.</q><figcaption class="who"><span class="av" style="background:#3f7d20">AS</span><span><b>Arif S.</b><small>Staf perencanaan</small></span><span class="tchip">Contoh</span></figcaption></figure>
+      <figure class="tcard"><q>Deck untuk pengajuan modal jadi kelihatan profesional. <strong>Bayar pakai QRIS</strong> juga praktis buat usaha kecil seperti kami.</q><figcaption class="who"><span class="av" style="background:#a16207">DK</span><span><b>Dewi K.</b><small>Pemilik kedai kopi</small></span><span class="tchip">Contoh</span></figcaption></figure>
+      <figure class="tcard"><q>File .pptx bisa dibuka dan diedit di PowerPoint kantor <strong>tanpa tata letak yang berantakan</strong>.</q><figcaption class="who"><span class="av" style="background:#2c6f8f">YA</span><span><b>Yoga A.</b><small>Analis data</small></span><span class="tchip">Contoh</span></figcaption></figure>
+      <figure class="tcard"><q>Bahasa Indonesianya rapi dan wajar, <strong>tidak terasa seperti hasil terjemahan mesin</strong>. Mahasiswa saya juga ikut memakainya.</q><figcaption class="who"><span class="av" style="background:#7a4f9a">SM</span><span><b>Sari M.</b><small>Dosen</small></span><span class="tchip">Contoh</span></figcaption></figure>
     </div>
   </div>
   <div class="tnav"><button type="button" id="tprev" aria-label="Sebelumnya"><svg class="ic"><use href="#i-left"/></svg></button><button type="button" id="tnext" aria-label="Berikutnya"><svg class="ic"><use href="#i-right"/></svg></button></div>
@@ -733,7 +800,7 @@ img{display:block;max-width:100%}
 <section class="faq" id="faq" aria-label="Pertanyaan umum">
   <div class="wrap">
     <div>
-      <h2>Pertanyaan<br> umum</h2>
+      <h2>Pertanyaan yang sering muncul</h2>
       <p class="faq-sub">Belum menemukan jawabannya? Hubungi kami lewat <a href="#">halaman bantuan</a>.</p>
     </div>
     <div class="acc">
@@ -754,24 +821,25 @@ img{display:block;max-width:100%}
   <h2>Ide bagus pantas tampil memukau</h2>
   <a class="btn" href="#">Mulai gratis</a>
   <div class="dream" aria-hidden="true">
-    <div class="fl" style="left:-10px;top:56px;width:180px;height:180px;background:linear-gradient(160deg,#2e8f6d,#7cc39a);color:#fff"></div>
-    <div class="fl" style="left:171px;top:0;width:239px;height:255px;background:#f7d6c9;color:#7a3b2b"><b>Liburan<br>Keluarga</b><i style="top:80px;width:24px"></i><i style="top:100px;width:120px"></i><i style="top:126px;width:24px"></i><i style="top:146px;width:120px"></i><i style="top:172px;width:24px"></i><i style="top:192px;width:120px"></i></div>
-    <div class="fl" style="left:322px;top:130px;width:282px;height:210px;background:linear-gradient(160deg,#2d7f88,#7fc2c1);color:#fff;opacity:.9"><b style="top:120px">Budidaya<br>Jamur Tiram</b></div>
-    <div class="fl" style="left:114px;top:258px;width:142px;height:180px;background:linear-gradient(180deg,#5aa7a7,#d9a3b9);opacity:.85;color:#fff"></div>
-    <div class="fl" style="left:890px;top:18px;width:301px;height:270px;background:linear-gradient(180deg,#e7efee 0 11px,#3aa6a0 11px,#7cc8bd 60%,#f2a985);color:#fff"><b style="top:70px;left:70px">Portofolio<br>Ilustrasi</b></div>
-    <div class="fl" style="left:1012px;top:228px;width:316px;height:194px;background:linear-gradient(180deg,#9bd8cf,#f4c2a9 60%,#f0a3a0);color:#fff"><b style="top:130px;left:20px">Tips Jualan<br>Online</b></div>
-    <div class="fl" style="left:1245px;top:20px;width:200px;height:110px;background:linear-gradient(160deg,#0a4a50,#2b8a86);color:#e6fffb"><b style="font-size:17px">Tren Kopi<br>Lokal 2027</b></div>
+    <div class="fl" style="left:-0.694%;top:10.072%;width:12.500%;height:32.374%;background:url(assets/ill-palette.webp) 50% 50%/cover"></div>
+    <div class="fl" style="left:29.167%;top:4.317%;width:11.806%;height:21.583%;background:linear-gradient(160deg,#0b4f55,#2a8a86);opacity:.55;color:#e6fffb"><b style="left:0.833cqw;top:0.833cqw;font-size:0.903cqw">Agenda<br>Rapat Bulanan</b><i style="left:0.833cqw;top:3.889cqw;width:6.944cqw;height:0.278cqw"></i><i style="left:0.833cqw;top:4.583cqw;width:4.861cqw;height:0.278cqw"></i><i style="left:0.833cqw;top:5.278cqw;width:6.25cqw;height:0.278cqw"></i></div>
+    <div class="fl lib" style="left:11.875%;top:0.000%;width:16.597%;height:45.863%;background:#f7d6c9;color:#7a3b2b"><b style="left:1.111cqw;top:1.111cqw;font-size:1.528cqw">Liburan<br>Keluarga</b><span class="num" style="left:1.111cqw;top:5.833cqw;font-size:1.042cqw">01</span><i style="left:3.611cqw;top:6.042cqw;width:10.417cqw;height:0.347cqw;"></i><i style="left:3.611cqw;top:6.806cqw;width:7.778cqw;height:0.347cqw;"></i><span class="num" style="left:1.111cqw;top:9.028cqw;font-size:1.042cqw">02</span><i style="left:3.611cqw;top:9.236cqw;width:10.417cqw;height:0.347cqw;"></i><i style="left:3.611cqw;top:10.000cqw;width:7.778cqw;height:0.347cqw;"></i><span class="num" style="left:1.111cqw;top:12.222cqw;font-size:1.042cqw">03</span><i style="left:3.611cqw;top:12.431cqw;width:10.417cqw;height:0.347cqw;"></i><i style="left:3.611cqw;top:13.194cqw;width:7.778cqw;height:0.347cqw;"></i></div>
+    <div class="fl" style="left:22.361%;top:23.381%;width:19.583%;height:37.770%;background:linear-gradient(rgba(4,52,56,0) 40%,rgba(4,52,56,.88) 100%),url(assets/ill-boat.webp) 50% 45%/cover;color:#fff"><b style="left:1.111cqw;top:8.889cqw;font-size:1.528cqw">Rencana<br>Ekspansi</b><i style="left:1.250cqw;top:12.639cqw;width:10.417cqw;height:0.347cqw;"></i><i style="left:1.250cqw;top:13.333cqw;width:7.222cqw;height:0.347cqw;"></i></div>
+    <div class="fl" style="left:7.917%;top:46.403%;width:9.861%;height:32.374%;background:linear-gradient(180deg,#5aa7a7,#d9a3b9);opacity:.85;color:#fff"><b style="left:0.833cqw;top:0.972cqw;font-size:0.972cqw">Strategi<br>Kuartal 3</b><i style="left:0.833cqw;top:4.444cqw;width:6.667cqw;height:0.278cqw;"></i><i style="left:0.833cqw;top:5.139cqw;width:4.861cqw;height:0.278cqw;"></i><i style="left:0.833cqw;top:6.389cqw;width:6.667cqw;height:0.278cqw;"></i><i style="left:0.833cqw;top:7.083cqw;width:4.167cqw;height:0.278cqw;"></i></div>
+    <div class="fl win" style="left:61.806%;top:3.237%;width:20.903%;height:48.561%;background:linear-gradient(180deg,#3aa6a0,#7cc8bd 62%,#f2c4a6);color:#fff"><span class="bar" style="left:0.000cqw;top:0.000cqw;width:20.903cqw;height:1.042cqw;background:#e7efee;position:absolute"></span><i class="dot" style="left:0.625cqw;top:0.347cqw;width:0.347cqw;height:0.347cqw;opacity:1;background:#9db7b5;border-radius:50%"></i><i class="dot" style="left:1.250cqw;top:0.347cqw;width:0.347cqw;height:0.347cqw;opacity:1;background:#9db7b5;border-radius:50%"></i><i class="dot" style="left:1.875cqw;top:0.347cqw;width:0.347cqw;height:0.347cqw;opacity:1;background:#9db7b5;border-radius:50%"></i><i class="pill" style="left:4.444cqw;top:2.639cqw;width:2.500cqw;height:0.278cqw;opacity:.6;background:#fff"></i><i class="pill" style="left:7.639cqw;top:2.639cqw;width:2.500cqw;height:0.278cqw;opacity:.6;background:#fff"></i><i class="pill" style="left:10.833cqw;top:2.639cqw;width:2.500cqw;height:0.278cqw;opacity:.6;background:#fff"></i><i class="pill" style="left:14.028cqw;top:2.639cqw;width:2.500cqw;height:0.278cqw;opacity:.6;background:#fff"></i><b style="left:0.000cqw;top:4.583cqw;width:20.903cqw;font-size:1.667cqw;text-align:center;font-weight:600">Portofolio<br>Ilustrasi</b><span class="hill" style="left:-2.083cqw;top:13.611cqw;width:11.806cqw;height:5.556cqw;background:#f3b799"></span><span class="hill" style="left:6.667cqw;top:12.917cqw;width:15.972cqw;height:6.250cqw;background:#e98f86"></span><span class="hill" style="left:2.083cqw;top:15.417cqw;width:10.417cqw;height:4.167cqw;background:#86c7c0"></span></div>
+    <div class="fl" style="left:70.278%;top:41.007%;width:21.944%;height:34.892%;background:repeating-linear-gradient(168deg,rgba(255,255,255,.22) 0 7px,rgba(255,255,255,0) 7px 19px),linear-gradient(180deg,#9bd8cf,#f4c2a9 60%,#f0a3a0);color:#fff"><b style="left:1.250cqw;top:8.611cqw;font-size:1.389cqw">Tips Jualan<br>Online</b><i style="left:13.611cqw;top:9.167cqw;width:6.667cqw;height:0.278cqw;opacity:.6"></i><i style="left:13.611cqw;top:9.931cqw;width:5.556cqw;height:0.278cqw;opacity:.6"></i><i style="left:13.611cqw;top:10.694cqw;width:6.389cqw;height:0.278cqw;opacity:.6"></i></div>
+    <div class="fl" style="left:86.458%;top:3.597%;width:13.889%;height:19.784%;background:linear-gradient(160deg,#0a4a50,#2b8a86);color:#e6fffb"><b style="left:0.972cqw;top:0.972cqw;font-size:1.111cqw">Tren Kopi<br>Lokal 2027</b><i style="left:0.972cqw;top:4.306cqw;width:7.639cqw;height:0.278cqw;"></i><i style="left:0.972cqw;top:5.000cqw;width:5.556cqw;height:0.278cqw;"></i></div>
   </div>
 </section>
 </main>
 
 <footer class="foot" aria-label="Kaki halaman">
   <div class="wrap">
-    <svg class="fmark" viewBox="0 0 1268 219" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="fg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a7e3dc" stop-opacity=".55"/><stop offset="1" stop-color="#a7e3dc" stop-opacity=".2"/></linearGradient></defs>
+    <svg class="fmark" viewBox="0 0 1268 219" aria-hidden="true"><defs><linearGradient id="fg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a7e3dc" stop-opacity=".55"/><stop offset="1" stop-color="#a7e3dc" stop-opacity=".2"/></linearGradient></defs>
       <text x="0" y="209" textLength="1268" lengthAdjust="spacingAndGlyphs" font-family="Outfit, sans-serif" font-weight="800" font-size="282" fill="url(#fg)">SOLUSLIDE</text></svg>
     <hr>
     <div class="fcols">
-      <div class="getapp"><h3>Bayar pakai Rupiah</h3>
+      <div class="getapp"><h3>Bayar Rupiah</h3>
         <div class="pay"><span class="pb"><svg class="ic"><use href="#i-qr"/></svg><span class="pt"><small>Bayar dengan</small>QRIS</span></span><span class="pb"><svg class="ic"><use href="#i-wallet"/></svg><span class="pt"><small>Bayar dengan</small>E-wallet</span></span></div></div>
       <div><h3>Produk</h3><ul><li><a href="#">Harga</a></li><li><a href="#">Template</a></li><li><a href="#">Sidang skripsi</a></li><li><a href="#">Presentasi kantor</a></li><li><a href="#">Pitch UMKM</a></li><li><a href="#">Materi ajar</a></li><li><a href="#">Panduan prompt</a></li><li><a href="#">Integrasi</a></li><li><a href="#">Aksesibilitas</a></li></ul></div>
       <div><h3>Perusahaan</h3><ul><li><a href="#">Tentang</a></li><li><a href="#">Karier</a></li><li><a href="#">Tim</a></li><li><a href="#">Bantuan</a></li><li><a href="#">Komunitas</a></li><li><a href="#">Dokumentasi API</a></li><li><a href="#">Merek</a></li><li><a href="#">Keamanan</a></li><li><a href="#">Kontak</a></li></ul></div>
@@ -787,10 +855,22 @@ img{display:block;max-width:100%}
   var lang=document.getElementById('lang'),lb=document.getElementById('langBtn');
   lb.addEventListener('click',function(e){e.stopPropagation();var o=lang.classList.toggle('open');lb.setAttribute('aria-expanded',o)});
   document.addEventListener('click',function(){lang.classList.remove('open');lb.setAttribute('aria-expanded','false')});
-  var bg=document.getElementById('burger'),mn=document.getElementById('mnav');
-  function tog(){var o=mn.classList.toggle('open');bg.setAttribute('aria-expanded',o)}
-  bg.addEventListener('click',tog);document.querySelector('.globe-m').addEventListener('click',tog);
-  mn.addEventListener('click',function(e){if(e.target.tagName==='A'){mn.classList.remove('open')}});
+  var bg=document.getElementById('burger'),mn=document.getElementById('mnav'),bgu=bg.querySelector('use');
+  function setMenu(o){mn.classList.toggle('open',o);document.body.classList.toggle('menu-open',o);bg.setAttribute('aria-expanded',o);
+    bg.setAttribute('aria-label',o?'Tutup menu':'Buka menu');bgu.setAttribute('href',o?'#i-x':'#i-menu');}
+  bg.addEventListener('click',function(){setMenu(!mn.classList.contains('open'))});
+  document.querySelector('.globe-m').addEventListener('click',function(){setMenu(!mn.classList.contains('open'))});
+  mn.addEventListener('click',function(e){if(e.target.closest('a')){setMenu(false)}});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'){setMenu(false);lang.classList.remove('open')}});
+  window.addEventListener('resize',function(){if(innerWidth>1023&&mn.classList.contains('open'))setMenu(false)});
+  // header gelap saat berada di atas CTA malam dan footer
+  var nav=document.querySelector('.nav'),cta=document.querySelector('.cta'),tick=false;
+  function navTone(){tick=false;var y=cta.getBoundingClientRect().top;nav.classList.toggle('dark',y<28)}
+  window.addEventListener('scroll',function(){if(!tick){tick=true;requestAnimationFrame(navTone)}},{passive:true});navTone();
+  // skala kanvas mockup fitur mengikuti lebar panel
+  var fv=[].slice.call(document.querySelectorAll('.fvis'));
+  function fit(){fv.forEach(function(v){v.style.setProperty('--k',(v.clientWidth/586).toFixed(4))})}
+  fit();window.addEventListener('resize',fit);if('ResizeObserver' in window){var ro=new ResizeObserver(fit);fv.forEach(function(v){ro.observe(v)})}
   // carousel testimoni: kartu indeks 1 di tengah
   var tr=document.getElementById('ttrack'),idx=1;
   function place(){var c=tr.children[0],w=c.getBoundingClientRect().width,g=parseFloat(getComputedStyle(tr).columnGap)||16,vw=tr.parentNode.getBoundingClientRect().width;

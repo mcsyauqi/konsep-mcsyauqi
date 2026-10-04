@@ -1,6 +1,14 @@
 (function () {
   'use strict';
   var KEY = 'dokurapi-lang';
+
+  // Menu "Alat" di ponsel: panel selebar layar berisi direktori alat lengkap (disalin dari footer)
+  var tmAll = document.querySelector('.tm-all');
+  var dirIn = document.querySelector('.dir-in');
+  if (tmAll && dirIn) {
+    Array.prototype.forEach.call(dirIn.children, function (sec) { tmAll.appendChild(sec.cloneNode(true)); });
+  }
+
   var nodes = Array.prototype.slice.call(document.querySelectorAll('[data-en]'));
   nodes.forEach(function (el) { el.setAttribute('data-id', el.textContent); });
 
@@ -33,7 +41,10 @@
       closeAll();
       if (open) { menu.removeAttribute('hidden'); btn.setAttribute('aria-expanded', 'true'); }
     });
-    menu.addEventListener('click', function (ev) { ev.stopPropagation(); });
+    menu.addEventListener('click', function (ev) {
+      ev.stopPropagation();
+      if (ev.target.closest && ev.target.closest('a')) closeAll();
+    });
   }
   function closeAll() {
     ['tools-menu', 'm-menu'].forEach(function (id) {
